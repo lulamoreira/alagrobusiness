@@ -17,8 +17,11 @@ function DetailPage() {
   const { id } = Route.useParams();
   const { t, i18n } = useTranslation();
   const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const [photoIdx, setPhotoIdx] = useState(0);
   const [interestStatus, setInterestStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [chatError, setChatError] = useState<string | null>(null);
+  const [openingChat, setOpeningChat] = useState(false);
 
   const { data: anuncio, isLoading } = useQuery({
     queryKey: ["anuncio_detail", id],
