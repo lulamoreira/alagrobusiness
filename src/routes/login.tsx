@@ -10,6 +10,7 @@ import { Logo } from "@/components/Logo";
 import { DarkInput } from "@/components/DarkInput";
 import { PillButton } from "@/components/PillButton";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { GoogleButton } from "@/components/GoogleButton";
 
 export const Route = createFileRoute("/login")({
   ssr: false,
@@ -74,6 +75,16 @@ function LoginPage() {
             {submitting ? t("auth.signing") : t("auth.login")}
           </PillButton>
         </form>
+        <div className="flex items-center gap-3">
+          <span className="h-px flex-1 bg-border" />
+          <span className="text-xs uppercase tracking-wider text-muted-foreground">{t("google.or")}</span>
+          <span className="h-px flex-1 bg-border" />
+        </div>
+        <GoogleButton
+          label={t("google.signin")}
+          fullWidth
+          onError={() => setServerError(t("google.error"))}
+        />
         <div className="flex items-center justify-between text-xs">
           <button type="button" className="text-muted-foreground hover:text-foreground">
             {t("auth.forgot")}

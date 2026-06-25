@@ -114,5 +114,31 @@
     "passwordsMatch": "As senhas não conferem",
     "lgpdRequired": "Você precisa aceitar os termos",
     "minOneCategory": "Selecione pelo menos uma categoria"
+  },
+  "google": {
+    "signin": "Entrar com Google",
+    "signup": "Cadastrar com Google",
+    "or": "ou",
+    "error": "Não foi possível entrar com o Google."
+  },
+  "onboarding": {
+    "title": "Complete seu cadastro",
+    "subtitle": "Precisamos de alguns dados para liberar seu acesso à plataforma.",
+    "cep": "CEP",
+    "themes": "Temas de notícias",
+    "submit": "Concluir cadastro",
+    "submitting": "Salvando…",
+    "error": "Não foi possível salvar. Tente novamente."
+  },
+  "themes": {
+    "soja": "Soja",
+    "cafe": "Café",
+    "milho": "Milho",
+    "clima": "Clima",
+    "mercado": "Mercado",
+    "tecnologia": "Tecnologia",
+    "pecuaria": "Pecuária",
+    "trigo": "Trigo",
+    "algodao": "Algodão"
   }
 }

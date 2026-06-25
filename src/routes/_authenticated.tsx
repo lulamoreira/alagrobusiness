@@ -19,6 +19,10 @@ function AuthGate() {
       return;
     }
     if (profile) {
+      if (!profile.perfil_completo) {
+        navigate({ to: "/completar-cadastro" });
+        return;
+      }
       if (profile.status === "bloqueado") navigate({ to: "/bloqueado" });
       else if (profile.status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao" });
     }
@@ -31,6 +35,7 @@ function AuthGate() {
       </div>
     );
   }
+  if (!profile.perfil_completo) return null;
   if (profile.status !== "ativo") return null;
 
   return (
