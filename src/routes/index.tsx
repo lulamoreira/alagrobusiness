@@ -20,7 +20,8 @@ function SplashPage() {
   useEffect(() => {
     if (loading) return;
     if (user && profile) {
-      if (profile.status === "ativo") navigate({ to: "/painel" });
+      if (!profile.perfil_completo) navigate({ to: "/completar-cadastro" });
+      else if (profile.status === "ativo") navigate({ to: "/painel" });
       else if (profile.status === "bloqueado") navigate({ to: "/bloqueado" });
       else if (profile.status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao" });
     }
