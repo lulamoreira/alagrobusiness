@@ -25,6 +25,7 @@ import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authen
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
 import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
+import { Route as AuthenticatedMensagensConversaIdRouteImport } from './routes/_authenticated.mensagens.$conversaId'
 import { Route as AuthenticatedAnuncioIdRouteImport } from './routes/_authenticated.anuncio.$id'
 import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
 
@@ -108,6 +109,12 @@ const AuthenticatedVenderNovoRoute = AuthenticatedVenderNovoRouteImport.update({
   path: '/novo',
   getParentRoute: () => AuthenticatedVenderRoute,
 } as any)
+const AuthenticatedMensagensConversaIdRoute =
+  AuthenticatedMensagensConversaIdRouteImport.update({
+    id: '/$conversaId',
+    path: '/$conversaId',
+    getParentRoute: () => AuthenticatedMensagensRoute,
+  } as any)
 const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
   id: '/anuncio/$id',
   path: '/anuncio/$id',
@@ -131,11 +138,12 @@ export interface FileRoutesByFullPath {
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
-  '/mensagens': typeof AuthenticatedMensagensRoute
+  '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
@@ -150,11 +158,12 @@ export interface FileRoutesByTo {
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
-  '/mensagens': typeof AuthenticatedMensagensRoute
+  '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
@@ -171,11 +180,12 @@ export interface FileRoutesById {
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
-  '/_authenticated/mensagens': typeof AuthenticatedMensagensRoute
+  '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/_authenticated/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/_authenticated/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/_authenticated/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/vender'
     | '/anuncio/$id'
+    | '/mensagens/$conversaId'
     | '/vender/novo'
     | '/vender/editar/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/vender'
     | '/anuncio/$id'
+    | '/mensagens/$conversaId'
     | '/vender/novo'
     | '/vender/editar/$id'
   id:
@@ -236,6 +248,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel'
     | '/_authenticated/vender'
     | '/_authenticated/anuncio/$id'
+    | '/_authenticated/mensagens/$conversaId'
     | '/_authenticated/vender/novo'
     | '/_authenticated/vender/editar/$id'
   fileRoutesById: FileRoutesById
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedVenderNovoRouteImport
       parentRoute: typeof AuthenticatedVenderRoute
     }
+    '/_authenticated/mensagens/$conversaId': {
+      id: '/_authenticated/mensagens/$conversaId'
+      path: '/$conversaId'
+      fullPath: '/mensagens/$conversaId'
+      preLoaderRoute: typeof AuthenticatedMensagensConversaIdRouteImport
+      parentRoute: typeof AuthenticatedMensagensRoute
+    }
     '/_authenticated/anuncio/$id': {
       id: '/_authenticated/anuncio/$id'
       path: '/anuncio/$id'
@@ -380,6 +400,21 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedMensagensRouteChildren {
+  AuthenticatedMensagensConversaIdRoute: typeof AuthenticatedMensagensConversaIdRoute
+}
+
+const AuthenticatedMensagensRouteChildren: AuthenticatedMensagensRouteChildren =
+  {
+    AuthenticatedMensagensConversaIdRoute:
+      AuthenticatedMensagensConversaIdRoute,
+  }
+
+const AuthenticatedMensagensRouteWithChildren =
+  AuthenticatedMensagensRoute._addFileChildren(
+    AuthenticatedMensagensRouteChildren,
+  )
 
 interface AuthenticatedVenderRouteChildren {
   AuthenticatedVenderNovoRoute: typeof AuthenticatedVenderNovoRoute
@@ -399,7 +434,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
-  AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRoute
+  AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
   AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
@@ -411,7 +446,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
-  AuthenticatedMensagensRoute: AuthenticatedMensagensRoute,
+  AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
   AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
