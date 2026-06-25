@@ -1,0 +1,113 @@
+{
+  "common": {
+    "appName": "ALAGROBUSINESS",
+    "tagline": "El agronegocio brasileño, conectado.",
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "back": "Volver",
+    "logout": "Salir",
+    "search": "Buscar"
+  },
+  "splash": {
+    "title": "ALAGROBUSINESS",
+    "subtitle": "Marketplace del agronegocio brasileño",
+    "enter": "Entrar",
+    "create": "Crear cuenta"
+  },
+  "auth": {
+    "login": "Entrar",
+    "email": "Correo",
+    "password": "Contraseña",
+    "forgot": "Olvidé mi contraseña",
+    "noAccount": "¿No tienes cuenta?",
+    "signupHere": "Regístrate",
+    "welcome": "Bienvenido de vuelta",
+    "subtitle": "Accede para continuar",
+    "signing": "Entrando…",
+    "error": "No se pudo iniciar sesión."
+  },
+  "signup": {
+    "title": "Crear cuenta",
+    "subtitle": "Únete a la plataforma del agro brasileño",
+    "profileType": "Tipo de perfil",
+    "buyer": "Comprador",
+    "seller": "Vendedor",
+    "name": "Nombre completo",
+    "phone": "Teléfono",
+    "country": "País",
+    "state": "Estado",
+    "city": "Ciudad",
+    "email": "Correo",
+    "password": "Contraseña",
+    "confirmPassword": "Repetir contraseña",
+    "categories": "Categorías de interés",
+    "submit": "Crear cuenta",
+    "submitting": "Creando…",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "loginHere": "Entrar",
+    "error": "No se pudo crear la cuenta."
+  },
+  "categories": {
+    "fruta": "Frutas",
+    "grao": "Granos",
+    "legumes": "Legumbres",
+    "vegetal": "Verduras"
+  },
+  "lgpd": {
+    "label": "Acepto los Términos de Uso y la Política de Privacidad."
+  },
+  "awaiting": {
+    "title": "Cuenta en revisión",
+    "message": "Tu cuenta de tienda o marca está esperando aprobación."
+  },
+  "blocked": {
+    "title": "Cuenta bloqueada",
+    "message": "Tu cuenta está bloqueada. Contacta a soporte."
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "buy": "Comprar",
+    "sell": "Vender",
+    "quote": "Cotización",
+    "news": "Noticias",
+    "alerts": "Alertas",
+    "settings": "Ajustes",
+    "more": "Más"
+  },
+  "dashboard": {
+    "hello": "Hola",
+    "summary": "Resumen del agro hoy",
+    "dollar": "Dólar",
+    "news": "Noticias",
+    "noNews": "Sin noticias aún."
+  },
+  "news": {
+    "title": "Noticias del agro",
+    "empty": "Sin noticias por ahora.",
+    "readMore": "Leer más"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "language": "Idioma",
+    "currency": "Moneda",
+    "dollarType": "Tipo de dólar",
+    "comercial": "Comercial",
+    "turismo": "Turismo",
+    "paralelo": "Paralelo",
+    "saved": "Preferencias guardadas"
+  },
+  "placeholders": {
+    "soon": "Próximamente",
+    "soonDesc": "Esta sección se habilitará en próximas fases."
+  },
+  "validation": {
+    "required": "Campo obligatorio",
+    "emailInvalid": "Correo inválido",
+    "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+    "passwordsMatch": "Las contraseñas no coinciden",
+    "lgpdRequired": "Debes aceptar los términos",
+    "minOneCategory": "Selecciona al menos una categoría"
+  }
+}
