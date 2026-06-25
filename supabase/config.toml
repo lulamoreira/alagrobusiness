@@ -1,1 +1,7 @@
 project_id = "jgkmyyxrtgcfhcnieegw"
+
+[functions.fetch-dolar]
+verify_jwt = false
+
+[functions.fetch-noticias-agro]
+verify_jwt = false
