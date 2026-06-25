@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -16,17 +17,18 @@ import "@/i18n";
 import { detectAndApplyLang } from "@/i18n";
 
 function NotFoundComponent() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-7xl font-bold text-foreground">404</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Página não encontrada.</p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("common.not_found")}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:brightness-110"
           >
-            Voltar ao início
+            {t("common.back_home")}
           </Link>
         </div>
       </div>
@@ -37,6 +39,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useTranslation();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -45,10 +48,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
-          Algo deu errado
+          {t("common.something_wrong")}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Tente novamente em alguns instantes.
+          {t("common.try_again_later")}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -58,7 +61,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             }}
             className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:brightness-110"
           >
-            Tentar novamente
+            {t("common.try_again")}
           </button>
         </div>
       </div>
