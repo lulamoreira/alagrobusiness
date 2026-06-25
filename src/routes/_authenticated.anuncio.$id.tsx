@@ -265,16 +265,35 @@ function DetailPage() {
                 <PillButton
                   type="button"
                   variant="secondary"
-                  disabled
-                  title={t("detail.chatSoon")}
                   fullWidth
+                  disabled={openingChat || !user}
+                  onClick={async () => {
+                    if (!user) return;
+                    setOpeningChat(true);
+                    setChatError(null);
+                    try {
+                      const conversaId = await getOrCreateConversation({
+                        anuncioId: anuncio.id,
+                        vendedorId: anuncio.vendedor_id,
+                        userId: user.id,
+                      });
+                      navigate({ to: "/mensagens/$conversaId", params: { conversaId } });
+                    } catch {
+                      setChatError(t("detail.chatError"));
+                    } finally {
+                      setOpeningChat(false);
+                    }
+                  }}
                 >
                   <MessageCircle className="h-4 w-4" />
-                  {t("detail.chat")} · {t("detail.chatSoon")}
+                  {t("detail.startChat")}
                 </PillButton>
               </div>
               {interestStatus === "error" && (
                 <p className="text-xs text-destructive">{t("detail.interestError")}</p>
+              )}
+              {chatError && (
+                <p className="text-xs text-destructive">{chatError}</p>
               )}
             </div>
           )}
