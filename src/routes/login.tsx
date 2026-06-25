@@ -1,0 +1,88 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
+import { supabase } from "@/integrations/supabase/client";
+import { loginSchema, type LoginInput } from "@/lib/schemas";
+import { AmbientGlow } from "@/components/AmbientGlow";
+import { Logo } from "@/components/Logo";
+import { DarkInput } from "@/components/DarkInput";
+import { PillButton } from "@/components/PillButton";
+import { LanguageSelector } from "@/components/LanguageSelector";
+
+export const Route = createFileRoute("/login")({
+  ssr: false,
+  component: LoginPage,
+});
+
+function LoginPage() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+
+  const onSubmit = async (data: LoginInput) => {
+    setSubmitting(true);
+    setServerError(null);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    });
+    setSubmitting(false);
+    if (error) {
+      setServerError(t("auth.error"));
+      return;
+    }
+    navigate({ to: "/" });
+  };
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8">
+      <AmbientGlow />
+      <div className="absolute top-4 right-4"><LanguageSelector /></div>
+      <div className="w-full max-w-md space-y-6 rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-md md:p-8">
+        <Link to="/"><Logo size="md" /></Link>
+        <div>
+          <h1 className="font-display text-2xl font-bold text-foreground">{t("auth.welcome")}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t("auth.subtitle")}</p>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <DarkInput
+            id="email"
+            type="email"
+            label={t("auth.email")}
+            autoComplete="email"
+            error={errors.email?.message ? t(errors.email.message) : undefined}
+            {...register("email")}
+          />
+          <DarkInput
+            id="password"
+            type="password"
+            label={t("auth.password")}
+            autoComplete="current-password"
+            error={errors.password?.message ? t(errors.password.message) : undefined}
+            {...register("password")}
+          />
+          {serverError && <p className="text-sm text-destructive">{serverError}</p>}
+          <PillButton type="submit" fullWidth disabled={submitting}>
+            {submitting ? t("auth.signing") : t("auth.login")}
+          </PillButton>
+        </form>
+        <div className="flex items-center justify-between text-xs">
+          <button type="button" className="text-muted-foreground hover:text-foreground">
+            {t("auth.forgot")}
+          </button>
+          <Link to="/cadastro" className="font-semibold text-primary hover:underline">
+            {t("auth.signupHere")}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
