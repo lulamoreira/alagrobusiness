@@ -13,6 +13,7 @@ import { SegmentedToggle } from "@/components/SegmentedToggle";
 import { CategoryChip } from "@/components/CategoryChip";
 import { LGPDCheckbox } from "@/components/LGPDCheckbox";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { GoogleButton } from "@/components/GoogleButton";
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 
@@ -82,6 +83,17 @@ function SignupPage() {
         <div>
           <h1 className="font-display text-2xl font-bold text-foreground">{t("signup.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{t("signup.subtitle")}</p>
+        </div>
+
+        <GoogleButton
+          label={t("google.signup")}
+          fullWidth
+          onError={() => setServerError(t("google.error"))}
+        />
+        <div className="flex items-center gap-3">
+          <span className="h-px flex-1 bg-border" />
+          <span className="text-xs uppercase tracking-wider text-muted-foreground">{t("google.or")}</span>
+          <span className="h-px flex-1 bg-border" />
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

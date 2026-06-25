@@ -259,6 +259,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           categorias_interesse: Database["public"]["Enums"]["categoria_agro"][]
           cep: string | null
           cidade: string | null
@@ -273,6 +274,7 @@ export type Database = {
           moeda_preferida: Database["public"]["Enums"]["moeda_app"]
           nome_completo: string
           pais: string
+          perfil_completo: boolean
           status: Database["public"]["Enums"]["status_perfil"]
           telefone: string | null
           termos_aceitos_em: string | null
@@ -282,6 +284,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
           cidade?: string | null
@@ -296,6 +299,7 @@ export type Database = {
           moeda_preferida?: Database["public"]["Enums"]["moeda_app"]
           nome_completo?: string
           pais?: string
+          perfil_completo?: boolean
           status?: Database["public"]["Enums"]["status_perfil"]
           telefone?: string | null
           termos_aceitos_em?: string | null
@@ -305,6 +309,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
           cidade?: string | null
@@ -319,6 +324,7 @@ export type Database = {
           moeda_preferida?: Database["public"]["Enums"]["moeda_app"]
           nome_completo?: string
           pais?: string
+          perfil_completo?: boolean
           status?: Database["public"]["Enums"]["status_perfil"]
           telefone?: string | null
           termos_aceitos_em?: string | null
@@ -364,6 +370,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      complete_profile: {
+        Args: {
+          p_categorias: string[]
+          p_cep: string
+          p_cidade: string
+          p_estado: string
+          p_idioma: string
+          p_lgpd: boolean
+          p_moeda: string
+          p_nome_completo: string
+          p_telefone: string
+          p_temas: string[]
+          p_termos_versao: string
+          p_tipo_dolar: string
+          p_tipo_perfil: string
+        }
+        Returns: Database["public"]["Enums"]["status_perfil"]
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {

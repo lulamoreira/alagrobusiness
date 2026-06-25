@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { AmbientGlow } from "@/components/AmbientGlow";
 import { Logo } from "@/components/Logo";
@@ -12,7 +13,13 @@ export const Route = createFileRoute("/aguardando-aprovacao")({
 
 function AwaitingPage() {
   const { t } = useTranslation();
-  const { signOut } = useAuth();
+  const { user, profile, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) return;
+    if (!user) { navigate({ to: "/login" }); return; }
+    if (profile && !profile.perfil_completo) navigate({ to: "/completar-cadastro" });
+  }, [user, profile, loading, navigate]);
   return (
     <div className="relative flex min-h-screen items-center justify-center px-4">
       <AmbientGlow />

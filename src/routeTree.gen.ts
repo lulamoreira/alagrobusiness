@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as CompletarCadastroRouteImport } from './routes/completar-cadastro'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BloqueadoRouteImport } from './routes/bloqueado'
 import { Route as AguardandoAprovacaoRouteImport } from './routes/aguardando-aprovacao'
@@ -26,6 +27,11 @@ import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticate
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompletarCadastroRoute = CompletarCadastroRouteImport.update({
+  id: '/completar-cadastro',
+  path: '/completar-cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CadastroRoute = CadastroRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
+  '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
+  '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
+  '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
   '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/aguardando-aprovacao'
     | '/bloqueado'
     | '/cadastro'
+    | '/completar-cadastro'
     | '/login'
     | '/alertas'
     | '/comprar'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/aguardando-aprovacao'
     | '/bloqueado'
     | '/cadastro'
+    | '/completar-cadastro'
     | '/login'
     | '/alertas'
     | '/comprar'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/aguardando-aprovacao'
     | '/bloqueado'
     | '/cadastro'
+    | '/completar-cadastro'
     | '/login'
     | '/_authenticated/alertas'
     | '/_authenticated/comprar'
@@ -185,6 +197,7 @@ export interface RootRouteChildren {
   AguardandoAprovacaoRoute: typeof AguardandoAprovacaoRoute
   BloqueadoRoute: typeof BloqueadoRoute
   CadastroRoute: typeof CadastroRoute
+  CompletarCadastroRoute: typeof CompletarCadastroRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/completar-cadastro': {
+      id: '/completar-cadastro'
+      path: '/completar-cadastro'
+      fullPath: '/completar-cadastro'
+      preLoaderRoute: typeof CompletarCadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cadastro': {
@@ -314,6 +334,7 @@ const rootRouteChildren: RootRouteChildren = {
   AguardandoAprovacaoRoute: AguardandoAprovacaoRoute,
   BloqueadoRoute: BloqueadoRoute,
   CadastroRoute: CadastroRoute,
+  CompletarCadastroRoute: CompletarCadastroRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport

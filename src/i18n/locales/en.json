@@ -114,5 +114,31 @@
     "passwordsMatch": "Passwords do not match",
     "lgpdRequired": "You must accept the terms",
     "minOneCategory": "Select at least one category"
+  },
+  "google": {
+    "signin": "Sign in with Google",
+    "signup": "Sign up with Google",
+    "or": "or",
+    "error": "Could not sign in with Google."
+  },
+  "onboarding": {
+    "title": "Complete your profile",
+    "subtitle": "We need a few details to unlock the platform.",
+    "cep": "ZIP code",
+    "themes": "News topics",
+    "submit": "Finish signup",
+    "submitting": "Saving…",
+    "error": "Could not save. Please try again."
+  },
+  "themes": {
+    "soja": "Soy",
+    "cafe": "Coffee",
+    "milho": "Corn",
+    "clima": "Weather",
+    "mercado": "Market",
+    "tecnologia": "Technology",
+    "pecuaria": "Livestock",
+    "trigo": "Wheat",
+    "algodao": "Cotton"
   }
 }
