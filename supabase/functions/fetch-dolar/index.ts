@@ -1,4 +1,6 @@
-// Fetch USD-BRL (comercial) e USD-BRL-T (turismo) da AwesomeAPI e faz upsert em cotacoes_dolar.
+// Busca cotações USD-BRL (comercial) e turismo, faz upsert manual em cotacoes_dolar.
+// Estratégia anti-429: comercial via open.er-api.com (sem rate-limit estrito),
+// turismo via AwesomeAPI USD-BRL-T com retry e fallback (comercial * 1.04).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const corsHeaders = {
@@ -6,74 +8,112 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+async function fetchWithRetry(url: string, tries = 3): Promise<Response | null> {
+  for (let i = 0; i < tries; i++) {
+    try {
+      const r = await fetch(url, {
+        headers: { "User-Agent": "ALAGROBUSINESS/1.0", Accept: "application/json" },
+      });
+      if (r.ok) return r;
+      if (r.status !== 429 && r.status < 500) return r;
+    } catch (_e) { /* network */ }
+    await new Promise((res) => setTimeout(res, 1200 * (i + 1)));
+  }
+  return null;
+}
+
+async function upsertCotacao(
+  supabase: ReturnType<typeof createClient>,
+  tipo: "comercial" | "turismo",
+  valor_brl: number,
+) {
+  const atualizado_em = new Date().toISOString();
+  const { data: upd, error: updErr } = await supabase
+    .from("cotacoes_dolar")
+    .update({ valor_brl, atualizado_em })
+    .eq("tipo", tipo)
+    .is("deleted_at", null)
+    .select("id");
+  if (updErr) throw updErr;
+  if (!upd || upd.length === 0) {
+    const { error: insErr } = await supabase
+      .from("cotacoes_dolar")
+      .insert({ tipo, valor_brl, atualizado_em });
+    if (insErr) throw insErr;
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
-
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-  const results: Record<string, unknown> = {};
+  const out: Record<string, unknown> = { sources: {} };
+  let comercial: number | null = null;
+  let turismo: number | null = null;
+
+  // 1) Comercial — open.er-api.com (estável, sem 429)
   try {
-    let resp: Response | null = null;
-    for (let i = 0; i < 3; i++) {
-      resp = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,USD-BRL-T", {
-        headers: { "User-Agent": "ALAGROBUSINESS/1.0", Accept: "application/json" },
-      });
-      if (resp.ok) break;
-      if (resp.status === 429 || resp.status >= 500) {
-        await new Promise((r) => setTimeout(r, 1500 * (i + 1)));
-        continue;
-      }
-      break;
+    const r = await fetchWithRetry("https://open.er-api.com/v6/latest/USD");
+    if (!r || !r.ok) throw new Error(`open.er-api HTTP ${r?.status ?? "no-response"}`);
+    const j = await r.json();
+    const brl = j?.rates?.BRL;
+    if (typeof brl !== "number") throw new Error("BRL ausente em open.er-api");
+    comercial = brl;
+    (out.sources as Record<string, unknown>).comercial = "open.er-api.com";
+  } catch (err) {
+    // fallback AwesomeAPI
+    try {
+      const r = await fetchWithRetry("https://economia.awesomeapi.com.br/json/last/USD-BRL");
+      if (!r || !r.ok) throw new Error(`AwesomeAPI USD-BRL HTTP ${r?.status ?? "no-response"}`);
+      const j = await r.json();
+      const bid = j?.USDBRL?.bid;
+      comercial = bid ? Number(bid) : null;
+      (out.sources as Record<string, unknown>).comercial = "awesomeapi.com.br (fallback)";
+    } catch (err2) {
+      (out.sources as Record<string, unknown>).comercial_error =
+        `${String(err)} | ${String(err2)}`;
     }
-    if (!resp || !resp.ok) throw new Error(`AwesomeAPI HTTP ${resp?.status ?? "no-response"}`);
-    const data = await resp.json();
+  }
 
-    const rows: { tipo: "comercial" | "turismo"; valor_brl: number; atualizado_em: string }[] = [];
-    const comercial = data?.USDBRL;
-    const turismo = data?.USDBRLT;
-
-    if (comercial?.bid) {
-      rows.push({
-        tipo: "comercial",
-        valor_brl: Number(comercial.bid),
-        atualizado_em: new Date().toISOString(),
-      });
+  // 2) Turismo — AwesomeAPI USD-BRL-T
+  try {
+    const r = await fetchWithRetry("https://economia.awesomeapi.com.br/json/last/USD-BRL-T");
+    if (!r || !r.ok) throw new Error(`AwesomeAPI USD-BRL-T HTTP ${r?.status ?? "no-response"}`);
+    const j = await r.json();
+    const bid = j?.USDBRLT?.bid;
+    turismo = bid ? Number(bid) : null;
+    (out.sources as Record<string, unknown>).turismo = "awesomeapi.com.br";
+  } catch (err) {
+    if (comercial != null) {
+      turismo = Number((comercial * 1.04).toFixed(4));
+      (out.sources as Record<string, unknown>).turismo = "derived (comercial * 1.04)";
+      (out.sources as Record<string, unknown>).turismo_warn = String(err);
+    } else {
+      (out.sources as Record<string, unknown>).turismo_error = String(err);
     }
-    if (turismo?.bid) {
-      rows.push({
-        tipo: "turismo",
-        valor_brl: Number(turismo.bid),
-        atualizado_em: new Date().toISOString(),
-      });
-    }
+  }
 
-    for (const row of rows) {
-      // update-or-insert para respeitar índice único parcial (WHERE deleted_at IS NULL)
-      const { data: upd, error: updErr } = await supabase
-        .from("cotacoes_dolar")
-        .update({ valor_brl: row.valor_brl, atualizado_em: row.atualizado_em })
-        .eq("tipo", row.tipo)
-        .is("deleted_at", null)
-        .select("id");
-      if (updErr) throw updErr;
-      if (!upd || upd.length === 0) {
-        const { error: insErr } = await supabase.from("cotacoes_dolar").insert(row);
-        if (insErr) throw insErr;
-      }
-      results[row.tipo] = row.valor_brl;
+  try {
+    if (comercial != null) {
+      await upsertCotacao(supabase, "comercial", comercial);
+      (out as Record<string, unknown>).comercial = comercial;
     }
-
-    return new Response(JSON.stringify({ ok: true, results }), {
+    if (turismo != null) {
+      await upsertCotacao(supabase, "turismo", turismo);
+      (out as Record<string, unknown>).turismo = turismo;
+    }
+  } catch (err) {
+    console.error("upsert cotacoes_dolar:", err);
+    return new Response(JSON.stringify({ ok: false, error: String(err), ...out }), {
+      status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (err) {
-    console.error("fetch-dolar error:", err);
-    return new Response(
-      JSON.stringify({ ok: false, error: String(err), results }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
   }
+
+  return new Response(JSON.stringify({ ok: true, ...out }), {
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 });
