@@ -8,7 +8,12 @@
     "continue": "Continuar",
     "back": "Voltar",
     "logout": "Sair",
-    "search": "Buscar"
+    "search": "Buscar",
+    "not_found": "Página não encontrada.",
+    "back_home": "Voltar ao início",
+    "something_wrong": "Algo deu errado",
+    "try_again_later": "Tente novamente em alguns instantes.",
+    "try_again": "Tentar novamente"
   },
   "splash": {
     "title": "ALAGROBUSINESS",
