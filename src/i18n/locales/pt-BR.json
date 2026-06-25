@@ -263,5 +263,37 @@
     "notFound": "Anúncio não encontrado.",
     "interestNotification": "Novo interesse no anúncio: {{titulo}}",
     "interestMessage": "Um comprador demonstrou interesse no seu anúncio."
+  },
+  "messages": {
+    "title": "Mensagens",
+    "empty": "Você ainda não tem conversas. Abra uma no detalhe de um anúncio.",
+    "you": "Você",
+    "unread_one": "{{count}} não lida",
+    "unread_other": "{{count}} não lidas",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "placeholder": "Escreva sua mensagem…",
+    "sendError": "Não foi possível enviar a mensagem.",
+    "regarding": "Sobre o anúncio",
+    "openListing": "Abrir anúncio",
+    "notFound": "Conversa não encontrada.",
+    "blockedHint": "Sua conta está bloqueada e não pode enviar mensagens.",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "backToList": "Voltar para conversas",
+    "newMessage": "Nova mensagem"
+  },
+  "alerts": {
+    "title": "Notificações",
+    "empty": "Nenhuma notificação por enquanto.",
+    "markAllRead": "Marcar todas como lidas",
+    "unreadOnly": "Apenas não lidas"
+  },
+  "notifTypes": {
+    "alerta": "Alerta",
+    "noticia": "Notícia",
+    "preco": "Preço",
+    "sistema": "Sistema",
+    "mensagem": "Mensagem"
   }
 }
