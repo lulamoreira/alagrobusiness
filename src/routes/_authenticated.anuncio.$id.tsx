@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
 import { getSignedUrls } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
+import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
