@@ -8,9 +8,10 @@ const corsHeaders = {
 };
 
 const FEEDS: { fonte: string; url: string }[] = [
-  { fonte: "Notícias Agrícolas", url: "https://www.noticiasagricolas.com.br/rss/ultimas" },
+  { fonte: "Notícias Agrícolas", url: "https://www.noticiasagricolas.com.br/rss/noticias" },
   { fonte: "Canal Rural", url: "https://www.canalrural.com.br/feed/" },
   { fonte: "Globo Rural", url: "https://g1.globo.com/rss/g1/economia/agronegocios/" },
+  { fonte: "Agrolink", url: "https://www.agrolink.com.br/rss/noticia.xml" },
 ];
 
 const TEMAS: { key: string; words: string[] }[] = [
@@ -102,16 +103,40 @@ Deno.serve(async (req) => {
         (summary.feeds as unknown[]).push({ fonte: feed.fonte, count: 0, note: "0 items parsed" });
         continue;
       }
-      const { data, error } = await supabase
+      // Manual upsert: índice único é PARCIAL (WHERE deleted_at IS NULL),
+      // que PostgREST ON CONFLICT não aceita. Fazemos select+diff+insert/update.
+      const links = rows.map((r) => r.link);
+      const { data: existing, error: selErr } = await supabase
         .from("noticias")
-        .upsert(rows, { onConflict: "link", ignoreDuplicates: false })
-        .select("id");
-      if (error) throw error;
-      (summary.feeds as unknown[]).push({ fonte: feed.fonte, count: data?.length ?? 0 });
-      summary.inserted = (summary.inserted as number) + (data?.length ?? 0);
+        .select("id, link")
+        .in("link", links)
+        .is("deleted_at", null);
+      if (selErr) throw selErr;
+      const existingMap = new Map((existing ?? []).map((e) => [e.link, e.id]));
+      const toInsert = rows.filter((r) => !existingMap.has(r.link));
+      const toUpdate = rows.filter((r) => existingMap.has(r.link));
+      let inserted = 0;
+      if (toInsert.length > 0) {
+        const { data: ins, error: insErr } = await supabase
+          .from("noticias")
+          .insert(toInsert)
+          .select("id");
+        if (insErr) throw insErr;
+        inserted = ins?.length ?? 0;
+      }
+      for (const r of toUpdate) {
+        const id = existingMap.get(r.link);
+        await supabase
+          .from("noticias")
+          .update({ titulo: r.titulo, resumo: r.resumo, tema: r.tema, publicado_em: r.publicado_em })
+          .eq("id", id!);
+      }
+      (summary.feeds as unknown[]).push({ fonte: feed.fonte, inserted, updated: toUpdate.length });
+      summary.inserted = (summary.inserted as number) + inserted;
     } catch (err) {
-      console.error(`feed ${feed.fonte} falhou:`, err);
-      (summary.errors as unknown[]).push({ fonte: feed.fonte, error: String(err) });
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      console.error(`feed ${feed.fonte} falhou:`, msg);
+      (summary.errors as unknown[]).push({ fonte: feed.fonte, error: msg });
     }
   }
 

@@ -16,8 +16,19 @@ Deno.serve(async (req) => {
 
   const results: Record<string, unknown> = {};
   try {
-    const resp = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,USD-BRL-T");
-    if (!resp.ok) throw new Error(`AwesomeAPI HTTP ${resp.status}`);
+    let resp: Response | null = null;
+    for (let i = 0; i < 3; i++) {
+      resp = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,USD-BRL-T", {
+        headers: { "User-Agent": "ALAGROBUSINESS/1.0", Accept: "application/json" },
+      });
+      if (resp.ok) break;
+      if (resp.status === 429 || resp.status >= 500) {
+        await new Promise((r) => setTimeout(r, 1500 * (i + 1)));
+        continue;
+      }
+      break;
+    }
+    if (!resp || !resp.ok) throw new Error(`AwesomeAPI HTTP ${resp?.status ?? "no-response"}`);
     const data = await resp.json();
 
     const rows: { tipo: "comercial" | "turismo"; valor_brl: number; atualizado_em: string }[] = [];
