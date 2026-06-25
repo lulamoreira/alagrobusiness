@@ -1,0 +1,113 @@
+{
+  "common": {
+    "appName": "ALAGROBUSINESS",
+    "tagline": "Brazilian agribusiness, connected.",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "logout": "Sign out",
+    "search": "Search"
+  },
+  "splash": {
+    "title": "ALAGROBUSINESS",
+    "subtitle": "Brazilian agribusiness marketplace",
+    "enter": "Sign in",
+    "create": "Create account"
+  },
+  "auth": {
+    "login": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot password",
+    "noAccount": "Don't have an account?",
+    "signupHere": "Sign up",
+    "welcome": "Welcome back",
+    "subtitle": "Sign in to continue",
+    "signing": "Signing in…",
+    "error": "Could not sign in. Check your credentials."
+  },
+  "signup": {
+    "title": "Create account",
+    "subtitle": "Join the Brazilian agribusiness platform",
+    "profileType": "Profile type",
+    "buyer": "Buyer",
+    "seller": "Seller",
+    "name": "Full name",
+    "phone": "Phone",
+    "country": "Country",
+    "state": "State",
+    "city": "City",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "categories": "Interest categories",
+    "submit": "Create account",
+    "submitting": "Creating…",
+    "hasAccount": "Already have an account?",
+    "loginHere": "Sign in",
+    "error": "Could not create account."
+  },
+  "categories": {
+    "fruta": "Fruits",
+    "grao": "Grains",
+    "legumes": "Legumes",
+    "vegetal": "Vegetables"
+  },
+  "lgpd": {
+    "label": "I accept the Terms of Use and Privacy Policy."
+  },
+  "awaiting": {
+    "title": "Account under review",
+    "message": "Your account as a store or brand is awaiting approval. We'll notify you by email."
+  },
+  "blocked": {
+    "title": "Account blocked",
+    "message": "Your account is blocked. Contact support for more info."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "buy": "Buy",
+    "sell": "Sell",
+    "quote": "Quote",
+    "news": "News",
+    "alerts": "Alerts",
+    "settings": "Settings",
+    "more": "More"
+  },
+  "dashboard": {
+    "hello": "Hello",
+    "summary": "Today's agribusiness overview",
+    "dollar": "Dollar",
+    "news": "News",
+    "noNews": "No news yet. Awaiting first update."
+  },
+  "news": {
+    "title": "Agribusiness news",
+    "empty": "No news yet.",
+    "readMore": "Read more"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "currency": "Currency",
+    "dollarType": "Dollar type",
+    "comercial": "Commercial",
+    "turismo": "Tourism",
+    "paralelo": "Parallel",
+    "saved": "Preferences saved"
+  },
+  "placeholders": {
+    "soon": "Coming soon",
+    "soonDesc": "This area will be enabled in upcoming phases."
+  },
+  "validation": {
+    "required": "Required field",
+    "emailInvalid": "Invalid email",
+    "passwordMin": "Password must be at least 6 characters",
+    "passwordsMatch": "Passwords do not match",
+    "lgpdRequired": "You must accept the terms",
+    "minOneCategory": "Select at least one category"
+  }
+}

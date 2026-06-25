@@ -1,0 +1,124 @@
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "@/lib/auth";
+import { Logo } from "./Logo";
+import { LanguageSelector } from "./LanguageSelector";
+import { AmbientGlow } from "./AmbientGlow";
+import {
+  LayoutDashboard,
+  ShoppingCart,
+  Store,
+  TrendingUp,
+  Newspaper,
+  Bell,
+  Settings,
+  LogOut,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { ReactNode } from "react";
+
+interface NavItem {
+  to: string;
+  labelKey: string;
+  icon: typeof LayoutDashboard;
+}
+
+const NAV: NavItem[] = [
+  { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
+  { to: "/vender", labelKey: "nav.sell", icon: Store },
+  { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
+  { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
+  { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+  { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
+];
+
+const MOBILE_NAV = NAV.slice(0, 5);
+
+export function AppShell({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
+  const { profile, signOut } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <AmbientGlow />
+
+      {/* Desktop sidebar */}
+      <aside className="fixed left-0 top-0 z-30 hidden h-screen w-64 flex-col border-r border-border bg-card/40 backdrop-blur-md lg:flex">
+        <div className="px-6 py-5">
+          <Logo size="sm" />
+        </div>
+        <nav className="flex-1 space-y-1 px-3">
+          {NAV.map((item) => {
+            const active = pathname === item.to;
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                  active
+                    ? "bg-primary/15 text-primary"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {t(item.labelKey)}
+              </Link>
+            );
+          })}
+        </nav>
+        <button
+          onClick={signOut}
+          className="m-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <LogOut className="h-4 w-4" />
+          {t("common.logout")}
+        </button>
+      </aside>
+
+      {/* Top bar */}
+      <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/70 px-4 backdrop-blur-md lg:pl-72 lg:pr-8">
+        <div className="lg:hidden">
+          <Logo size="sm" />
+        </div>
+        <div className="ml-auto flex items-center gap-3">
+          <LanguageSelector />
+          <div className="hidden items-center gap-2 md:flex">
+            <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
+              {profile?.nome_completo?.[0]?.toUpperCase() ?? "?"}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 lg:pl-72 lg:pr-8">
+        {children}
+      </main>
+
+      {/* Mobile bottom nav */}
+      <nav className="fixed bottom-0 left-0 right-0 z-30 flex h-16 items-center justify-around border-t border-border bg-card/90 backdrop-blur-md lg:hidden">
+        {MOBILE_NAV.map((item) => {
+          const active = pathname === item.to;
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={cn(
+                "flex flex-col items-center gap-0.5 px-3 text-[10px] font-medium",
+                active ? "text-primary" : "text-muted-foreground",
+              )}
+            >
+              <Icon className="h-5 w-5" />
+              {t(item.labelKey)}
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
