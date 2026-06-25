@@ -263,5 +263,37 @@
     "notFound": "Listing not found.",
     "interestNotification": "New interest in listing: {{titulo}}",
     "interestMessage": "A buyer has shown interest in your listing."
+  },
+  "messages": {
+    "title": "Messages",
+    "empty": "You have no conversations yet. Start one from a listing page.",
+    "you": "You",
+    "unread_one": "{{count}} unread",
+    "unread_other": "{{count}} unread",
+    "send": "Send",
+    "sending": "Sending…",
+    "placeholder": "Type your message…",
+    "sendError": "Could not send the message.",
+    "regarding": "About the listing",
+    "openListing": "Open listing",
+    "notFound": "Conversation not found.",
+    "blockedHint": "Your account is blocked and cannot send messages.",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "backToList": "Back to conversations",
+    "newMessage": "New message"
+  },
+  "alerts": {
+    "title": "Notifications",
+    "empty": "No notifications yet.",
+    "markAllRead": "Mark all as read",
+    "unreadOnly": "Unread only"
+  },
+  "notifTypes": {
+    "alerta": "Alert",
+    "noticia": "News",
+    "preco": "Price",
+    "sistema": "System",
+    "mensagem": "Message"
   }
 }
