@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
 import { getSignedUrls } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
+import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
@@ -16,8 +17,11 @@ function DetailPage() {
   const { id } = Route.useParams();
   const { t, i18n } = useTranslation();
   const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const [photoIdx, setPhotoIdx] = useState(0);
   const [interestStatus, setInterestStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [chatError, setChatError] = useState<string | null>(null);
+  const [openingChat, setOpeningChat] = useState(false);
 
   const { data: anuncio, isLoading } = useQuery({
     queryKey: ["anuncio_detail", id],
@@ -261,16 +265,35 @@ function DetailPage() {
                 <PillButton
                   type="button"
                   variant="secondary"
-                  disabled
-                  title={t("detail.chatSoon")}
                   fullWidth
+                  disabled={openingChat || !user}
+                  onClick={async () => {
+                    if (!user) return;
+                    setOpeningChat(true);
+                    setChatError(null);
+                    try {
+                      const conversaId = await getOrCreateConversation({
+                        anuncioId: anuncio.id,
+                        vendedorId: anuncio.vendedor_id,
+                        userId: user.id,
+                      });
+                      navigate({ to: "/mensagens/$conversaId", params: { conversaId } });
+                    } catch {
+                      setChatError(t("detail.chatError"));
+                    } finally {
+                      setOpeningChat(false);
+                    }
+                  }}
                 >
                   <MessageCircle className="h-4 w-4" />
-                  {t("detail.chat")} · {t("detail.chatSoon")}
+                  {t("detail.startChat")}
                 </PillButton>
               </div>
               {interestStatus === "error" && (
                 <p className="text-xs text-destructive">{t("detail.interestError")}</p>
+              )}
+              {chatError && (
+                <p className="text-xs text-destructive">{chatError}</p>
               )}
             </div>
           )}

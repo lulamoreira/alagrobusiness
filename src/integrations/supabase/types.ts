@@ -165,6 +165,61 @@ export type Database = {
         }
         Relationships: []
       }
+      conversas: {
+        Row: {
+          anuncio_id: string
+          comprador_id: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          last_message_at: string
+          updated_at: string
+          vendedor_id: string
+        }
+        Insert: {
+          anuncio_id: string
+          comprador_id: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          last_message_at?: string
+          updated_at?: string
+          vendedor_id: string
+        }
+        Update: {
+          anuncio_id?: string
+          comprador_id?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          last_message_at?: string
+          updated_at?: string
+          vendedor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversas_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversas_comprador_id_fkey"
+            columns: ["comprador_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversas_vendedor_id_fkey"
+            columns: ["vendedor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cotacoes_commodities: {
         Row: {
           atualizado_em: string
@@ -238,6 +293,54 @@ export type Database = {
           valor_brl?: number
         }
         Relationships: []
+      }
+      mensagens: {
+        Row: {
+          conteudo: string
+          conversa_id: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          lida: boolean
+          remetente_id: string
+          updated_at: string
+        }
+        Insert: {
+          conteudo: string
+          conversa_id: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          lida?: boolean
+          remetente_id: string
+          updated_at?: string
+        }
+        Update: {
+          conteudo?: string
+          conversa_id?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          lida?: boolean
+          remetente_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mensagens_conversa_id_fkey"
+            columns: ["conversa_id"]
+            isOneToOne: false
+            referencedRelation: "conversas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mensagens_remetente_id_fkey"
+            columns: ["remetente_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       noticias: {
         Row: {

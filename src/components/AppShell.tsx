@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   ShoppingCart,
   Store,
+  MessageSquare,
   TrendingUp,
   Newspaper,
   Bell,
@@ -15,30 +16,63 @@ import {
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUnreadMessages } from "@/hooks/useUnreadMessages";
 import type { ReactNode } from "react";
 
 interface NavItem {
   to: string;
   labelKey: string;
   icon: typeof LayoutDashboard;
+  badgeKey?: "messages";
 }
 
 const NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
+  { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
 
-const MOBILE_NAV = NAV.slice(0, 5);
+const MOBILE_NAV: NavItem[] = [
+  { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
+  { to: "/vender", labelKey: "nav.sell", icon: Store },
+  { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
+  { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+];
+
+function Badge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <span className="ml-auto inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-primary px-1.5 text-[10px] font-bold text-primary-foreground">
+      {count > 99 ? "99+" : count}
+    </span>
+  );
+}
+
+function MobileBadge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <span className="absolute -right-2 -top-1 inline-flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-primary px-1 text-[9px] font-bold text-primary-foreground">
+      {count > 99 ? "99+" : count}
+    </span>
+  );
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { profile, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const unreadMessages = useUnreadMessages();
+
+  const resolveBadge = (key?: NavItem["badgeKey"]) => {
+    if (key === "messages") return unreadMessages;
+    return 0;
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -51,8 +85,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <nav className="flex-1 space-y-1 px-3">
           {NAV.map((item) => {
-            const active = pathname === item.to;
+            const active =
+              pathname === item.to || pathname.startsWith(`${item.to}/`);
             const Icon = item.icon;
+            const badge = resolveBadge(item.badgeKey);
             return (
               <Link
                 key={item.to}
@@ -65,7 +101,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 )}
               >
                 <Icon className="h-4 w-4" />
-                {t(item.labelKey)}
+                <span>{t(item.labelKey)}</span>
+                <Badge count={badge} />
               </Link>
             );
           })}
@@ -102,18 +139,23 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Mobile bottom nav */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 flex h-16 items-center justify-around border-t border-border bg-card/90 backdrop-blur-md lg:hidden">
         {MOBILE_NAV.map((item) => {
-          const active = pathname === item.to;
+          const active =
+            pathname === item.to || pathname.startsWith(`${item.to}/`);
           const Icon = item.icon;
+          const badge = resolveBadge(item.badgeKey);
           return (
             <Link
               key={item.to}
               to={item.to}
               className={cn(
-                "flex flex-col items-center gap-0.5 px-3 text-[10px] font-medium",
+                "relative flex flex-col items-center gap-0.5 px-3 text-[10px] font-medium",
                 active ? "text-primary" : "text-muted-foreground",
               )}
             >
-              <Icon className="h-5 w-5" />
+              <span className="relative">
+                <Icon className="h-5 w-5" />
+                <MobileBadge count={badge} />
+              </span>
               {t(item.labelKey)}
             </Link>
           );

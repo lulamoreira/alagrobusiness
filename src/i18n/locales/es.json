@@ -81,6 +81,7 @@
     "dashboard": "Panel",
     "buy": "Comprar",
     "sell": "Vender",
+    "messages": "Mensajes",
     "quote": "Cotización",
     "news": "Noticias",
     "alerts": "Alertas",
@@ -248,7 +249,9 @@
     "interestedSent": "Tu interés fue registrado. El vendedor fue notificado.",
     "interestError": "No se pudo registrar tu interés.",
     "chat": "Conversar",
-    "chatSoon": "pronto",
+    "openChat": "Abrir conversación",
+    "startChat": "Hablar con el vendedor",
+    "chatError": "No se pudo abrir la conversación.",
     "seller": "Vendedor",
     "delivery": "Entrega",
     "harvest": "Cosecha",
@@ -260,5 +263,37 @@
     "notFound": "Anuncio no encontrado.",
     "interestNotification": "Nuevo interés en el anuncio: {{titulo}}",
     "interestMessage": "Un comprador mostró interés en tu anuncio."
+  },
+  "messages": {
+    "title": "Mensajes",
+    "empty": "Aún no tienes conversaciones. Inicia una desde el detalle de un anuncio.",
+    "you": "Tú",
+    "unread_one": "{{count}} sin leer",
+    "unread_other": "{{count}} sin leer",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "placeholder": "Escribe tu mensaje…",
+    "sendError": "No se pudo enviar el mensaje.",
+    "regarding": "Sobre el anuncio",
+    "openListing": "Abrir anuncio",
+    "notFound": "Conversación no encontrada.",
+    "blockedHint": "Tu cuenta está bloqueada y no puede enviar mensajes.",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "backToList": "Volver a conversaciones",
+    "newMessage": "Nuevo mensaje"
+  },
+  "alerts": {
+    "title": "Notificaciones",
+    "empty": "Sin notificaciones por ahora.",
+    "markAllRead": "Marcar todas como leídas",
+    "unreadOnly": "Solo sin leer"
+  },
+  "notifTypes": {
+    "alerta": "Alerta",
+    "noticia": "Noticia",
+    "preco": "Precio",
+    "sistema": "Sistema",
+    "mensagem": "Mensaje"
   }
 }
