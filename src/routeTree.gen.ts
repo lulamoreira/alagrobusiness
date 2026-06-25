@@ -9,38 +9,222 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as BloqueadoRouteImport } from './routes/bloqueado'
+import { Route as AguardandoAprovacaoRouteImport } from './routes/aguardando-aprovacao'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedVenderRouteImport } from './routes/_authenticated.vender'
+import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated.painel'
+import { Route as AuthenticatedNoticiasRouteImport } from './routes/_authenticated.noticias'
+import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
+import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
+import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BloqueadoRoute = BloqueadoRouteImport.update({
+  id: '/bloqueado',
+  path: '/bloqueado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AguardandoAprovacaoRoute = AguardandoAprovacaoRouteImport.update({
+  id: '/aguardando-aprovacao',
+  path: '/aguardando-aprovacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedVenderRoute = AuthenticatedVenderRouteImport.update({
+  id: '/vender',
+  path: '/vender',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedNoticiasRoute = AuthenticatedNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedCotacaoRoute = AuthenticatedCotacaoRouteImport.update({
+  id: '/cotacao',
+  path: '/cotacao',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedComprarRoute = AuthenticatedComprarRouteImport.update({
+  id: '/comprar',
+  path: '/comprar',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
+  id: '/alertas',
+  path: '/alertas',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
+  '/bloqueado': typeof BloqueadoRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/alertas': typeof AuthenticatedAlertasRoute
+  '/comprar': typeof AuthenticatedComprarRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/noticias': typeof AuthenticatedNoticiasRoute
+  '/painel': typeof AuthenticatedPainelRoute
+  '/vender': typeof AuthenticatedVenderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
+  '/bloqueado': typeof BloqueadoRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/alertas': typeof AuthenticatedAlertasRoute
+  '/comprar': typeof AuthenticatedComprarRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/noticias': typeof AuthenticatedNoticiasRoute
+  '/painel': typeof AuthenticatedPainelRoute
+  '/vender': typeof AuthenticatedVenderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/aguardando-aprovacao': typeof AguardandoAprovacaoRoute
+  '/bloqueado': typeof BloqueadoRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
+  '/_authenticated/comprar': typeof AuthenticatedComprarRoute
+  '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
+  '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
+  '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/vender': typeof AuthenticatedVenderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/aguardando-aprovacao'
+    | '/bloqueado'
+    | '/cadastro'
+    | '/login'
+    | '/alertas'
+    | '/comprar'
+    | '/configuracoes'
+    | '/cotacao'
+    | '/noticias'
+    | '/painel'
+    | '/vender'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/aguardando-aprovacao'
+    | '/bloqueado'
+    | '/cadastro'
+    | '/login'
+    | '/alertas'
+    | '/comprar'
+    | '/configuracoes'
+    | '/cotacao'
+    | '/noticias'
+    | '/painel'
+    | '/vender'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/aguardando-aprovacao'
+    | '/bloqueado'
+    | '/cadastro'
+    | '/login'
+    | '/_authenticated/alertas'
+    | '/_authenticated/comprar'
+    | '/_authenticated/configuracoes'
+    | '/_authenticated/cotacao'
+    | '/_authenticated/noticias'
+    | '/_authenticated/painel'
+    | '/_authenticated/vender'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  AguardandoAprovacaoRoute: typeof AguardandoAprovacaoRoute
+  BloqueadoRoute: typeof BloqueadoRoute
+  CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bloqueado': {
+      id: '/bloqueado'
+      path: '/bloqueado'
+      fullPath: '/bloqueado'
+      preLoaderRoute: typeof BloqueadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aguardando-aprovacao': {
+      id: '/aguardando-aprovacao'
+      path: '/aguardando-aprovacao'
+      fullPath: '/aguardando-aprovacao'
+      preLoaderRoute: typeof AguardandoAprovacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +232,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/vender': {
+      id: '/_authenticated/vender'
+      path: '/vender'
+      fullPath: '/vender'
+      preLoaderRoute: typeof AuthenticatedVenderRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/painel': {
+      id: '/_authenticated/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof AuthenticatedPainelRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/noticias': {
+      id: '/_authenticated/noticias'
+      path: '/noticias'
+      fullPath: '/noticias'
+      preLoaderRoute: typeof AuthenticatedNoticiasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/cotacao': {
+      id: '/_authenticated/cotacao'
+      path: '/cotacao'
+      fullPath: '/cotacao'
+      preLoaderRoute: typeof AuthenticatedCotacaoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/configuracoes': {
+      id: '/_authenticated/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/comprar': {
+      id: '/_authenticated/comprar'
+      path: '/comprar'
+      fullPath: '/comprar'
+      preLoaderRoute: typeof AuthenticatedComprarRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/alertas': {
+      id: '/_authenticated/alertas'
+      path: '/alertas'
+      fullPath: '/alertas'
+      preLoaderRoute: typeof AuthenticatedAlertasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
+  AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
+  AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
+  AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
+  AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedVenderRoute: typeof AuthenticatedVenderRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAlertasRoute: AuthenticatedAlertasRoute,
+  AuthenticatedComprarRoute: AuthenticatedComprarRoute,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
+  AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
+  AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
+  AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedVenderRoute: AuthenticatedVenderRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  AguardandoAprovacaoRoute: AguardandoAprovacaoRoute,
+  BloqueadoRoute: BloqueadoRoute,
+  CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
