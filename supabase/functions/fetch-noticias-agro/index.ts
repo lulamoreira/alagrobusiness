@@ -8,10 +8,9 @@ const corsHeaders = {
 };
 
 const FEEDS: { fonte: string; url: string }[] = [
-  { fonte: "Notícias Agrícolas", url: "https://www.noticiasagricolas.com.br/rss/noticias" },
+  { fonte: "Notícias Agrícolas", url: "https://www.noticiasagricolas.com.br/rss/noticias/agronegocio" },
   { fonte: "Canal Rural", url: "https://www.canalrural.com.br/feed/" },
   { fonte: "Globo Rural", url: "https://g1.globo.com/rss/g1/economia/agronegocios/" },
-  { fonte: "Agrolink", url: "https://www.agrolink.com.br/rss/noticia.xml" },
 ];
 
 const TEMAS: { key: string; words: string[] }[] = [
@@ -105,14 +104,20 @@ Deno.serve(async (req) => {
       }
       // Manual upsert: índice único é PARCIAL (WHERE deleted_at IS NULL),
       // que PostgREST ON CONFLICT não aceita. Fazemos select+diff+insert/update.
+      // Chunk para não estourar tamanho da URL.
       const links = rows.map((r) => r.link);
-      const { data: existing, error: selErr } = await supabase
-        .from("noticias")
-        .select("id, link")
-        .in("link", links)
-        .is("deleted_at", null);
-      if (selErr) throw selErr;
-      const existingMap = new Map((existing ?? []).map((e) => [e.link, e.id]));
+      const existingMap = new Map<string, string>();
+      const CHUNK = 15;
+      for (let i = 0; i < links.length; i += CHUNK) {
+        const slice = links.slice(i, i + CHUNK);
+        const { data: existing, error: selErr } = await supabase
+          .from("noticias")
+          .select("id, link")
+          .in("link", slice)
+          .is("deleted_at", null);
+        if (selErr) throw selErr;
+        for (const e of existing ?? []) existingMap.set(e.link as string, e.id as string);
+      }
       const toInsert = rows.filter((r) => !existingMap.has(r.link));
       const toUpdate = rows.filter((r) => existingMap.has(r.link));
       let inserted = 0;
