@@ -23,6 +23,9 @@ import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
+import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
+import { Route as AuthenticatedAnuncioIdRouteImport } from './routes/_authenticated.anuncio.$id'
+import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -94,6 +97,22 @@ const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
   path: '/alertas',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedVenderNovoRoute = AuthenticatedVenderNovoRouteImport.update({
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => AuthenticatedVenderRoute,
+} as any)
+const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
+  id: '/anuncio/$id',
+  path: '/anuncio/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedVenderEditarIdRoute =
+  AuthenticatedVenderEditarIdRouteImport.update({
+    id: '/editar/$id',
+    path: '/editar/$id',
+    getParentRoute: () => AuthenticatedVenderRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,7 +127,10 @@ export interface FileRoutesByFullPath {
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
-  '/vender': typeof AuthenticatedVenderRoute
+  '/vender': typeof AuthenticatedVenderRouteWithChildren
+  '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,7 +145,10 @@ export interface FileRoutesByTo {
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
-  '/vender': typeof AuthenticatedVenderRoute
+  '/vender': typeof AuthenticatedVenderRouteWithChildren
+  '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,7 +165,10 @@ export interface FileRoutesById {
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
   '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
-  '/_authenticated/vender': typeof AuthenticatedVenderRoute
+  '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
+  '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/_authenticated/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/_authenticated/vender/editar/$id': typeof AuthenticatedVenderEditarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -158,6 +186,9 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/painel'
     | '/vender'
+    | '/anuncio/$id'
+    | '/vender/novo'
+    | '/vender/editar/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -173,6 +204,9 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/painel'
     | '/vender'
+    | '/anuncio/$id'
+    | '/vender/novo'
+    | '/vender/editar/$id'
   id:
     | '__root__'
     | '/'
@@ -189,6 +223,9 @@ export interface FileRouteTypes {
     | '/_authenticated/noticias'
     | '/_authenticated/painel'
     | '/_authenticated/vender'
+    | '/_authenticated/anuncio/$id'
+    | '/_authenticated/vender/novo'
+    | '/_authenticated/vender/editar/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -301,8 +338,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAlertasRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/vender/novo': {
+      id: '/_authenticated/vender/novo'
+      path: '/novo'
+      fullPath: '/vender/novo'
+      preLoaderRoute: typeof AuthenticatedVenderNovoRouteImport
+      parentRoute: typeof AuthenticatedVenderRoute
+    }
+    '/_authenticated/anuncio/$id': {
+      id: '/_authenticated/anuncio/$id'
+      path: '/anuncio/$id'
+      fullPath: '/anuncio/$id'
+      preLoaderRoute: typeof AuthenticatedAnuncioIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/vender/editar/$id': {
+      id: '/_authenticated/vender/editar/$id'
+      path: '/editar/$id'
+      fullPath: '/vender/editar/$id'
+      preLoaderRoute: typeof AuthenticatedVenderEditarIdRouteImport
+      parentRoute: typeof AuthenticatedVenderRoute
+    }
   }
 }
+
+interface AuthenticatedVenderRouteChildren {
+  AuthenticatedVenderNovoRoute: typeof AuthenticatedVenderNovoRoute
+  AuthenticatedVenderEditarIdRoute: typeof AuthenticatedVenderEditarIdRoute
+}
+
+const AuthenticatedVenderRouteChildren: AuthenticatedVenderRouteChildren = {
+  AuthenticatedVenderNovoRoute: AuthenticatedVenderNovoRoute,
+  AuthenticatedVenderEditarIdRoute: AuthenticatedVenderEditarIdRoute,
+}
+
+const AuthenticatedVenderRouteWithChildren =
+  AuthenticatedVenderRoute._addFileChildren(AuthenticatedVenderRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
@@ -311,7 +382,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
   AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
-  AuthenticatedVenderRoute: typeof AuthenticatedVenderRoute
+  AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
+  AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -321,7 +393,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
   AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
-  AuthenticatedVenderRoute: AuthenticatedVenderRoute,
+  AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
+  AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

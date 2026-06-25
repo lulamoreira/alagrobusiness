@@ -14,6 +14,121 @@ export type Database = {
   }
   public: {
     Tables: {
+      anuncios: {
+        Row: {
+          aceita_permuta: boolean
+          categoria: Database["public"]["Enums"]["categoria_agro"]
+          cep: string | null
+          certificacoes: string[]
+          cidade: string | null
+          created_at: string
+          data_colheita: string | null
+          deleted_at: string | null
+          descricao: string | null
+          estado: string | null
+          fotos: string[]
+          id: string
+          latitude: number | null
+          longitude: number | null
+          modalidade_entrega: Database["public"]["Enums"]["modalidade_entrega"]
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          permuta_descricao: string | null
+          preco: number
+          preco_unidade_id: string
+          produto: string
+          qualidade: string | null
+          quantidade_disponivel: number
+          quantidade_unidade_id: string
+          raio_entrega_km: number | null
+          status: Database["public"]["Enums"]["status_anuncio"]
+          titulo: string
+          updated_at: string
+          vendedor_id: string
+        }
+        Insert: {
+          aceita_permuta?: boolean
+          categoria: Database["public"]["Enums"]["categoria_agro"]
+          cep?: string | null
+          certificacoes?: string[]
+          cidade?: string | null
+          created_at?: string
+          data_colheita?: string | null
+          deleted_at?: string | null
+          descricao?: string | null
+          estado?: string | null
+          fotos?: string[]
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          modalidade_entrega?: Database["public"]["Enums"]["modalidade_entrega"]
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          permuta_descricao?: string | null
+          preco: number
+          preco_unidade_id: string
+          produto: string
+          qualidade?: string | null
+          quantidade_disponivel: number
+          quantidade_unidade_id: string
+          raio_entrega_km?: number | null
+          status?: Database["public"]["Enums"]["status_anuncio"]
+          titulo: string
+          updated_at?: string
+          vendedor_id: string
+        }
+        Update: {
+          aceita_permuta?: boolean
+          categoria?: Database["public"]["Enums"]["categoria_agro"]
+          cep?: string | null
+          certificacoes?: string[]
+          cidade?: string | null
+          created_at?: string
+          data_colheita?: string | null
+          deleted_at?: string | null
+          descricao?: string | null
+          estado?: string | null
+          fotos?: string[]
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          modalidade_entrega?: Database["public"]["Enums"]["modalidade_entrega"]
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          permuta_descricao?: string | null
+          preco?: number
+          preco_unidade_id?: string
+          produto?: string
+          qualidade?: string | null
+          quantidade_disponivel?: number
+          quantidade_unidade_id?: string
+          raio_entrega_km?: number | null
+          status?: Database["public"]["Enums"]["status_anuncio"]
+          titulo?: string
+          updated_at?: string
+          vendedor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anuncios_preco_unidade_id_fkey"
+            columns: ["preco_unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "anuncios_quantidade_unidade_id_fkey"
+            columns: ["quantidade_unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "anuncios_vendedor_id_fkey"
+            columns: ["vendedor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clima: {
         Row: {
           atualizado_em: string
@@ -393,7 +508,9 @@ export type Database = {
     Enums: {
       categoria_agro: "fruta" | "grao" | "legumes" | "vegetal"
       idioma_app: "pt-BR" | "en" | "es"
+      modalidade_entrega: "retirada" | "entrega" | "ambos"
       moeda_app: "BRL" | "USD" | "EUR"
+      status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
       tipo_dolar: "comercial" | "turismo" | "paralelo"
       tipo_perfil: "comprador" | "vendedor" | "lojista" | "marca" | "admin"
@@ -526,7 +643,9 @@ export const Constants = {
     Enums: {
       categoria_agro: ["fruta", "grao", "legumes", "vegetal"],
       idioma_app: ["pt-BR", "en", "es"],
+      modalidade_entrega: ["retirada", "entrega", "ambos"],
       moeda_app: ["BRL", "USD", "EUR"],
+      status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
       tipo_dolar: ["comercial", "turismo", "paralelo"],
       tipo_perfil: ["comprador", "vendedor", "lojista", "marca", "admin"],
