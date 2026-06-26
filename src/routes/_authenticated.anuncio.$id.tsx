@@ -29,11 +29,9 @@ function DetailPage() {
       (await supabase.from("anuncios").select("*").eq("id", id).is("deleted_at", null).maybeSingle()).data,
   });
 
-  const { data: photoUrls } = useQuery({
-    queryKey: ["anuncio_photos", id, anuncio?.fotos],
-    queryFn: () => getSignedUrls(anuncio?.fotos ?? []),
-    enabled: !!anuncio?.fotos && anuncio.fotos.length > 0,
-  });
+  // We no longer pre-resolve signed URLs — <AnuncioPhoto> mints fresh signed URLs at render time
+  // so they cannot expire between fetch and display.
+  const photos: string[] = (anuncio?.fotos ?? []) as string[];
 
   const { data: vendedor } = useQuery({
     queryKey: ["anuncio_vendedor", anuncio?.vendedor_id],
