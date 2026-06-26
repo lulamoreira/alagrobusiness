@@ -337,7 +337,7 @@
     "previewConfirm": "Confirm and save",
     "previewEmpty": "AI did not find quotes in the consulted sources.",
     "previewSkippedManual": "skipped (today's manual)",
-    "previewSaved": "Saved: {{ok}} · Skipped (manual): {{skipped}}",
+    "previewSaved": "Saved: {{ok}} · Skipped (manual): {{skipped}} · Errors: {{errors}}",
     "errorFetch": "Failed to fetch quotes: {{detail}}",
     "errorSave": "Failed to save: {{detail}}",
     "validation": {

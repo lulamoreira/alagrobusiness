@@ -167,16 +167,25 @@ function AdminCotacoesPage() {
 
   const confirmIA = async () => {
     if (!preview) return;
-    const today = new Date().toISOString().slice(0, 10);
+    // Validação na UI: toda linha precisa de unidade e valor positivo
+    const missingUnit = preview.some((p) => !p._skipped && !p.unidade_id);
+    if (missingUnit) {
+      toast.error(t("adminQuotes.validation.unitRequired"));
+      return;
+    }
     const items = preview
-      .filter((p) => !p._skipped && p.unidade_id && Number(p.valor) > 0)
+      .filter((p) => !p._skipped && Number(p.valor) > 0)
       .map((p) => ({
         produto: p.produto,
         valor: Number(p.valor),
-        unidade_id: p.unidade_id,
+        unidade_id: p.unidade_id || null,
         moeda: p.moeda ?? "BRL",
         fonte_url: p.fonte_url,
       }));
+    if (items.length === 0) {
+      toast.error(t("adminQuotes.previewEmpty"));
+      return;
+    }
     setBusy(true);
     const { data, error } = await supabase.rpc("gravar_cotacoes_ia", { p_items: items as never });
     setBusy(false);
@@ -184,18 +193,30 @@ function AdminCotacoesPage() {
       toast.error(t("adminQuotes.errorSave", { detail: error.message }));
       return;
     }
-    const rows = (data ?? []) as { produto: string; status: string }[];
+    const raw = (data ?? []) as { out_produto: string; out_status: string; out_motivo: string | null }[];
+    const rows = raw.map((r) => ({ produto: r.out_produto, status: r.out_status, motivo: r.out_motivo }));
     const ok = rows.filter((r) => r.status === "ok").length;
     const skipped = rows.filter((r) => r.status === "skipped_manual").length;
-    toast.success(t("adminQuotes.previewSaved", { ok, skipped }));
-    // marcar pulados no preview
-    setPreview((cur) => cur?.map((p) => ({
-      ...p,
-      _skipped: rows.find((r) => r.produto === p.produto)?.status === "skipped_manual",
-    })) ?? null);
-    void today;
-    load();
+    const errors = rows.filter((r) => r.status === "erro" || r.status === "skipped_invalid");
+    toast.success(t("adminQuotes.previewSaved", { ok, skipped, errors: errors.length }));
+    if (errors.length > 0) {
+      toast.error(
+        errors.map((e) => `${e.produto}: ${e.motivo ?? e.status}`).join(" · "),
+      );
+    }
+    await load();
+    if (ok > 0 || skipped > 0) {
+      setPreview(null);
+    } else {
+      // mantém preview aberto para o admin corrigir os erros
+      setPreview((cur) => cur?.map((p) => {
+        const r = rows.find((x) => x.produto === p.produto);
+        return { ...p, _skipped: r?.status === "skipped_manual" };
+      }) ?? null);
+    }
+
   };
+
 
   const updatePreview = (idx: number, patch: Partial<Sugestao>) => {
     setPreview((cur) => cur ? cur.map((p, i) => i === idx ? { ...p, ...patch } : p) : cur);
@@ -366,8 +387,19 @@ function AdminCotacoesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {preview.map((p, idx) => (
-                    <tr key={idx} className={p._skipped ? "opacity-50" : ""}>
+                  {preview.map((p, idx) => {
+                    const missing = !p._skipped && !p.unidade_id;
+                    return (
+                    <tr
+                      key={idx}
+                      className={
+                        p._skipped
+                          ? "opacity-50"
+                          : missing
+                            ? "bg-destructive/10 ring-1 ring-inset ring-destructive/40"
+                            : ""
+                      }
+                    >
                       <td className="px-3 py-2 font-medium">{t(`commodities.${p.produto}`)}</td>
                       <td className="px-3 py-2">
                         <input
@@ -381,9 +413,10 @@ function AdminCotacoesPage() {
                         <select
                           value={p.unidade_id ?? ""}
                           onChange={(e) => updatePreview(idx, { unidade_id: e.target.value })}
-                          className="rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                          className={`rounded-lg border bg-background px-2 py-1 text-sm ${missing ? "border-destructive" : "border-border"}`}
                         >
                           <option value="">—</option>
+
                           {unidades.map((u) => (
                             <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`)}</option>
                           ))}
@@ -411,7 +444,9 @@ function AdminCotacoesPage() {
                         )}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
+
                 </tbody>
               </table>
             </div>

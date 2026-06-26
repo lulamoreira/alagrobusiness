@@ -337,7 +337,7 @@
     "previewConfirm": "Confirmar y guardar",
     "previewEmpty": "La IA no encontró cotizaciones en las fuentes consultadas.",
     "previewSkippedManual": "ignorada (manual de hoy)",
-    "previewSaved": "Guardadas: {{ok}} · Ignoradas (manual): {{skipped}}",
+    "previewSaved": "Guardadas: {{ok}} · Ignoradas (manual): {{skipped}} · Errores: {{errors}}",
     "errorFetch": "Error al buscar cotizaciones: {{detail}}",
     "errorSave": "Error al guardar: {{detail}}",
     "validation": {
