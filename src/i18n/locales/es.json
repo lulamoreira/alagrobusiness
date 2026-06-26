@@ -242,6 +242,7 @@
     "acceptsBarterBadge": "Permuta",
     "certifiedBadge": "Certificado",
     "results_one": "{{count}} resultado",
+    "noPhoto": "Sin foto",
     "results_other": "{{count}} resultados"
   },
   "detail": {
