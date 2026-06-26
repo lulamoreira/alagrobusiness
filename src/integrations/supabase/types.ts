@@ -648,6 +648,7 @@ export type Database = {
       gravar_cotacoes_ia: {
         Args: { p_items: Json }
         Returns: {
+          motivo: string
           produto: string
           status: string
         }[]
