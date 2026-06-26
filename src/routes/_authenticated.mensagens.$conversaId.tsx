@@ -106,16 +106,17 @@ function ConversationThreadPage() {
   }, [conversaId]);
 
   // Marca como lidas ao abrir / ao chegar nova mensagem do outro.
+  // Usa RPC SECURITY DEFINER: a policy de UPDATE em mensagens só permite
+  // o próprio remetente editar a linha, então o "lida=true" do destinatário
+  // passa exclusivamente pelo definer abaixo.
   useEffect(() => {
     if (!userId || !messagesQuery.data) return;
-    const ids = messagesQuery.data
-      .filter((m) => !m.lida && m.remetente_id !== userId)
-      .map((m) => m.id);
-    if (ids.length === 0) return;
+    const hasUnread = messagesQuery.data.some(
+      (m) => !m.lida && m.remetente_id !== userId,
+    );
+    if (!hasUnread) return;
     void supabase
-      .from("mensagens")
-      .update({ lida: true })
-      .in("id", ids)
+      .rpc("marcar_mensagens_lidas", { p_conversa_id: conversaId })
       .then(() => {
         void queryClient.invalidateQueries({ queryKey: ["mensagens", conversaId] });
       });
