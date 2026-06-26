@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_authenticated/mensagens")({
+export const Route = createFileRoute("/_authenticated/mensagens/")({
   component: ConversationListPage,
 });
 

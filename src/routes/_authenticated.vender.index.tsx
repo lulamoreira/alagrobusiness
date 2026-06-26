@@ -11,7 +11,7 @@ import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-export const Route = createFileRoute("/_authenticated/vender")({ component: SellPage });
+export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
 type AnuncioRow = {
   id: string;
