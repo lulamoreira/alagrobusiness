@@ -1,11 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { MapPin, Repeat2, BadgeCheck, Sprout } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 
 export interface AnuncioCardData {
   id: string;
@@ -34,33 +36,49 @@ interface AnuncioCardProps {
 }
 
 /**
- * Neutral, theme-tinted placeholder used when an anúncio has no photo.
- * Same visual is reused on /vender thumbnails through <AnuncioPhoto compact />.
+ * Renders a signed-URL photo for an anúncio. Always re-fetches a fresh signed URL
+ * via TanStack Query (no persisted URLs) and falls back to a themed placeholder
+ * on missing path, missing object, or expired URL (onError).
  */
 export function AnuncioPhoto({
   path,
   productLabel,
   compact = false,
+  imgClassName,
 }: {
   path: string | null | undefined;
   productLabel?: string;
   compact?: boolean;
+  imgClassName?: string;
 }) {
   const { t } = useTranslation();
-  const { data: photoUrl } = useQuery({
-    queryKey: ["anuncio_photo", path],
-    queryFn: () => getSignedUrl(path ?? null),
+  const [broken, setBroken] = useState(false);
+  const { data: photoUrl, refetch } = useQuery({
+    // include `broken` so a refetch on error produces a new cache entry
+    queryKey: ["anuncio_photo", path, broken],
+    // Always mint a brand new signed URL just before render — bucket is private
+    queryFn: () => getSignedUrl(path ?? null, 60 * 60),
     enabled: !!path,
+    // Keep well under the 1h signed-URL expiry to avoid serving stale URLs
     staleTime: 1000 * 60 * 30,
+    gcTime: 1000 * 60 * 45,
+    refetchOnWindowFocus: false,
   });
 
-  if (photoUrl) {
+  if (path && photoUrl && !broken) {
     return (
       <img
         src={photoUrl}
         alt={productLabel ?? ""}
-        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+        className={cn("h-full w-full object-cover transition-transform group-hover:scale-105", imgClassName)}
         loading="lazy"
+        onError={() => {
+          // Try once with a fresh signed URL; if it still fails we keep the placeholder
+          if (!broken) {
+            setBroken(true);
+            void refetch();
+          }
+        }}
       />
     );
   }
