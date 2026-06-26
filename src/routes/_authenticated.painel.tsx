@@ -16,6 +16,7 @@ import {
   type DolarHistoryRow,
 } from "@/lib/quotes";
 import { VariationBadge } from "@/components/VariationBadge";
+import { WeatherCard } from "@/components/WeatherCard";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
