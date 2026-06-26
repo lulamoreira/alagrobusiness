@@ -6,7 +6,7 @@ import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, Chevr
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
-import { getSignedUrls } from "@/lib/storage";
+import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
