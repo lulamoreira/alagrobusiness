@@ -140,7 +140,7 @@ function BuyPage() {
         <div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("buy.title")}</h1>
           <p className="text-xs text-muted-foreground">
-            {filtered.length} {filtered.length === 1 ? t("buy.results", { count: filtered.length }) : t("buy.results_plural", { count: filtered.length })}
+            {t("buy.results", { count: filtered.length })}
           </p>
         </div>
         <div className="flex items-center gap-2">

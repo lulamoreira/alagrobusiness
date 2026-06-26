@@ -5,7 +5,8 @@ import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
-import { getSignedUrl, deleteAnuncioPhotos } from "@/lib/storage";
+import { deleteAnuncioPhotos } from "@/lib/storage";
+import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -26,16 +27,10 @@ type AnuncioRow = {
   cidade: string | null;
 };
 
-function PhotoThumb({ path }: { path: string | null | undefined }) {
-  const { data } = useQuery({
-    queryKey: ["thumb", path],
-    queryFn: () => getSignedUrl(path),
-    enabled: !!path,
-    staleTime: 1000 * 60 * 30,
-  });
+function PhotoThumb({ path, productLabel }: { path: string | null | undefined; productLabel: string }) {
   return (
-    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
-      {data ? <img src={data} alt="" className="h-full w-full object-cover" /> : null}
+    <div className="group h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
+      <AnuncioPhoto path={path} productLabel={productLabel} compact />
     </div>
   );
 }
@@ -145,7 +140,7 @@ function SellPage() {
                 key={a.id}
                 className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex-row md:items-center"
               >
-                <PhotoThumb path={a.fotos?.[0]} />
+                <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
