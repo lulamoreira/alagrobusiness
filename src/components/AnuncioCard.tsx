@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Repeat2, BadgeCheck } from "lucide-react";
+import { MapPin, Repeat2, BadgeCheck, Sprout } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
@@ -33,16 +33,56 @@ interface AnuncioCardProps {
   sellerName?: string;
 }
 
+/**
+ * Neutral, theme-tinted placeholder used when an anúncio has no photo.
+ * Same visual is reused on /vender thumbnails through <AnuncioPhoto compact />.
+ */
+export function AnuncioPhoto({
+  path,
+  productLabel,
+  compact = false,
+}: {
+  path: string | null | undefined;
+  productLabel?: string;
+  compact?: boolean;
+}) {
+  const { t } = useTranslation();
+  const { data: photoUrl } = useQuery({
+    queryKey: ["anuncio_photo", path],
+    queryFn: () => getSignedUrl(path ?? null),
+    enabled: !!path,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  if (photoUrl) {
+    return (
+      <img
+        src={photoUrl}
+        alt={productLabel ?? ""}
+        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+        loading="lazy"
+      />
+    );
+  }
+
+  return (
+    <div
+      aria-label={t("buy.noPhoto")}
+      className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_60%),linear-gradient(135deg,#13201A,#0F1A14)] text-muted-foreground"
+    >
+      <Sprout className={compact ? "h-5 w-5 text-primary/70" : "h-8 w-8 text-primary/70"} strokeWidth={1.5} />
+      {!compact && productLabel && (
+        <span className="max-w-[80%] truncate text-center text-[11px] font-medium uppercase tracking-wider text-muted-foreground/80">
+          {productLabel}
+        </span>
+      )}
+    </div>
+  );
+}
+
 export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardProps) {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
-
-  const { data: photoUrl } = useQuery({
-    queryKey: ["anuncio_photo", item.id, item.fotos?.[0]],
-    queryFn: () => getSignedUrl(item.fotos?.[0] ?? null),
-    enabled: !!item.fotos?.[0],
-    staleTime: 1000 * 60 * 30,
-  });
 
   const { data: seller } = useQuery({
     queryKey: ["anuncio_seller", item.vendedor_id],
@@ -65,64 +105,67 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
     ? new Date(item.data_colheita).toLocaleDateString(i18n.language, { month: "short", year: "numeric" })
     : null;
 
+  const location = [item.cidade, item.estado].filter(Boolean).join(" — ");
+  const hasCert = item.certificacoes && item.certificacoes.length > 0;
+
   return (
     <Link
       to="/anuncio/$id"
       params={{ id: item.id }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
-        {photoUrl ? (
-          <img
-            src={photoUrl}
-            alt={item.titulo}
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-            {t("form.photos")}
+      {/* Image area — fixed 16:9 with rounded top via parent overflow */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
+        <AnuncioPhoto path={item.fotos?.[0]} productLabel={item.produto} />
+
+        {/* Badges: top-left, stacked, with breathing room. Dark text on light pill = contrast. */}
+        {(item.aceita_permuta || hasCert) && (
+          <div className="absolute left-3 top-3 flex max-w-[70%] flex-col items-start gap-1.5">
+            {item.aceita_permuta && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
+                <Repeat2 className="h-3 w-3" /> {t("buy.acceptsBarterBadge")}
+              </span>
+            )}
+            {hasCert && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm backdrop-blur">
+                <BadgeCheck className="h-3 w-3" /> {t("buy.certifiedBadge")}
+              </span>
+            )}
           </div>
         )}
-        <div className="absolute left-2 top-2 flex flex-wrap gap-1">
-          {item.aceita_permuta && (
-            <span className="flex items-center gap-1 rounded-full bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-foreground backdrop-blur">
-              <Repeat2 className="h-3 w-3" /> {t("buy.acceptsBarterBadge")}
-            </span>
-          )}
-          {item.certificacoes && item.certificacoes.length > 0 && (
-            <span className="flex items-center gap-1 rounded-full bg-primary/90 px-2 py-0.5 text-[10px] font-semibold text-primary-foreground backdrop-blur">
-              <BadgeCheck className="h-3 w-3" /> {t("buy.certifiedBadge")}
-            </span>
-          )}
-        </div>
       </div>
+
+      {/* Info block — single source of truth for title/product */}
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h3 className="font-display text-base font-bold text-foreground line-clamp-1">{item.produto}</h3>
-            <p className="line-clamp-1 text-xs text-muted-foreground">{item.titulo}</p>
-          </div>
+        <div className="min-w-0">
+          <h3 className="truncate font-display text-base font-bold text-foreground">{item.produto}</h3>
+          <p className="truncate text-xs text-muted-foreground">{item.titulo}</p>
         </div>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          {(item.cidade || item.estado) && (
-            <span className="flex items-center gap-1">
-              <MapPin className="h-3 w-3" />
-              {[item.cidade, item.estado].filter(Boolean).join(" — ")}
+
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+          {location && (
+            <span className="inline-flex min-w-0 items-center gap-1">
+              <MapPin className="h-3 w-3 shrink-0" />
+              <span className="truncate">{location}</span>
             </span>
           )}
           {item.qualidade && <span>· {item.qualidade}</span>}
           {harvest && <span>· {harvest}</span>}
         </div>
+
         <div className="text-xs text-muted-foreground">
-          {Number(item.quantidade_disponivel).toLocaleString(i18n.language)} {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
+          {Number(item.quantidade_disponivel).toLocaleString(i18n.language)}{" "}
+          {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
         </div>
-        <div className="mt-auto flex items-end justify-between pt-2">
-          <div>
-            <p className="font-display text-lg font-bold text-primary">{priceLabel}</p>
-            {unitLabel && <p className="text-[10px] uppercase text-muted-foreground">/ {unitLabel}</p>}
+
+        <div className="mt-auto grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 pt-2">
+          <div className="min-w-0">
+            <p className="font-display text-lg font-bold leading-none text-primary">{priceLabel}</p>
+            {unitLabel && (
+              <p className="mt-1 text-[10px] uppercase tracking-wide text-muted-foreground">/ {unitLabel}</p>
+            )}
           </div>
-          <p className="text-[10px] text-muted-foreground line-clamp-1">
+          <p className="max-w-[55%] truncate text-right text-[10px] text-muted-foreground">
             {t("common.by")} {sellerName ?? seller?.nome_completo ?? "—"}
           </p>
         </div>
