@@ -241,8 +241,8 @@
     "noResults": "No listings found.",
     "acceptsBarterBadge": "Barter",
     "certifiedBadge": "Certified",
-    "results": "{{count}} result",
-    "results_plural": "{{count}} results"
+    "results_one": "{{count}} result",
+    "results_other": "{{count}} results"
   },
   "detail": {
     "interested": "I'm interested",

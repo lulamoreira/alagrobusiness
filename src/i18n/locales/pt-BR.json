@@ -241,8 +241,8 @@
     "noResults": "Nenhum anúncio encontrado.",
     "acceptsBarterBadge": "Permuta",
     "certifiedBadge": "Certificado",
-    "results": "{{count}} resultado",
-    "results_plural": "{{count}} resultados"
+    "results_one": "{{count}} resultado",
+    "results_other": "{{count}} resultados"
   },
   "detail": {
     "interested": "Tenho interesse",
