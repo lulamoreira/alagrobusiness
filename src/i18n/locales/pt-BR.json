@@ -337,7 +337,7 @@
     "previewConfirm": "Confirmar e gravar",
     "previewEmpty": "A IA não encontrou cotações nas fontes consultadas.",
     "previewSkippedManual": "ignorada (manual de hoje)",
-    "previewSaved": "Gravado: {{ok}} · Ignoradas (manual): {{skipped}}",
+    "previewSaved": "Gravado: {{ok}} · Ignoradas (manual): {{skipped}} · Erros: {{errors}}",
     "errorFetch": "Falha ao buscar cotações: {{detail}}",
     "errorSave": "Falha ao salvar: {{detail}}",
     "validation": {
