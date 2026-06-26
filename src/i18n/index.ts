@@ -9,7 +9,7 @@ export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
-    compatibilityJSON: "v3",
+    compatibilityJSON: "v3" as never,
     resources: {
       "pt-BR": { translation: ptBR },
       en: { translation: en },
