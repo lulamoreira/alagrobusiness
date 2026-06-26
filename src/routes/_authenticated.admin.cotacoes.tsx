@@ -17,6 +17,36 @@ const PRODUTOS = [
 ] as const;
 type Produto = (typeof PRODUTOS)[number];
 
+/**
+ * Unidade padrão de cotação por produto, em alinhamento com a prática
+ * brasileira. Esses nomes_chave devem existir na tabela `unidades`:
+ *   - saca_60 (saca 60 kg) — grãos e cafés
+ *   - arroba (15 kg)       — bovino gordo e algodão
+ *   - kg                    — suíno
+ *
+ * Observação: o arroz no mercado interno costuma ser cotado em saca de
+ * 50 kg; até cadastrarmos uma unidade "saca_50", usamos saca_60 como
+ * fallback razoável. Trocar manualmente quando necessário.
+ */
+const PRODUTO_UNIDADE_PADRAO: Record<Produto, string> = {
+  soja: "saca_60",
+  milho: "saca_60",
+  cafe_arabica: "saca_60",
+  cafe_conilon: "saca_60",
+  trigo: "saca_60",
+  feijao: "saca_60",
+  arroz: "saca_60", // TODO: cadastrar saca_50 e migrar arroz para ela
+  boi_gordo: "arroba",
+  algodao: "arroba",
+  suino: "kg",
+};
+
+/** Resolve o UUID da unidade padrão de um produto na lista carregada. */
+function unidadePadraoId(produto: Produto, unidades: Unidade[]): string {
+  const chave = PRODUTO_UNIDADE_PADRAO[produto];
+  return unidades.find((u) => u.nome_chave === chave)?.id ?? "";
+}
+
 type Moeda = "BRL" | "USD" | "EUR";
 
 interface Unidade {
@@ -100,7 +130,10 @@ function AdminCotacoesPage() {
     const cur = atuais[produto];
     setEditing(produto);
     setEditValor(cur ? String(cur.valor) : "");
-    setEditUnidade(cur?.unidade_id ?? unidades[0]?.id ?? "");
+    // Prioridade: unidade já cadastrada > unidade padrão do produto > primeira disponível
+    setEditUnidade(
+      cur?.unidade_id ?? unidadePadraoId(produto, unidades) ?? unidades[0]?.id ?? "",
+    );
     setEditMoeda((cur?.moeda as Moeda) ?? "BRL");
   };
 
@@ -157,10 +190,18 @@ function AdminCotacoesPage() {
       return;
     }
     const cot = (data.cotacoes ?? []) as Sugestao[];
-    // pré-resolve unidade_id pelo nome_chave
+    // Pré-resolve unidade_id: 1) pelo nome_chave devolvido pela IA;
+    // 2) caso a IA não retorne unidade ou ela seja desconhecida, usa a
+    //    unidade padrão do produto. A regra continua a mesma — sem unidade
+    //    a linha é bloqueada no `confirmIA`.
     const enriched = cot.map((c) => {
-      const u = unidades.find((u) => u.nome_chave === c.unidade);
-      return { ...c, unidade_id: u?.id ?? "", moeda: (c.moeda ?? "BRL") as Moeda };
+      const byName = unidades.find((u) => u.nome_chave === c.unidade);
+      const fallbackId = unidadePadraoId(c.produto, unidades);
+      return {
+        ...c,
+        unidade_id: byName?.id || fallbackId || "",
+        moeda: (c.moeda ?? "BRL") as Moeda,
+      };
     });
     setPreview(enriched);
   };
