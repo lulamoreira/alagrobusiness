@@ -368,6 +368,23 @@
       "valueRequired": "Ingrese un valor válido.",
       "unitRequired": "Seleccione la unidad."
     }
+  },
+  "weather": {
+    "title": "Clima",
+    "now": "Ahora",
+    "forecast": "Próximos días",
+    "empty": "Aún no hay datos de clima para tu región",
+    "noRegion": "Define ciudad y estado en tu perfil para ver el clima.",
+    "updatedAt": "Actualizado a las",
+    "unknown": "Indefinido",
+    "clear": "Despejado",
+    "partlyCloudy": "Parcialmente nublado",
+    "cloudy": "Nublado",
+    "fog": "Niebla",
+    "drizzle": "Llovizna",
+    "rain": "Lluvia",
+    "snow": "Nieve",
+    "thunderstorm": "Tormenta"
   }
 }
 
