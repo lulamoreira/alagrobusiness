@@ -16,6 +16,7 @@ import {
   type DolarHistoryRow,
 } from "@/lib/quotes";
 import { VariationBadge } from "@/components/VariationBadge";
+import { WeatherCard } from "@/components/WeatherCard";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
@@ -180,6 +181,10 @@ function PainelPage() {
             </div>
           </Link>
         </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        <WeatherCard />
       </section>
 
       <section>

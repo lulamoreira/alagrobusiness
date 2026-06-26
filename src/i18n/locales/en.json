@@ -368,6 +368,23 @@
       "valueRequired": "Enter a valid value.",
       "unitRequired": "Select the unit."
     }
+  },
+  "weather": {
+    "title": "Weather",
+    "now": "Now",
+    "forecast": "Next days",
+    "empty": "No weather data for your region yet",
+    "noRegion": "Set city and state in your profile to see the weather.",
+    "updatedAt": "Updated at",
+    "unknown": "Unknown",
+    "clear": "Clear",
+    "partlyCloudy": "Partly cloudy",
+    "cloudy": "Cloudy",
+    "fog": "Fog",
+    "drizzle": "Drizzle",
+    "rain": "Rain",
+    "snow": "Snow",
+    "thunderstorm": "Thunderstorm"
   }
 }
 
