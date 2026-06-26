@@ -355,6 +355,3 @@ function EmptyState() {
     </div>
   );
 }
-
-// Re-export so /painel can link without prop-drilling
-export { Link as _Link };

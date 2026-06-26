@@ -1,23 +1,75 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { NewsCard } from "@/components/NewsCard";
-import { formatDolarValue } from "@/lib/format";
+import { formatMoney, formatDolarValue } from "@/lib/format";
+import {
+  computeVariation,
+  groupCommodityHistory,
+  groupDolarHistory,
+  PAINEL_FEATURED,
+  type CommodityRow,
+  type DolarHistoryRow,
+} from "@/lib/quotes";
+import { VariationBadge } from "@/components/VariationBadge";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
 });
 
+type DolarTipo = "comercial" | "turismo" | "paralelo";
+
 function PainelPage() {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
+  const userMoeda = profile?.moeda_preferida ?? "BRL";
+  const userDolarPref = (profile?.tipo_dolar_preferido ?? "comercial") as DolarTipo;
 
   const { data: dolar } = useQuery({
     queryKey: ["cotacoes_dolar"],
     queryFn: async () =>
       (await supabase.from("cotacoes_dolar").select("*").is("deleted_at", null)).data ?? [],
+  });
+
+  const { data: dolarHistory } = useQuery({
+    queryKey: ["cotacoes_dolar_historico_all"],
+    queryFn: async (): Promise<DolarHistoryRow[]> => {
+      const { data } = await supabase
+        .from("cotacoes_dolar_historico")
+        .select("tipo, valor_brl, data")
+        .is("deleted_at", null)
+        .order("data", { ascending: true });
+      return (data ?? []).map((r) => ({
+        tipo: r.tipo as DolarTipo,
+        valor_brl: Number(r.valor_brl),
+        data: r.data as string,
+      }));
+    },
+  });
+
+  const { data: commodityRows } = useQuery({
+    queryKey: ["cotacoes_commodities_painel", PAINEL_FEATURED],
+    queryFn: async (): Promise<CommodityRow[]> => {
+      const { data } = await supabase
+        .from("cotacoes_commodities")
+        .select("produto, valor, data, fonte, fonte_url, unidade_id, moeda")
+        .is("deleted_at", null)
+        .in("produto", PAINEL_FEATURED as unknown as string[])
+        .order("data", { ascending: true });
+      return (data ?? []).map((r) => ({
+        produto: r.produto as string,
+        valor: Number(r.valor),
+        data: r.data as string,
+        fonte: r.fonte as CommodityRow["fonte"],
+        fonte_url: r.fonte_url as string | null,
+        unidade_id: r.unidade_id as string | null,
+        moeda: r.moeda as CommodityRow["moeda"],
+      }));
+    },
   });
 
   const { data: noticias } = useQuery({
@@ -33,6 +85,25 @@ function PainelPage() {
       ).data ?? [],
   });
 
+  const cotacoesForConvert = useMemo(
+    () =>
+      (dolar ?? []).map((r) => ({
+        tipo: r.tipo as DolarTipo,
+        valor_brl: Number(r.valor_brl),
+      })),
+    [dolar],
+  );
+
+  const commodityGroups = useMemo(() => groupCommodityHistory(commodityRows ?? []), [commodityRows]);
+  const dolarGroups = useMemo(() => groupDolarHistory(dolarHistory ?? []), [dolarHistory]);
+
+  const formatValueInUserCurrency = (valorBRL: number) =>
+    formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
+
+  const preferredDolarRow = dolar?.find((d) => d.tipo === userDolarPref);
+  const preferredDolarHistory = dolarGroups.get(userDolarPref) ?? [];
+  const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
+
   return (
     <div className="space-y-8">
       <section>
@@ -43,24 +114,71 @@ function PainelPage() {
       </section>
 
       <section>
-        <h2 className="mb-3 font-display text-lg font-bold">{t("dashboard.dollar")}</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {(["comercial", "turismo", "paralelo"] as const).map((tipo) => {
-            const row = dolar?.find((d) => d.tipo === tipo);
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-display text-lg font-bold">{t("quote.title")}</h2>
+          <Link
+            to="/cotacao"
+            className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+          >
+            {t("quote.viewAll")}
+            <ChevronRight className="h-3 w-3" />
+          </Link>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {PAINEL_FEATURED.map((produto) => {
+            const history = commodityGroups.get(produto) ?? [];
+            const latest = history[history.length - 1];
+            const variation = computeVariation(history.map((h) => h.valor));
             return (
-              <div
-                key={tipo}
-                className="rounded-2xl border border-border bg-card p-5"
+              <Link
+                key={produto}
+                to="/cotacao"
+                className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/60"
               >
                 <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                  {t(`settings.${tipo}`)}
+                  {t(`commodities.${produto}`)}
                 </div>
-                <div className="mt-2 font-display text-2xl font-bold text-foreground">
-                  {row ? formatDolarValue(Number(row.valor_brl), i18n.language) : "—"}
+                <div className="mt-2 flex items-baseline justify-between gap-2">
+                  <span className="font-display text-xl font-bold text-primary tabular-nums">
+                    {latest ? formatValueInUserCurrency(latest.valor) : "—"}
+                  </span>
                 </div>
-              </div>
+                <div className="mt-1">
+                  <VariationBadge
+                    variation={variation}
+                    locale={i18n.language}
+                    formatDelta={formatValueInUserCurrency}
+                    size="sm"
+                  />
+                </div>
+              </Link>
             );
           })}
+
+          <Link
+            to="/cotacao"
+            className="group rounded-2xl border border-primary/40 bg-card p-5 transition-colors hover:border-primary"
+          >
+            <div className="text-xs uppercase tracking-wide text-primary/90">
+              {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
+            </div>
+            <div className="mt-2 flex items-baseline justify-between gap-2">
+              <span className="font-display text-xl font-bold text-foreground tabular-nums">
+                {preferredDolarRow
+                  ? formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)
+                  : "—"}
+              </span>
+            </div>
+            <div className="mt-1">
+              <VariationBadge
+                variation={preferredDolarVariation}
+                locale={i18n.language}
+                formatDelta={(v) => formatDolarValue(v, i18n.language)}
+                size="sm"
+              />
+            </div>
+          </Link>
         </div>
       </section>
 
