@@ -385,8 +385,19 @@ function AdminCotacoesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {preview.map((p, idx) => (
-                    <tr key={idx} className={p._skipped ? "opacity-50" : ""}>
+                  {preview.map((p, idx) => {
+                    const missing = !p._skipped && !p.unidade_id;
+                    return (
+                    <tr
+                      key={idx}
+                      className={
+                        p._skipped
+                          ? "opacity-50"
+                          : missing
+                            ? "bg-destructive/10 ring-1 ring-inset ring-destructive/40"
+                            : ""
+                      }
+                    >
                       <td className="px-3 py-2 font-medium">{t(`commodities.${p.produto}`)}</td>
                       <td className="px-3 py-2">
                         <input
@@ -400,9 +411,10 @@ function AdminCotacoesPage() {
                         <select
                           value={p.unidade_id ?? ""}
                           onChange={(e) => updatePreview(idx, { unidade_id: e.target.value })}
-                          className="rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                          className={`rounded-lg border bg-background px-2 py-1 text-sm ${missing ? "border-destructive" : "border-border"}`}
                         >
                           <option value="">—</option>
+
                           {unidades.map((u) => (
                             <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`)}</option>
                           ))}
