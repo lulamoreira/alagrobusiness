@@ -295,5 +295,54 @@
     "preco": "Precio",
     "sistema": "Sistema",
     "mensagem": "Mensaje"
+  },
+  "commodities": {
+    "soja": "Soja",
+    "milho": "Maíz",
+    "cafe_arabica": "Café arábica",
+    "cafe_conilon": "Café conilon",
+    "boi_gordo": "Bovino gordo",
+    "suino": "Cerdo",
+    "trigo": "Trigo",
+    "algodao": "Algodón",
+    "arroz": "Arroz",
+    "feijao": "Frijol"
+  },
+  "adminQuotes": {
+    "navLabel": "Admin · Cotizaciones",
+    "title": "Administración de cotizaciones",
+    "subtitle": "Ingrese precios manuales o consulte sugerencias por IA. Lo manual siempre prevalece sobre la IA en el mismo día.",
+    "tableProduct": "Producto",
+    "tableValue": "Valor",
+    "tableUnit": "Unidad",
+    "tableCurrency": "Moneda",
+    "tableDate": "Fecha",
+    "tableSource": "Fuente",
+    "tableSourceUrl": "Enlace",
+    "tableActions": "Acciones",
+    "sourceManual": "Manual",
+    "sourceAuto": "Automático",
+    "sourceIa": "IA",
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "manualLaunch": "Ingresar manualmente",
+    "manualSaved": "Cotización manual guardada.",
+    "noCurrent": "Sin cotización para hoy",
+    "fetchAi": "Buscar cotizaciones (IA)",
+    "fetchingAi": "Buscando…",
+    "previewTitle": "Vista previa de cotizaciones sugeridas",
+    "previewHint": "Revise, ajuste y confirme. Las filas manuales de hoy no serán sobrescritas.",
+    "previewConfirm": "Confirmar y guardar",
+    "previewEmpty": "La IA no encontró cotizaciones en las fuentes consultadas.",
+    "previewSkippedManual": "ignorada (manual de hoy)",
+    "previewSaved": "Guardadas: {{ok}} · Ignoradas (manual): {{skipped}}",
+    "errorFetch": "Error al buscar cotizaciones: {{detail}}",
+    "errorSave": "Error al guardar: {{detail}}",
+    "validation": {
+      "valueRequired": "Ingrese un valor válido.",
+      "unitRequired": "Seleccione la unidad."
+    }
   }
 }
+

@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.fetch-noticias-agro]
 verify_jwt = false
+
+[functions.buscar-cotacoes]
+verify_jwt = true

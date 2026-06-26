@@ -13,8 +13,10 @@ import {
   Newspaper,
   Bell,
   Settings,
+  ShieldCheck,
   LogOut,
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
 import type { ReactNode } from "react";
@@ -106,7 +108,22 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Link>
             );
           })}
+          {profile?.tipo_perfil === "admin" && (
+            <Link
+              to="/admin/cotacoes"
+              className={cn(
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                pathname.startsWith("/admin/cotacoes")
+                  ? "bg-primary/15 text-primary"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
+              )}
+            >
+              <ShieldCheck className="h-4 w-4" />
+              <span>{t("adminQuotes.navLabel")}</span>
+            </Link>
+          )}
         </nav>
+
         <button
           onClick={signOut}
           className="m-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"

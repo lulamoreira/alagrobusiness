@@ -295,5 +295,54 @@
     "preco": "Price",
     "sistema": "System",
     "mensagem": "Message"
+  },
+  "commodities": {
+    "soja": "Soybean",
+    "milho": "Corn",
+    "cafe_arabica": "Arabica coffee",
+    "cafe_conilon": "Conilon coffee",
+    "boi_gordo": "Live cattle",
+    "suino": "Hog",
+    "trigo": "Wheat",
+    "algodao": "Cotton",
+    "arroz": "Rice",
+    "feijao": "Beans"
+  },
+  "adminQuotes": {
+    "navLabel": "Admin · Quotes",
+    "title": "Quotes administration",
+    "subtitle": "Enter manual prices or fetch AI suggestions. Manual always wins over AI for the same day.",
+    "tableProduct": "Product",
+    "tableValue": "Value",
+    "tableUnit": "Unit",
+    "tableCurrency": "Currency",
+    "tableDate": "Date",
+    "tableSource": "Source",
+    "tableSourceUrl": "Link",
+    "tableActions": "Actions",
+    "sourceManual": "Manual",
+    "sourceAuto": "Automatic",
+    "sourceIa": "AI",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "manualLaunch": "Enter manually",
+    "manualSaved": "Manual quote saved.",
+    "noCurrent": "No quote for today",
+    "fetchAi": "Fetch latest quotes (AI)",
+    "fetchingAi": "Fetching…",
+    "previewTitle": "Suggested quotes preview",
+    "previewHint": "Review, adjust and confirm. Today's manual rows will not be overwritten.",
+    "previewConfirm": "Confirm and save",
+    "previewEmpty": "AI did not find quotes in the consulted sources.",
+    "previewSkippedManual": "skipped (today's manual)",
+    "previewSaved": "Saved: {{ok}} · Skipped (manual): {{skipped}}",
+    "errorFetch": "Failed to fetch quotes: {{detail}}",
+    "errorSave": "Failed to save: {{detail}}",
+    "validation": {
+      "valueRequired": "Enter a valid value.",
+      "unitRequired": "Select the unit."
+    }
   }
 }
+
