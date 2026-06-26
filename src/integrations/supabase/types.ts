@@ -607,6 +607,10 @@ export type Database = {
         Returns: Database["public"]["Enums"]["status_perfil"]
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      marcar_mensagens_lidas: {
+        Args: { p_conversa_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       categoria_agro: "fruta" | "grao" | "legumes" | "vegetal"
