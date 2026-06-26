@@ -27,16 +27,10 @@ type AnuncioRow = {
   cidade: string | null;
 };
 
-function PhotoThumb({ path }: { path: string | null | undefined }) {
-  const { data } = useQuery({
-    queryKey: ["thumb", path],
-    queryFn: () => getSignedUrl(path),
-    enabled: !!path,
-    staleTime: 1000 * 60 * 30,
-  });
+function PhotoThumb({ path, productLabel }: { path: string | null | undefined; productLabel: string }) {
   return (
-    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
-      {data ? <img src={data} alt="" className="h-full w-full object-cover" /> : null}
+    <div className="group h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
+      <AnuncioPhoto path={path} productLabel={productLabel} compact />
     </div>
   );
 }
