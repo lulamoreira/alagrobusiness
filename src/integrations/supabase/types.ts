@@ -648,9 +648,9 @@ export type Database = {
       gravar_cotacoes_ia: {
         Args: { p_items: Json }
         Returns: {
-          motivo: string
-          produto: string
-          status: string
+          out_motivo: string
+          out_produto: string
+          out_status: string
         }[]
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
