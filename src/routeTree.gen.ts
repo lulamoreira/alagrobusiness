@@ -16,8 +16,10 @@ import { Route as BloqueadoRouteImport } from './routes/bloqueado'
 import { Route as AguardandoAprovacaoRouteImport } from './routes/aguardando-aprovacao'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedVenderRouteImport } from './routes/_authenticated.vender'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated.painel'
 import { Route as AuthenticatedNoticiasRouteImport } from './routes/_authenticated.noticias'
+import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated.mensagens'
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
@@ -64,6 +66,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedVenderRoute = AuthenticatedVenderRouteImport.update({
+  id: '/vender',
+  path: '/vender',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   id: '/painel',
   path: '/painel',
@@ -72,6 +79,11 @@ const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
 const AuthenticatedNoticiasRoute = AuthenticatedNoticiasRouteImport.update({
   id: '/noticias',
   path: '/noticias',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedMensagensRoute = AuthenticatedMensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedCotacaoRoute = AuthenticatedCotacaoRouteImport.update({
@@ -97,26 +109,26 @@ const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
 } as any)
 const AuthenticatedVenderIndexRoute =
   AuthenticatedVenderIndexRouteImport.update({
-    id: '/vender/',
-    path: '/vender/',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedVenderRoute,
   } as any)
 const AuthenticatedMensagensIndexRoute =
   AuthenticatedMensagensIndexRouteImport.update({
-    id: '/mensagens/',
-    path: '/mensagens/',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedMensagensRoute,
   } as any)
 const AuthenticatedVenderNovoRoute = AuthenticatedVenderNovoRouteImport.update({
-  id: '/vender/novo',
-  path: '/vender/novo',
-  getParentRoute: () => AuthenticatedRoute,
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => AuthenticatedVenderRoute,
 } as any)
 const AuthenticatedMensagensConversaIdRoute =
   AuthenticatedMensagensConversaIdRouteImport.update({
-    id: '/mensagens/$conversaId',
-    path: '/mensagens/$conversaId',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/$conversaId',
+    path: '/$conversaId',
+    getParentRoute: () => AuthenticatedMensagensRoute,
   } as any)
 const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
   id: '/anuncio/$id',
@@ -131,9 +143,9 @@ const AuthenticatedAdminCotacoesRoute =
   } as any)
 const AuthenticatedVenderEditarIdRoute =
   AuthenticatedVenderEditarIdRouteImport.update({
-    id: '/vender/editar/$id',
-    path: '/vender/editar/$id',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/editar/$id',
+    path: '/editar/$id',
+    getParentRoute: () => AuthenticatedVenderRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -147,8 +159,10 @@ export interface FileRoutesByFullPath {
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
@@ -191,8 +205,10 @@ export interface FileRoutesById {
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
+  '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/_authenticated/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
@@ -214,8 +230,10 @@ export interface FileRouteTypes {
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
+    | '/mensagens'
     | '/noticias'
     | '/painel'
+    | '/vender'
     | '/admin/cotacoes'
     | '/anuncio/$id'
     | '/mensagens/$conversaId'
@@ -257,8 +275,10 @@ export interface FileRouteTypes {
     | '/_authenticated/comprar'
     | '/_authenticated/configuracoes'
     | '/_authenticated/cotacao'
+    | '/_authenticated/mensagens'
     | '/_authenticated/noticias'
     | '/_authenticated/painel'
+    | '/_authenticated/vender'
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/anuncio/$id'
     | '/_authenticated/mensagens/$conversaId'
@@ -329,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/vender': {
+      id: '/_authenticated/vender'
+      path: '/vender'
+      fullPath: '/vender'
+      preLoaderRoute: typeof AuthenticatedVenderRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/painel': {
       id: '/_authenticated/painel'
       path: '/painel'
@@ -341,6 +368,13 @@ declare module '@tanstack/react-router' {
       path: '/noticias'
       fullPath: '/noticias'
       preLoaderRoute: typeof AuthenticatedNoticiasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/mensagens': {
+      id: '/_authenticated/mensagens'
+      path: '/mensagens'
+      fullPath: '/mensagens'
+      preLoaderRoute: typeof AuthenticatedMensagensRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/cotacao': {
@@ -373,31 +407,31 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/vender/': {
       id: '/_authenticated/vender/'
-      path: '/vender'
+      path: '/'
       fullPath: '/vender/'
       preLoaderRoute: typeof AuthenticatedVenderIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedVenderRoute
     }
     '/_authenticated/mensagens/': {
       id: '/_authenticated/mensagens/'
-      path: '/mensagens'
+      path: '/'
       fullPath: '/mensagens/'
       preLoaderRoute: typeof AuthenticatedMensagensIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedMensagensRoute
     }
     '/_authenticated/vender/novo': {
       id: '/_authenticated/vender/novo'
-      path: '/vender/novo'
+      path: '/novo'
       fullPath: '/vender/novo'
       preLoaderRoute: typeof AuthenticatedVenderNovoRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedVenderRoute
     }
     '/_authenticated/mensagens/$conversaId': {
       id: '/_authenticated/mensagens/$conversaId'
-      path: '/mensagens/$conversaId'
+      path: '/$conversaId'
       fullPath: '/mensagens/$conversaId'
       preLoaderRoute: typeof AuthenticatedMensagensConversaIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedMensagensRoute
     }
     '/_authenticated/anuncio/$id': {
       id: '/_authenticated/anuncio/$id'
@@ -415,28 +449,57 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/vender/editar/$id': {
       id: '/_authenticated/vender/editar/$id'
-      path: '/vender/editar/$id'
+      path: '/editar/$id'
       fullPath: '/vender/editar/$id'
       preLoaderRoute: typeof AuthenticatedVenderEditarIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedVenderRoute
     }
   }
 }
+
+interface AuthenticatedMensagensRouteChildren {
+  AuthenticatedMensagensConversaIdRoute: typeof AuthenticatedMensagensConversaIdRoute
+  AuthenticatedMensagensIndexRoute: typeof AuthenticatedMensagensIndexRoute
+}
+
+const AuthenticatedMensagensRouteChildren: AuthenticatedMensagensRouteChildren =
+  {
+    AuthenticatedMensagensConversaIdRoute:
+      AuthenticatedMensagensConversaIdRoute,
+    AuthenticatedMensagensIndexRoute: AuthenticatedMensagensIndexRoute,
+  }
+
+const AuthenticatedMensagensRouteWithChildren =
+  AuthenticatedMensagensRoute._addFileChildren(
+    AuthenticatedMensagensRouteChildren,
+  )
+
+interface AuthenticatedVenderRouteChildren {
+  AuthenticatedVenderNovoRoute: typeof AuthenticatedVenderNovoRoute
+  AuthenticatedVenderIndexRoute: typeof AuthenticatedVenderIndexRoute
+  AuthenticatedVenderEditarIdRoute: typeof AuthenticatedVenderEditarIdRoute
+}
+
+const AuthenticatedVenderRouteChildren: AuthenticatedVenderRouteChildren = {
+  AuthenticatedVenderNovoRoute: AuthenticatedVenderNovoRoute,
+  AuthenticatedVenderIndexRoute: AuthenticatedVenderIndexRoute,
+  AuthenticatedVenderEditarIdRoute: AuthenticatedVenderEditarIdRoute,
+}
+
+const AuthenticatedVenderRouteWithChildren =
+  AuthenticatedVenderRoute._addFileChildren(AuthenticatedVenderRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
+  AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
   AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
   AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
-  AuthenticatedMensagensConversaIdRoute: typeof AuthenticatedMensagensConversaIdRoute
-  AuthenticatedVenderNovoRoute: typeof AuthenticatedVenderNovoRoute
-  AuthenticatedMensagensIndexRoute: typeof AuthenticatedMensagensIndexRoute
-  AuthenticatedVenderIndexRoute: typeof AuthenticatedVenderIndexRoute
-  AuthenticatedVenderEditarIdRoute: typeof AuthenticatedVenderEditarIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -444,15 +507,12 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
+  AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
   AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
   AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
-  AuthenticatedMensagensConversaIdRoute: AuthenticatedMensagensConversaIdRoute,
-  AuthenticatedVenderNovoRoute: AuthenticatedVenderNovoRoute,
-  AuthenticatedMensagensIndexRoute: AuthenticatedMensagensIndexRoute,
-  AuthenticatedVenderIndexRoute: AuthenticatedVenderIndexRoute,
-  AuthenticatedVenderEditarIdRoute: AuthenticatedVenderEditarIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
