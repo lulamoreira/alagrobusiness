@@ -6,7 +6,7 @@ import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, Chevr
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
-import { getSignedUrls } from "@/lib/storage";
+import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
@@ -29,11 +29,9 @@ function DetailPage() {
       (await supabase.from("anuncios").select("*").eq("id", id).is("deleted_at", null).maybeSingle()).data,
   });
 
-  const { data: photoUrls } = useQuery({
-    queryKey: ["anuncio_photos", id, anuncio?.fotos],
-    queryFn: () => getSignedUrls(anuncio?.fotos ?? []),
-    enabled: !!anuncio?.fotos && anuncio.fotos.length > 0,
-  });
+  // We no longer pre-resolve signed URLs — <AnuncioPhoto> mints fresh signed URLs at render time
+  // so they cannot expire between fetch and display.
+  const photos: string[] = (anuncio?.fotos ?? []) as string[];
 
   const { data: vendedor } = useQuery({
     queryKey: ["anuncio_vendedor", anuncio?.vendedor_id],
@@ -97,9 +95,8 @@ function DetailPage() {
     setInterestStatus(error ? "error" : "sent");
   };
 
-  const photos = photoUrls ?? [];
   const total = photos.length;
-  const current = photos[photoIdx];
+  const currentPath = photos[photoIdx];
 
   return (
     <div className="space-y-6">
@@ -111,13 +108,7 @@ function DetailPage() {
         {/* Carousel */}
         <div className="space-y-3">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-muted">
-            {current ? (
-              <img src={current} alt={anuncio.titulo} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-                {t("form.photos")}
-              </div>
-            )}
+            <AnuncioPhoto path={currentPath ?? null} productLabel={anuncio.produto} />
             {total > 1 && (
               <>
                 <button
@@ -141,22 +132,23 @@ function DetailPage() {
           </div>
           {total > 1 && (
             <div className="flex gap-2 overflow-x-auto">
-              {photos.map((u, i) => (
+              {photos.map((p: string, i: number) => (
                 <button
                   type="button"
-                  key={i}
+                  key={p + i}
                   onClick={() => setPhotoIdx(i)}
                   className={cn(
-                    "h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border-2",
+                    "h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border-2 bg-muted",
                     i === photoIdx ? "border-primary" : "border-border opacity-60 hover:opacity-100",
                   )}
                 >
-                  <img src={u} alt="" className="h-full w-full object-cover" />
+                  <AnuncioPhoto path={p} productLabel={anuncio.produto} compact />
                 </button>
               ))}
             </div>
           )}
         </div>
+
 
         {/* Info */}
         <div className="space-y-5">
