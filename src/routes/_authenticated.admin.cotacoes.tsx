@@ -193,7 +193,8 @@ function AdminCotacoesPage() {
       toast.error(t("adminQuotes.errorSave", { detail: error.message }));
       return;
     }
-    const rows = (data ?? []) as { produto: string; status: string; motivo: string | null }[];
+    const raw = (data ?? []) as { out_produto: string; out_status: string; out_motivo: string | null }[];
+    const rows = raw.map((r) => ({ produto: r.out_produto, status: r.out_status, motivo: r.out_motivo }));
     const ok = rows.filter((r) => r.status === "ok").length;
     const skipped = rows.filter((r) => r.status === "skipped_manual").length;
     const errors = rows.filter((r) => r.status === "erro" || r.status === "skipped_invalid");
@@ -213,6 +214,7 @@ function AdminCotacoesPage() {
         return { ...p, _skipped: r?.status === "skipped_manual" };
       }) ?? null);
     }
+
   };
 
 
