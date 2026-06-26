@@ -442,7 +442,9 @@ function AdminCotacoesPage() {
                         )}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
+
                 </tbody>
               </table>
             </div>
