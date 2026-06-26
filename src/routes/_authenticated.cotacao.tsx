@@ -1,43 +1,357 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { ExternalLink, Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { formatDolarValue } from "@/lib/format";
+import { useAuth } from "@/lib/auth";
+import { formatMoney, formatDolarValue } from "@/lib/format";
+import { cn } from "@/lib/utils";
+import {
+  computeVariation,
+  filterRange,
+  groupCommodityHistory,
+  groupDolarHistory,
+  COMMODITY_KEYS,
+  type CommodityRow,
+  type DolarHistoryRow,
+} from "@/lib/quotes";
+import { Sparkline } from "@/components/Sparkline";
+import { VariationBadge } from "@/components/VariationBadge";
 
 export const Route = createFileRoute("/_authenticated/cotacao")({
   component: CotacaoPage,
 });
 
+type Range = 7 | 30;
+type DolarTipo = "comercial" | "turismo" | "paralelo";
+
 function CotacaoPage() {
   const { t, i18n } = useTranslation();
-  const { data } = useQuery({
+  const { profile } = useAuth();
+  const userMoeda = profile?.moeda_preferida ?? "BRL";
+  const userDolarPref = (profile?.tipo_dolar_preferido ?? "comercial") as DolarTipo;
+
+  const [commodityRange, setCommodityRange] = useState<Range>(7);
+  const [dolarRange, setDolarRange] = useState<Range>(7);
+  const [selectedDolar, setSelectedDolar] = useState<DolarTipo>(userDolarPref);
+
+  const { data: commodityRows } = useQuery({
+    queryKey: ["cotacoes_commodities_all"],
+    queryFn: async (): Promise<CommodityRow[]> => {
+      const { data } = await supabase
+        .from("cotacoes_commodities")
+        .select("produto, valor, data, fonte, fonte_url, unidade_id, moeda")
+        .is("deleted_at", null)
+        .order("data", { ascending: true });
+      return (data ?? []).map((r) => ({
+        produto: r.produto as string,
+        valor: Number(r.valor),
+        data: r.data as string,
+        fonte: r.fonte as CommodityRow["fonte"],
+        fonte_url: r.fonte_url as string | null,
+        unidade_id: r.unidade_id as string | null,
+        moeda: r.moeda as CommodityRow["moeda"],
+      }));
+    },
+  });
+
+  const { data: dolarHistory } = useQuery({
+    queryKey: ["cotacoes_dolar_historico_all"],
+    queryFn: async (): Promise<DolarHistoryRow[]> => {
+      const { data } = await supabase
+        .from("cotacoes_dolar_historico")
+        .select("tipo, valor_brl, data")
+        .is("deleted_at", null)
+        .order("data", { ascending: true });
+      return (data ?? []).map((r) => ({
+        tipo: r.tipo as DolarTipo,
+        valor_brl: Number(r.valor_brl),
+        data: r.data as string,
+      }));
+    },
+  });
+
+  const { data: dolarCurrent } = useQuery({
     queryKey: ["cotacoes_dolar"],
     queryFn: async () =>
-      (await supabase.from("cotacoes_dolar").select("*").is("deleted_at", null)).data ?? [],
+      (await supabase.from("cotacoes_dolar").select("tipo, valor_brl, atualizado_em").is("deleted_at", null))
+        .data ?? [],
   });
+
+  const { data: unidades } = useQuery({
+    queryKey: ["unidades_all"],
+    queryFn: async () => (await supabase.from("unidades").select("id, nome_chave").is("deleted_at", null)).data ?? [],
+    staleTime: 1000 * 60 * 30,
+  });
+
+  // Quote conversions go through user-preferred dollar
+  const cotacoesForConvert = useMemo(
+    () =>
+      (dolarCurrent ?? []).map((r) => ({
+        tipo: r.tipo as DolarTipo,
+        valor_brl: Number(r.valor_brl),
+      })),
+    [dolarCurrent],
+  );
+
+  const commodityGroups = useMemo(
+    () => groupCommodityHistory(commodityRows ?? []),
+    [commodityRows],
+  );
+  const dolarGroups = useMemo(() => groupDolarHistory(dolarHistory ?? []), [dolarHistory]);
+
+  const dolarTiposAvailable: DolarTipo[] = useMemo(() => {
+    const set = new Set<DolarTipo>();
+    (dolarCurrent ?? []).forEach((r) => set.add(r.tipo as DolarTipo));
+    dolarGroups.forEach((_v, k) => set.add(k as DolarTipo));
+    // Ensure deterministic order
+    return (["comercial", "turismo", "paralelo"] as DolarTipo[]).filter((t) => set.has(t));
+  }, [dolarCurrent, dolarGroups]);
+
+  const formatValueInUserCurrency = (valorBRL: number) =>
+    formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
+
   return (
-    <div className="space-y-6">
-      <h1 className="font-display text-2xl font-bold md:text-3xl">{t("nav.quote")}</h1>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {(["comercial", "turismo", "paralelo"] as const).map((tipo) => {
-          const row = data?.find((d) => d.tipo === tipo);
-          return (
-            <div key={tipo} className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                {t(`settings.${tipo}`)}
-              </div>
-              <div className="mt-2 font-display text-2xl font-bold">
-                {row ? formatDolarValue(Number(row.valor_brl), i18n.language) : "—"}
-              </div>
-              {row?.atualizado_em && (
-                <div className="mt-1 text-[10px] text-muted-foreground">
-                  {new Date(row.atualizado_em).toLocaleString(i18n.language)}
-                </div>
+    <div className="space-y-8">
+      <header>
+        <h1 className="font-display text-2xl font-bold md:text-3xl">{t("quote.title")}</h1>
+        <p className="text-sm text-muted-foreground">{t("quote.subtitle")}</p>
+      </header>
+
+      {/* Commodities */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-display text-lg font-bold">{t("quote.commoditiesTitle")}</h2>
+          <RangeToggle value={commodityRange} onChange={setCommodityRange} />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {COMMODITY_KEYS.map((produto) => {
+            const history = commodityGroups.get(produto) ?? [];
+            const ranged = filterRange(history, commodityRange);
+            const latest = history[history.length - 1];
+            const unidade = unidades?.find((u) => u.id === latest?.unidade_id);
+            const variation = computeVariation(history.map((h) => h.valor));
+
+            return (
+              <article
+                key={produto}
+                className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5"
+              >
+                <header className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="truncate font-display text-base font-bold text-foreground">
+                      {t(`commodities.${produto}`)}
+                    </h3>
+                    {unidade && (
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                        {t(`units.${unidade.nome_chave}`)}
+                      </p>
+                    )}
+                  </div>
+                  {latest?.fonte && (
+                    <SourceBadge fonte={latest.fonte} fonteUrl={latest.fonte_url ?? undefined} />
+                  )}
+                </header>
+
+                {latest ? (
+                  <>
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-display text-2xl font-bold text-primary tabular-nums">
+                        {formatValueInUserCurrency(latest.valor)}
+                      </span>
+                      <VariationBadge
+                        variation={variation}
+                        locale={i18n.language}
+                        formatDelta={formatValueInUserCurrency}
+                      />
+                    </div>
+
+                    <Sparkline
+                      points={ranged.map((r) => ({ data: r.data, value: r.valor }))}
+                      formatValue={formatValueInUserCurrency}
+                    />
+
+                    <p className="text-[10px] text-muted-foreground">
+                      {t("quote.lastUpdate")}{" "}
+                      {new Date(latest.data).toLocaleDateString(i18n.language, {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </p>
+                  </>
+                ) : (
+                  <EmptyState />
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Dollar */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-display text-lg font-bold">{t("quote.dollarTitle")}</h2>
+          <RangeToggle value={dolarRange} onChange={setDolarRange} />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {dolarTiposAvailable.map((tipo) => (
+            <button
+              key={tipo}
+              type="button"
+              onClick={() => setSelectedDolar(tipo)}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                selectedDolar === tipo
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground",
               )}
-            </div>
-          );
-        })}
-      </div>
+            >
+              {tipo === userDolarPref && <Star className="h-3 w-3 fill-primary text-primary" />}
+              {t(`quote.${tipo}`)}
+              {tipo === userDolarPref && (
+                <span className="ml-1 text-[9px] uppercase tracking-wide text-primary/80">
+                  {t("quote.preferred")}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {dolarTiposAvailable.map((tipo) => {
+            const history = dolarGroups.get(tipo) ?? [];
+            const current = (dolarCurrent ?? []).find((d) => d.tipo === tipo);
+            const ranged = filterRange(history, dolarRange);
+            const variation = computeVariation(history.map((h) => h.valor_brl));
+            const isPreferred = tipo === userDolarPref;
+            const isSelected = tipo === selectedDolar;
+
+            return (
+              <article
+                key={tipo}
+                className={cn(
+                  "flex flex-col gap-3 rounded-2xl border bg-card p-5 transition-colors",
+                  isPreferred ? "border-primary/60 shadow-[0_0_0_1px_hsl(var(--primary)/0.25)]" : "border-border",
+                )}
+              >
+                <header className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-display text-base font-bold">{t(`quote.${tipo}`)}</h3>
+                    {isPreferred && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                        <Star className="h-3 w-3 fill-primary" />
+                        {t("quote.preferred")}
+                      </span>
+                    )}
+                  </div>
+                </header>
+
+                {current ? (
+                  <>
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-display text-2xl font-bold text-foreground tabular-nums">
+                        {formatDolarValue(Number(current.valor_brl), i18n.language)}
+                      </span>
+                      <VariationBadge
+                        variation={variation}
+                        locale={i18n.language}
+                        formatDelta={(v) => formatDolarValue(v, i18n.language)}
+                      />
+                    </div>
+
+                    {isSelected && (
+                      <Sparkline
+                        points={ranged.map((r) => ({ data: r.data, value: r.valor_brl }))}
+                        formatValue={(v) => formatDolarValue(v, i18n.language)}
+                      />
+                    )}
+
+                    {current.atualizado_em && (
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("quote.lastUpdate")}{" "}
+                        {new Date(current.atualizado_em).toLocaleString(i18n.language)}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <EmptyState />
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function RangeToggle({ value, onChange }: { value: Range; onChange: (r: Range) => void }) {
+  const { t } = useTranslation();
+  const options: { v: Range; label: string }[] = [
+    { v: 7, label: t("quote.range7d") },
+    { v: 30, label: t("quote.range30d") },
+  ];
+  return (
+    <div className="inline-flex rounded-full border border-border bg-card p-0.5">
+      {options.map((o) => (
+        <button
+          key={o.v}
+          type="button"
+          onClick={() => onChange(o.v)}
+          className={cn(
+            "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+            value === o.v ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+          )}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function SourceBadge({ fonte, fonteUrl }: { fonte: "manual" | "auto" | "ia"; fonteUrl?: string }) {
+  const { t } = useTranslation();
+  const label =
+    fonte === "manual" ? t("quote.sourceManual") : fonte === "ia" ? t("quote.sourceIa") : t("quote.sourceAuto");
+
+  const className = cn(
+    "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+    fonte === "manual"
+      ? "bg-primary/15 text-primary"
+      : fonte === "ia"
+        ? "bg-purple-500/15 text-purple-300"
+        : "bg-muted text-muted-foreground",
+  );
+
+  if (fonte === "ia" && fonteUrl) {
+    return (
+      <a
+        href={fonteUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={className}
+        title={fonteUrl}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {label}
+        <ExternalLink className="h-2.5 w-2.5" />
+      </a>
+    );
+  }
+  return <span className={className}>{label}</span>;
+}
+
+function EmptyState() {
+  const { t } = useTranslation();
+  return (
+    <div className="rounded-xl border border-dashed border-border/60 bg-muted/20 px-3 py-6 text-center text-xs text-muted-foreground">
+      {t("quote.noData")}
     </div>
   );
 }
