@@ -140,7 +140,7 @@ function SellPage() {
                 key={a.id}
                 className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex-row md:items-center"
               >
-                <PhotoThumb path={a.fotos?.[0]} />
+                <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
