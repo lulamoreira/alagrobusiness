@@ -295,5 +295,54 @@
     "preco": "Preço",
     "sistema": "Sistema",
     "mensagem": "Mensagem"
+  },
+  "commodities": {
+    "soja": "Soja",
+    "milho": "Milho",
+    "cafe_arabica": "Café arábica",
+    "cafe_conilon": "Café conilon",
+    "boi_gordo": "Boi gordo",
+    "suino": "Suíno",
+    "trigo": "Trigo",
+    "algodao": "Algodão",
+    "arroz": "Arroz",
+    "feijao": "Feijão"
+  },
+  "adminQuotes": {
+    "navLabel": "Admin · Cotações",
+    "title": "Administração de cotações",
+    "subtitle": "Lance preços manuais ou busque sugestões por IA. Manual sempre prevalece sobre IA no mesmo dia.",
+    "tableProduct": "Produto",
+    "tableValue": "Valor",
+    "tableUnit": "Unidade",
+    "tableCurrency": "Moeda",
+    "tableDate": "Data",
+    "tableSource": "Fonte",
+    "tableSourceUrl": "Link",
+    "tableActions": "Ações",
+    "sourceManual": "Manual",
+    "sourceAuto": "Automático",
+    "sourceIa": "IA",
+    "edit": "Editar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "manualLaunch": "Lançar manualmente",
+    "manualSaved": "Cotação manual salva.",
+    "noCurrent": "Sem cotação para hoje",
+    "fetchAi": "Buscar últimas cotações (IA)",
+    "fetchingAi": "Buscando…",
+    "previewTitle": "Prévia das cotações sugeridas",
+    "previewHint": "Revise, ajuste e confirme. Linhas marcadas como manual de hoje não serão sobrescritas.",
+    "previewConfirm": "Confirmar e gravar",
+    "previewEmpty": "A IA não encontrou cotações nas fontes consultadas.",
+    "previewSkippedManual": "ignorada (manual de hoje)",
+    "previewSaved": "Gravado: {{ok}} · Ignoradas (manual): {{skipped}}",
+    "errorFetch": "Falha ao buscar cotações: {{detail}}",
+    "errorSave": "Falha ao salvar: {{detail}}",
+    "validation": {
+      "valueRequired": "Informe um valor válido.",
+      "unitRequired": "Selecione a unidade."
+    }
   }
 }
+

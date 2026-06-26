@@ -224,7 +224,10 @@ export type Database = {
         Row: {
           atualizado_em: string
           created_at: string
+          data: string
           deleted_at: string | null
+          fonte: string
+          fonte_url: string | null
           id: string
           moeda: Database["public"]["Enums"]["moeda_app"]
           produto: string
@@ -235,7 +238,10 @@ export type Database = {
         Insert: {
           atualizado_em?: string
           created_at?: string
+          data?: string
           deleted_at?: string | null
+          fonte?: string
+          fonte_url?: string | null
           id?: string
           moeda?: Database["public"]["Enums"]["moeda_app"]
           produto: string
@@ -246,7 +252,10 @@ export type Database = {
         Update: {
           atualizado_em?: string
           created_at?: string
+          data?: string
           deleted_at?: string | null
+          fonte?: string
+          fonte_url?: string | null
           id?: string
           moeda?: Database["public"]["Enums"]["moeda_app"]
           produto?: string
@@ -286,6 +295,36 @@ export type Database = {
         Update: {
           atualizado_em?: string
           created_at?: string
+          deleted_at?: string | null
+          id?: string
+          tipo?: Database["public"]["Enums"]["tipo_dolar"]
+          updated_at?: string
+          valor_brl?: number
+        }
+        Relationships: []
+      }
+      cotacoes_dolar_historico: {
+        Row: {
+          created_at: string
+          data: string
+          deleted_at: string | null
+          id: string
+          tipo: Database["public"]["Enums"]["tipo_dolar"]
+          updated_at: string
+          valor_brl: number
+        }
+        Insert: {
+          created_at?: string
+          data?: string
+          deleted_at?: string | null
+          id?: string
+          tipo: Database["public"]["Enums"]["tipo_dolar"]
+          updated_at?: string
+          valor_brl: number
+        }
+        Update: {
+          created_at?: string
+          data?: string
           deleted_at?: string | null
           id?: string
           tipo?: Database["public"]["Enums"]["tipo_dolar"]
@@ -605,6 +644,13 @@ export type Database = {
           p_tipo_perfil: string
         }
         Returns: Database["public"]["Enums"]["status_perfil"]
+      }
+      gravar_cotacoes_ia: {
+        Args: { p_items: Json }
+        Returns: {
+          produto: string
+          status: string
+        }[]
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       marcar_mensagens_lidas: {

@@ -96,13 +96,33 @@ Deno.serve(async (req) => {
     }
   }
 
+  async function upsertHistorico(tipo: "comercial" | "turismo", valor: number) {
+    const hoje = new Date().toISOString().slice(0, 10);
+    const { data: upd, error: updErr } = await supabase
+      .from("cotacoes_dolar_historico")
+      .update({ valor_brl: valor })
+      .eq("tipo", tipo)
+      .eq("data", hoje)
+      .is("deleted_at", null)
+      .select("id");
+    if (updErr) throw updErr;
+    if (!upd || upd.length === 0) {
+      const { error: insErr } = await supabase
+        .from("cotacoes_dolar_historico")
+        .insert({ tipo, valor_brl: valor, data: hoje });
+      if (insErr) throw insErr;
+    }
+  }
+
   try {
     if (comercial != null) {
       await upsertCotacao(supabase, "comercial", comercial);
+      await upsertHistorico("comercial", comercial);
       (out as Record<string, unknown>).comercial = comercial;
     }
     if (turismo != null) {
       await upsertCotacao(supabase, "turismo", turismo);
+      await upsertHistorico("turismo", turismo);
       (out as Record<string, unknown>).turismo = turismo;
     }
   } catch (err) {
@@ -112,6 +132,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
+
 
   return new Response(JSON.stringify({ ok: true, ...out }), {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
