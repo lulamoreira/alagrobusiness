@@ -10,7 +10,7 @@ const corsHeaders = {
 const FEEDS: { fonte: string; url: string }[] = [
   { fonte: "Canal Rural", url: "https://www.canalrural.com.br/feed/" },
   { fonte: "Globo Rural", url: "https://g1.globo.com/rss/g1/economia/agronegocios/" },
-  { fonte: "AgroLink", url: "https://www.agrolink.com.br/rss/noticias.xml" },
+  { fonte: "Campo & Negócios", url: "https://revistacampoenegocios.com.br/feed/" },
 ];
 
 const TEMAS: { key: string; words: string[] }[] = [
