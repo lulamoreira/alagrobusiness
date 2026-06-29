@@ -368,7 +368,7 @@ function AlertsPage() {
                 min="0"
                 value={valorAlvo}
                 onChange={(e) => setValorAlvo(e.target.value)}
-                placeholder="0,00"
+                placeholder={t("alerts.target")}
                 className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono"
               />
             </label>
