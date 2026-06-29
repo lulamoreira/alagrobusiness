@@ -25,12 +25,12 @@ const TEMAS: { key: string; words: string[] }[] = [
   { key: "algodao", words: ["algodão", "algodao"] },
 ];
 
-function derivarTema(titulo: string, resumo: string): string | null {
+function derivarTema(titulo: string, resumo: string): string {
   const txt = `${titulo} ${resumo}`.toLowerCase();
   for (const t of TEMAS) {
     if (t.words.some((w) => txt.includes(w))) return t.key;
   }
-  return null;
+  return "geral";
 }
 
 function decodeEntities(s: string): string {
