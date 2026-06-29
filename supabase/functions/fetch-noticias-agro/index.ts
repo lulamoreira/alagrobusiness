@@ -101,13 +101,14 @@ function parseRSS(xml: string): { titulo: string; link: string; resumo: string; 
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
-  const authErr = checkCronAuth(req);
-  if (authErr) return authErr;
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+
+  const authErr = await checkCronAuth(req, supabase);
+  if (authErr) return authErr;
 
   const summary: Record<string, unknown> = { feeds: [], inserted: 0, softDeleted: 0, errors: [] };
 
