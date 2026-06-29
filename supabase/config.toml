@@ -8,3 +8,9 @@ verify_jwt = false
 
 [functions.buscar-cotacoes]
 verify_jwt = true
+
+[functions.fetch-clima]
+verify_jwt = false
+
+[functions.check-alertas-preco]
+verify_jwt = false

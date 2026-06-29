@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      alertas_preco: {
+        Row: {
+          ativo: boolean
+          condicao: string
+          created_at: string
+          deleted_at: string | null
+          disparado: boolean
+          id: string
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          referencia: string
+          tipo_alerta: string
+          ultima_notificacao_em: string | null
+          updated_at: string
+          usuario_id: string
+          valor_alvo: number
+        }
+        Insert: {
+          ativo?: boolean
+          condicao: string
+          created_at?: string
+          deleted_at?: string | null
+          disparado?: boolean
+          id?: string
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          referencia: string
+          tipo_alerta: string
+          ultima_notificacao_em?: string | null
+          updated_at?: string
+          usuario_id: string
+          valor_alvo: number
+        }
+        Update: {
+          ativo?: boolean
+          condicao?: string
+          created_at?: string
+          deleted_at?: string | null
+          disparado?: boolean
+          id?: string
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          referencia?: string
+          tipo_alerta?: string
+          ultima_notificacao_em?: string | null
+          updated_at?: string
+          usuario_id?: string
+          valor_alvo?: number
+        }
+        Relationships: []
+      }
       anuncios: {
         Row: {
           aceita_permuta: boolean

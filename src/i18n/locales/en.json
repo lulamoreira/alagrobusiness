@@ -291,10 +291,48 @@
     "newMessage": "New message"
   },
   "alerts": {
-    "title": "Notifications",
-    "empty": "No notifications yet.",
-    "markAllRead": "Mark all as read",
-    "unreadOnly": "Unread only"
+    "title": "Price alerts",
+    "subtitle": "Notify me when the price crosses the target.",
+    "empty": "You don't have any alerts yet. Create the first one below.",
+    "new": "New alert",
+    "edit": "Edit alert",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "activate": "Activate",
+    "deactivate": "Pause",
+    "active": "Active",
+    "inactive": "Paused",
+    "armed": "Waiting for crossing",
+    "triggered": "Notified — waiting to rearm",
+    "type": "Type",
+    "typeCommodity": "Commodity",
+    "typeDolar": "Dollar",
+    "reference": "Reference",
+    "selectProduct": "Pick a product",
+    "selectDolar": "Pick a dollar type",
+    "condition": "Condition",
+    "above": "Above",
+    "below": "Below",
+    "target": "Target value",
+    "currency": "Currency",
+    "confirmDelete": "Delete this alert?",
+    "createdToast": "Alert created.",
+    "updatedToast": "Alert updated.",
+    "deletedToast": "Alert removed.",
+    "errorSave": "Could not save: {{detail}}",
+    "notificationsTitle": "Price notifications received",
+    "notificationsEmpty": "No price notifications yet.",
+    "openBell": "Open bell",
+    "notif": {
+      "commodityTitle": "{{product}} {{condition}} {{value, number}} {{currency}}",
+      "dolarTitle": "Dollar {{type}} {{condition}} {{value, number}} {{currency}}",
+      "message": "Current quote: {{current, number}} {{currency}}"
+    },
+    "validation": {
+      "targetRequired": "Enter a positive target value.",
+      "referenceRequired": "Pick a reference."
+    }
   },
   "notifTypes": {
     "alerta": "Alert",
