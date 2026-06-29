@@ -148,10 +148,12 @@
     "tecnologia": "Technology",
     "pecuaria": "Livestock",
     "trigo": "Wheat",
-    "algodao": "Cotton"
+    "algodao": "Cotton",
+    "geral": "General"
   },
   "units": {
     "saca_60": "Bag (60kg)",
+    "saca_50": "Bag (50kg)",
     "tonelada": "Ton",
     "kg": "Kg",
     "caixa": "Box",

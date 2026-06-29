@@ -8,9 +8,9 @@ const corsHeaders = {
 };
 
 const FEEDS: { fonte: string; url: string }[] = [
-  { fonte: "Notícias Agrícolas", url: "https://www.noticiasagricolas.com.br/rss/noticias/agronegocio" },
   { fonte: "Canal Rural", url: "https://www.canalrural.com.br/feed/" },
   { fonte: "Globo Rural", url: "https://g1.globo.com/rss/g1/economia/agronegocios/" },
+  { fonte: "Campo & Negócios", url: "https://revistacampoenegocios.com.br/feed/" },
 ];
 
 const TEMAS: { key: string; words: string[] }[] = [
@@ -25,12 +25,12 @@ const TEMAS: { key: string; words: string[] }[] = [
   { key: "algodao", words: ["algodão", "algodao"] },
 ];
 
-function derivarTema(titulo: string, resumo: string): string | null {
+function derivarTema(titulo: string, resumo: string): string {
   const txt = `${titulo} ${resumo}`.toLowerCase();
   for (const t of TEMAS) {
     if (t.words.some((w) => txt.includes(w))) return t.key;
   }
-  return null;
+  return "geral";
 }
 
 function decodeEntities(s: string): string {

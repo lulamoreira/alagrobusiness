@@ -21,12 +21,9 @@ type Produto = (typeof PRODUTOS)[number];
  * Unidade padrão de cotação por produto, em alinhamento com a prática
  * brasileira. Esses nomes_chave devem existir na tabela `unidades`:
  *   - saca_60 (saca 60 kg) — grãos e cafés
+ *   - saca_50 (saca 50 kg) — arroz
  *   - arroba (15 kg)       — bovino gordo e algodão
  *   - kg                    — suíno
- *
- * Observação: o arroz no mercado interno costuma ser cotado em saca de
- * 50 kg; até cadastrarmos uma unidade "saca_50", usamos saca_60 como
- * fallback razoável. Trocar manualmente quando necessário.
  */
 const PRODUTO_UNIDADE_PADRAO: Record<Produto, string> = {
   soja: "saca_60",
@@ -35,7 +32,7 @@ const PRODUTO_UNIDADE_PADRAO: Record<Produto, string> = {
   cafe_conilon: "saca_60",
   trigo: "saca_60",
   feijao: "saca_60",
-  arroz: "saca_60", // TODO: cadastrar saca_50 e migrar arroz para ela
+  arroz: "saca_50",
   boi_gordo: "arroba",
   algodao: "arroba",
   suino: "kg",

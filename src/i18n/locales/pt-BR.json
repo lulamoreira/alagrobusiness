@@ -148,10 +148,12 @@
     "tecnologia": "Tecnologia",
     "pecuaria": "Pecuária",
     "trigo": "Trigo",
-    "algodao": "Algodão"
+    "algodao": "Algodão",
+    "geral": "Geral"
   },
   "units": {
     "saca_60": "Saca (60kg)",
+    "saca_50": "Saca (50kg)",
     "tonelada": "Tonelada",
     "kg": "Quilo",
     "caixa": "Caixa",
