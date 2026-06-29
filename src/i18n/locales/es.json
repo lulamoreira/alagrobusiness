@@ -291,10 +291,48 @@
     "newMessage": "Nuevo mensaje"
   },
   "alerts": {
-    "title": "Notificaciones",
-    "empty": "Sin notificaciones por ahora.",
-    "markAllRead": "Marcar todas como leídas",
-    "unreadOnly": "Solo sin leer"
+    "title": "Alertas de precio",
+    "subtitle": "Avísame cuando el precio cruce el objetivo.",
+    "empty": "Aún no tienes alertas. Crea la primera abajo.",
+    "new": "Nueva alerta",
+    "edit": "Editar alerta",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "activate": "Activar",
+    "deactivate": "Pausar",
+    "active": "Activa",
+    "inactive": "Pausada",
+    "armed": "Esperando cruce",
+    "triggered": "Notificada — esperando reactivación",
+    "type": "Tipo",
+    "typeCommodity": "Commodity",
+    "typeDolar": "Dólar",
+    "reference": "Referencia",
+    "selectProduct": "Elige el producto",
+    "selectDolar": "Elige el tipo de dólar",
+    "condition": "Condición",
+    "above": "Por encima de",
+    "below": "Por debajo de",
+    "target": "Valor objetivo",
+    "currency": "Moneda",
+    "confirmDelete": "¿Eliminar esta alerta?",
+    "createdToast": "Alerta creada.",
+    "updatedToast": "Alerta actualizada.",
+    "deletedToast": "Alerta eliminada.",
+    "errorSave": "No se pudo guardar: {{detail}}",
+    "notificationsTitle": "Notificaciones de precio recibidas",
+    "notificationsEmpty": "Aún no hay notificaciones de precio.",
+    "openBell": "Ver en la campana",
+    "notif": {
+      "commodityTitle": "{{product}} {{condition}} {{value, number}} {{currency}}",
+      "dolarTitle": "Dólar {{type}} {{condition}} {{value, number}} {{currency}}",
+      "message": "Cotización actual: {{current, number}} {{currency}}"
+    },
+    "validation": {
+      "targetRequired": "Ingresa un valor objetivo positivo.",
+      "referenceRequired": "Elige la referencia."
+    }
   },
   "notifTypes": {
     "alerta": "Alerta",
