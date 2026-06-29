@@ -98,7 +98,11 @@
   "news": {
     "title": "Notícias do agro",
     "empty": "Sem notícias por enquanto.",
-    "readMore": "Ler mais"
+    "readMore": "Ler mais",
+    "myThemes": "Meus temas",
+    "allThemes": "Todas",
+    "allChip": "Todos",
+    "noInterestsHint": "Você ainda não escolheu temas de interesse — mostrando notícias gerais."
   },
   "settings": {
     "title": "Configurações",
