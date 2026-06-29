@@ -645,6 +645,7 @@ export type Database = {
         }
         Returns: Database["public"]["Enums"]["status_perfil"]
       }
+      get_cron_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {
         Args: { p_items: Json }
         Returns: {

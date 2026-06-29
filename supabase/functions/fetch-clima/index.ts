@@ -7,16 +7,25 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-cron-secret",
 };
 
-function checkCronAuth(req: Request): Response | null {
-  const expected = Deno.env.get("CRON_SECRET");
-  if (!expected) {
-    return new Response(JSON.stringify({ error: "CRON_SECRET not configured" }), {
+async function checkCronAuth(
+  req: Request,
+  supabase: ReturnType<typeof createClient>,
+): Promise<Response | null> {
+  const provided = req.headers.get("x-cron-secret");
+  if (!provided) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+  const { data: expected, error } = await supabase.rpc("get_cron_secret");
+  if (error || !expected) {
+    return new Response(JSON.stringify({ error: "Server auth not configured" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-  const provided = req.headers.get("x-cron-secret");
-  if (!provided || provided !== expected) {
+  if (provided !== expected) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -89,13 +98,14 @@ async function upsertClima(
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
-  const authErr = checkCronAuth(req);
-  if (authErr) return authErr;
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+
+  const authErr = await checkCronAuth(req, supabase);
+  if (authErr) return authErr;
 
   // Regiões distintas a partir de profiles.
   const { data: profs, error: profErr } = await supabase
