@@ -89,6 +89,8 @@ async function upsertClima(
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  const authErr = checkCronAuth(req);
+  if (authErr) return authErr;
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
