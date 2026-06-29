@@ -98,7 +98,11 @@
   "news": {
     "title": "Agribusiness news",
     "empty": "No news yet.",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "myThemes": "My topics",
+    "allThemes": "All",
+    "allChip": "All",
+    "noInterestsHint": "You haven't picked any topics yet — showing general news."
   },
   "settings": {
     "title": "Settings",
