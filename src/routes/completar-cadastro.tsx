@@ -17,7 +17,7 @@ export const Route = createFileRoute("/completar-cadastro")({
 });
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
-const THEMES = ["soja", "cafe", "milho", "clima", "mercado", "tecnologia", "pecuaria", "trigo", "algodao"] as const;
+const THEMES = ["soja", "cafe", "milho", "clima", "mercado", "tecnologia", "pecuaria", "trigo", "algodao", "geral"] as const;
 const PROFILE_TYPES = ["comprador", "vendedor", "lojista", "marca"] as const;
 const LANGS = ["pt-BR", "en", "es"] as const;
 const CURRENCIES = ["BRL", "USD", "EUR"] as const;
