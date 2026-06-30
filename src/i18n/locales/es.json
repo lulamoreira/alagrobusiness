@@ -90,7 +90,8 @@
     "more": "Más",
     "finance": "Financiero",
     "agenda": "Agenda",
-    "reports": "Reportes"
+    "reports": "Reportes",
+    "plans": "Planes"
   },
   "dashboard": {
     "hello": "Hola",
@@ -633,6 +634,56 @@
       "em_negociacao": "En negociación",
       "fechado": "Cerrado",
       "descartado": "Descartado"
+    }
+  },
+  "plan": {
+    "proBadge": "Pro",
+    "trialBadge": "Prueba",
+    "viewPlans": "Ver planes",
+    "current": "Plan actual",
+    "free": "Gratis",
+    "month": "mes",
+    "annual": "Anual",
+    "subscribe": "Suscribirse",
+    "alreadyActive": "Plan activo",
+    "checkoutSoon": "Checkout próximamente — disponible en la próxima fase.",
+    "recommended": "Recomendado",
+    "banner": {
+      "trial": "Tu prueba Pro termina en {{days}} día(s) — suscríbete para mantenerla.",
+      "cta": "Suscribirse",
+      "free": "Estás en el plan Gratis.",
+      "upgradeLink": "Ver planes →"
+    },
+    "page": {
+      "title": "Planes",
+      "subtitle": "Elige el plan ideal para tu negocio."
+    },
+    "gate": {
+      "title": "Función Pro",
+      "description": "Esta función está disponible solo para suscriptores Pro. Mejora para desbloquear todo."
+    },
+    "feature": {
+      "negotiations": "Negociaciones es una función Pro",
+      "finance": "Finanzas es una función Pro",
+      "agenda": "Agenda es una función Pro",
+      "reports": "Informes es una función Pro"
+    },
+    "limit": {
+      "anuncios": "Alcanzaste el límite de anuncios del plan Gratis.",
+      "alertas": "Alcanzaste el límite de alertas del plan Gratis.",
+      "description": "Suscríbete a Pro para uso ilimitado."
+    },
+    "features": {
+      "unlimitedAnuncios": "Anuncios ilimitados",
+      "maxAnuncios": "Hasta {{n}} anuncios activos",
+      "unlimitedAlertas": "Alertas de precio ilimitadas",
+      "maxAlertas": "Hasta {{n}} alerta(s) de precio",
+      "painelFull": "Panel completo (negociaciones, finanzas, agenda, informes)",
+      "painelLimited": "Panel básico",
+      "cursosFull": "Cursos completos",
+      "cursosPreview": "Cursos en vista previa",
+      "clubeFull": "Club de ventajas",
+      "clubeNone": "Sin club de ventajas"
     }
   }
 }
