@@ -59,23 +59,8 @@ export function filterRange<T extends { data: string }>(rows: T[], days: 7 | 30)
   return rows.filter((r) => r.data >= iso);
 }
 
-/** Returns the catalogued commodity keys we render on /cotacao (and admin/cotacoes). */
-export const COMMODITY_KEYS = [
-  "soja",
-  "milho",
-  "cafe_arabica",
-  "cafe_conilon",
-  "boi_gordo",
-  "suino",
-  "trigo",
-  "algodao",
-  "arroz",
-  "feijao",
-] as const;
-export type CommodityKey = (typeof COMMODITY_KEYS)[number];
-
-/** Default trio shown in the /painel summary card. */
-export const PAINEL_FEATURED: CommodityKey[] = ["soja", "milho", "boi_gordo"];
+/** Máximo de commodities exibidas em destaque no /painel (resumo). */
+export const PAINEL_MAX_FEATURED = 3;
 
 /** Groups commodity rows by produto, sorted ascending by date. */
 export function groupCommodityHistory(rows: CommodityRow[]): Map<string, CommodityRow[]> {
