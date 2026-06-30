@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { handlePaywallError } from "@/components/PlanStatus";
 
 export const Route = createFileRoute("/_authenticated/alertas")({
   component: AlertsPage,
@@ -241,6 +242,7 @@ function AlertsPage() {
       void queryClient.invalidateQueries({ queryKey: ["alertas_preco", userId] });
     },
     onError: (e: unknown) => {
+      if (handlePaywallError(e, t)) return;
       const detail = e instanceof z.ZodError ? e.errors.map((x) => x.message).join(", ") : (e as Error).message;
       toast.error(t("alerts.errorSave", { detail }));
     },

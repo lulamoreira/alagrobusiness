@@ -90,7 +90,8 @@
     "more": "Mais",
     "finance": "Financeiro",
     "agenda": "Agenda",
-    "reports": "Relatórios"
+    "reports": "Relatórios",
+    "plans": "Planos"
   },
   "dashboard": {
     "hello": "Olá",
@@ -633,6 +634,56 @@
       "em_negociacao": "Em negociação",
       "fechado": "Fechado",
       "descartado": "Descartado"
+    }
+  },
+  "plan": {
+    "proBadge": "Pro",
+    "trialBadge": "Trial",
+    "viewPlans": "Ver planos",
+    "current": "Plano atual",
+    "free": "Grátis",
+    "month": "mês",
+    "annual": "Anual",
+    "subscribe": "Assinar",
+    "alreadyActive": "Plano ativo",
+    "checkoutSoon": "Checkout em breve — disponível na próxima fase.",
+    "recommended": "Recomendado",
+    "banner": {
+      "trial": "Seu teste Pro termina em {{days}} dia(s) — assine para manter.",
+      "cta": "Assinar",
+      "free": "Você está no plano Free.",
+      "upgradeLink": "Ver planos →"
+    },
+    "page": {
+      "title": "Planos",
+      "subtitle": "Escolha o plano que combina com o seu negócio."
+    },
+    "gate": {
+      "title": "Recurso Pro",
+      "description": "Esta funcionalidade está disponível apenas para assinantes Pro. Faça upgrade para liberar todos os recursos."
+    },
+    "feature": {
+      "negotiations": "Negociações é um recurso Pro",
+      "finance": "Financeiro é um recurso Pro",
+      "agenda": "Agenda é um recurso Pro",
+      "reports": "Relatórios é um recurso Pro"
+    },
+    "limit": {
+      "anuncios": "Você atingiu o limite de anúncios do plano Free.",
+      "alertas": "Você atingiu o limite de alertas do plano Free.",
+      "description": "Assine o Pro para liberar uso ilimitado."
+    },
+    "features": {
+      "unlimitedAnuncios": "Anúncios ilimitados",
+      "maxAnuncios": "Até {{n}} anúncios ativos",
+      "unlimitedAlertas": "Alertas de preço ilimitados",
+      "maxAlertas": "Até {{n}} alerta(s) de preço",
+      "painelFull": "Painel completo (negociações, financeiro, agenda, relatórios)",
+      "painelLimited": "Painel básico",
+      "cursosFull": "Cursos completos",
+      "cursosPreview": "Cursos em pré-visualização",
+      "clubeFull": "Clube de vantagens",
+      "clubeNone": "Sem clube de vantagens"
     }
   }
 }

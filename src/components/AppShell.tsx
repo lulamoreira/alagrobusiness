@@ -4,6 +4,8 @@ import { useAuth } from "@/lib/auth";
 import { Logo } from "./Logo";
 import { LanguageSelector } from "./LanguageSelector";
 import { AmbientGlow } from "./AmbientGlow";
+import { PlanBadge, PlanBanner } from "./PlanStatus";
+import { usePlan } from "@/lib/plan";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -19,6 +21,8 @@ import {
   Wallet,
   CalendarDays,
   BarChart3,
+  Lock,
+  Crown,
 } from "lucide-react";
 
 
@@ -31,20 +35,22 @@ interface NavItem {
   labelKey: string;
   icon: typeof LayoutDashboard;
   badgeKey?: "messages";
+  pro?: boolean;
 }
 
 const NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
-  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
+  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
-  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet },
-  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays },
-  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3 },
+  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
+  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
+  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+  { to: "/planos", labelKey: "nav.plans", icon: Crown },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
 
@@ -80,6 +86,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { profile, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const unreadMessages = useUnreadMessages();
+  const { isPro } = usePlan();
 
   const resolveBadge = (key?: NavItem["badgeKey"]) => {
     if (key === "messages") return unreadMessages;
@@ -114,6 +121,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               >
                 <Icon className="h-4 w-4" />
                 <span>{t(item.labelKey)}</span>
+                {item.pro && !isPro && (
+                  <Lock className="ml-1 h-3 w-3 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
+                )}
                 <Badge count={badge} />
               </Link>
             );
@@ -149,6 +159,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Logo size="sm" />
         </div>
         <div className="ml-auto flex items-center gap-3">
+          <PlanBadge />
           <LanguageSelector />
           <div className="hidden items-center gap-2 md:flex">
             <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
@@ -160,6 +171,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Content */}
       <main className="mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 lg:pl-72 lg:pr-8">
+        <PlanBanner />
         {children}
       </main>
 

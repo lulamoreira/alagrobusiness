@@ -985,6 +985,7 @@ export type Database = {
         }
         Returns: Database["public"]["Enums"]["status_perfil"]
       }
+      current_plan: { Args: never; Returns: Json }
       current_plan_limites: { Args: { uid: string }; Returns: Json }
       get_cron_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {

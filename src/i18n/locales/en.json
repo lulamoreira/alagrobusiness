@@ -90,7 +90,8 @@
     "more": "More",
     "finance": "Finance",
     "agenda": "Calendar",
-    "reports": "Reports"
+    "reports": "Reports",
+    "plans": "Plans"
   },
   "dashboard": {
     "hello": "Hello",
@@ -633,6 +634,56 @@
       "em_negociacao": "In negotiation",
       "fechado": "Closed",
       "descartado": "Discarded"
+    }
+  },
+  "plan": {
+    "proBadge": "Pro",
+    "trialBadge": "Trial",
+    "viewPlans": "View plans",
+    "current": "Current plan",
+    "free": "Free",
+    "month": "month",
+    "annual": "Yearly",
+    "subscribe": "Subscribe",
+    "alreadyActive": "Active plan",
+    "checkoutSoon": "Checkout coming soon — available in the next phase.",
+    "recommended": "Recommended",
+    "banner": {
+      "trial": "Your Pro trial ends in {{days}} day(s) — subscribe to keep it.",
+      "cta": "Subscribe",
+      "free": "You are on the Free plan.",
+      "upgradeLink": "View plans →"
+    },
+    "page": {
+      "title": "Plans",
+      "subtitle": "Pick the plan that fits your business."
+    },
+    "gate": {
+      "title": "Pro feature",
+      "description": "This feature is available only for Pro subscribers. Upgrade to unlock everything."
+    },
+    "feature": {
+      "negotiations": "Negotiations is a Pro feature",
+      "finance": "Finance is a Pro feature",
+      "agenda": "Calendar is a Pro feature",
+      "reports": "Reports is a Pro feature"
+    },
+    "limit": {
+      "anuncios": "You reached the listing limit of the Free plan.",
+      "alertas": "You reached the alert limit of the Free plan.",
+      "description": "Subscribe to Pro for unlimited usage."
+    },
+    "features": {
+      "unlimitedAnuncios": "Unlimited listings",
+      "maxAnuncios": "Up to {{n}} active listings",
+      "unlimitedAlertas": "Unlimited price alerts",
+      "maxAlertas": "Up to {{n}} price alert(s)",
+      "painelFull": "Full dashboard (negotiations, finance, calendar, reports)",
+      "painelLimited": "Basic dashboard",
+      "cursosFull": "Full courses",
+      "cursosPreview": "Course previews",
+      "clubeFull": "Rewards club",
+      "clubeNone": "No rewards club"
     }
   }
 }

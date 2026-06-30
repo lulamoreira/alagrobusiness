@@ -10,6 +10,7 @@ import { PillButton } from "@/components/PillButton";
 import { PhotoDropzone, type PhotoItem } from "@/components/PhotoDropzone";
 import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
+import { handlePaywallError } from "@/components/PlanStatus";
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
@@ -213,7 +214,11 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
       navigate({ to: "/vender" });
     } catch (err) {
       console.error(err);
-      setServerError(t("form.error"));
+      if (handlePaywallError(err, t)) {
+        // friendly toast was shown
+      } else {
+        setServerError(t("form.error"));
+      }
     } finally {
       setSubmitting(false);
     }

@@ -18,6 +18,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedVenderRouteImport } from './routes/_authenticated.vender'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated.relatorios'
+import { Route as AuthenticatedPlanosRouteImport } from './routes/_authenticated.planos'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated.painel'
 import { Route as AuthenticatedNoticiasRouteImport } from './routes/_authenticated.noticias'
 import { Route as AuthenticatedNegociacoesRouteImport } from './routes/_authenticated.negociacoes'
@@ -78,6 +79,11 @@ const AuthenticatedVenderRoute = AuthenticatedVenderRouteImport.update({
 const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPlanosRoute = AuthenticatedPlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
@@ -216,6 +223,7 @@ export interface FileRoutesByTo {
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
@@ -244,6 +252,7 @@ export interface FileRoutesById {
   '/_authenticated/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/planos': typeof AuthenticatedPlanosRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
@@ -273,6 +282,7 @@ export interface FileRouteTypes {
     | '/negociacoes'
     | '/noticias'
     | '/painel'
+    | '/planos'
     | '/relatorios'
     | '/vender'
     | '/admin/cotacoes'
@@ -299,6 +309,7 @@ export interface FileRouteTypes {
     | '/negociacoes'
     | '/noticias'
     | '/painel'
+    | '/planos'
     | '/relatorios'
     | '/admin/cotacoes'
     | '/anuncio/$id'
@@ -326,6 +337,7 @@ export interface FileRouteTypes {
     | '/_authenticated/negociacoes'
     | '/_authenticated/noticias'
     | '/_authenticated/painel'
+    | '/_authenticated/planos'
     | '/_authenticated/relatorios'
     | '/_authenticated/vender'
     | '/_authenticated/admin/cotacoes'
@@ -410,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/relatorios'
       fullPath: '/relatorios'
       preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/planos': {
+      id: '/_authenticated/planos'
+      path: '/planos'
+      fullPath: '/planos'
+      preLoaderRoute: typeof AuthenticatedPlanosRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/painel': {
@@ -577,6 +596,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedNegociacoesRoute: typeof AuthenticatedNegociacoesRoute
   AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedPlanosRoute: typeof AuthenticatedPlanosRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
@@ -594,6 +614,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedNegociacoesRoute: AuthenticatedNegociacoesRoute,
   AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedPlanosRoute: AuthenticatedPlanosRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
@@ -616,13 +637,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
