@@ -434,7 +434,15 @@
     "perUnit": "/ {{unit}}",
     "comercial": "Comercial",
     "turismo": "Turismo",
-    "paralelo": "Paralelo"
+    "paralelo": "Paralelo",
+    "personalizeTitle": "Personalizar",
+    "personalizeHint": "Selecione as commodities e tipos de dólar que deseja ver. Vazio = mostrar todos com dados.",
+    "personalizeCommodities": "Commodities",
+    "personalizeDollar": "Tipos de dólar",
+    "personalizeSave": "Salvar preferências",
+    "personalizeSaved": "Preferências salvas.",
+    "personalizeClear": "Limpar seleção",
+    "emptyWithFilters": "Nenhuma commodity selecionada possui cotação atual."
   },
   "adminQuotes": {
     "navLabel": "Admin · Cotações",
