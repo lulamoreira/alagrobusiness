@@ -10,6 +10,7 @@ import { PillButton } from "@/components/PillButton";
 import { PhotoDropzone, type PhotoItem } from "@/components/PhotoDropzone";
 import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
+import { handlePaywallError } from "@/components/PlanStatus";
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
