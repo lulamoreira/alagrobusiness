@@ -92,10 +92,11 @@ export function BusinessDashboard() {
         supabase.from("unidades").select("id, fator_kg").is("deleted_at", null),
         supabase
           .from("vendas")
-          .select("valor_total, moeda")
+          .select("valor_total, moeda, status_pagamento")
           .eq("vendedor_id", user!.id)
           .is("deleted_at", null),
       ]);
+
 
       const anuncios = anunciosRes.data ?? [];
       const unidades = unidadesRes.data ?? [];
