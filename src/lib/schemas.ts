@@ -27,3 +27,12 @@ export const signupSchema = z
     path: ["confirmPassword"],
   });
 export type SignupInput = z.infer<typeof signupSchema>;
+
+export const registrarVendaSchema = z.object({
+  quantidade: z.coerce.number({ message: "validation.positiveNumber" }).positive({ message: "validation.positiveNumber" }),
+  unidade_id: z.string().uuid({ message: "validation.required" }),
+  valor_total: z.coerce.number({ message: "validation.positiveNumber" }).nonnegative({ message: "validation.positiveNumber" }),
+  comprador_nome: z.string().trim().max(120).optional().or(z.literal("")),
+  data_venda: z.string().refine((s) => !Number.isNaN(Date.parse(s)), { message: "validation.dateInvalid" }),
+});
+export type RegistrarVendaInput = z.infer<typeof registrarVendaSchema>;

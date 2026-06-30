@@ -10,6 +10,7 @@ import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
@@ -21,6 +22,8 @@ type AnuncioRow = {
   preco: number;
   moeda: "BRL" | "USD" | "EUR";
   preco_unidade_id: string;
+  quantidade_disponivel: number;
+  quantidade_unidade_id: string;
   fotos: string[];
   updated_at: string;
   estado: string | null;
@@ -48,6 +51,8 @@ function SellPage() {
   const navigate = useNavigate();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [soldDialog, setSoldDialog] = useState<AnuncioRow | null>(null);
+  const [soldToast, setSoldToast] = useState<string | null>(null);
 
   const { data: anuncios, isLoading } = useQuery({
     queryKey: ["my_anuncios", user?.id],
@@ -187,7 +192,7 @@ function SellPage() {
                     <button
                       type="button"
                       disabled={busyId === a.id}
-                      onClick={() => updateStatus(a.id, "vendido")}
+                      onClick={() => setSoldDialog(a)}
                       className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent disabled:opacity-50"
                     >
                       <CheckCircle2 className="h-3 w-3" />
@@ -208,6 +213,24 @@ function SellPage() {
             );
           })}
         </ul>
+      )}
+
+      {soldToast && (
+        <div className="fixed bottom-24 left-1/2 z-40 -translate-x-1/2 rounded-full border border-primary/40 bg-primary/15 px-4 py-2 text-xs font-medium text-primary backdrop-blur md:bottom-6">
+          {soldToast}
+        </div>
+      )}
+
+      {soldDialog && (
+        <MarkAsSoldDialog
+          open={!!soldDialog}
+          anuncio={soldDialog}
+          onClose={() => setSoldDialog(null)}
+          onSuccess={() => {
+            setSoldToast(t("sell.markSoldDialog.success"));
+            window.setTimeout(() => setSoldToast(null), 3000);
+          }}
+        />
       )}
     </div>
   );

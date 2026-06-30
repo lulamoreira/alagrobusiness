@@ -1,0 +1,1 @@
+COMMENT ON TABLE public.vendas IS 'Registro manual de vendas do produtor';

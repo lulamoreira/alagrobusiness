@@ -17,6 +17,7 @@ import {
 } from "@/lib/quotes";
 import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
+import { BusinessDashboard } from "@/components/BusinessDashboard";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
@@ -113,6 +114,8 @@ function PainelPage() {
         </h1>
         <p className="text-sm text-muted-foreground">{t("dashboard.summary")}</p>
       </section>
+
+      <BusinessDashboard />
 
       <section>
         <div className="mb-3 flex items-center justify-between">
