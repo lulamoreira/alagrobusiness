@@ -240,6 +240,62 @@ export type Database = {
           },
         ]
       }
+      assinaturas: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          fim: string | null
+          id: string
+          inicio: string
+          periodo: string | null
+          plano_id: string
+          status: Database["public"]["Enums"]["assinatura_status"]
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          trial_ate: string | null
+          updated_at: string
+          usuario_id: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          fim?: string | null
+          id?: string
+          inicio?: string
+          periodo?: string | null
+          plano_id: string
+          status?: Database["public"]["Enums"]["assinatura_status"]
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          trial_ate?: string | null
+          updated_at?: string
+          usuario_id: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          fim?: string | null
+          id?: string
+          inicio?: string
+          periodo?: string | null
+          plano_id?: string
+          status?: Database["public"]["Enums"]["assinatura_status"]
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          trial_ate?: string | null
+          updated_at?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assinaturas_plano_id_fkey"
+            columns: ["plano_id"]
+            isOneToOne: false
+            referencedRelation: "planos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clima: {
         Row: {
           atualizado_em: string
@@ -584,6 +640,60 @@ export type Database = {
           },
         ]
       }
+      planos: {
+        Row: {
+          ativo: boolean
+          codigo: string
+          created_at: string
+          deleted_at: string | null
+          descricao: Json
+          id: string
+          limites: Json
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          nome: Json
+          ordem: number
+          preco_anual: number
+          preco_mensal: number
+          stripe_price_id_anual: string | null
+          stripe_price_id_mensal: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          codigo: string
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: Json
+          id?: string
+          limites?: Json
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          nome?: Json
+          ordem?: number
+          preco_anual?: number
+          preco_mensal?: number
+          stripe_price_id_anual?: string | null
+          stripe_price_id_mensal?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          codigo?: string
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: Json
+          id?: string
+          limites?: Json
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          nome?: Json
+          ordem?: number
+          preco_anual?: number
+          preco_mensal?: number
+          stripe_price_id_anual?: string | null
+          stripe_price_id_mensal?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       preferencias: {
         Row: {
           created_at: string
@@ -825,6 +935,7 @@ export type Database = {
         }
         Returns: Database["public"]["Enums"]["status_perfil"]
       }
+      current_plan_limites: { Args: { uid: string }; Returns: Json }
       get_cron_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {
         Args: { p_items: Json }
@@ -848,6 +959,7 @@ export type Database = {
       }
     }
     Enums: {
+      assinatura_status: "trial" | "ativa" | "cancelada" | "expirada"
       categoria_agro: "fruta" | "grao" | "legumes" | "vegetal"
       idioma_app: "pt-BR" | "en" | "es"
       modalidade_entrega: "retirada" | "entrega" | "ambos"
@@ -992,6 +1104,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      assinatura_status: ["trial", "ativa", "cancelada", "expirada"],
       categoria_agro: ["fruta", "grao", "legumes", "vegetal"],
       idioma_app: ["pt-BR", "en", "es"],
       modalidade_entrega: ["retirada", "entrega", "ambos"],
