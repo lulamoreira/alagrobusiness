@@ -477,8 +477,20 @@
     "errorSave": "Falha ao salvar: {{detail}}",
     "validation": {
       "valueRequired": "Informe um valor válido.",
-      "unitRequired": "Selecione a unidade."
-    }
+      "unitRequired": "Selecione a unidade.",
+      "codeRequired": "Informe o código (slug).",
+      "nameRequired": "Informe o nome em pelo menos um idioma."
+    },
+    "newProduct": "Novo produto",
+    "newProductTitle": "Cadastrar nova commodity",
+    "newProductHint": "Defina um código curto (ex.: tomate) e nomes nos 3 idiomas.",
+    "code": "Código",
+    "namePt": "Nome (pt-BR)",
+    "nameEn": "Nome (en)",
+    "nameEs": "Nome (es)",
+    "defaultUnit": "Unidade padrão",
+    "createProduct": "Cadastrar",
+    "productCreated": "Commodity cadastrada."
   },
   "weather": {
     "title": "Clima",
