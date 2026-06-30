@@ -144,7 +144,8 @@
     "minOneCategory": "Selecione pelo menos uma categoria",
     "positiveNumber": "Informe um número maior que zero",
     "minOnePhoto": "Adicione ao menos uma foto",
-    "dateInvalid": "Data inválida"
+    "dateInvalid": "Data inválida",
+    "invalid_amount": "Valor inválido"
   },
   "google": {
     "signin": "Entrar com Google",
