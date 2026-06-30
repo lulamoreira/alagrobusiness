@@ -678,11 +678,13 @@ export type Database = {
           anuncio_id: string
           comprador_nome: string | null
           created_at: string
+          data_recebimento: string | null
           data_venda: string
           deleted_at: string | null
           id: string
           moeda: Database["public"]["Enums"]["moeda_app"]
           quantidade: number
+          status_pagamento: Database["public"]["Enums"]["pagamento_status"]
           unidade_id: string
           updated_at: string
           valor_total: number
@@ -692,11 +694,13 @@ export type Database = {
           anuncio_id: string
           comprador_nome?: string | null
           created_at?: string
+          data_recebimento?: string | null
           data_venda?: string
           deleted_at?: string | null
           id?: string
           moeda?: Database["public"]["Enums"]["moeda_app"]
           quantidade: number
+          status_pagamento?: Database["public"]["Enums"]["pagamento_status"]
           unidade_id: string
           updated_at?: string
           valor_total: number
@@ -706,11 +710,13 @@ export type Database = {
           anuncio_id?: string
           comprador_nome?: string | null
           created_at?: string
+          data_recebimento?: string | null
           data_venda?: string
           deleted_at?: string | null
           id?: string
           moeda?: Database["public"]["Enums"]["moeda_app"]
           quantidade?: number
+          status_pagamento?: Database["public"]["Enums"]["pagamento_status"]
           unidade_id?: string
           updated_at?: string
           valor_total?: number
@@ -784,6 +790,7 @@ export type Database = {
       modalidade_entrega: "retirada" | "entrega" | "ambos"
       moeda_app: "BRL" | "USD" | "EUR"
       negociacao_status: "iniciado" | "em_negociacao" | "fechado" | "descartado"
+      pagamento_status: "aguardando" | "recebido"
       status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
       tipo_dolar: "comercial" | "turismo" | "paralelo"
@@ -920,6 +927,7 @@ export const Constants = {
       modalidade_entrega: ["retirada", "entrega", "ambos"],
       moeda_app: ["BRL", "USD", "EUR"],
       negociacao_status: ["iniciado", "em_negociacao", "fechado", "descartado"],
+      pagamento_status: ["aguardando", "recebido"],
       status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
       tipo_dolar: ["comercial", "turismo", "paralelo"],

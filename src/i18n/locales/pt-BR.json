@@ -87,7 +87,8 @@
     "news": "Notícias",
     "alerts": "Alertas",
     "settings": "Configurações",
-    "more": "Mais"
+    "more": "Mais",
+    "finance": "Financeiro"
   },
   "dashboard": {
     "hello": "Olá",
@@ -107,7 +108,8 @@
       "emptyDescription": "Comece a vender e acompanhe seus indicadores aqui.",
       "emptyCta": "Criar primeiro anúncio",
       "kg": "kg",
-      "ton": "t"
+      "ton": "t",
+      "pendingHint": "{{value}} a receber"
     }
   },
   "news": {
@@ -142,7 +144,8 @@
     "minOneCategory": "Selecione pelo menos uma categoria",
     "positiveNumber": "Informe um número maior que zero",
     "minOnePhoto": "Adicione ao menos uma foto",
-    "dateInvalid": "Data inválida"
+    "dateInvalid": "Data inválida",
+    "invalid_amount": "Valor inválido"
   },
   "google": {
     "signin": "Entrar com Google",
@@ -478,5 +481,49 @@
     "rain": "Chuva",
     "snow": "Neve",
     "thunderstorm": "Tempestade"
+  },
+  "finance": {
+    "title": "Financeiro",
+    "subtitle": "Controle das suas vendas e recebimentos",
+    "kpiTotal": "Total vendido",
+    "kpiReceived": "Recebido",
+    "kpiPending": "A receber",
+    "historyTitle": "Histórico de vendas",
+    "filters": "Filtros",
+    "filterStatus": "Status",
+    "filterAll": "Todos",
+    "filterPending": "Aguardando",
+    "filterReceived": "Recebido",
+    "filterPeriodFrom": "De",
+    "filterPeriodTo": "Até",
+    "colProduct": "Produto",
+    "colBuyer": "Comprador",
+    "colQuantity": "Quantidade",
+    "colTotal": "Valor",
+    "colDate": "Data",
+    "colStatus": "Pagamento",
+    "colActions": "Ações",
+    "statusPending": "Aguardando",
+    "statusReceived": "Recebido",
+    "markReceived": "Marcar como recebido",
+    "markReceivedSuccess": "Venda marcada como recebida.",
+    "edit": "Editar",
+    "editTitle": "Editar venda",
+    "editTotal": "Valor total",
+    "editBuyer": "Comprador",
+    "editDate": "Data da venda",
+    "editStatus": "Status do pagamento",
+    "editSave": "Salvar alterações",
+    "editSuccess": "Venda atualizada.",
+    "delete": "Excluir",
+    "deleteConfirmTitle": "Excluir esta venda?",
+    "deleteConfirmDesc": "A venda será removida e o anúncio voltará para o status ativo.",
+    "deleteConfirm": "Sim, excluir",
+    "deleteSuccess": "Venda excluída e anúncio reativado.",
+    "emptyTitle": "Sem vendas registradas",
+    "emptyDescription": "Quando você marcar um anúncio como vendido, ele aparecerá aqui.",
+    "pendingHint": "{{value}} a receber",
+    "errorGeneric": "Não foi possível concluir a ação.",
+    "noResults": "Nenhuma venda encontrada com esses filtros."
   }
 }

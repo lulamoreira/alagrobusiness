@@ -14,9 +14,10 @@ interface KpiCardProps {
   value: string;
   icon: typeof Package;
   accent?: boolean;
+  hint?: string;
 }
 
-function KpiCard({ label, value, icon: Icon, accent }: KpiCardProps) {
+function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
   return (
     <div className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
       <div className="flex items-center justify-between">
@@ -42,9 +43,13 @@ function KpiCard({ label, value, icon: Icon, accent }: KpiCardProps) {
       >
         {value}
       </div>
+      {hint ? (
+        <div className="mt-1 text-xs font-medium text-muted-foreground tabular-nums">{hint}</div>
+      ) : null}
     </div>
   );
 }
+
 
 function formatVolume(totalKg: number, t: (k: string) => string, locale: string) {
   if (totalKg <= 0) {
@@ -87,10 +92,11 @@ export function BusinessDashboard() {
         supabase.from("unidades").select("id, fator_kg").is("deleted_at", null),
         supabase
           .from("vendas")
-          .select("valor_total, moeda")
+          .select("valor_total, moeda, status_pagamento")
           .eq("vendedor_id", user!.id)
           .is("deleted_at", null),
       ]);
+
 
       const anuncios = anunciosRes.data ?? [];
       const unidades = unidadesRes.data ?? [];
@@ -121,10 +127,11 @@ export function BusinessDashboard() {
         conversasCount = (conv ?? []).length;
       }
 
-      // Sum revenue in BRL (vendas.moeda is currently 'BRL' by default; treat valor_total as that currency).
-      // For BRL we sum directly; for other currencies we keep numeric value and rely on formatMoney to convert.
-      const totalBRL = vendas
-        .filter((v) => (v.moeda as string) === "BRL")
+      // Sum revenue in BRL (vendas.moeda is currently 'BRL' by default).
+      const brlVendas = vendas.filter((v) => (v.moeda as string) === "BRL");
+      const totalBRL = brlVendas.reduce((acc, v) => acc + Number(v.valor_total), 0);
+      const pendingBRL = brlVendas
+        .filter((v) => (v.status_pagamento as string) === "aguardando")
         .reduce((acc, v) => acc + Number(v.valor_total), 0);
 
       return {
@@ -133,10 +140,12 @@ export function BusinessDashboard() {
         volumeKg,
         negotiatingCount: conversasCount,
         revenueBRL: totalBRL,
+        pendingBRL,
         totalListings: anuncios.length,
       };
     },
   });
+
 
   const nf = new Intl.NumberFormat(i18n.language);
 
@@ -172,6 +181,15 @@ export function BusinessDashboard() {
 
   const k = data!;
   const revenue = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const pendingFormatted = formatMoney(
+    k.pendingBRL,
+    userMoeda,
+    userDolarPref,
+    dolar ?? [],
+    i18n.language,
+  );
+  const pendingHint =
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFormatted }) : undefined;
 
   return (
     <section>
@@ -195,8 +213,15 @@ export function BusinessDashboard() {
           value={nf.format(k.negotiatingCount)}
           icon={MessageCircle}
         />
-        <KpiCard label={t("dashboard.business.revenue")} value={revenue} icon={Wallet} accent />
+        <KpiCard
+          label={t("dashboard.business.revenue")}
+          value={revenue}
+          icon={Wallet}
+          accent
+          hint={pendingHint}
+        />
       </div>
     </section>
   );
 }
+
