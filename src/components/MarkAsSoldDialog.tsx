@@ -23,9 +23,11 @@ interface MarkAsSoldDialogProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialBuyerName?: string;
+  conversaId?: string;
 }
 
-export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess }: MarkAsSoldDialogProps) {
+export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess, initialBuyerName, conversaId }: MarkAsSoldDialogProps) {
   const { t } = useTranslation();
   const { user } = useAuth();
   const qc = useQueryClient();
@@ -36,7 +38,7 @@ export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess }: MarkAsSo
   const [quantidade, setQuantidade] = useState<string>(String(anuncio.quantidade_disponivel));
   const [unidadeId, setUnidadeId] = useState<string>(anuncio.quantidade_unidade_id);
   const [valorTotal, setValorTotal] = useState<string>(String(defaultTotal));
-  const [compradorNome, setCompradorNome] = useState<string>("");
+  const [compradorNome, setCompradorNome] = useState<string>(initialBuyerName ?? "");
   const [dataVenda, setDataVenda] = useState<string>(today);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
