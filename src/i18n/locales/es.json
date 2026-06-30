@@ -319,6 +319,25 @@
     "backToList": "Volver a conversaciones",
     "newMessage": "Nuevo mensaje"
   },
+  "nego": {
+    "title": "Negociaciones",
+    "subtitle": "Sigue los contactos de tus anuncios en un solo lugar.",
+    "empty": "Aún no tienes negociaciones. Cuando alguien abra un chat en uno de tus anuncios, aparecerá aquí.",
+    "emptyColumn": "Sin negociaciones en esta etapa.",
+    "lastMessage": "Último mensaje",
+    "noMessageYet": "Sin mensajes aún",
+    "openChat": "Abrir conversación",
+    "registerSale": "Registrar venta",
+    "moveTo": "Mover a",
+    "moveError": "No se pudo mover la negociación.",
+    "buyer": "Comprador",
+    "status": {
+      "iniciado": "Iniciada",
+      "em_negociacao": "En negociación",
+      "fechado": "Cerrada",
+      "descartado": "Descartada"
+    }
+  },
   "alerts": {
     "title": "Alertas de precio",
     "subtitle": "Avísame cuando el precio cruce el objetivo.",

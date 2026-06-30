@@ -9,6 +9,7 @@ import {
   ShoppingCart,
   Store,
   MessageSquare,
+  Handshake,
   TrendingUp,
   Newspaper,
   Bell,
@@ -32,6 +33,7 @@ const NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
+  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
@@ -43,8 +45,8 @@ const MOBILE_NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
+  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
-  { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
 ];
 
 function Badge({ count }: { count: number }) {
