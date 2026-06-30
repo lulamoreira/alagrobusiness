@@ -332,6 +332,50 @@ export type Database = {
         }
         Relationships: []
       }
+      commodities_catalogo: {
+        Row: {
+          ativo: boolean
+          codigo: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          nome: Json
+          ordem: number
+          unidade_padrao_id: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          codigo: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          nome?: Json
+          ordem?: number
+          unidade_padrao_id: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          codigo?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          nome?: Json
+          ordem?: number
+          unidade_padrao_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commodities_catalogo_unidade_padrao_id_fkey"
+            columns: ["unidade_padrao_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversas: {
         Row: {
           anuncio_id: string
@@ -696,6 +740,7 @@ export type Database = {
       }
       preferencias: {
         Row: {
+          cotacoes_selecionadas: string[]
           created_at: string
           deleted_at: string | null
           id: string
@@ -703,10 +748,12 @@ export type Database = {
           moeda: Database["public"]["Enums"]["moeda_app"]
           temas_noticias: string[]
           tipo_dolar: Database["public"]["Enums"]["tipo_dolar"]
+          tipos_dolar_visiveis: string[]
           updated_at: string
           usuario_id: string
         }
         Insert: {
+          cotacoes_selecionadas?: string[]
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -714,10 +761,12 @@ export type Database = {
           moeda?: Database["public"]["Enums"]["moeda_app"]
           temas_noticias?: string[]
           tipo_dolar?: Database["public"]["Enums"]["tipo_dolar"]
+          tipos_dolar_visiveis?: string[]
           updated_at?: string
           usuario_id: string
         }
         Update: {
+          cotacoes_selecionadas?: string[]
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -725,6 +774,7 @@ export type Database = {
           moeda?: Database["public"]["Enums"]["moeda_app"]
           temas_noticias?: string[]
           tipo_dolar?: Database["public"]["Enums"]["tipo_dolar"]
+          tipos_dolar_visiveis?: string[]
           updated_at?: string
           usuario_id?: string
         }
