@@ -121,6 +121,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               >
                 <Icon className="h-4 w-4" />
                 <span>{t(item.labelKey)}</span>
+                {item.pro && !isPro && (
+                  <Lock className="ml-1 h-3 w-3 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
+                )}
                 <Badge count={badge} />
               </Link>
             );
