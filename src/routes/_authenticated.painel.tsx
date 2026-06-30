@@ -17,6 +17,7 @@ import {
 } from "@/lib/quotes";
 import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
+import { BusinessDashboard } from "@/components/BusinessDashboard";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
