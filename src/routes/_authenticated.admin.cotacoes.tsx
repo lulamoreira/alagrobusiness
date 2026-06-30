@@ -395,7 +395,8 @@ function AdminCotacoesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {PRODUTOS.map((produto) => {
+              {catalog.map((item: CatalogItem) => {
+                const produto = item.codigo;
                 const cur = atuais[produto];
                 const isEditing = editing === produto;
                 const unidadeLabel = cur?.unidade_id
@@ -403,7 +404,7 @@ function AdminCotacoesPage() {
                   : "—";
                 return (
                   <tr key={produto} className="hover:bg-accent/30">
-                    <td className="px-4 py-3 font-medium">{t(`commodities.${produto}`)}</td>
+                    <td className="px-4 py-3 font-medium">{nomeFor(item, i18n.language)}</td>
                     {isEditing ? (
                       <>
                         <td className="px-4 py-2">
