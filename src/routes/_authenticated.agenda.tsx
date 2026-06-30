@@ -1,3 +1,4 @@
+import { ProGate } from "@/components/ProGate";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +21,7 @@ import { PillButton } from "@/components/PillButton";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/agenda")({
-  component: AgendaPage,
+  component: () => (<ProGate featureKey="plan.feature.agenda"><AgendaPage /></ProGate>),
 });
 
 type TipoEvento = "plantio" | "colheita" | "entrega" | "pagamento" | "reuniao" | "outro";

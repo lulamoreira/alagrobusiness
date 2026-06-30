@@ -1,3 +1,4 @@
+import { ProGate } from "@/components/ProGate";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
@@ -9,7 +10,7 @@ import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/negociacoes")({
-  component: NegociacoesPage,
+  component: () => (<ProGate featureKey="plan.feature.negotiations"><NegociacoesPage /></ProGate>),
 });
 
 type Status = "iniciado" | "em_negociacao" | "fechado" | "descartado";
