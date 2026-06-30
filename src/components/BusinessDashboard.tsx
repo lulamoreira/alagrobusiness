@@ -221,8 +221,7 @@ export function BusinessDashboard() {
           hint={pendingHint}
         />
       </div>
-
-      </div>
     </section>
   );
 }
+
