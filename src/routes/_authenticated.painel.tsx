@@ -115,6 +115,8 @@ function PainelPage() {
         <p className="text-sm text-muted-foreground">{t("dashboard.summary")}</p>
       </section>
 
+      <BusinessDashboard />
+
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-display text-lg font-bold">{t("quote.title")}</h2>
