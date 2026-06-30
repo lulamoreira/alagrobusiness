@@ -159,6 +159,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Logo size="sm" />
         </div>
         <div className="ml-auto flex items-center gap-3">
+          <PlanBadge />
           <LanguageSelector />
           <div className="hidden items-center gap-2 md:flex">
             <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
@@ -170,6 +171,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Content */}
       <main className="mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 lg:pl-72 lg:pr-8">
+        <PlanBanner />
         {children}
       </main>
 
