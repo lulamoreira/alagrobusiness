@@ -181,6 +181,15 @@ export function BusinessDashboard() {
 
   const k = data!;
   const revenue = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const pendingFormatted = formatMoney(
+    k.pendingBRL,
+    userMoeda,
+    userDolarPref,
+    dolar ?? [],
+    i18n.language,
+  );
+  const pendingHint =
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFormatted }) : undefined;
 
   return (
     <section>
@@ -204,7 +213,15 @@ export function BusinessDashboard() {
           value={nf.format(k.negotiatingCount)}
           icon={MessageCircle}
         />
-        <KpiCard label={t("dashboard.business.revenue")} value={revenue} icon={Wallet} accent />
+        <KpiCard
+          label={t("dashboard.business.revenue")}
+          value={revenue}
+          icon={Wallet}
+          accent
+          hint={pendingHint}
+        />
+      </div>
+
       </div>
     </section>
   );
