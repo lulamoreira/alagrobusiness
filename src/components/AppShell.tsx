@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   LogOut,
   Wallet,
+  CalendarDays,
 } from "lucide-react";
+
 
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
