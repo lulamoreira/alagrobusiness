@@ -208,7 +208,7 @@ function AdminCotacoesPage() {
     //    a linha é bloqueada no `confirmIA`.
     const enriched = cot.map((c) => {
       const byName = unidades.find((u) => u.nome_chave === c.unidade);
-      const fallbackId = unidadePadraoId(c.produto, unidades);
+      const fallbackId = unidadePadraoId(c.produto);
       return {
         ...c,
         unidade_id: byName?.id || fallbackId || "",
