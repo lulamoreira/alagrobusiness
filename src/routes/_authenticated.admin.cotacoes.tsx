@@ -285,16 +285,100 @@ function AdminCotacoesPage() {
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("adminQuotes.subtitle")}</p>
         </div>
-        <button
-          type="button"
-          onClick={buscarIA}
-          disabled={fetching}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
-        >
-          {fetching ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
-          {fetching ? t("adminQuotes.fetchingAi") : t("adminQuotes.fetchAi")}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setShowNew(true)}
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-card px-4 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/10"
+          >
+            <Plus className="h-4 w-4" />
+            {t("adminQuotes.newProduct")}
+          </button>
+          <button
+            type="button"
+            onClick={buscarIA}
+            disabled={fetching}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
+          >
+            {fetching ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            {fetching ? t("adminQuotes.fetchingAi") : t("adminQuotes.fetchAi")}
+          </button>
+        </div>
       </header>
+
+      {showNew && (
+        <section className="rounded-2xl border border-primary/30 bg-primary/5 p-4 md:p-6">
+          <header className="mb-4 flex items-center justify-between">
+            <h2 className="font-display text-lg font-semibold">{t("adminQuotes.newProduct")}</h2>
+            <button
+              onClick={() => setShowNew(false)}
+              className="rounded-full p-1 hover:bg-accent"
+              aria-label={t("adminQuotes.cancel")}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </header>
+          <div className="grid gap-3 md:grid-cols-2">
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.code")}
+              <input
+                value={newCodigo}
+                onChange={(e) => setNewCodigo(e.target.value)}
+                placeholder="ex: cevada"
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.defaultUnit")}
+              <select
+                value={newUnidadeId}
+                onChange={(e) => setNewUnidadeId(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              >
+                <option value="">—</option>
+                {unidades.map((u) => (
+                  <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`, { defaultValue: u.nome_chave })}</option>
+                ))}
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.namePt")}
+              <input
+                value={newNomePt}
+                onChange={(e) => setNewNomePt(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.nameEn")}
+              <input
+                value={newNomeEn}
+                onChange={(e) => setNewNomeEn(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground md:col-span-2">
+              {t("adminQuotes.nameEs")}
+              <input
+                value={newNomeEs}
+                onChange={(e) => setNewNomeEs(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+          </div>
+          <div className="mt-4 flex justify-end">
+            <button
+              onClick={saveNewProduto}
+              disabled={savingNew}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+            >
+              {savingNew ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {t("adminQuotes.save")}
+            </button>
+          </div>
+        </section>
+      )}
+
 
       <section className="overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-md">
         <div className="overflow-x-auto">
