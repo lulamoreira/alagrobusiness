@@ -477,8 +477,20 @@
     "errorSave": "Failed to save: {{detail}}",
     "validation": {
       "valueRequired": "Enter a valid value.",
-      "unitRequired": "Select the unit."
-    }
+      "unitRequired": "Select the unit.",
+      "codeRequired": "Enter the code (slug).",
+      "nameRequired": "Enter a name in at least one language."
+    },
+    "newProduct": "New product",
+    "newProductTitle": "Add a new commodity",
+    "newProductHint": "Set a short code (e.g. tomate) and names in all 3 languages.",
+    "code": "Code",
+    "namePt": "Name (pt-BR)",
+    "nameEn": "Name (en)",
+    "nameEs": "Name (es)",
+    "defaultUnit": "Default unit",
+    "createProduct": "Create",
+    "productCreated": "Commodity created."
   },
   "weather": {
     "title": "Weather",
