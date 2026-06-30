@@ -5,44 +5,12 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { Loader2, Pencil, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
+import { useCommoditiesCatalog, nomeFor, type CatalogItem } from "@/lib/catalog";
 
 export const Route = createFileRoute("/_authenticated/admin/cotacoes")({
   component: AdminCotacoesPage,
 });
-
-const PRODUTOS = [
-  "soja", "milho", "cafe_arabica", "cafe_conilon", "boi_gordo",
-  "suino", "trigo", "algodao", "arroz", "feijao",
-] as const;
-type Produto = (typeof PRODUTOS)[number];
-
-/**
- * Unidade padrão de cotação por produto, em alinhamento com a prática
- * brasileira. Esses nomes_chave devem existir na tabela `unidades`:
- *   - saca_60 (saca 60 kg) — grãos e cafés
- *   - saca_50 (saca 50 kg) — arroz
- *   - arroba (15 kg)       — bovino gordo e algodão
- *   - kg                    — suíno
- */
-const PRODUTO_UNIDADE_PADRAO: Record<Produto, string> = {
-  soja: "saca_60",
-  milho: "saca_60",
-  cafe_arabica: "saca_60",
-  cafe_conilon: "saca_60",
-  trigo: "saca_60",
-  feijao: "saca_60",
-  arroz: "saca_50",
-  boi_gordo: "arroba",
-  algodao: "arroba",
-  suino: "kg",
-};
-
-/** Resolve o UUID da unidade padrão de um produto na lista carregada. */
-function unidadePadraoId(produto: Produto, unidades: Unidade[]): string {
-  const chave = PRODUTO_UNIDADE_PADRAO[produto];
-  return unidades.find((u) => u.nome_chave === chave)?.id ?? "";
-}
 
 type Moeda = "BRL" | "USD" | "EUR";
 
@@ -63,7 +31,7 @@ interface Cotacao {
 }
 
 interface Sugestao {
-  produto: Produto;
+  produto: string;
   valor: number | string;
   unidade: string;
   unidade_id?: string;
@@ -77,22 +45,32 @@ function AdminCotacoesPage() {
   const { profile } = useAuth();
   const navigate = useNavigate();
 
+  const { data: catalog = [], refetch: refetchCatalog } = useCommoditiesCatalog();
+
   const [unidades, setUnidades] = useState<Unidade[]>([]);
   const [atuais, setAtuais] = useState<Record<string, Cotacao | undefined>>({});
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [editing, setEditing] = useState<Produto | null>(null);
+  const [editing, setEditing] = useState<string | null>(null);
   const [editValor, setEditValor] = useState("");
   const [editUnidade, setEditUnidade] = useState("");
   const [editMoeda, setEditMoeda] = useState<Moeda>("BRL");
   const [preview, setPreview] = useState<Sugestao[] | null>(null);
+  const [showNew, setShowNew] = useState(false);
+  const [newCodigo, setNewCodigo] = useState("");
+  const [newNomePt, setNewNomePt] = useState("");
+  const [newNomeEn, setNewNomeEn] = useState("");
+  const [newNomeEs, setNewNomeEs] = useState("");
+  const [newUnidadeId, setNewUnidadeId] = useState("");
+  const [savingNew, setSavingNew] = useState(false);
 
   useEffect(() => {
     if (profile && profile.tipo_perfil !== "admin") {
       navigate({ to: "/painel" });
     }
   }, [profile, navigate]);
+
 
   const schema = useMemo(() => z.object({
     valor: z.coerce.number({ invalid_type_error: t("adminQuotes.validation.valueRequired") })
@@ -101,6 +79,11 @@ function AdminCotacoesPage() {
     moeda: z.enum(["BRL", "USD", "EUR"]),
   }), [i18n.language]);
 
+  const unidadePadraoId = (codigo: string): string => {
+    const item = catalog.find((c) => c.codigo === codigo);
+    return item?.unidade_padrao_id ?? "";
+  };
+
   const load = async () => {
     setLoading(true);
     const [{ data: uns }, { data: cots }] = await Promise.all([
@@ -108,7 +91,6 @@ function AdminCotacoesPage() {
       supabase
         .from("cotacoes_commodities")
         .select("id, produto, valor, moeda, unidade_id, data, fonte, fonte_url")
-        .in("produto", PRODUTOS as unknown as string[])
         .is("deleted_at", null)
         .order("data", { ascending: false }),
     ]);
@@ -123,16 +105,49 @@ function AdminCotacoesPage() {
 
   useEffect(() => { load(); }, []);
 
-  const startEdit = (produto: Produto) => {
+  const startEdit = (produto: string) => {
     const cur = atuais[produto];
     setEditing(produto);
     setEditValor(cur ? String(cur.valor) : "");
-    // Prioridade: unidade já cadastrada > unidade padrão do produto > primeira disponível
     setEditUnidade(
-      cur?.unidade_id ?? unidadePadraoId(produto, unidades) ?? unidades[0]?.id ?? "",
+      cur?.unidade_id ?? unidadePadraoId(produto) ?? unidades[0]?.id ?? "",
     );
     setEditMoeda((cur?.moeda as Moeda) ?? "BRL");
   };
+
+  const saveNewProduto = async () => {
+    if (!newCodigo.trim() || !newNomePt.trim() || !newUnidadeId) {
+      toast.error(t("adminQuotes.validation.unitRequired"));
+      return;
+    }
+    setSavingNew(true);
+    const codigo = newCodigo.trim().toLowerCase().replace(/\s+/g, "_");
+    const ordem = (catalog[catalog.length - 1]?.ordem ?? 0) + 10;
+    const { error } = await supabase.from("commodities_catalogo").insert({
+      codigo,
+      nome: {
+        "pt-BR": newNomePt.trim(),
+        en: (newNomeEn || newNomePt).trim(),
+        es: (newNomeEs || newNomePt).trim(),
+      },
+      unidade_padrao_id: newUnidadeId,
+      ordem,
+    });
+    setSavingNew(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(t("adminQuotes.newProductSaved"));
+    setShowNew(false);
+    setNewCodigo("");
+    setNewNomePt("");
+    setNewNomeEn("");
+    setNewNomeEs("");
+    setNewUnidadeId("");
+    refetchCatalog();
+  };
+
 
   const saveManual = async () => {
     if (!editing) return;
@@ -193,7 +208,7 @@ function AdminCotacoesPage() {
     //    a linha é bloqueada no `confirmIA`.
     const enriched = cot.map((c) => {
       const byName = unidades.find((u) => u.nome_chave === c.unidade);
-      const fallbackId = unidadePadraoId(c.produto, unidades);
+      const fallbackId = unidadePadraoId(c.produto);
       return {
         ...c,
         unidade_id: byName?.id || fallbackId || "",
@@ -270,16 +285,100 @@ function AdminCotacoesPage() {
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("adminQuotes.subtitle")}</p>
         </div>
-        <button
-          type="button"
-          onClick={buscarIA}
-          disabled={fetching}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
-        >
-          {fetching ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
-          {fetching ? t("adminQuotes.fetchingAi") : t("adminQuotes.fetchAi")}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setShowNew(true)}
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-card px-4 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/10"
+          >
+            <Plus className="h-4 w-4" />
+            {t("adminQuotes.newProduct")}
+          </button>
+          <button
+            type="button"
+            onClick={buscarIA}
+            disabled={fetching}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
+          >
+            {fetching ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            {fetching ? t("adminQuotes.fetchingAi") : t("adminQuotes.fetchAi")}
+          </button>
+        </div>
       </header>
+
+      {showNew && (
+        <section className="rounded-2xl border border-primary/30 bg-primary/5 p-4 md:p-6">
+          <header className="mb-4 flex items-center justify-between">
+            <h2 className="font-display text-lg font-semibold">{t("adminQuotes.newProduct")}</h2>
+            <button
+              onClick={() => setShowNew(false)}
+              className="rounded-full p-1 hover:bg-accent"
+              aria-label={t("adminQuotes.cancel")}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </header>
+          <div className="grid gap-3 md:grid-cols-2">
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.code")}
+              <input
+                value={newCodigo}
+                onChange={(e) => setNewCodigo(e.target.value)}
+                placeholder="ex: cevada"
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.defaultUnit")}
+              <select
+                value={newUnidadeId}
+                onChange={(e) => setNewUnidadeId(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              >
+                <option value="">—</option>
+                {unidades.map((u) => (
+                  <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`, { defaultValue: u.nome_chave })}</option>
+                ))}
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.namePt")}
+              <input
+                value={newNomePt}
+                onChange={(e) => setNewNomePt(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground">
+              {t("adminQuotes.nameEn")}
+              <input
+                value={newNomeEn}
+                onChange={(e) => setNewNomeEn(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium text-muted-foreground md:col-span-2">
+              {t("adminQuotes.nameEs")}
+              <input
+                value={newNomeEs}
+                onChange={(e) => setNewNomeEs(e.target.value)}
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"
+              />
+            </label>
+          </div>
+          <div className="mt-4 flex justify-end">
+            <button
+              onClick={saveNewProduto}
+              disabled={savingNew}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+            >
+              {savingNew ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {t("adminQuotes.save")}
+            </button>
+          </div>
+        </section>
+      )}
+
 
       <section className="overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-md">
         <div className="overflow-x-auto">
@@ -296,7 +395,8 @@ function AdminCotacoesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {PRODUTOS.map((produto) => {
+              {catalog.map((item: CatalogItem) => {
+                const produto = item.codigo;
                 const cur = atuais[produto];
                 const isEditing = editing === produto;
                 const unidadeLabel = cur?.unidade_id
@@ -304,7 +404,7 @@ function AdminCotacoesPage() {
                   : "—";
                 return (
                   <tr key={produto} className="hover:bg-accent/30">
-                    <td className="px-4 py-3 font-medium">{t(`commodities.${produto}`)}</td>
+                    <td className="px-4 py-3 font-medium">{nomeFor(item, i18n.language)}</td>
                     {isEditing ? (
                       <>
                         <td className="px-4 py-2">
@@ -438,7 +538,7 @@ function AdminCotacoesPage() {
                             : ""
                       }
                     >
-                      <td className="px-3 py-2 font-medium">{t(`commodities.${p.produto}`)}</td>
+                      <td className="px-3 py-2 font-medium">{(() => { const c = catalog.find((x) => x.codigo === p.produto); return c ? nomeFor(c, i18n.language) : p.produto; })()}</td>
                       <td className="px-3 py-2">
                         <input
                           type="number" step="0.0001" min="0"

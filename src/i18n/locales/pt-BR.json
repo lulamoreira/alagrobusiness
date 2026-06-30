@@ -434,7 +434,16 @@
     "perUnit": "/ {{unit}}",
     "comercial": "Comercial",
     "turismo": "Turismo",
-    "paralelo": "Paralelo"
+    "paralelo": "Paralelo",
+    "personalizeTitle": "Personalizar",
+    "personalizeHint": "Selecione as commodities e tipos de dólar que deseja ver. Vazio = mostrar todos com dados.",
+    "personalizeCommodities": "Commodities",
+    "personalizeDollar": "Tipos de dólar",
+    "personalizeSave": "Salvar preferências",
+    "personalizeSaved": "Preferências salvas.",
+    "personalizeClear": "Limpar seleção",
+    "emptyWithFilters": "Nenhuma commodity selecionada possui cotação atual.",
+    "emptyPainel": "Nenhuma cotação disponível."
   },
   "adminQuotes": {
     "navLabel": "Admin · Cotações",
@@ -469,8 +478,21 @@
     "errorSave": "Falha ao salvar: {{detail}}",
     "validation": {
       "valueRequired": "Informe um valor válido.",
-      "unitRequired": "Selecione a unidade."
-    }
+      "unitRequired": "Selecione a unidade.",
+      "codeRequired": "Informe o código (slug).",
+      "nameRequired": "Informe o nome em pelo menos um idioma."
+    },
+    "newProduct": "Novo produto",
+    "newProductTitle": "Cadastrar nova commodity",
+    "newProductHint": "Defina um código curto (ex.: tomate) e nomes nos 3 idiomas.",
+    "code": "Código",
+    "namePt": "Nome (pt-BR)",
+    "nameEn": "Nome (en)",
+    "nameEs": "Nome (es)",
+    "defaultUnit": "Unidade padrão",
+    "createProduct": "Cadastrar",
+    "productCreated": "Commodity cadastrada.",
+    "newProductSaved": "Produto adicionado ao catálogo."
   },
   "weather": {
     "title": "Clima",
