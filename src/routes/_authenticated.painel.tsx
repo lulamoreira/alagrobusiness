@@ -133,36 +133,57 @@ function PainelPage() {
           </Link>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {PAINEL_FEATURED.map((produto) => {
-            const history = commodityGroups.get(produto) ?? [];
-            const latest = history[history.length - 1];
-            const variation = computeVariation(history.map((h) => h.valor));
+        {(() => {
+          const sel = prefs?.cotacoes_selecionadas ?? [];
+          const featured = catalog
+            .filter((c) => c.ativo)
+            .filter((c) => (commodityGroups.get(c.codigo)?.length ?? 0) > 0)
+            .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)))
+            .slice(0, PAINEL_MAX_FEATURED);
+
+          if (featured.length === 0) {
             return (
-              <Link
-                key={produto}
-                to="/cotacao"
-                className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/60"
-              >
-                <div className="text-xs uppercase tracking-wide text-muted-foreground">
-                  {t(`commodities.${produto}`)}
-                </div>
-                <div className="mt-2 flex items-baseline justify-between gap-2">
-                  <span className="font-display text-xl font-bold text-primary tabular-nums">
-                    {latest ? formatValueInUserCurrency(latest.valor) : "—"}
-                  </span>
-                </div>
-                <div className="mt-1">
-                  <VariationBadge
-                    variation={variation}
-                    locale={i18n.language}
-                    formatDelta={formatValueInUserCurrency}
-                    size="sm"
-                  />
-                </div>
-              </Link>
+              <p className="rounded-2xl border border-dashed border-border bg-card/30 p-6 text-center text-sm text-muted-foreground">
+                {t("quote.emptyPainel")}
+              </p>
             );
-          })}
+          }
+
+          return (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {featured.map((c) => {
+                const history = commodityGroups.get(c.codigo) ?? [];
+                const latest = history[history.length - 1];
+                const variation = computeVariation(history.map((h) => h.valor));
+                return (
+                  <Link
+                    key={c.codigo}
+                    to="/cotacao"
+                    className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/60"
+                  >
+                    <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {nomeFor(c, i18n.language)}
+                    </div>
+                    <div className="mt-2 flex items-baseline justify-between gap-2">
+                      <span className="font-display text-xl font-bold text-primary tabular-nums">
+                        {latest ? formatValueInUserCurrency(latest.valor) : "—"}
+                      </span>
+                    </div>
+                    <div className="mt-1">
+                      <VariationBadge
+                        variation={variation}
+                        locale={i18n.language}
+                        formatDelta={formatValueInUserCurrency}
+                        size="sm"
+                      />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          );
+        })()}
+
 
           <Link
             to="/cotacao"
