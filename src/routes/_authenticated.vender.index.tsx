@@ -214,6 +214,24 @@ function SellPage() {
           })}
         </ul>
       )}
+
+      {soldToast && (
+        <div className="fixed bottom-24 left-1/2 z-40 -translate-x-1/2 rounded-full border border-primary/40 bg-primary/15 px-4 py-2 text-xs font-medium text-primary backdrop-blur md:bottom-6">
+          {soldToast}
+        </div>
+      )}
+
+      {soldDialog && (
+        <MarkAsSoldDialog
+          open={!!soldDialog}
+          anuncio={soldDialog}
+          onClose={() => setSoldDialog(null)}
+          onSuccess={() => {
+            setSoldToast(t("sell.markSoldDialog.success"));
+            window.setTimeout(() => setSoldToast(null), 3000);
+          }}
+        />
+      )}
     </div>
   );
 }
