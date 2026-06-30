@@ -18,6 +18,7 @@ import {
   LogOut,
   Wallet,
   CalendarDays,
+  BarChart3,
 } from "lucide-react";
 
 
@@ -40,6 +41,7 @@ const NAV: NavItem[] = [
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
   { to: "/financeiro", labelKey: "nav.finance", icon: Wallet },
   { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays },
+  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3 },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },

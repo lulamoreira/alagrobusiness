@@ -89,7 +89,8 @@
     "settings": "Configurações",
     "more": "Mais",
     "finance": "Financeiro",
-    "agenda": "Agenda"
+    "agenda": "Agenda",
+    "reports": "Relatórios"
   },
   "dashboard": {
     "hello": "Olá",
@@ -569,6 +570,47 @@
       "pagamento": "Pagamento",
       "reuniao": "Reunião",
       "outro": "Outro"
+    }
+  },
+  "reports": {
+    "title": "Relatórios",
+    "subtitle": "Indicadores do seu negócio no período selecionado.",
+    "periodLabel": "Período",
+    "period30": "Últimos 30 dias",
+    "period90": "Últimos 90 dias",
+    "period12m": "Últimos 12 meses",
+    "periodCustom": "Personalizado",
+    "from": "De",
+    "to": "Até",
+    "exportCsv": "Exportar CSV",
+    "summary": "Resumo",
+    "totalSold": "Total vendido",
+    "received": "Recebido",
+    "pending": "A receber",
+    "salesCount": "Nº de vendas",
+    "averageTicket": "Ticket médio",
+    "revenueByMonth": "Receita por mês",
+    "topProducts": "Vendas por produto",
+    "byValue": "Por valor",
+    "byVolume": "Por volume (kg)",
+    "funnel": "Funil de negociações",
+    "conversionRate": "Taxa de conversão",
+    "emptySales": "Sem vendas neste período.",
+    "emptyConversations": "Sem negociações no período.",
+    "csvDate": "data",
+    "csvProduct": "produto",
+    "csvBuyer": "comprador",
+    "csvQuantity": "quantidade",
+    "csvUnit": "unidade",
+    "csvTotal": "valor_total",
+    "csvCurrency": "moeda",
+    "csvStatus": "status_pagamento",
+    "csvFileName": "vendas",
+    "status": {
+      "iniciado": "Iniciado",
+      "em_negociacao": "Em negociação",
+      "fechado": "Fechado",
+      "descartado": "Descartado"
     }
   }
 }
