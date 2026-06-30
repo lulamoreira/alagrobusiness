@@ -571,5 +571,46 @@
       "reuniao": "Meeting",
       "outro": "Other"
     }
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Business indicators for the selected period.",
+    "periodLabel": "Period",
+    "period30": "Last 30 days",
+    "period90": "Last 90 days",
+    "period12m": "Last 12 months",
+    "periodCustom": "Custom",
+    "from": "From",
+    "to": "To",
+    "exportCsv": "Export CSV",
+    "summary": "Summary",
+    "totalSold": "Total sold",
+    "received": "Received",
+    "pending": "To receive",
+    "salesCount": "Sales count",
+    "averageTicket": "Average ticket",
+    "revenueByMonth": "Revenue by month",
+    "topProducts": "Sales by product",
+    "byValue": "By value",
+    "byVolume": "By volume (kg)",
+    "funnel": "Negotiations funnel",
+    "conversionRate": "Conversion rate",
+    "emptySales": "No sales in this period.",
+    "emptyConversations": "No negotiations in this period.",
+    "csvDate": "date",
+    "csvProduct": "product",
+    "csvBuyer": "buyer",
+    "csvQuantity": "quantity",
+    "csvUnit": "unit",
+    "csvTotal": "total_amount",
+    "csvCurrency": "currency",
+    "csvStatus": "payment_status",
+    "csvFileName": "sales",
+    "status": {
+      "iniciado": "Started",
+      "em_negociacao": "In negotiation",
+      "fechado": "Closed",
+      "descartado": "Discarded"
+    }
   }
 }
