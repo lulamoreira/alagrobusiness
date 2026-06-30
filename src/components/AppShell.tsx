@@ -18,6 +18,7 @@ import {
   LogOut,
   Wallet,
   CalendarDays,
+  BarChart3,
 } from "lucide-react";
 
 
