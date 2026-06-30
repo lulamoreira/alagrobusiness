@@ -16,6 +16,7 @@ import {
   Settings,
   ShieldCheck,
   LogOut,
+  Wallet,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -35,11 +36,13 @@ const NAV: NavItem[] = [
   { to: "/vender", labelKey: "nav.sell", icon: Store },
   { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
+  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
+
 
 const MOBILE_NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
