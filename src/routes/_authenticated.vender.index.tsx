@@ -51,6 +51,8 @@ function SellPage() {
   const navigate = useNavigate();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [soldDialog, setSoldDialog] = useState<AnuncioRow | null>(null);
+  const [soldToast, setSoldToast] = useState<string | null>(null);
 
   const { data: anuncios, isLoading } = useQuery({
     queryKey: ["my_anuncios", user?.id],
