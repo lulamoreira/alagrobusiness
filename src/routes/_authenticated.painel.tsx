@@ -32,6 +32,9 @@ function PainelPage() {
   const userMoeda = profile?.moeda_preferida ?? "BRL";
   const userDolarPref = (profile?.tipo_dolar_preferido ?? "comercial") as DolarTipo;
 
+  const { data: catalog = [] } = useCommoditiesCatalog();
+  const { data: prefs } = useQuotePreferences(profile?.id);
+
   const { data: dolar } = useQuery({
     queryKey: ["cotacoes_dolar"],
     queryFn: async () =>
@@ -55,13 +58,12 @@ function PainelPage() {
   });
 
   const { data: commodityRows } = useQuery({
-    queryKey: ["cotacoes_commodities_painel", PAINEL_FEATURED],
+    queryKey: ["cotacoes_commodities_painel_all"],
     queryFn: async (): Promise<CommodityRow[]> => {
       const { data } = await supabase
         .from("cotacoes_commodities")
         .select("produto, valor, data, fonte, fonte_url, unidade_id, moeda")
         .is("deleted_at", null)
-        .in("produto", PAINEL_FEATURED as unknown as string[])
         .order("data", { ascending: true });
       return (data ?? []).map((r) => ({
         produto: r.produto as string,
@@ -74,6 +76,7 @@ function PainelPage() {
       }));
     },
   });
+
 
   const { data: noticias } = useQuery({
     queryKey: ["noticias_recentes"],
