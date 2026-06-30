@@ -442,7 +442,8 @@
     "personalizeSave": "Salvar preferências",
     "personalizeSaved": "Preferências salvas.",
     "personalizeClear": "Limpar seleção",
-    "emptyWithFilters": "Nenhuma commodity selecionada possui cotação atual."
+    "emptyWithFilters": "Nenhuma commodity selecionada possui cotação atual.",
+    "emptyPainel": "Nenhuma cotação disponível."
   },
   "adminQuotes": {
     "navLabel": "Admin · Cotações",
@@ -490,7 +491,8 @@
     "nameEs": "Nome (es)",
     "defaultUnit": "Unidade padrão",
     "createProduct": "Cadastrar",
-    "productCreated": "Commodity cadastrada."
+    "productCreated": "Commodity cadastrada.",
+    "newProductSaved": "Produto adicionado ao catálogo."
   },
   "weather": {
     "title": "Clima",

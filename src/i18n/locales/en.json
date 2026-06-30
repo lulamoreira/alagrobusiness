@@ -442,7 +442,8 @@
     "personalizeSave": "Save preferences",
     "personalizeSaved": "Preferences saved.",
     "personalizeClear": "Clear selection",
-    "emptyWithFilters": "None of the selected commodities have current quotes."
+    "emptyWithFilters": "None of the selected commodities have current quotes.",
+    "emptyPainel": "No quotes available."
   },
   "adminQuotes": {
     "navLabel": "Admin · Quotes",
@@ -490,7 +491,8 @@
     "nameEs": "Name (es)",
     "defaultUnit": "Default unit",
     "createProduct": "Create",
-    "productCreated": "Commodity created."
+    "productCreated": "Commodity created.",
+    "newProductSaved": "Product added to catalog."
   },
   "weather": {
     "title": "Weather",
