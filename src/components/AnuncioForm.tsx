@@ -213,7 +213,11 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
       navigate({ to: "/vender" });
     } catch (err) {
       console.error(err);
-      setServerError(t("form.error"));
+      if (handlePaywallError(err, t)) {
+        // friendly toast was shown
+      } else {
+        setServerError(t("form.error"));
+      }
     } finally {
       setSubmitting(false);
     }
