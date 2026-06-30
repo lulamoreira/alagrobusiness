@@ -192,7 +192,7 @@ function SellPage() {
                     <button
                       type="button"
                       disabled={busyId === a.id}
-                      onClick={() => updateStatus(a.id, "vendido")}
+                      onClick={() => setSoldDialog(a)}
                       className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent disabled:opacity-50"
                     >
                       <CheckCircle2 className="h-3 w-3" />
