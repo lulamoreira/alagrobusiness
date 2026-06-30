@@ -26,6 +26,7 @@ import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
+import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated.agenda'
 import { Route as AuthenticatedVenderIndexRouteImport } from './routes/_authenticated.vender.index'
 import { Route as AuthenticatedMensagensIndexRouteImport } from './routes/_authenticated.mensagens.index'
 import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
@@ -120,6 +121,11 @@ const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
   path: '/alertas',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAgendaRoute = AuthenticatedAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedVenderIndexRoute =
   AuthenticatedVenderIndexRouteImport.update({
     id: '/',
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/agenda'
     | '/alertas'
     | '/comprar'
     | '/configuracoes'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/agenda'
     | '/alertas'
     | '/comprar'
     | '/configuracoes'
@@ -294,6 +305,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/_authenticated/agenda'
     | '/_authenticated/alertas'
     | '/_authenticated/comprar'
     | '/_authenticated/configuracoes'
@@ -444,6 +456,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAlertasRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/agenda': {
+      id: '/_authenticated/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AuthenticatedAgendaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/vender/': {
       id: '/_authenticated/vender/'
       path: '/'
@@ -529,6 +548,7 @@ const AuthenticatedVenderRouteWithChildren =
   AuthenticatedVenderRoute._addFileChildren(AuthenticatedVenderRouteChildren)
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedAgendaRoute: typeof AuthenticatedAgendaRoute
   AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
@@ -544,6 +564,7 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAgendaRoute: AuthenticatedAgendaRoute,
   AuthenticatedAlertasRoute: AuthenticatedAlertasRoute,
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
