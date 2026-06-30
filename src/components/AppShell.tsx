@@ -86,6 +86,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { profile, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const unreadMessages = useUnreadMessages();
+  const { isPro } = usePlan();
 
   const resolveBadge = (key?: NavItem["badgeKey"]) => {
     if (key === "messages") return unreadMessages;
