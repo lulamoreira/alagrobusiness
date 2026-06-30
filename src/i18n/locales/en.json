@@ -434,7 +434,15 @@
     "perUnit": "/ {{unit}}",
     "comercial": "Commercial",
     "turismo": "Tourism",
-    "paralelo": "Parallel"
+    "paralelo": "Parallel",
+    "personalizeTitle": "Personalize",
+    "personalizeHint": "Pick the commodities and dollar types you want to see. Empty = show everything with data.",
+    "personalizeCommodities": "Commodities",
+    "personalizeDollar": "Dollar types",
+    "personalizeSave": "Save preferences",
+    "personalizeSaved": "Preferences saved.",
+    "personalizeClear": "Clear selection",
+    "emptyWithFilters": "None of the selected commodities have current quotes."
   },
   "adminQuotes": {
     "navLabel": "Admin · Quotes",
