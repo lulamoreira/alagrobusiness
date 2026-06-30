@@ -10,6 +10,7 @@ import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
