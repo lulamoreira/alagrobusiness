@@ -103,8 +103,15 @@ export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess, initialBuy
       setSubmitError(t("sell.markSoldDialog.error"));
       return;
     }
+    if (conversaId) {
+      await supabase.rpc("set_status_negociacao", {
+        p_conversa_id: conversaId,
+        p_status: "fechado",
+      });
+    }
     qc.invalidateQueries({ queryKey: ["my_anuncios", user.id] });
     qc.invalidateQueries({ queryKey: ["business_kpis", user.id] });
+    qc.invalidateQueries({ queryKey: ["negociacoes", user.id] });
     onSuccess();
     onClose();
   };
