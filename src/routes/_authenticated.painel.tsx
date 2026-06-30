@@ -11,10 +11,11 @@ import {
   computeVariation,
   groupCommodityHistory,
   groupDolarHistory,
-  PAINEL_FEATURED,
+  PAINEL_MAX_FEATURED,
   type CommodityRow,
   type DolarHistoryRow,
 } from "@/lib/quotes";
+import { useCommoditiesCatalog, useQuotePreferences, nomeFor } from "@/lib/catalog";
 import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
 import { BusinessDashboard } from "@/components/BusinessDashboard";
