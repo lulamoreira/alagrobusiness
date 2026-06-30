@@ -5,44 +5,12 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { Loader2, Pencil, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
+import { useCommoditiesCatalog, nomeFor, type CatalogItem } from "@/lib/catalog";
 
 export const Route = createFileRoute("/_authenticated/admin/cotacoes")({
   component: AdminCotacoesPage,
 });
-
-const PRODUTOS = [
-  "soja", "milho", "cafe_arabica", "cafe_conilon", "boi_gordo",
-  "suino", "trigo", "algodao", "arroz", "feijao",
-] as const;
-type Produto = (typeof PRODUTOS)[number];
-
-/**
- * Unidade padrão de cotação por produto, em alinhamento com a prática
- * brasileira. Esses nomes_chave devem existir na tabela `unidades`:
- *   - saca_60 (saca 60 kg) — grãos e cafés
- *   - saca_50 (saca 50 kg) — arroz
- *   - arroba (15 kg)       — bovino gordo e algodão
- *   - kg                    — suíno
- */
-const PRODUTO_UNIDADE_PADRAO: Record<Produto, string> = {
-  soja: "saca_60",
-  milho: "saca_60",
-  cafe_arabica: "saca_60",
-  cafe_conilon: "saca_60",
-  trigo: "saca_60",
-  feijao: "saca_60",
-  arroz: "saca_50",
-  boi_gordo: "arroba",
-  algodao: "arroba",
-  suino: "kg",
-};
-
-/** Resolve o UUID da unidade padrão de um produto na lista carregada. */
-function unidadePadraoId(produto: Produto, unidades: Unidade[]): string {
-  const chave = PRODUTO_UNIDADE_PADRAO[produto];
-  return unidades.find((u) => u.nome_chave === chave)?.id ?? "";
-}
 
 type Moeda = "BRL" | "USD" | "EUR";
 
@@ -63,7 +31,7 @@ interface Cotacao {
 }
 
 interface Sugestao {
-  produto: Produto;
+  produto: string;
   valor: number | string;
   unidade: string;
   unidade_id?: string;
@@ -77,22 +45,32 @@ function AdminCotacoesPage() {
   const { profile } = useAuth();
   const navigate = useNavigate();
 
+  const { data: catalog = [], refetch: refetchCatalog } = useCommoditiesCatalog();
+
   const [unidades, setUnidades] = useState<Unidade[]>([]);
   const [atuais, setAtuais] = useState<Record<string, Cotacao | undefined>>({});
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [editing, setEditing] = useState<Produto | null>(null);
+  const [editing, setEditing] = useState<string | null>(null);
   const [editValor, setEditValor] = useState("");
   const [editUnidade, setEditUnidade] = useState("");
   const [editMoeda, setEditMoeda] = useState<Moeda>("BRL");
   const [preview, setPreview] = useState<Sugestao[] | null>(null);
+  const [showNew, setShowNew] = useState(false);
+  const [newCodigo, setNewCodigo] = useState("");
+  const [newNomePt, setNewNomePt] = useState("");
+  const [newNomeEn, setNewNomeEn] = useState("");
+  const [newNomeEs, setNewNomeEs] = useState("");
+  const [newUnidadeId, setNewUnidadeId] = useState("");
+  const [savingNew, setSavingNew] = useState(false);
 
   useEffect(() => {
     if (profile && profile.tipo_perfil !== "admin") {
       navigate({ to: "/painel" });
     }
   }, [profile, navigate]);
+
 
   const schema = useMemo(() => z.object({
     valor: z.coerce.number({ invalid_type_error: t("adminQuotes.validation.valueRequired") })
