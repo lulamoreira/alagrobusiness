@@ -89,7 +89,8 @@
     "settings": "Settings",
     "more": "More",
     "finance": "Finance",
-    "agenda": "Calendar"
+    "agenda": "Calendar",
+    "reports": "Reports"
   },
   "dashboard": {
     "hello": "Hello",
