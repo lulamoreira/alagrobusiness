@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      agenda_eventos: {
+        Row: {
+          anuncio_id: string | null
+          concluido: boolean
+          created_at: string
+          data: string
+          deleted_at: string | null
+          descricao: string | null
+          hora: string | null
+          id: string
+          tipo: Database["public"]["Enums"]["tipo_evento"]
+          titulo: string
+          updated_at: string
+          usuario_id: string
+          venda_id: string | null
+        }
+        Insert: {
+          anuncio_id?: string | null
+          concluido?: boolean
+          created_at?: string
+          data: string
+          deleted_at?: string | null
+          descricao?: string | null
+          hora?: string | null
+          id?: string
+          tipo?: Database["public"]["Enums"]["tipo_evento"]
+          titulo: string
+          updated_at?: string
+          usuario_id: string
+          venda_id?: string | null
+        }
+        Update: {
+          anuncio_id?: string | null
+          concluido?: boolean
+          created_at?: string
+          data?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          hora?: string | null
+          id?: string
+          tipo?: Database["public"]["Enums"]["tipo_evento"]
+          titulo?: string
+          updated_at?: string
+          usuario_id?: string
+          venda_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agenda_eventos_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agenda_eventos_venda_id_fkey"
+            columns: ["venda_id"]
+            isOneToOne: false
+            referencedRelation: "vendas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       alertas_preco: {
         Row: {
           ativo: boolean
@@ -794,6 +857,13 @@ export type Database = {
       status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
       tipo_dolar: "comercial" | "turismo" | "paralelo"
+      tipo_evento:
+        | "plantio"
+        | "colheita"
+        | "entrega"
+        | "pagamento"
+        | "reuniao"
+        | "outro"
       tipo_perfil: "comprador" | "vendedor" | "lojista" | "marca" | "admin"
     }
     CompositeTypes: {
@@ -931,6 +1001,14 @@ export const Constants = {
       status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
       tipo_dolar: ["comercial", "turismo", "paralelo"],
+      tipo_evento: [
+        "plantio",
+        "colheita",
+        "entrega",
+        "pagamento",
+        "reuniao",
+        "outro",
+      ],
       tipo_perfil: ["comprador", "vendedor", "lojista", "marca", "admin"],
     },
   },

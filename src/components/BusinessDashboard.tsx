@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import { Package, Boxes, CheckCircle2, MessageCircle, Wallet, Plus } from "lucide-react";
+import { Package, Boxes, CheckCircle2, MessageCircle, Wallet, Plus, CalendarDays, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { formatMoney } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
+
 
 type DolarTipo = "comercial" | "turismo" | "paralelo";
 
@@ -221,7 +222,96 @@ export function BusinessDashboard() {
           hint={pendingHint}
         />
       </div>
+
+      <UpcomingEventsMini />
     </section>
   );
 }
+
+interface UpcomingEventRow {
+  id: string;
+  titulo: string;
+  tipo: string;
+  data: string;
+  hora: string | null;
+  concluido: boolean;
+}
+
+function UpcomingEventsMini() {
+  const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["agenda_upcoming_mini", user?.id],
+    enabled: !!user,
+    queryFn: async (): Promise<UpcomingEventRow[]> => {
+      const { data, error } = await supabase
+        .from("agenda_eventos")
+        .select("id, titulo, tipo, data, hora, concluido")
+        .eq("usuario_id", user!.id)
+        .is("deleted_at", null)
+        .gte("data", today)
+        .order("data", { ascending: true })
+        .order("hora", { ascending: true, nullsFirst: true })
+        .limit(3);
+      if (error) throw error;
+      return (data ?? []) as UpcomingEventRow[];
+    },
+  });
+
+  const fmtDate = (iso: string) =>
+    new Intl.DateTimeFormat(i18n.language, { day: "2-digit", month: "short" }).format(
+      new Date(iso + "T00:00:00"),
+    );
+
+  return (
+    <div className="mt-6 rounded-2xl border border-border bg-card p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-primary/15 p-1.5 text-primary">
+            <CalendarDays className="h-3.5 w-3.5" />
+          </span>
+          <h3 className="font-display text-sm font-bold">{t("dashboard.agendaMini.title")}</h3>
+        </div>
+        <Link
+          to="/agenda"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+        >
+          {t("dashboard.agendaMini.viewAll")}
+          <ArrowRight className="h-3 w-3" />
+        </Link>
+      </div>
+
+      {isLoading ? (
+        <p className="text-xs text-muted-foreground">{t("common.loading")}</p>
+      ) : !data || data.length === 0 ? (
+        <p className="text-xs text-muted-foreground">{t("dashboard.agendaMini.empty")}</p>
+      ) : (
+        <ul className="divide-y divide-border">
+          {data.map((e) => (
+            <li key={e.id} className="flex items-center justify-between gap-3 py-2 first:pt-0 last:pb-0">
+              <div className="min-w-0">
+                <p
+                  className={
+                    e.concluido
+                      ? "truncate text-sm font-medium text-muted-foreground line-through"
+                      : "truncate text-sm font-medium text-foreground"
+                  }
+                >
+                  {e.titulo}
+                </p>
+                <p className="text-[11px] text-muted-foreground">
+                  {t(`agenda.types.${e.tipo}`)} · {fmtDate(e.data)}
+                  {e.hora ? ` · ${e.hora.slice(0, 5)}` : ""}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 

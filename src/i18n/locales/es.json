@@ -88,7 +88,8 @@
     "alerts": "Alertas",
     "settings": "Ajustes",
     "more": "Más",
-    "finance": "Financiero"
+    "finance": "Financiero",
+    "agenda": "Agenda"
   },
   "dashboard": {
     "hello": "Hola",
@@ -110,6 +111,11 @@
       "kg": "kg",
       "ton": "t",
       "pendingHint": "{{value}} por cobrar"
+    },
+    "agendaMini": {
+      "title": "Próximos eventos",
+      "viewAll": "Ver agenda",
+      "empty": "Sin próximos eventos."
     }
   },
   "news": {
@@ -525,5 +531,44 @@
     "pendingHint": "{{value}} por cobrar",
     "errorGeneric": "No se pudo completar la acción.",
     "noResults": "No hay ventas con esos filtros."
+  },
+  "agenda": {
+    "title": "Agenda",
+    "subtitle": "Organiza siembras, cosechas, entregas y reuniones.",
+    "newEvent": "Nuevo evento",
+    "editTitle": "Editar evento",
+    "upcomingTitle": "Próximos eventos",
+    "emptyTitle": "Aún no hay eventos",
+    "emptyDescription": "Crea tu primer evento y mantén tu calendario al día.",
+    "filterAll": "Todos",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "eventsOf": "Eventos del {{date}}",
+    "noEventsThisDay": "Sin eventos este día.",
+    "allDay": "Todo el día",
+    "toggleDone": "Marcar como hecho",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "deleteConfirmTitle": "Eliminar evento",
+    "deleteConfirmDesc": "¿Seguro que deseas eliminar este evento? El soporte puede revertirlo.",
+    "deleteConfirm": "Eliminar",
+    "errorGeneric": "No se pudo guardar el evento.",
+    "fieldTitle": "Título",
+    "fieldType": "Tipo",
+    "fieldDate": "Fecha",
+    "fieldTime": "Hora",
+    "fieldDescription": "Descripción",
+    "fieldLinkAnuncio": "Vincular anuncio",
+    "fieldLinkVenda": "Vincular venta",
+    "linkNone": "Ninguno",
+    "types": {
+      "plantio": "Siembra",
+      "colheita": "Cosecha",
+      "entrega": "Entrega",
+      "pagamento": "Pago",
+      "reuniao": "Reunión",
+      "outro": "Otro"
+    }
   }
 }

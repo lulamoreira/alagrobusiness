@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   LogOut,
   Wallet,
+  CalendarDays,
 } from "lucide-react";
+
 
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
@@ -37,6 +39,7 @@ const NAV: NavItem[] = [
   { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
   { to: "/financeiro", labelKey: "nav.finance", icon: Wallet },
+  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
