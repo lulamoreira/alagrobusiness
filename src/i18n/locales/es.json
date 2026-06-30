@@ -87,7 +87,8 @@
     "news": "Noticias",
     "alerts": "Alertas",
     "settings": "Ajustes",
-    "more": "Más"
+    "more": "Más",
+    "finance": "Financiero"
   },
   "dashboard": {
     "hello": "Hola",
@@ -107,7 +108,8 @@
       "emptyDescription": "Empieza a vender y sigue tus indicadores aquí.",
       "emptyCta": "Crear el primer anuncio",
       "kg": "kg",
-      "ton": "t"
+      "ton": "t",
+      "pendingHint": "{{value}} por cobrar"
     }
   },
   "news": {
@@ -478,5 +480,49 @@
     "rain": "Lluvia",
     "snow": "Nieve",
     "thunderstorm": "Tormenta"
+  },
+  "finance": {
+    "title": "Financiero",
+    "subtitle": "Controla tus ventas y cobros",
+    "kpiTotal": "Total vendido",
+    "kpiReceived": "Recibido",
+    "kpiPending": "Por cobrar",
+    "historyTitle": "Historial de ventas",
+    "filters": "Filtros",
+    "filterStatus": "Estado",
+    "filterAll": "Todos",
+    "filterPending": "Pendiente",
+    "filterReceived": "Recibido",
+    "filterPeriodFrom": "Desde",
+    "filterPeriodTo": "Hasta",
+    "colProduct": "Producto",
+    "colBuyer": "Comprador",
+    "colQuantity": "Cantidad",
+    "colTotal": "Valor",
+    "colDate": "Fecha",
+    "colStatus": "Pago",
+    "colActions": "Acciones",
+    "statusPending": "Pendiente",
+    "statusReceived": "Recibido",
+    "markReceived": "Marcar como recibido",
+    "markReceivedSuccess": "Venta marcada como recibida.",
+    "edit": "Editar",
+    "editTitle": "Editar venta",
+    "editTotal": "Valor total",
+    "editBuyer": "Comprador",
+    "editDate": "Fecha de la venta",
+    "editStatus": "Estado del pago",
+    "editSave": "Guardar cambios",
+    "editSuccess": "Venta actualizada.",
+    "delete": "Eliminar",
+    "deleteConfirmTitle": "¿Eliminar esta venta?",
+    "deleteConfirmDesc": "La venta será eliminada y el anuncio volverá al estado activo.",
+    "deleteConfirm": "Sí, eliminar",
+    "deleteSuccess": "Venta eliminada y anuncio reactivado.",
+    "emptyTitle": "Sin ventas registradas",
+    "emptyDescription": "Cuando marques un anuncio como vendido, aparecerá aquí.",
+    "pendingHint": "{{value}} por cobrar",
+    "errorGeneric": "No se pudo completar la acción.",
+    "noResults": "No hay ventas con esos filtros."
   }
 }

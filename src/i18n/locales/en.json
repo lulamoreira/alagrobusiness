@@ -87,7 +87,8 @@
     "news": "News",
     "alerts": "Alerts",
     "settings": "Settings",
-    "more": "More"
+    "more": "More",
+    "finance": "Finance"
   },
   "dashboard": {
     "hello": "Hello",
@@ -107,7 +108,8 @@
       "emptyDescription": "Start selling and track your indicators here.",
       "emptyCta": "Create your first listing",
       "kg": "kg",
-      "ton": "t"
+      "ton": "t",
+      "pendingHint": "{{value}} to receive"
     }
   },
   "news": {
@@ -478,5 +480,49 @@
     "rain": "Rain",
     "snow": "Snow",
     "thunderstorm": "Thunderstorm"
+  },
+  "finance": {
+    "title": "Finance",
+    "subtitle": "Track your sales and payments",
+    "kpiTotal": "Total sold",
+    "kpiReceived": "Received",
+    "kpiPending": "To receive",
+    "historyTitle": "Sales history",
+    "filters": "Filters",
+    "filterStatus": "Status",
+    "filterAll": "All",
+    "filterPending": "Pending",
+    "filterReceived": "Received",
+    "filterPeriodFrom": "From",
+    "filterPeriodTo": "To",
+    "colProduct": "Product",
+    "colBuyer": "Buyer",
+    "colQuantity": "Quantity",
+    "colTotal": "Amount",
+    "colDate": "Date",
+    "colStatus": "Payment",
+    "colActions": "Actions",
+    "statusPending": "Pending",
+    "statusReceived": "Received",
+    "markReceived": "Mark as received",
+    "markReceivedSuccess": "Sale marked as received.",
+    "edit": "Edit",
+    "editTitle": "Edit sale",
+    "editTotal": "Total amount",
+    "editBuyer": "Buyer",
+    "editDate": "Sale date",
+    "editStatus": "Payment status",
+    "editSave": "Save changes",
+    "editSuccess": "Sale updated.",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Delete this sale?",
+    "deleteConfirmDesc": "The sale will be removed and the listing will go back to active.",
+    "deleteConfirm": "Yes, delete",
+    "deleteSuccess": "Sale deleted and listing reactivated.",
+    "emptyTitle": "No sales recorded",
+    "emptyDescription": "When you mark a listing as sold, it will appear here.",
+    "pendingHint": "{{value}} to receive",
+    "errorGeneric": "Could not complete the action.",
+    "noResults": "No sales match these filters."
   }
 }
