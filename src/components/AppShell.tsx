@@ -35,20 +35,22 @@ interface NavItem {
   labelKey: string;
   icon: typeof LayoutDashboard;
   badgeKey?: "messages";
+  pro?: boolean;
 }
 
 const NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
-  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
+  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
-  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet },
-  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays },
-  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3 },
+  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
+  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
+  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+  { to: "/planos", labelKey: "nav.plans", icon: Crown },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
 
