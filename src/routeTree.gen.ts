@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedVenderRouteImport } from './routes/_authenticated.vender'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated.painel'
 import { Route as AuthenticatedNoticiasRouteImport } from './routes/_authenticated.noticias'
+import { Route as AuthenticatedNegociacoesRouteImport } from './routes/_authenticated.negociacoes'
 import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated.mensagens'
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
@@ -81,6 +82,12 @@ const AuthenticatedNoticiasRoute = AuthenticatedNoticiasRouteImport.update({
   path: '/noticias',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedNegociacoesRoute =
+  AuthenticatedNegociacoesRouteImport.update({
+    id: '/negociacoes',
+    path: '/negociacoes',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedMensagensRoute = AuthenticatedMensagensRouteImport.update({
   id: '/mensagens',
   path: '/mensagens',
@@ -160,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
+  '/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
@@ -182,6 +190,7 @@ export interface FileRoutesByTo {
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
@@ -206,6 +215,7 @@ export interface FileRoutesById {
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
   '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
+  '/_authenticated/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/_authenticated/noticias': typeof AuthenticatedNoticiasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/cotacao'
     | '/mensagens'
+    | '/negociacoes'
     | '/noticias'
     | '/painel'
     | '/vender'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
+    | '/negociacoes'
     | '/noticias'
     | '/painel'
     | '/admin/cotacoes'
@@ -276,6 +288,7 @@ export interface FileRouteTypes {
     | '/_authenticated/configuracoes'
     | '/_authenticated/cotacao'
     | '/_authenticated/mensagens'
+    | '/_authenticated/negociacoes'
     | '/_authenticated/noticias'
     | '/_authenticated/painel'
     | '/_authenticated/vender'
@@ -368,6 +381,13 @@ declare module '@tanstack/react-router' {
       path: '/noticias'
       fullPath: '/noticias'
       preLoaderRoute: typeof AuthenticatedNoticiasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/negociacoes': {
+      id: '/_authenticated/negociacoes'
+      path: '/negociacoes'
+      fullPath: '/negociacoes'
+      preLoaderRoute: typeof AuthenticatedNegociacoesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/mensagens': {
@@ -495,6 +515,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
   AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
+  AuthenticatedNegociacoesRoute: typeof AuthenticatedNegociacoesRoute
   AuthenticatedNoticiasRoute: typeof AuthenticatedNoticiasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
@@ -508,6 +529,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
   AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
+  AuthenticatedNegociacoesRoute: AuthenticatedNegociacoesRoute,
   AuthenticatedNoticiasRoute: AuthenticatedNoticiasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
