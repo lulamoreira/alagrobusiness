@@ -93,7 +93,21 @@
     "summary": "Resumen del agro hoy",
     "dollar": "Dólar",
     "news": "Noticias",
-    "noNews": "Sin noticias aún."
+    "noNews": "Sin noticias aún.",
+    "business": {
+      "title": "Mi negocio",
+      "subtitle": "Tus indicadores en tiempo real",
+      "productsListed": "Productos anunciados",
+      "volumeListed": "Volumen anunciado",
+      "sold": "Vendidos",
+      "inNegotiation": "En negociación",
+      "revenue": "Valor financiero",
+      "emptyTitle": "Aún no tienes anuncios",
+      "emptyDescription": "Empieza a vender y sigue tus indicadores aquí.",
+      "emptyCta": "Crear el primer anuncio",
+      "kg": "kg",
+      "ton": "t"
+    }
   },
   "news": {
     "title": "Noticias del agro",
@@ -126,7 +140,8 @@
     "lgpdRequired": "Debes aceptar los términos",
     "minOneCategory": "Selecciona al menos una categoría",
     "positiveNumber": "Ingresa un número mayor a cero",
-    "minOnePhoto": "Añade al menos una foto"
+    "minOnePhoto": "Añade al menos una foto",
+    "dateInvalid": "Fecha inválida"
   },
   "google": {
     "signin": "Entrar con Google",
@@ -188,7 +203,21 @@
     "statusPaused": "Pausado",
     "statusSold": "Vendido",
     "updatedAt": "Actualizado",
-    "actionError": "No se pudo realizar la acción."
+    "actionError": "No se pudo realizar la acción.",
+    "markSoldDialog": {
+      "title": "Registrar venta",
+      "subtitle": "Confirma los datos de la venta. El anuncio será marcado como vendido.",
+      "quantity": "Cantidad vendida",
+      "unit": "Unidad",
+      "total": "Valor total",
+      "buyer": "Comprador (opcional)",
+      "buyerPlaceholder": "Nombre del comprador",
+      "date": "Fecha de la venta",
+      "confirm": "Confirmar venta",
+      "cancel": "Cancelar",
+      "success": "Venta registrada con éxito.",
+      "error": "No se pudo registrar la venta."
+    }
   },
   "form": {
     "createTitle": "Nuevo anuncio",
@@ -431,4 +460,3 @@
     "thunderstorm": "Tormenta"
   }
 }
-

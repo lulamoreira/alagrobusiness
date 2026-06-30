@@ -93,7 +93,21 @@
     "summary": "Visão geral do agro hoje",
     "dollar": "Dólar",
     "news": "Notícias",
-    "noNews": "Nenhuma notícia ainda. Aguarde a primeira atualização."
+    "noNews": "Nenhuma notícia ainda. Aguarde a primeira atualização.",
+    "business": {
+      "title": "Meu negócio",
+      "subtitle": "Seus indicadores em tempo real",
+      "productsListed": "Produtos anunciados",
+      "volumeListed": "Volume anunciado",
+      "sold": "Vendidos",
+      "inNegotiation": "Em negociação",
+      "revenue": "Valor financeiro",
+      "emptyTitle": "Você ainda não tem anúncios",
+      "emptyDescription": "Comece a vender e acompanhe seus indicadores aqui.",
+      "emptyCta": "Criar primeiro anúncio",
+      "kg": "kg",
+      "ton": "t"
+    }
   },
   "news": {
     "title": "Notícias do agro",
@@ -126,7 +140,8 @@
     "lgpdRequired": "Você precisa aceitar os termos",
     "minOneCategory": "Selecione pelo menos uma categoria",
     "positiveNumber": "Informe um número maior que zero",
-    "minOnePhoto": "Adicione ao menos uma foto"
+    "minOnePhoto": "Adicione ao menos uma foto",
+    "dateInvalid": "Data inválida"
   },
   "google": {
     "signin": "Entrar com Google",
@@ -188,7 +203,21 @@
     "statusPaused": "Pausado",
     "statusSold": "Vendido",
     "updatedAt": "Atualizado em",
-    "actionError": "Não foi possível executar a ação."
+    "actionError": "Não foi possível executar a ação.",
+    "markSoldDialog": {
+      "title": "Registrar venda",
+      "subtitle": "Confirme os dados desta venda. O anúncio será marcado como vendido.",
+      "quantity": "Quantidade vendida",
+      "unit": "Unidade",
+      "total": "Valor total",
+      "buyer": "Comprador (opcional)",
+      "buyerPlaceholder": "Nome do comprador",
+      "date": "Data da venda",
+      "confirm": "Confirmar venda",
+      "cancel": "Cancelar",
+      "success": "Venda registrada com sucesso.",
+      "error": "Não foi possível registrar a venda."
+    }
   },
   "form": {
     "createTitle": "Novo anúncio",
@@ -431,4 +460,3 @@
     "thunderstorm": "Tempestade"
   }
 }
-

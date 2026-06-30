@@ -93,7 +93,21 @@
     "summary": "Today's agribusiness overview",
     "dollar": "Dollar",
     "news": "News",
-    "noNews": "No news yet. Awaiting first update."
+    "noNews": "No news yet. Awaiting first update.",
+    "business": {
+      "title": "My business",
+      "subtitle": "Your real-time indicators",
+      "productsListed": "Listed products",
+      "volumeListed": "Listed volume",
+      "sold": "Sold",
+      "inNegotiation": "In negotiation",
+      "revenue": "Revenue",
+      "emptyTitle": "You don't have any listings yet",
+      "emptyDescription": "Start selling and track your indicators here.",
+      "emptyCta": "Create your first listing",
+      "kg": "kg",
+      "ton": "t"
+    }
   },
   "news": {
     "title": "Agribusiness news",
@@ -126,7 +140,8 @@
     "lgpdRequired": "You must accept the terms",
     "minOneCategory": "Select at least one category",
     "positiveNumber": "Enter a number greater than zero",
-    "minOnePhoto": "Add at least one photo"
+    "minOnePhoto": "Add at least one photo",
+    "dateInvalid": "Invalid date"
   },
   "google": {
     "signin": "Sign in with Google",
@@ -188,7 +203,21 @@
     "statusPaused": "Paused",
     "statusSold": "Sold",
     "updatedAt": "Updated",
-    "actionError": "Could not perform action."
+    "actionError": "Could not perform action.",
+    "markSoldDialog": {
+      "title": "Record sale",
+      "subtitle": "Confirm the sale details. The listing will be marked as sold.",
+      "quantity": "Quantity sold",
+      "unit": "Unit",
+      "total": "Total amount",
+      "buyer": "Buyer (optional)",
+      "buyerPlaceholder": "Buyer name",
+      "date": "Sale date",
+      "confirm": "Confirm sale",
+      "cancel": "Cancel",
+      "success": "Sale recorded successfully.",
+      "error": "Could not record the sale."
+    }
   },
   "form": {
     "createTitle": "New listing",
@@ -431,4 +460,3 @@
     "thunderstorm": "Thunderstorm"
   }
 }
-
