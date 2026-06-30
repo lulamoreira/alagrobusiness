@@ -4,6 +4,8 @@ import { useAuth } from "@/lib/auth";
 import { Logo } from "./Logo";
 import { LanguageSelector } from "./LanguageSelector";
 import { AmbientGlow } from "./AmbientGlow";
+import { PlanBadge, PlanBanner } from "./PlanStatus";
+import { usePlan } from "@/lib/plan";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -19,6 +21,8 @@ import {
   Wallet,
   CalendarDays,
   BarChart3,
+  Lock,
+  Crown,
 } from "lucide-react";
 
 
