@@ -538,7 +538,7 @@ function AdminCotacoesPage() {
                             : ""
                       }
                     >
-                      <td className="px-3 py-2 font-medium">{t(`commodities.${p.produto}`)}</td>
+                      <td className="px-3 py-2 font-medium">{(() => { const c = catalog.find((x) => x.codigo === p.produto); return c ? nomeFor(c, i18n.language) : p.produto; })()}</td>
                       <td className="px-3 py-2">
                         <input
                           type="number" step="0.0001" min="0"
