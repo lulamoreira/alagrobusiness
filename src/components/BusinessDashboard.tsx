@@ -14,9 +14,10 @@ interface KpiCardProps {
   value: string;
   icon: typeof Package;
   accent?: boolean;
+  hint?: string;
 }
 
-function KpiCard({ label, value, icon: Icon, accent }: KpiCardProps) {
+function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
   return (
     <div className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
       <div className="flex items-center justify-between">
@@ -42,9 +43,13 @@ function KpiCard({ label, value, icon: Icon, accent }: KpiCardProps) {
       >
         {value}
       </div>
+      {hint ? (
+        <div className="mt-1 text-xs font-medium text-muted-foreground tabular-nums">{hint}</div>
+      ) : null}
     </div>
   );
 }
+
 
 function formatVolume(totalKg: number, t: (k: string) => string, locale: string) {
   if (totalKg <= 0) {
