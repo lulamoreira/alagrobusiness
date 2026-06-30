@@ -88,7 +88,8 @@
     "alerts": "Alertas",
     "settings": "Configurações",
     "more": "Mais",
-    "finance": "Financeiro"
+    "finance": "Financeiro",
+    "agenda": "Agenda"
   },
   "dashboard": {
     "hello": "Olá",
@@ -110,6 +111,11 @@
       "kg": "kg",
       "ton": "t",
       "pendingHint": "{{value}} a receber"
+    },
+    "agendaMini": {
+      "title": "Próximos eventos",
+      "viewAll": "Ver agenda",
+      "empty": "Nenhum evento futuro."
     }
   },
   "news": {
@@ -525,5 +531,44 @@
     "pendingHint": "{{value}} a receber",
     "errorGeneric": "Não foi possível concluir a ação.",
     "noResults": "Nenhuma venda encontrada com esses filtros."
+  },
+  "agenda": {
+    "title": "Agenda",
+    "subtitle": "Organize plantios, colheitas, entregas e compromissos.",
+    "newEvent": "Novo evento",
+    "editTitle": "Editar evento",
+    "upcomingTitle": "Próximos eventos",
+    "emptyTitle": "Nenhum evento por aqui",
+    "emptyDescription": "Crie seu primeiro evento e mantenha o controle do seu calendário.",
+    "filterAll": "Todos",
+    "prevMonth": "Mês anterior",
+    "nextMonth": "Próximo mês",
+    "eventsOf": "Eventos de {{date}}",
+    "noEventsThisDay": "Sem eventos neste dia.",
+    "allDay": "Dia todo",
+    "toggleDone": "Marcar como concluído",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "deleteConfirmTitle": "Excluir evento",
+    "deleteConfirmDesc": "Tem certeza que deseja excluir este evento? Esta ação pode ser desfeita pelo suporte.",
+    "deleteConfirm": "Excluir",
+    "errorGeneric": "Não foi possível salvar o evento.",
+    "fieldTitle": "Título",
+    "fieldType": "Tipo",
+    "fieldDate": "Data",
+    "fieldTime": "Hora",
+    "fieldDescription": "Descrição",
+    "fieldLinkAnuncio": "Vincular anúncio",
+    "fieldLinkVenda": "Vincular venda",
+    "linkNone": "Nenhum",
+    "types": {
+      "plantio": "Plantio",
+      "colheita": "Colheita",
+      "entrega": "Entrega",
+      "pagamento": "Pagamento",
+      "reuniao": "Reunião",
+      "outro": "Outro"
+    }
   }
 }

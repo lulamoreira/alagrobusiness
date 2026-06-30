@@ -88,7 +88,8 @@
     "alerts": "Alerts",
     "settings": "Settings",
     "more": "More",
-    "finance": "Finance"
+    "finance": "Finance",
+    "agenda": "Calendar"
   },
   "dashboard": {
     "hello": "Hello",
@@ -110,6 +111,11 @@
       "kg": "kg",
       "ton": "t",
       "pendingHint": "{{value}} to receive"
+    },
+    "agendaMini": {
+      "title": "Upcoming events",
+      "viewAll": "View calendar",
+      "empty": "No upcoming events."
     }
   },
   "news": {
@@ -525,5 +531,44 @@
     "pendingHint": "{{value}} to receive",
     "errorGeneric": "Could not complete the action.",
     "noResults": "No sales match these filters."
+  },
+  "agenda": {
+    "title": "Calendar",
+    "subtitle": "Organize plantings, harvests, deliveries and meetings.",
+    "newEvent": "New event",
+    "editTitle": "Edit event",
+    "upcomingTitle": "Upcoming events",
+    "emptyTitle": "No events yet",
+    "emptyDescription": "Create your first event and keep your calendar on track.",
+    "filterAll": "All",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "eventsOf": "Events on {{date}}",
+    "noEventsThisDay": "No events on this day.",
+    "allDay": "All day",
+    "toggleDone": "Mark as done",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "deleteConfirmTitle": "Delete event",
+    "deleteConfirmDesc": "Are you sure you want to delete this event? This can be undone by support.",
+    "deleteConfirm": "Delete",
+    "errorGeneric": "Could not save the event.",
+    "fieldTitle": "Title",
+    "fieldType": "Type",
+    "fieldDate": "Date",
+    "fieldTime": "Time",
+    "fieldDescription": "Description",
+    "fieldLinkAnuncio": "Link listing",
+    "fieldLinkVenda": "Link sale",
+    "linkNone": "None",
+    "types": {
+      "plantio": "Planting",
+      "colheita": "Harvest",
+      "entrega": "Delivery",
+      "pagamento": "Payment",
+      "reuniao": "Meeting",
+      "outro": "Other"
+    }
   }
 }
