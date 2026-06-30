@@ -22,6 +22,8 @@ type AnuncioRow = {
   preco: number;
   moeda: "BRL" | "USD" | "EUR";
   preco_unidade_id: string;
+  quantidade_disponivel: number;
+  quantidade_unidade_id: string;
   fotos: string[];
   updated_at: string;
   estado: string | null;
