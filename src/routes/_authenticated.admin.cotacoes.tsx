@@ -79,6 +79,11 @@ function AdminCotacoesPage() {
     moeda: z.enum(["BRL", "USD", "EUR"]),
   }), [i18n.language]);
 
+  const unidadePadraoId = (codigo: string): string => {
+    const item = catalog.find((c) => c.codigo === codigo);
+    return item?.unidade_padrao_id ?? "";
+  };
+
   const load = async () => {
     setLoading(true);
     const [{ data: uns }, { data: cots }] = await Promise.all([
@@ -86,7 +91,6 @@ function AdminCotacoesPage() {
       supabase
         .from("cotacoes_commodities")
         .select("id, produto, valor, moeda, unidade_id, data, fonte, fonte_url")
-        .in("produto", PRODUTOS as unknown as string[])
         .is("deleted_at", null)
         .order("data", { ascending: false }),
     ]);
@@ -101,16 +105,49 @@ function AdminCotacoesPage() {
 
   useEffect(() => { load(); }, []);
 
-  const startEdit = (produto: Produto) => {
+  const startEdit = (produto: string) => {
     const cur = atuais[produto];
     setEditing(produto);
     setEditValor(cur ? String(cur.valor) : "");
-    // Prioridade: unidade já cadastrada > unidade padrão do produto > primeira disponível
     setEditUnidade(
-      cur?.unidade_id ?? unidadePadraoId(produto, unidades) ?? unidades[0]?.id ?? "",
+      cur?.unidade_id ?? unidadePadraoId(produto) ?? unidades[0]?.id ?? "",
     );
     setEditMoeda((cur?.moeda as Moeda) ?? "BRL");
   };
+
+  const saveNewProduto = async () => {
+    if (!newCodigo.trim() || !newNomePt.trim() || !newUnidadeId) {
+      toast.error(t("adminQuotes.validation.unitRequired"));
+      return;
+    }
+    setSavingNew(true);
+    const codigo = newCodigo.trim().toLowerCase().replace(/\s+/g, "_");
+    const ordem = (catalog[catalog.length - 1]?.ordem ?? 0) + 10;
+    const { error } = await supabase.from("commodities_catalogo").insert({
+      codigo,
+      nome: {
+        "pt-BR": newNomePt.trim(),
+        en: (newNomeEn || newNomePt).trim(),
+        es: (newNomeEs || newNomePt).trim(),
+      },
+      unidade_padrao_id: newUnidadeId,
+      ordem,
+    });
+    setSavingNew(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(t("adminQuotes.newProductSaved"));
+    setShowNew(false);
+    setNewCodigo("");
+    setNewNomePt("");
+    setNewNomeEn("");
+    setNewNomeEs("");
+    setNewUnidadeId("");
+    refetchCatalog();
+  };
+
 
   const saveManual = async () => {
     if (!editing) return;
