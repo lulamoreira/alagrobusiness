@@ -127,10 +127,11 @@ export function BusinessDashboard() {
         conversasCount = (conv ?? []).length;
       }
 
-      // Sum revenue in BRL (vendas.moeda is currently 'BRL' by default; treat valor_total as that currency).
-      // For BRL we sum directly; for other currencies we keep numeric value and rely on formatMoney to convert.
-      const totalBRL = vendas
-        .filter((v) => (v.moeda as string) === "BRL")
+      // Sum revenue in BRL (vendas.moeda is currently 'BRL' by default).
+      const brlVendas = vendas.filter((v) => (v.moeda as string) === "BRL");
+      const totalBRL = brlVendas.reduce((acc, v) => acc + Number(v.valor_total), 0);
+      const pendingBRL = brlVendas
+        .filter((v) => (v.status_pagamento as string) === "aguardando")
         .reduce((acc, v) => acc + Number(v.valor_total), 0);
 
       return {
@@ -139,10 +140,12 @@ export function BusinessDashboard() {
         volumeKg,
         negotiatingCount: conversasCount,
         revenueBRL: totalBRL,
+        pendingBRL,
         totalListings: anuncios.length,
       };
     },
   });
+
 
   const nf = new Intl.NumberFormat(i18n.language);
 
