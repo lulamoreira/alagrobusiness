@@ -221,6 +221,7 @@ export type Database = {
           deleted_at: string | null
           id: string
           last_message_at: string
+          status_negociacao: Database["public"]["Enums"]["negociacao_status"]
           updated_at: string
           vendedor_id: string
         }
@@ -231,6 +232,7 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           last_message_at?: string
+          status_negociacao?: Database["public"]["Enums"]["negociacao_status"]
           updated_at?: string
           vendedor_id: string
         }
@@ -241,6 +243,7 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           last_message_at?: string
+          status_negociacao?: Database["public"]["Enums"]["negociacao_status"]
           updated_at?: string
           vendedor_id?: string
         }
@@ -767,12 +770,20 @@ export type Database = {
         Args: { p_conversa_id: string }
         Returns: undefined
       }
+      set_status_negociacao: {
+        Args: {
+          p_conversa_id: string
+          p_status: Database["public"]["Enums"]["negociacao_status"]
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       categoria_agro: "fruta" | "grao" | "legumes" | "vegetal"
       idioma_app: "pt-BR" | "en" | "es"
       modalidade_entrega: "retirada" | "entrega" | "ambos"
       moeda_app: "BRL" | "USD" | "EUR"
+      negociacao_status: "iniciado" | "em_negociacao" | "fechado" | "descartado"
       status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
       tipo_dolar: "comercial" | "turismo" | "paralelo"
@@ -908,6 +919,7 @@ export const Constants = {
       idioma_app: ["pt-BR", "en", "es"],
       modalidade_entrega: ["retirada", "entrega", "ambos"],
       moeda_app: ["BRL", "USD", "EUR"],
+      negociacao_status: ["iniciado", "em_negociacao", "fechado", "descartado"],
       status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
       tipo_dolar: ["comercial", "turismo", "paralelo"],

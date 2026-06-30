@@ -23,9 +23,11 @@ interface MarkAsSoldDialogProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialBuyerName?: string;
+  conversaId?: string;
 }
 
-export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess }: MarkAsSoldDialogProps) {
+export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess, initialBuyerName, conversaId }: MarkAsSoldDialogProps) {
   const { t } = useTranslation();
   const { user } = useAuth();
   const qc = useQueryClient();
@@ -36,7 +38,7 @@ export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess }: MarkAsSo
   const [quantidade, setQuantidade] = useState<string>(String(anuncio.quantidade_disponivel));
   const [unidadeId, setUnidadeId] = useState<string>(anuncio.quantidade_unidade_id);
   const [valorTotal, setValorTotal] = useState<string>(String(defaultTotal));
-  const [compradorNome, setCompradorNome] = useState<string>("");
+  const [compradorNome, setCompradorNome] = useState<string>(initialBuyerName ?? "");
   const [dataVenda, setDataVenda] = useState<string>(today);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -101,8 +103,15 @@ export function MarkAsSoldDialog({ anuncio, open, onClose, onSuccess }: MarkAsSo
       setSubmitError(t("sell.markSoldDialog.error"));
       return;
     }
+    if (conversaId) {
+      await supabase.rpc("set_status_negociacao", {
+        p_conversa_id: conversaId,
+        p_status: "fechado",
+      });
+    }
     qc.invalidateQueries({ queryKey: ["my_anuncios", user.id] });
     qc.invalidateQueries({ queryKey: ["business_kpis", user.id] });
+    qc.invalidateQueries({ queryKey: ["negociacoes", user.id] });
     onSuccess();
     onClose();
   };

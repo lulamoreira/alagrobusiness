@@ -82,6 +82,7 @@
     "buy": "Buy",
     "sell": "Sell",
     "messages": "Messages",
+    "negotiations": "Negotiations",
     "quote": "Quote",
     "news": "News",
     "alerts": "Alerts",
@@ -318,6 +319,25 @@
     "yesterday": "Yesterday",
     "backToList": "Back to conversations",
     "newMessage": "New message"
+  },
+  "nego": {
+    "title": "Negotiations",
+    "subtitle": "Track the contacts on your listings in one place.",
+    "empty": "You have no negotiations yet. When a buyer opens a chat on one of your listings, it shows up here.",
+    "emptyColumn": "No negotiations in this stage.",
+    "lastMessage": "Last message",
+    "noMessageYet": "No messages yet",
+    "openChat": "Open chat",
+    "registerSale": "Register sale",
+    "moveTo": "Move to",
+    "moveError": "Could not move the negotiation.",
+    "buyer": "Buyer",
+    "status": {
+      "iniciado": "Started",
+      "em_negociacao": "In negotiation",
+      "fechado": "Closed",
+      "descartado": "Discarded"
+    }
   },
   "alerts": {
     "title": "Price alerts",

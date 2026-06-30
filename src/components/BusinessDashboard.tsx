@@ -114,11 +114,11 @@ export function BusinessDashboard() {
         const ids = ativos.map((a) => a.id as string);
         const { data: conv } = await supabase
           .from("conversas")
-          .select("anuncio_id")
+          .select("id, status_negociacao")
           .in("anuncio_id", ids)
+          .in("status_negociacao", ["iniciado", "em_negociacao"])
           .is("deleted_at", null);
-        const set = new Set((conv ?? []).map((c) => c.anuncio_id as string));
-        conversasCount = set.size;
+        conversasCount = (conv ?? []).length;
       }
 
       // Sum revenue in BRL (vendas.moeda is currently 'BRL' by default; treat valor_total as that currency).

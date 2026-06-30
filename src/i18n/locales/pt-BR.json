@@ -82,6 +82,7 @@
     "buy": "Comprar",
     "sell": "Vender",
     "messages": "Mensagens",
+    "negotiations": "Negociações",
     "quote": "Cotação",
     "news": "Notícias",
     "alerts": "Alertas",
@@ -318,6 +319,25 @@
     "yesterday": "Ontem",
     "backToList": "Voltar para conversas",
     "newMessage": "Nova mensagem"
+  },
+  "nego": {
+    "title": "Negociações",
+    "subtitle": "Acompanhe os contatos dos seus anúncios em um só lugar.",
+    "empty": "Você ainda não tem negociações. Quando alguém abrir uma conversa em um dos seus anúncios, ela aparece aqui.",
+    "emptyColumn": "Nenhuma negociação nesta etapa.",
+    "lastMessage": "Última mensagem",
+    "noMessageYet": "Sem mensagens ainda",
+    "openChat": "Abrir conversa",
+    "registerSale": "Registrar venda",
+    "moveTo": "Mover para",
+    "moveError": "Não foi possível mover a negociação.",
+    "buyer": "Comprador",
+    "status": {
+      "iniciado": "Iniciado",
+      "em_negociacao": "Em negociação",
+      "fechado": "Fechado",
+      "descartado": "Descartado"
+    }
   },
   "alerts": {
     "title": "Alertas de preço",
