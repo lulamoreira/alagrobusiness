@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { handlePaywallError } from "@/components/PlanStatus";
 
 export const Route = createFileRoute("/_authenticated/alertas")({
   component: AlertsPage,
