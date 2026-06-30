@@ -670,6 +670,66 @@ export type Database = {
         }
         Relationships: []
       }
+      vendas: {
+        Row: {
+          anuncio_id: string
+          comprador_nome: string | null
+          created_at: string
+          data_venda: string
+          deleted_at: string | null
+          id: string
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          quantidade: number
+          unidade_id: string
+          updated_at: string
+          valor_total: number
+          vendedor_id: string
+        }
+        Insert: {
+          anuncio_id: string
+          comprador_nome?: string | null
+          created_at?: string
+          data_venda?: string
+          deleted_at?: string | null
+          id?: string
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          quantidade: number
+          unidade_id: string
+          updated_at?: string
+          valor_total: number
+          vendedor_id: string
+        }
+        Update: {
+          anuncio_id?: string
+          comprador_nome?: string | null
+          created_at?: string
+          data_venda?: string
+          deleted_at?: string | null
+          id?: string
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          quantidade?: number
+          unidade_id?: string
+          updated_at?: string
+          valor_total?: number
+          vendedor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vendas_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vendas_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
