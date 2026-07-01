@@ -132,6 +132,8 @@ function RelatoriosPage() {
 
   const money = (v: number) =>
     formatMoney(v, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const moneyCompact = (v: number) =>
+    formatMoneyCompact(v, userMoeda, userDolarPref, dolar ?? [], i18n.language);
 
   // Summary
   const summary = useMemo(() => {
