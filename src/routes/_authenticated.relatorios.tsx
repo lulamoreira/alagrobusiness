@@ -454,20 +454,23 @@ function RelatoriosPage() {
 function Kpi({
   label,
   value,
+  fullValue,
   accent,
 }: {
   label: string;
   value: string;
+  fullValue?: string;
   accent?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-4">
+    <div className="min-w-0 rounded-2xl border border-border bg-card p-4">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
       <p
+        title={fullValue}
         className={cn(
-          "mt-2 font-display text-xl font-bold tabular-nums md:text-2xl",
+          "mt-2 font-display font-bold tabular-nums leading-tight break-words [font-size:clamp(1.125rem,4vw,1.5rem)]",
           accent ? "text-primary" : "text-foreground",
         )}
       >
