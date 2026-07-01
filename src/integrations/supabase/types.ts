@@ -384,6 +384,47 @@ export type Database = {
           },
         ]
       }
+      certificados: {
+        Row: {
+          codigo: string
+          created_at: string
+          curso_id: string
+          deleted_at: string | null
+          emitido_em: string
+          id: string
+          updated_at: string
+          usuario_id: string
+        }
+        Insert: {
+          codigo: string
+          created_at?: string
+          curso_id: string
+          deleted_at?: string | null
+          emitido_em?: string
+          id?: string
+          updated_at?: string
+          usuario_id: string
+        }
+        Update: {
+          codigo?: string
+          created_at?: string
+          curso_id?: string
+          deleted_at?: string | null
+          emitido_em?: string
+          id?: string
+          updated_at?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificados_curso_id_fkey"
+            columns: ["curso_id"]
+            isOneToOne: false
+            referencedRelation: "cursos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clima: {
         Row: {
           atualizado_em: string
@@ -1243,6 +1284,10 @@ export type Database = {
       }
       current_plan: { Args: never; Returns: Json }
       current_plan_limites: { Args: { uid: string }; Returns: Json }
+      emitir_certificado_se_completo: {
+        Args: { p_curso_id: string }
+        Returns: Json
+      }
       get_cron_secret: { Args: never; Returns: string }
       get_stripe_webhook_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {
