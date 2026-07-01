@@ -34,6 +34,7 @@ import { Route as AuthenticatedMensagensIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedCursosIndexRouteImport } from './routes/_authenticated.cursos.index'
 import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
 import { Route as AuthenticatedMensagensConversaIdRouteImport } from './routes/_authenticated.mensagens.$conversaId'
+import { Route as AuthenticatedCursosIdRouteImport } from './routes/_authenticated.cursos.$id'
 import { Route as AuthenticatedAnuncioIdRouteImport } from './routes/_authenticated.anuncio.$id'
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
@@ -170,6 +171,11 @@ const AuthenticatedMensagensConversaIdRoute =
     path: '/$conversaId',
     getParentRoute: () => AuthenticatedMensagensRoute,
   } as any)
+const AuthenticatedCursosIdRoute = AuthenticatedCursosIdRouteImport.update({
+  id: '/cursos/$id',
+  path: '/cursos/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
   id: '/anuncio/$id',
   path: '/anuncio/$id',
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/cursos/': typeof AuthenticatedCursosIndexRoute
@@ -253,6 +260,7 @@ export interface FileRoutesByTo {
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/cursos': typeof AuthenticatedCursosIndexRoute
@@ -286,6 +294,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
+  '/_authenticated/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/_authenticated/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/_authenticated/vender/novo': typeof AuthenticatedVenderNovoRoute
   '/_authenticated/cursos/': typeof AuthenticatedCursosIndexRoute
@@ -319,6 +328,7 @@ export interface FileRouteTypes {
     | '/admin/cotacoes'
     | '/admin/cursos'
     | '/anuncio/$id'
+    | '/cursos/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
     | '/cursos/'
@@ -348,6 +358,7 @@ export interface FileRouteTypes {
     | '/admin/cotacoes'
     | '/admin/cursos'
     | '/anuncio/$id'
+    | '/cursos/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
     | '/cursos'
@@ -380,6 +391,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/admin/cursos'
     | '/_authenticated/anuncio/$id'
+    | '/_authenticated/cursos/$id'
     | '/_authenticated/mensagens/$conversaId'
     | '/_authenticated/vender/novo'
     | '/_authenticated/cursos/'
@@ -575,6 +587,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMensagensConversaIdRouteImport
       parentRoute: typeof AuthenticatedMensagensRoute
     }
+    '/_authenticated/cursos/$id': {
+      id: '/_authenticated/cursos/$id'
+      path: '/cursos/$id'
+      fullPath: '/cursos/$id'
+      preLoaderRoute: typeof AuthenticatedCursosIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/anuncio/$id': {
       id: '/_authenticated/anuncio/$id'
       path: '/anuncio/$id'
@@ -663,6 +682,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
   AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
+  AuthenticatedCursosIdRoute: typeof AuthenticatedCursosIdRoute
   AuthenticatedCursosIndexRoute: typeof AuthenticatedCursosIndexRoute
 }
 
@@ -684,6 +704,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,
   AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
+  AuthenticatedCursosIdRoute: AuthenticatedCursosIdRoute,
   AuthenticatedCursosIndexRoute: AuthenticatedCursosIndexRoute,
 }
 
