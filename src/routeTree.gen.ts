@@ -34,6 +34,7 @@ import { Route as AuthenticatedMensagensIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
 import { Route as AuthenticatedMensagensConversaIdRouteImport } from './routes/_authenticated.mensagens.$conversaId'
 import { Route as AuthenticatedAnuncioIdRouteImport } from './routes/_authenticated.anuncio.$id'
+import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated.admin.acessos'
 import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
@@ -167,6 +168,12 @@ const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
   path: '/anuncio/$id',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminCursosRoute =
+  AuthenticatedAdminCursosRouteImport.update({
+    id: '/admin/cursos',
+    path: '/admin/cursos',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminCotacoesRoute =
   AuthenticatedAdminCotacoesRouteImport.update({
     id: '/admin/cotacoes',
@@ -208,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
+  '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
@@ -235,6 +243,7 @@ export interface FileRoutesByTo {
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
+  '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
@@ -266,6 +275,7 @@ export interface FileRoutesById {
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
+  '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/_authenticated/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/_authenticated/vender/novo': typeof AuthenticatedVenderNovoRoute
@@ -297,6 +307,7 @@ export interface FileRouteTypes {
     | '/vender'
     | '/admin/acessos'
     | '/admin/cotacoes'
+    | '/admin/cursos'
     | '/anuncio/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/admin/acessos'
     | '/admin/cotacoes'
+    | '/admin/cursos'
     | '/anuncio/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
@@ -354,6 +366,7 @@ export interface FileRouteTypes {
     | '/_authenticated/vender'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/cotacoes'
+    | '/_authenticated/admin/cursos'
     | '/_authenticated/anuncio/$id'
     | '/_authenticated/mensagens/$conversaId'
     | '/_authenticated/vender/novo'
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAnuncioIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/cursos': {
+      id: '/_authenticated/admin/cursos'
+      path: '/admin/cursos'
+      fullPath: '/admin/cursos'
+      preLoaderRoute: typeof AuthenticatedAdminCursosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/admin/cotacoes': {
       id: '/_authenticated/admin/cotacoes'
       path: '/admin/cotacoes'
@@ -621,6 +641,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
+  AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
   AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
 }
 
@@ -640,6 +661,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
+  AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,
   AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
 }
 
@@ -659,13 +681,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

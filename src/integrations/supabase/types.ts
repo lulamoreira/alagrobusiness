@@ -299,6 +299,91 @@ export type Database = {
           },
         ]
       }
+      aulas: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          descricao: string | null
+          duracao_seg: number | null
+          gratis: boolean
+          id: string
+          modulo_id: string
+          ordem: number
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          duracao_seg?: number | null
+          gratis?: boolean
+          id?: string
+          modulo_id: string
+          ordem?: number
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          duracao_seg?: number | null
+          gratis?: boolean
+          id?: string
+          modulo_id?: string
+          ordem?: number
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aulas_modulo_id_fkey"
+            columns: ["modulo_id"]
+            isOneToOne: false
+            referencedRelation: "modulos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      aulas_video: {
+        Row: {
+          aula_id: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          updated_at: string
+          video_provider: string
+          video_url: string
+        }
+        Insert: {
+          aula_id: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          updated_at?: string
+          video_provider: string
+          video_url: string
+        }
+        Update: {
+          aula_id?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          updated_at?: string
+          video_provider?: string
+          video_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aulas_video_aula_id_fkey"
+            columns: ["aula_id"]
+            isOneToOne: true
+            referencedRelation: "aulas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clima: {
         Row: {
           atualizado_em: string
@@ -550,6 +635,45 @@ export type Database = {
         }
         Relationships: []
       }
+      cursos: {
+        Row: {
+          capa_url: string | null
+          categoria: string | null
+          created_at: string
+          deleted_at: string | null
+          descricao: string | null
+          id: string
+          ordem: number
+          publicado: boolean
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          capa_url?: string | null
+          categoria?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          publicado?: boolean
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          capa_url?: string | null
+          categoria?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          publicado?: boolean
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       mensagens: {
         Row: {
           conteudo: string
@@ -594,6 +718,44 @@ export type Database = {
             columns: ["remetente_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modulos: {
+        Row: {
+          created_at: string
+          curso_id: string
+          deleted_at: string | null
+          id: string
+          ordem: number
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          curso_id: string
+          deleted_at?: string | null
+          id?: string
+          ordem?: number
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          curso_id?: string
+          deleted_at?: string | null
+          id?: string
+          ordem?: number
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modulos_curso_id_fkey"
+            columns: ["curso_id"]
+            isOneToOne: false
+            referencedRelation: "cursos"
             referencedColumns: ["id"]
           },
         ]
