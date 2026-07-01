@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Package, Boxes, CheckCircle2, MessageCircle, Wallet, Plus, CalendarDays, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, formatMoneyCompact } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 
 
@@ -16,11 +16,13 @@ interface KpiCardProps {
   icon: typeof Package;
   accent?: boolean;
   hint?: string;
+  fullValue?: string;
+  fullHint?: string;
 }
 
-function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
+function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }: KpiCardProps) {
   return (
-    <div className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
+    <div className="group min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {label}
@@ -36,20 +38,27 @@ function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
         </span>
       </div>
       <div
+        title={fullValue}
         className={
           accent
-            ? "mt-3 font-display text-2xl font-bold tabular-nums text-primary md:text-3xl"
-            : "mt-3 font-display text-2xl font-bold tabular-nums text-foreground md:text-3xl"
+            ? "mt-3 font-display font-bold tabular-nums text-primary [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
+            : "mt-3 font-display font-bold tabular-nums text-foreground [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
         }
       >
         {value}
       </div>
       {hint ? (
-        <div className="mt-1 text-xs font-medium text-muted-foreground tabular-nums">{hint}</div>
+        <div
+          title={fullHint}
+          className="mt-1 text-xs font-medium text-muted-foreground tabular-nums break-words"
+        >
+          {hint}
+        </div>
       ) : null}
     </div>
   );
 }
+
 
 
 function formatVolume(totalKg: number, t: (k: string) => string, locale: string) {
@@ -181,8 +190,16 @@ export function BusinessDashboard() {
   }
 
   const k = data!;
-  const revenue = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
-  const pendingFormatted = formatMoney(
+  const revenue = formatMoneyCompact(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const revenueFull = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const pendingCompact = formatMoneyCompact(
+    k.pendingBRL,
+    userMoeda,
+    userDolarPref,
+    dolar ?? [],
+    i18n.language,
+  );
+  const pendingFull = formatMoney(
     k.pendingBRL,
     userMoeda,
     userDolarPref,
@@ -190,7 +207,9 @@ export function BusinessDashboard() {
     i18n.language,
   );
   const pendingHint =
-    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFormatted }) : undefined;
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingCompact }) : undefined;
+  const pendingHintFull =
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFull }) : undefined;
 
   return (
     <section>
@@ -217,9 +236,11 @@ export function BusinessDashboard() {
         <KpiCard
           label={t("dashboard.business.revenue")}
           value={revenue}
+          fullValue={revenueFull}
           icon={Wallet}
           accent
           hint={pendingHint}
+          fullHint={pendingHintFull}
         />
       </div>
 

@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, formatMoneyCompact } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 import { cn } from "@/lib/utils";
 
@@ -94,6 +94,8 @@ function FinanceiroPage() {
     [dolar],
   );
   const fmt = (v: number) => formatMoney(v, userMoeda, userDolarPref, cotacoes, i18n.language);
+  const fmtCompact = (v: number) =>
+    formatMoneyCompact(v, userMoeda, userDolarPref, cotacoes, i18n.language);
 
   const filtered = useMemo(() => {
     return (vendas ?? []).filter((v) => {
@@ -158,19 +160,22 @@ function FinanceiroPage() {
       <section className="grid gap-3 sm:grid-cols-3">
         <KpiCard
           label={t("finance.kpiTotal")}
-          value={fmt(totals.total)}
+          value={fmtCompact(totals.total)}
+          fullValue={fmt(totals.total)}
           icon={Wallet}
           tone="primary"
         />
         <KpiCard
           label={t("finance.kpiReceived")}
-          value={fmt(totals.received)}
+          value={fmtCompact(totals.received)}
+          fullValue={fmt(totals.received)}
           icon={ArrowDownCircle}
           tone="success"
         />
         <KpiCard
           label={t("finance.kpiPending")}
-          value={fmt(totals.pending)}
+          value={fmtCompact(totals.pending)}
+          fullValue={fmt(totals.pending)}
           icon={Clock}
           tone="warning"
         />
@@ -328,11 +333,13 @@ function FinanceiroPage() {
 function KpiCard({
   label,
   value,
+  fullValue,
   icon: Icon,
   tone,
 }: {
   label: string;
   value: string;
+  fullValue?: string;
   icon: typeof Wallet;
   tone: "primary" | "success" | "warning";
 }) {
@@ -349,7 +356,7 @@ function KpiCard({
         ? "text-emerald-400"
         : "text-amber-400";
   return (
-    <div className="rounded-2xl border border-border bg-card p-5">
+    <div className="min-w-0 rounded-2xl border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {label}
@@ -358,7 +365,13 @@ function KpiCard({
           <Icon className="h-3.5 w-3.5" />
         </span>
       </div>
-      <div className={cn("mt-3 font-display text-2xl font-bold tabular-nums md:text-3xl", valueCls)}>
+      <div
+        title={fullValue}
+        className={cn(
+          "mt-3 font-display font-bold tabular-nums leading-tight break-words [font-size:clamp(1.25rem,4.5vw,1.875rem)]",
+          valueCls,
+        )}
+      >
         {value}
       </div>
     </div>

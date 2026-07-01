@@ -15,7 +15,7 @@ import {
 import { Download, BarChart3, TrendingUp, Package, Filter } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, formatMoneyCompact } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 import { cn } from "@/lib/utils";
 
@@ -132,6 +132,8 @@ function RelatoriosPage() {
 
   const money = (v: number) =>
     formatMoney(v, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const moneyCompact = (v: number) =>
+    formatMoneyCompact(v, userMoeda, userDolarPref, dolar ?? [], i18n.language);
 
   // Summary
   const summary = useMemo(() => {
@@ -321,11 +323,11 @@ function RelatoriosPage() {
       <section>
         <h2 className="mb-3 font-display text-lg font-bold">{t("reports.summary")}</h2>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-          <Kpi label={t("reports.totalSold")} value={money(summary.total)} accent />
-          <Kpi label={t("reports.received")} value={money(summary.received)} />
-          <Kpi label={t("reports.pending")} value={money(summary.pending)} />
+          <Kpi label={t("reports.totalSold")} value={moneyCompact(summary.total)} fullValue={money(summary.total)} accent />
+          <Kpi label={t("reports.received")} value={moneyCompact(summary.received)} fullValue={money(summary.received)} />
+          <Kpi label={t("reports.pending")} value={moneyCompact(summary.pending)} fullValue={money(summary.pending)} />
           <Kpi label={t("reports.salesCount")} value={nf.format(summary.count)} />
-          <Kpi label={t("reports.averageTicket")} value={money(summary.avg)} />
+          <Kpi label={t("reports.averageTicket")} value={moneyCompact(summary.avg)} fullValue={money(summary.avg)} />
         </div>
       </section>
 
@@ -452,20 +454,23 @@ function RelatoriosPage() {
 function Kpi({
   label,
   value,
+  fullValue,
   accent,
 }: {
   label: string;
   value: string;
+  fullValue?: string;
   accent?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-4">
+    <div className="min-w-0 rounded-2xl border border-border bg-card p-4">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
       <p
+        title={fullValue}
         className={cn(
-          "mt-2 font-display text-xl font-bold tabular-nums md:text-2xl",
+          "mt-2 font-display font-bold tabular-nums leading-tight break-words [font-size:clamp(1.125rem,4vw,1.5rem)]",
           accent ? "text-primary" : "text-foreground",
         )}
       >
