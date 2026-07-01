@@ -126,22 +126,37 @@ function PlanosPage() {
       const url = (data as { url?: string })?.url;
       if (!url) throw new Error("no_url");
       toast.info(t("plan.checkoutStarting"));
-      try {
-        if (window.top && window.top !== window.self) {
-          window.top.location.href = url;
-        } else {
-          window.location.href = url;
-        }
-      } catch {
-        // iframe cross-origin: fallback to new tab
-        window.open(url, "_blank", "noopener,noreferrer");
-      }
+      openTopLevel(url);
     } catch (e) {
       console.error(e);
       toast.error(t("plan.checkoutError"));
       setLoadingCheckout(false);
     }
   }
+
+  async function handleGerenciar() {
+    setLoadingPortal(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-portal-session", {
+        body: {},
+      });
+      if (error) throw error;
+      const payload = data as { url?: string; error?: string };
+      if (payload?.error === "no_stripe_customer") {
+        toast.error(t("plan.portalNoCustomer"));
+        setLoadingPortal(false);
+        return;
+      }
+      if (!payload?.url) throw new Error("no_url");
+      toast.info(t("plan.portalOpening"));
+      openTopLevel(payload.url);
+    } catch (e) {
+      console.error(e);
+      toast.error(t("plan.portalError"));
+      setLoadingPortal(false);
+    }
+  }
+
 
   return (
     <div className="space-y-8">
