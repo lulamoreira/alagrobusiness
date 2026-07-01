@@ -92,7 +92,8 @@
     "agenda": "Calendar",
     "reports": "Reports",
     "plans": "Plans",
-    "courses": "Courses"
+    "courses": "Courses",
+    "certificates": "Certificates"
   },
   "dashboard": {
     "hello": "Hello",
