@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import {
   ArrowLeft,
+  Award,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
@@ -156,6 +157,44 @@ function CursoDetailPage() {
   const total = allAulas.length;
   const done = data?.concluidas.size ?? 0;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const isComplete = total > 0 && done >= total;
+
+  // Certificado existente para este curso
+  const { data: certificado, refetch: refetchCert } = useQuery({
+    queryKey: ["certificado", cursoId, user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data: c } = await supabase
+        .from("certificados")
+        .select("id, codigo, emitido_em")
+        .eq("usuario_id", user!.id)
+        .eq("curso_id", cursoId)
+        .is("deleted_at", null)
+        .maybeSingle();
+      return c as { id: string; codigo: string; emitido_em: string } | null;
+    },
+  });
+
+  // Emite certificado ao atingir 100%
+  useEffect(() => {
+    if (!user || !isComplete || certificado) return;
+    (async () => {
+      const { data: res, error } = await supabase.rpc(
+        "emitir_certificado_se_completo",
+        { p_curso_id: cursoId },
+      );
+      if (error) {
+        console.error("emitir_certificado_se_completo", error);
+        return;
+      }
+      const parsed = res as { emitido?: boolean; ja_existia?: boolean } | null;
+      if (parsed?.emitido) {
+        if (!parsed.ja_existia) toast.success(t("courses.certificateIssued"));
+        await refetchCert();
+      }
+    })();
+  }, [isComplete, certificado, user, cursoId, refetchCert, t]);
+
 
   const marcarConcluida = async () => {
     if (!selectedAula || !user) return;
@@ -222,7 +261,31 @@ function CursoDetailPage() {
             {pct}% · {done}/{total} {t("courses.lessons")}
           </span>
         </div>
+        {isComplete && certificado && (
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/15 via-primary/5 to-transparent p-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10">
+                <Award className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <div className="font-display text-base font-bold text-primary">
+                  {t("courses.courseCompleted")}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {t("certificates.code")}: <span className="font-mono">{certificado.codigo}</span>
+                </div>
+              </div>
+            </div>
+            <Button asChild size="sm">
+              <Link to="/certificado/$codigo" params={{ codigo: certificado.codigo }}>
+                <Award className="mr-1.5 h-4 w-4" />
+                {t("courses.viewCertificate")}
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
+
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         {/* Player */}

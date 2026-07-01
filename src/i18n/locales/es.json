@@ -92,7 +92,8 @@
     "agenda": "Agenda",
     "reports": "Reportes",
     "plans": "Planes",
-    "courses": "Cursos"
+    "courses": "Cursos",
+    "certificates": "Certificados"
   },
   "dashboard": {
     "hello": "Hola",
@@ -833,6 +834,30 @@
     "ofTotal": "de",
     "toastCompleted": "Clase marcada como completada",
     "toastError": "No se pudo guardar el progreso",
-    "continueWatching": "Continuar donde lo dejaste"
+    "continueWatching": "Continuar donde lo dejaste",
+    "courseCompleted": "🎉 Curso completado",
+    "viewCertificate": "Ver certificado",
+    "certificateIssued": "¡Certificado emitido!",
+    "certificateError": "No se pudo emitir el certificado"
+  },
+  "certificates": {
+    "title": "Certificados",
+    "subtitle": "Tus logros de aprendizaje",
+    "empty": "Aún no tienes certificados",
+    "emptyDesc": "Completa un curso para recibir tu certificado.",
+    "browseCourses": "Explorar cursos",
+    "issuedOn": "Emitido el",
+    "code": "Código",
+    "view": "Ver",
+    "download": "Descargar PDF",
+    "print": "Imprimir",
+    "back": "Volver",
+    "notFound": "Certificado no encontrado",
+    "certifyThat": "Certificamos que",
+    "hasCompleted": "ha completado con éxito el curso",
+    "verification": "Código de verificación",
+    "issuedAt": "Fecha de emisión",
+    "platform": "Plataforma de educación del agronegocio brasileño",
+    "generating": "Generando PDF…"
   }
 }
