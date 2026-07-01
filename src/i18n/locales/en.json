@@ -834,6 +834,30 @@
     "ofTotal": "of",
     "toastCompleted": "Lesson marked as completed",
     "toastError": "Could not save progress",
-    "continueWatching": "Continue where you left off"
+    "continueWatching": "Continue where you left off",
+    "courseCompleted": "🎉 Course completed",
+    "viewCertificate": "View certificate",
+    "certificateIssued": "Certificate issued!",
+    "certificateError": "Could not issue certificate"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "subtitle": "Your learning achievements",
+    "empty": "You don't have any certificates yet",
+    "emptyDesc": "Complete a course to receive your certificate.",
+    "browseCourses": "Browse courses",
+    "issuedOn": "Issued on",
+    "code": "Code",
+    "view": "View",
+    "download": "Download PDF",
+    "print": "Print",
+    "back": "Back",
+    "notFound": "Certificate not found",
+    "certifyThat": "We certify that",
+    "hasCompleted": "has successfully completed the course",
+    "verification": "Verification code",
+    "issuedAt": "Issue date",
+    "platform": "Brazilian agribusiness education platform",
+    "generating": "Generating PDF…"
   }
 }
