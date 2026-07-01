@@ -84,6 +84,7 @@ function PlanosPage() {
     assinatura?.origem === "stripe" &&
     assinatura?.status === "ativa";
 
+  const { data: planos, isLoading } = useQuery({
     queryKey: ["planos_publicos"],
     queryFn: async (): Promise<PlanoRow[]> => {
       const { data, error } = await supabase
@@ -95,6 +96,7 @@ function PlanosPage() {
       return (data ?? []) as unknown as PlanoRow[];
     },
   });
+
 
   const nf = new Intl.NumberFormat(lang, { style: "currency", currency: "BRL" });
 
