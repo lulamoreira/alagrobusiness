@@ -726,6 +726,18 @@
       "cursosPreview": "Cursos em pré-visualização",
       "clubeFull": "Clube de vantagens",
       "clubeNone": "Sem clube de vantagens"
-    }
+    },
+    "billingMonthly": "Mensal",
+    "billingAnnual": "Anual",
+    "annualSave": "Economize com o anual",
+    "perMonth": "/mês",
+    "perYear": "/ano",
+    "checkoutStarting": "Abrindo checkout seguro…",
+    "checkoutError": "Não foi possível iniciar o checkout. Tente novamente.",
+    "statusSuccessTitle": "Pagamento recebido",
+    "statusSuccessDesc": "Ativando sua assinatura Pro… isso leva alguns segundos.",
+    "statusCancelTitle": "Checkout cancelado",
+    "statusCancelDesc": "Nenhuma cobrança foi feita. Você pode tentar novamente quando quiser.",
+    "dismiss": "Fechar"
   }
 }

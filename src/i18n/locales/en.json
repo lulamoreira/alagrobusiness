@@ -726,6 +726,18 @@
       "cursosPreview": "Course previews",
       "clubeFull": "Rewards club",
       "clubeNone": "No rewards club"
-    }
+    },
+    "billingMonthly": "Monthly",
+    "billingAnnual": "Annual",
+    "annualSave": "Save with annual",
+    "perMonth": "/mo",
+    "perYear": "/yr",
+    "checkoutStarting": "Opening secure checkout…",
+    "checkoutError": "Could not start checkout. Please try again.",
+    "statusSuccessTitle": "Payment received",
+    "statusSuccessDesc": "Activating your Pro subscription… this takes a few seconds.",
+    "statusCancelTitle": "Checkout canceled",
+    "statusCancelDesc": "No charge was made. You can try again whenever you like.",
+    "dismiss": "Dismiss"
   }
 }

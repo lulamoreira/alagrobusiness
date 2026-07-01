@@ -726,6 +726,18 @@
       "cursosPreview": "Cursos en vista previa",
       "clubeFull": "Club de ventajas",
       "clubeNone": "Sin club de ventajas"
-    }
+    },
+    "billingMonthly": "Mensual",
+    "billingAnnual": "Anual",
+    "annualSave": "Ahorra con el anual",
+    "perMonth": "/mes",
+    "perYear": "/año",
+    "checkoutStarting": "Abriendo el pago seguro…",
+    "checkoutError": "No se pudo iniciar el pago. Inténtalo de nuevo.",
+    "statusSuccessTitle": "Pago recibido",
+    "statusSuccessDesc": "Activando tu suscripción Pro… tarda unos segundos.",
+    "statusCancelTitle": "Pago cancelado",
+    "statusCancelDesc": "No se realizó ningún cargo. Puedes intentarlo cuando quieras.",
+    "dismiss": "Cerrar"
   }
 }
