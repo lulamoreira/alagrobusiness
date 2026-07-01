@@ -91,7 +91,8 @@
     "finance": "Financiero",
     "agenda": "Agenda",
     "reports": "Reportes",
-    "plans": "Planes"
+    "plans": "Planes",
+    "courses": "Cursos"
   },
   "dashboard": {
     "hello": "Hola",
@@ -803,5 +804,35 @@
     "urlRequired": "Ingrese la URL del video.",
     "urlInvalid": "URL no válida.",
     "providerRequired": "Elija un proveedor."
+  },
+  "courses": {
+    "title": "Cursos",
+    "subtitle": "Aprende con expertos del agronegocio",
+    "empty": "Aún no hay cursos disponibles",
+    "emptyDesc": "Pronto publicaremos nuevo contenido.",
+    "progress": "Progreso",
+    "lessons": "lecciones",
+    "lesson": "lección",
+    "startCourse": "Comenzar curso",
+    "continueCourse": "Continuar",
+    "completed": "Completado",
+    "modules": "Módulos",
+    "freeBadge": "Gratis",
+    "proBadge": "Pro",
+    "locked": "Clase exclusiva Pro",
+    "lockedDesc": "Suscríbete al plan Pro para acceder a esta clase y a todo el contenido premium.",
+    "subscribe": "Suscribirse",
+    "markComplete": "Marcar como completada",
+    "markedComplete": "Completada",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "selectLesson": "Selecciona una clase para empezar",
+    "noVideo": "Video no disponible",
+    "backToCatalog": "Volver al catálogo",
+    "notFound": "Curso no encontrado",
+    "ofTotal": "de",
+    "toastCompleted": "Clase marcada como completada",
+    "toastError": "No se pudo guardar el progreso",
+    "continueWatching": "Continuar donde lo dejaste"
   }
 }

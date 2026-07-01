@@ -91,7 +91,8 @@
     "finance": "Finance",
     "agenda": "Calendar",
     "reports": "Reports",
-    "plans": "Plans"
+    "plans": "Plans",
+    "courses": "Courses"
   },
   "dashboard": {
     "hello": "Hello",
@@ -803,5 +804,35 @@
     "urlRequired": "Please provide the video URL.",
     "urlInvalid": "Invalid URL.",
     "providerRequired": "Choose a provider."
+  },
+  "courses": {
+    "title": "Courses",
+    "subtitle": "Learn from agribusiness experts",
+    "empty": "No courses available yet",
+    "emptyDesc": "New content will be published soon.",
+    "progress": "Progress",
+    "lessons": "lessons",
+    "lesson": "lesson",
+    "startCourse": "Start course",
+    "continueCourse": "Continue",
+    "completed": "Completed",
+    "modules": "Modules",
+    "freeBadge": "Free",
+    "proBadge": "Pro",
+    "locked": "Pro-only lesson",
+    "lockedDesc": "Subscribe to the Pro plan to unlock this lesson and all premium content.",
+    "subscribe": "Subscribe",
+    "markComplete": "Mark as completed",
+    "markedComplete": "Completed",
+    "previous": "Previous",
+    "next": "Next",
+    "selectLesson": "Select a lesson to start",
+    "noVideo": "Video unavailable",
+    "backToCatalog": "Back to catalog",
+    "notFound": "Course not found",
+    "ofTotal": "of",
+    "toastCompleted": "Lesson marked as completed",
+    "toastError": "Could not save progress",
+    "continueWatching": "Continue where you left off"
   }
 }

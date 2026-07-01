@@ -1031,6 +1031,47 @@ export type Database = {
         }
         Relationships: []
       }
+      progresso_aulas: {
+        Row: {
+          assistido_em: string | null
+          aula_id: string
+          concluida: boolean
+          created_at: string
+          deleted_at: string | null
+          id: string
+          updated_at: string
+          usuario_id: string
+        }
+        Insert: {
+          assistido_em?: string | null
+          aula_id: string
+          concluida?: boolean
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          updated_at?: string
+          usuario_id: string
+        }
+        Update: {
+          assistido_em?: string | null
+          aula_id?: string
+          concluida?: boolean
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          updated_at?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "progresso_aulas_aula_id_fkey"
+            columns: ["aula_id"]
+            isOneToOne: false
+            referencedRelation: "aulas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stripe_events_processados: {
         Row: {
           event_id: string

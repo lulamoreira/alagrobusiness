@@ -91,7 +91,8 @@
     "finance": "Financeiro",
     "agenda": "Agenda",
     "reports": "Relatórios",
-    "plans": "Planos"
+    "plans": "Planos",
+    "courses": "Cursos"
   },
   "dashboard": {
     "hello": "Olá",
@@ -803,5 +804,35 @@
     "urlRequired": "Informe a URL do vídeo.",
     "urlInvalid": "URL inválida.",
     "providerRequired": "Escolha o provedor."
+  },
+  "courses": {
+    "title": "Cursos",
+    "subtitle": "Aprenda com especialistas do agronegócio",
+    "empty": "Nenhum curso disponível no momento",
+    "emptyDesc": "Novos conteúdos serão publicados em breve.",
+    "progress": "Progresso",
+    "lessons": "aulas",
+    "lesson": "aula",
+    "startCourse": "Começar curso",
+    "continueCourse": "Continuar",
+    "completed": "Concluído",
+    "modules": "Módulos",
+    "freeBadge": "Grátis",
+    "proBadge": "Pro",
+    "locked": "Aula exclusiva Pro",
+    "lockedDesc": "Assine o plano Pro para acessar esta aula e todo o conteúdo premium.",
+    "subscribe": "Assinar",
+    "markComplete": "Marcar como concluída",
+    "markedComplete": "Concluída",
+    "previous": "Anterior",
+    "next": "Próxima",
+    "selectLesson": "Selecione uma aula para começar",
+    "noVideo": "Vídeo indisponível",
+    "backToCatalog": "Voltar ao catálogo",
+    "notFound": "Curso não encontrado",
+    "ofTotal": "de",
+    "toastCompleted": "Aula marcada como concluída",
+    "toastError": "Não foi possível salvar o progresso",
+    "continueWatching": "Continuar de onde parou"
   }
 }
