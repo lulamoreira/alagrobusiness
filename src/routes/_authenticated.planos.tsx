@@ -1,12 +1,26 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import { Check, Crown, Sparkles, Clock, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { Check, Crown, Sparkles, Clock, CheckCircle2, XCircle, Loader2, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { usePlan } from "@/lib/plan";
+import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+
+function openTopLevel(url: string) {
+  try {
+    if (window.top && window.top !== window.self) {
+      window.top.location.href = url;
+      return;
+    }
+    window.location.href = url;
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+}
+
 
 type PlanosSearch = { status?: "success" | "cancel"; session_id?: string };
 
@@ -36,10 +50,40 @@ function PlanosPage() {
   const { codigo: planoAtual, emTrial, diasRestantesTrial, isProAtivo } = usePlan();
   const search = useSearch({ from: "/_authenticated/planos" });
 
+  const { user } = useAuth();
+
   const [periodo, setPeriodo] = useState<"mensal" | "anual">("mensal");
   const [loadingCheckout, setLoadingCheckout] = useState(false);
+  const [loadingPortal, setLoadingPortal] = useState(false);
 
-  const { data: planos, isLoading } = useQuery({
+  const { data: assinatura } = useQuery({
+    queryKey: ["assinatura_atual", user?.id],
+    enabled: !!user,
+    staleTime: 1000 * 30,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assinaturas")
+        .select("origem, status, stripe_customer_id, stripe_subscription_id")
+        .eq("usuario_id", user!.id)
+        .is("deleted_at", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return data as {
+        origem: string | null;
+        status: string | null;
+        stripe_customer_id: string | null;
+        stripe_subscription_id: string | null;
+      } | null;
+    },
+  });
+
+  const canManageStripe =
+    !!assinatura?.stripe_customer_id &&
+    assinatura?.origem === "stripe" &&
+    assinatura?.status === "ativa";
+
     queryKey: ["planos_publicos"],
     queryFn: async (): Promise<PlanoRow[]> => {
       const { data, error } = await supabase
