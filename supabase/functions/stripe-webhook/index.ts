@@ -6,7 +6,6 @@ import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
-const STRIPE_WEBHOOK_SECRET = Deno.env.get("STRIPE_WEBHOOK_SECRET")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
@@ -122,12 +121,23 @@ Deno.serve(async (req) => {
 
   const rawBody = await req.text();
 
+  let webhookSecret: string;
+  try {
+    const { data, error } = await admin.rpc("get_stripe_webhook_secret");
+    if (error) throw error;
+    if (!data) throw new Error("stripe_webhook_secret ausente no Vault (rode stripe-webhook-setup)");
+    webhookSecret = data as string;
+  } catch (err) {
+    log("vault fetch failed:", (err as Error).message);
+    return new Response(JSON.stringify({ error: "webhook_secret_unavailable" }), { status: 500 });
+  }
+
   let event: Stripe.Event;
   try {
     event = await stripe.webhooks.constructEventAsync(
       rawBody,
       signature,
-      STRIPE_WEBHOOK_SECRET,
+      webhookSecret,
       undefined,
       cryptoProvider,
     );

@@ -24,3 +24,7 @@ verify_jwt = false
 [functions.stripe-setup]
 verify_jwt = true
 
+[functions.stripe-webhook-setup]
+verify_jwt = true
+
+
