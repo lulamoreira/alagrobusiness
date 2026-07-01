@@ -368,7 +368,7 @@ function KpiCard({
       <div
         title={fullValue}
         className={cn(
-          "mt-3 font-display font-bold tabular-nums leading-tight break-words [font-size:clamp(1.25rem,4.5vw,1.875rem)]",
+          "mt-3 font-display font-bold tabular-nums leading-tight whitespace-nowrap [font-size:clamp(1rem,3.6vw,1.5rem)]",
           valueCls,
         )}
       >
