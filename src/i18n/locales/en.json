@@ -738,6 +738,11 @@
     "statusSuccessDesc": "Activating your Pro subscription… this takes a few seconds.",
     "statusCancelTitle": "Checkout canceled",
     "statusCancelDesc": "No charge was made. You can try again whenever you like.",
-    "dismiss": "Dismiss"
+    "dismiss": "Dismiss",
+    "manage": "Manage subscription",
+    "manageDesc": "Update payment method, see invoices and cancel anytime.",
+    "portalOpening": "Opening secure portal…",
+    "portalError": "Could not open the portal. Try again.",
+    "portalNoCustomer": "You don't have a Stripe subscription yet. Subscribe to manage it."
   }
 }
