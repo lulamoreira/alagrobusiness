@@ -470,7 +470,7 @@ function Kpi({
       <p
         title={fullValue}
         className={cn(
-          "mt-2 font-display font-bold tabular-nums leading-tight break-words [font-size:clamp(1.125rem,4vw,1.5rem)]",
+          "mt-2 font-display font-bold tabular-nums leading-tight whitespace-nowrap [font-size:clamp(0.95rem,3.2vw,1.375rem)]",
           accent ? "text-primary" : "text-foreground",
         )}
       >
