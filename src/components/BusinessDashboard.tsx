@@ -41,8 +41,8 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }
         title={fullValue}
         className={
           accent
-            ? "mt-3 font-display font-bold tabular-nums text-primary [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
-            : "mt-3 font-display font-bold tabular-nums text-foreground [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
+            ? "mt-3 font-display font-bold tabular-nums text-primary [font-size:clamp(1rem,3.6vw,1.5rem)] leading-tight whitespace-nowrap"
+            : "mt-3 font-display font-bold tabular-nums text-foreground [font-size:clamp(1rem,3.6vw,1.5rem)] leading-tight whitespace-nowrap"
         }
       >
         {value}
