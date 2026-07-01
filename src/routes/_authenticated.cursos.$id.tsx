@@ -261,7 +261,31 @@ function CursoDetailPage() {
             {pct}% · {done}/{total} {t("courses.lessons")}
           </span>
         </div>
+        {isComplete && certificado && (
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/15 via-primary/5 to-transparent p-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10">
+                <Award className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <div className="font-display text-base font-bold text-primary">
+                  {t("courses.courseCompleted")}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {t("certificates.code")}: <span className="font-mono">{certificado.codigo}</span>
+                </div>
+              </div>
+            </div>
+            <Button asChild size="sm">
+              <Link to="/certificado/$codigo" params={{ codigo: certificado.codigo }}>
+                <Award className="mr-1.5 h-4 w-4" />
+                {t("courses.viewCertificate")}
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
+
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         {/* Player */}
