@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Package, Boxes, CheckCircle2, MessageCircle, Wallet, Plus, CalendarDays, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, formatMoneyCompact } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 
 
