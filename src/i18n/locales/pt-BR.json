@@ -834,6 +834,30 @@
     "ofTotal": "de",
     "toastCompleted": "Aula marcada como concluída",
     "toastError": "Não foi possível salvar o progresso",
-    "continueWatching": "Continuar de onde parou"
+    "continueWatching": "Continuar de onde parou",
+    "courseCompleted": "🎉 Curso concluído",
+    "viewCertificate": "Ver certificado",
+    "certificateIssued": "Certificado emitido!",
+    "certificateError": "Não foi possível emitir o certificado"
+  },
+  "certificates": {
+    "title": "Certificados",
+    "subtitle": "Suas conquistas de aprendizado",
+    "empty": "Você ainda não possui certificados",
+    "emptyDesc": "Conclua um curso para receber seu certificado de conclusão.",
+    "browseCourses": "Explorar cursos",
+    "issuedOn": "Emitido em",
+    "code": "Código",
+    "view": "Ver",
+    "download": "Baixar PDF",
+    "print": "Imprimir",
+    "back": "Voltar",
+    "notFound": "Certificado não encontrado",
+    "certifyThat": "Certificamos que",
+    "hasCompleted": "concluiu com sucesso o curso",
+    "verification": "Código de verificação",
+    "issuedAt": "Data de emissão",
+    "platform": "Plataforma de educação do agronegócio brasileiro",
+    "generating": "Gerando PDF…"
   }
 }
