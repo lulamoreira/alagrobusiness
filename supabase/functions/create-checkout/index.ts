@@ -85,7 +85,9 @@ Deno.serve(async (req) => {
       }
     }
 
-    const origin = req.headers.get("origin") ?? req.headers.get("referer")?.replace(/\/$/, "") ?? "";
+    const originHeader = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
+    const originClean = originHeader.replace(/\/$/, "");
+    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://alagrobusiness.lovable.app";
     const successUrl = `${origin}/planos?status=success&session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${origin}/planos?status=cancel`;
 
