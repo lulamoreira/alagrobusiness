@@ -157,6 +157,44 @@ function CursoDetailPage() {
   const total = allAulas.length;
   const done = data?.concluidas.size ?? 0;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const isComplete = total > 0 && done >= total;
+
+  // Certificado existente para este curso
+  const { data: certificado, refetch: refetchCert } = useQuery({
+    queryKey: ["certificado", cursoId, user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data: c } = await supabase
+        .from("certificados")
+        .select("id, codigo, emitido_em")
+        .eq("usuario_id", user!.id)
+        .eq("curso_id", cursoId)
+        .is("deleted_at", null)
+        .maybeSingle();
+      return c as { id: string; codigo: string; emitido_em: string } | null;
+    },
+  });
+
+  // Emite certificado ao atingir 100%
+  useEffect(() => {
+    if (!user || !isComplete || certificado) return;
+    (async () => {
+      const { data: res, error } = await supabase.rpc(
+        "emitir_certificado_se_completo",
+        { p_curso_id: cursoId },
+      );
+      if (error) {
+        console.error("emitir_certificado_se_completo", error);
+        return;
+      }
+      const parsed = res as { emitido?: boolean; ja_existia?: boolean } | null;
+      if (parsed?.emitido) {
+        if (!parsed.ja_existia) toast.success(t("courses.certificateIssued"));
+        await refetchCert();
+      }
+    })();
+  }, [isComplete, certificado, user, cursoId, refetchCert, t]);
+
 
   const marcarConcluida = async () => {
     if (!selectedAula || !user) return;
