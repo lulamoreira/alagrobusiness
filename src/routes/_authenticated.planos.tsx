@@ -80,7 +80,16 @@ function PlanosPage() {
       const url = (data as { url?: string })?.url;
       if (!url) throw new Error("no_url");
       toast.info(t("plan.checkoutStarting"));
-      window.location.href = url;
+      try {
+        if (window.top && window.top !== window.self) {
+          window.top.location.href = url;
+        } else {
+          window.location.href = url;
+        }
+      } catch {
+        // iframe cross-origin: fallback to new tab
+        window.open(url, "_blank", "noopener,noreferrer");
+      }
     } catch (e) {
       console.error(e);
       toast.error(t("plan.checkoutError"));
