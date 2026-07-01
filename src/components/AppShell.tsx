@@ -53,6 +53,7 @@ const NAV: NavItem[] = [
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
   { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
+  { to: "/certificados", labelKey: "nav.certificates", icon: Award },
   { to: "/planos", labelKey: "nav.plans", icon: Crown },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
