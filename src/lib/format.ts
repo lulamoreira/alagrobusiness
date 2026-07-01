@@ -56,7 +56,7 @@ export function formatMoneyCompact(
     return `${brl} (BRL)`;
   }
   const abs = Math.abs(conv.value);
-  if (abs < 100_000) {
+  if (abs < 1_000_000) {
     return new Intl.NumberFormat(locale, { style: "currency", currency: conv.currency }).format(
       conv.value,
     );
