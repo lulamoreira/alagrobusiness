@@ -23,6 +23,7 @@ import {
   BarChart3,
   Lock,
   Crown,
+  GraduationCap,
 } from "lucide-react";
 
 
