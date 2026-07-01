@@ -24,6 +24,7 @@ import {
   Lock,
   Crown,
   GraduationCap,
+  Award,
 } from "lucide-react";
 
 
