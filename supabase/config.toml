@@ -14,3 +14,10 @@ verify_jwt = false
 
 [functions.check-alertas-preco]
 verify_jwt = false
+
+[functions.create-checkout]
+verify_jwt = true
+
+[functions.stripe-setup]
+verify_jwt = true
+
