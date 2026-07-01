@@ -869,6 +869,27 @@ export type Database = {
         }
         Relationships: []
       }
+      stripe_events_processados: {
+        Row: {
+          event_id: string
+          payload: Json | null
+          processado_em: string
+          tipo: string
+        }
+        Insert: {
+          event_id: string
+          payload?: Json | null
+          processado_em?: string
+          tipo: string
+        }
+        Update: {
+          event_id?: string
+          payload?: Json | null
+          processado_em?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
       unidades: {
         Row: {
           codigo: string
