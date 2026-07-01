@@ -1041,6 +1041,7 @@ export type Database = {
       current_plan: { Args: never; Returns: Json }
       current_plan_limites: { Args: { uid: string }; Returns: Json }
       get_cron_secret: { Args: never; Returns: string }
+      get_stripe_webhook_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {
         Args: { p_items: Json }
         Returns: {
@@ -1059,6 +1060,10 @@ export type Database = {
           p_conversa_id: string
           p_status: Database["public"]["Enums"]["negociacao_status"]
         }
+        Returns: undefined
+      }
+      set_stripe_webhook_secret: {
+        Args: { p_secret: string }
         Returns: undefined
       }
     }
