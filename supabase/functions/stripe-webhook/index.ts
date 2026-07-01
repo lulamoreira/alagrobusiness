@@ -121,12 +121,23 @@ Deno.serve(async (req) => {
 
   const rawBody = await req.text();
 
+  let webhookSecret: string;
+  try {
+    const { data, error } = await admin.rpc("get_stripe_webhook_secret");
+    if (error) throw error;
+    if (!data) throw new Error("stripe_webhook_secret ausente no Vault (rode stripe-webhook-setup)");
+    webhookSecret = data as string;
+  } catch (err) {
+    log("vault fetch failed:", (err as Error).message);
+    return new Response(JSON.stringify({ error: "webhook_secret_unavailable" }), { status: 500 });
+  }
+
   let event: Stripe.Event;
   try {
     event = await stripe.webhooks.constructEventAsync(
       rawBody,
       signature,
-      STRIPE_WEBHOOK_SECRET,
+      webhookSecret,
       undefined,
       cryptoProvider,
     );
