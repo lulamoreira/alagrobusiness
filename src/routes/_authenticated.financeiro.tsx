@@ -94,6 +94,8 @@ function FinanceiroPage() {
     [dolar],
   );
   const fmt = (v: number) => formatMoney(v, userMoeda, userDolarPref, cotacoes, i18n.language);
+  const fmtCompact = (v: number) =>
+    formatMoneyCompact(v, userMoeda, userDolarPref, cotacoes, i18n.language);
 
   const filtered = useMemo(() => {
     return (vendas ?? []).filter((v) => {
