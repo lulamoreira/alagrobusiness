@@ -59,38 +59,6 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }
   );
 }
 
-function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
-  return (
-    <div className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {label}
-        </span>
-        <span
-          className={
-            accent
-              ? "rounded-full bg-primary/15 p-1.5 text-primary"
-              : "rounded-full bg-muted p-1.5 text-muted-foreground"
-          }
-        >
-          <Icon className="h-3.5 w-3.5" />
-        </span>
-      </div>
-      <div
-        className={
-          accent
-            ? "mt-3 font-display text-2xl font-bold tabular-nums text-primary md:text-3xl"
-            : "mt-3 font-display text-2xl font-bold tabular-nums text-foreground md:text-3xl"
-        }
-      >
-        {value}
-      </div>
-      {hint ? (
-        <div className="mt-1 text-xs font-medium text-muted-foreground tabular-nums">{hint}</div>
-      ) : null}
-    </div>
-  );
-}
 
 
 function formatVolume(totalKg: number, t: (k: string) => string, locale: string) {
