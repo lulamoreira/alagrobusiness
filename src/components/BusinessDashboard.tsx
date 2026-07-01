@@ -50,7 +50,7 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }
       {hint ? (
         <div
           title={fullHint}
-          className="mt-1 text-xs font-medium text-muted-foreground tabular-nums break-words"
+          className="mt-1 text-xs font-medium text-muted-foreground tabular-nums whitespace-nowrap overflow-hidden text-ellipsis"
         >
           {hint}
         </div>
