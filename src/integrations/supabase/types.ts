@@ -247,6 +247,7 @@ export type Database = {
           fim: string | null
           id: string
           inicio: string
+          origem: Database["public"]["Enums"]["origem_assinatura"]
           periodo: string | null
           plano_id: string
           status: Database["public"]["Enums"]["assinatura_status"]
@@ -262,6 +263,7 @@ export type Database = {
           fim?: string | null
           id?: string
           inicio?: string
+          origem?: Database["public"]["Enums"]["origem_assinatura"]
           periodo?: string | null
           plano_id: string
           status?: Database["public"]["Enums"]["assinatura_status"]
@@ -277,6 +279,7 @@ export type Database = {
           fim?: string | null
           id?: string
           inicio?: string
+          origem?: Database["public"]["Enums"]["origem_assinatura"]
           periodo?: string | null
           plano_id?: string
           status?: Database["public"]["Enums"]["assinatura_status"]
@@ -967,6 +970,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_grant_plan: {
+        Args: { p_dias?: number; p_plano_codigo?: string; p_usuario: string }
+        Returns: undefined
+      }
+      admin_list_cortesias: {
+        Args: never
+        Returns: {
+          email: string
+          fim: string
+          inicio: string
+          nome_completo: string
+          plano_codigo: string
+          usuario_id: string
+        }[]
+      }
+      admin_revoke_plan: { Args: { p_usuario: string }; Returns: undefined }
+      admin_search_users: {
+        Args: { p_query: string }
+        Returns: {
+          email: string
+          fim: string
+          id: string
+          nome_completo: string
+          origem: string
+          plano_codigo: string
+          status: string
+          tipo_perfil: string
+        }[]
+      }
       complete_profile: {
         Args: {
           p_categorias: string[]
@@ -1016,6 +1048,7 @@ export type Database = {
       modalidade_entrega: "retirada" | "entrega" | "ambos"
       moeda_app: "BRL" | "USD" | "EUR"
       negociacao_status: "iniciado" | "em_negociacao" | "fechado" | "descartado"
+      origem_assinatura: "trial" | "stripe" | "admin_cortesia"
       pagamento_status: "aguardando" | "recebido"
       status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
@@ -1161,6 +1194,7 @@ export const Constants = {
       modalidade_entrega: ["retirada", "entrega", "ambos"],
       moeda_app: ["BRL", "USD", "EUR"],
       negociacao_status: ["iniciado", "em_negociacao", "fechado", "descartado"],
+      origem_assinatura: ["trial", "stripe", "admin_cortesia"],
       pagamento_status: ["aguardando", "recebido"],
       status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
