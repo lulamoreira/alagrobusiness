@@ -51,6 +51,7 @@ const NAV: NavItem[] = [
   { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
   { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
   { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+  { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
   { to: "/planos", labelKey: "nav.plans", icon: Crown },
   { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
 ];
