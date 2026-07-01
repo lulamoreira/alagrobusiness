@@ -272,15 +272,35 @@ function PlanosPage() {
                   ))}
                 </ul>
 
-                <div className="mt-7">
+                <div className="mt-7 space-y-2">
                   {isPro ? (
                     isProAtivo ? (
-                      <button
-                        disabled
-                        className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"
-                      >
-                        {t("plan.alreadyActive")}
-                      </button>
+                      canManageStripe ? (
+                        <>
+                          <button
+                            onClick={handleGerenciar}
+                            disabled={loadingPortal}
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+                          >
+                            {loadingPortal ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Settings className="h-4 w-4" />
+                            )}
+                            {t("plan.manage")}
+                          </button>
+                          <p className="text-center text-[11px] text-muted-foreground">
+                            {t("plan.manageDesc")}
+                          </p>
+                        </>
+                      ) : (
+                        <button
+                          disabled
+                          className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"
+                        >
+                          {t("plan.alreadyActive")}
+                        </button>
+                      )
                     ) : (
                       <button
                         onClick={handleAssinar}
@@ -292,6 +312,7 @@ function PlanosPage() {
                       </button>
                     )
                   ) : (
+
                     <button
                       disabled
                       className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"
