@@ -323,11 +323,11 @@ function RelatoriosPage() {
       <section>
         <h2 className="mb-3 font-display text-lg font-bold">{t("reports.summary")}</h2>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-          <Kpi label={t("reports.totalSold")} value={money(summary.total)} accent />
-          <Kpi label={t("reports.received")} value={money(summary.received)} />
-          <Kpi label={t("reports.pending")} value={money(summary.pending)} />
+          <Kpi label={t("reports.totalSold")} value={moneyCompact(summary.total)} fullValue={money(summary.total)} accent />
+          <Kpi label={t("reports.received")} value={moneyCompact(summary.received)} fullValue={money(summary.received)} />
+          <Kpi label={t("reports.pending")} value={moneyCompact(summary.pending)} fullValue={money(summary.pending)} />
           <Kpi label={t("reports.salesCount")} value={nf.format(summary.count)} />
-          <Kpi label={t("reports.averageTicket")} value={money(summary.avg)} />
+          <Kpi label={t("reports.averageTicket")} value={moneyCompact(summary.avg)} fullValue={money(summary.avg)} />
         </div>
       </section>
 
