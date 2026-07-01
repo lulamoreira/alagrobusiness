@@ -1,12 +1,26 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import { Check, Crown, Sparkles, Clock, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { Check, Crown, Sparkles, Clock, CheckCircle2, XCircle, Loader2, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { usePlan } from "@/lib/plan";
+import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+
+function openTopLevel(url: string) {
+  try {
+    if (window.top && window.top !== window.self) {
+      window.top.location.href = url;
+      return;
+    }
+    window.location.href = url;
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+}
+
 
 type PlanosSearch = { status?: "success" | "cancel"; session_id?: string };
 
@@ -36,8 +50,39 @@ function PlanosPage() {
   const { codigo: planoAtual, emTrial, diasRestantesTrial, isProAtivo } = usePlan();
   const search = useSearch({ from: "/_authenticated/planos" });
 
+  const { user } = useAuth();
+
   const [periodo, setPeriodo] = useState<"mensal" | "anual">("mensal");
   const [loadingCheckout, setLoadingCheckout] = useState(false);
+  const [loadingPortal, setLoadingPortal] = useState(false);
+
+  const { data: assinatura } = useQuery({
+    queryKey: ["assinatura_atual", user?.id],
+    enabled: !!user,
+    staleTime: 1000 * 30,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assinaturas")
+        .select("origem, status, stripe_customer_id, stripe_subscription_id")
+        .eq("usuario_id", user!.id)
+        .is("deleted_at", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return data as {
+        origem: string | null;
+        status: string | null;
+        stripe_customer_id: string | null;
+        stripe_subscription_id: string | null;
+      } | null;
+    },
+  });
+
+  const canManageStripe =
+    !!assinatura?.stripe_customer_id &&
+    assinatura?.origem === "stripe" &&
+    assinatura?.status === "ativa";
 
   const { data: planos, isLoading } = useQuery({
     queryKey: ["planos_publicos"],
@@ -51,6 +96,7 @@ function PlanosPage() {
       return (data ?? []) as unknown as PlanoRow[];
     },
   });
+
 
   const nf = new Intl.NumberFormat(lang, { style: "currency", currency: "BRL" });
 
@@ -80,22 +126,37 @@ function PlanosPage() {
       const url = (data as { url?: string })?.url;
       if (!url) throw new Error("no_url");
       toast.info(t("plan.checkoutStarting"));
-      try {
-        if (window.top && window.top !== window.self) {
-          window.top.location.href = url;
-        } else {
-          window.location.href = url;
-        }
-      } catch {
-        // iframe cross-origin: fallback to new tab
-        window.open(url, "_blank", "noopener,noreferrer");
-      }
+      openTopLevel(url);
     } catch (e) {
       console.error(e);
       toast.error(t("plan.checkoutError"));
       setLoadingCheckout(false);
     }
   }
+
+  async function handleGerenciar() {
+    setLoadingPortal(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-portal-session", {
+        body: {},
+      });
+      if (error) throw error;
+      const payload = data as { url?: string; error?: string };
+      if (payload?.error === "no_stripe_customer") {
+        toast.error(t("plan.portalNoCustomer"));
+        setLoadingPortal(false);
+        return;
+      }
+      if (!payload?.url) throw new Error("no_url");
+      toast.info(t("plan.portalOpening"));
+      openTopLevel(payload.url);
+    } catch (e) {
+      console.error(e);
+      toast.error(t("plan.portalError"));
+      setLoadingPortal(false);
+    }
+  }
+
 
   return (
     <div className="space-y-8">
@@ -211,15 +272,35 @@ function PlanosPage() {
                   ))}
                 </ul>
 
-                <div className="mt-7">
+                <div className="mt-7 space-y-2">
                   {isPro ? (
                     isProAtivo ? (
-                      <button
-                        disabled
-                        className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"
-                      >
-                        {t("plan.alreadyActive")}
-                      </button>
+                      canManageStripe ? (
+                        <>
+                          <button
+                            onClick={handleGerenciar}
+                            disabled={loadingPortal}
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+                          >
+                            {loadingPortal ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Settings className="h-4 w-4" />
+                            )}
+                            {t("plan.manage")}
+                          </button>
+                          <p className="text-center text-[11px] text-muted-foreground">
+                            {t("plan.manageDesc")}
+                          </p>
+                        </>
+                      ) : (
+                        <button
+                          disabled
+                          className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"
+                        >
+                          {t("plan.alreadyActive")}
+                        </button>
+                      )
                     ) : (
                       <button
                         onClick={handleAssinar}
@@ -231,6 +312,7 @@ function PlanosPage() {
                       </button>
                     )
                   ) : (
+
                     <button
                       disabled
                       className="w-full cursor-not-allowed rounded-full border border-border bg-background/40 px-6 py-3 text-sm font-semibold text-muted-foreground"

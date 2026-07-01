@@ -738,6 +738,11 @@
     "statusSuccessDesc": "Activando tu suscripción Pro… tarda unos segundos.",
     "statusCancelTitle": "Pago cancelado",
     "statusCancelDesc": "No se realizó ningún cargo. Puedes intentarlo cuando quieras.",
-    "dismiss": "Cerrar"
+    "dismiss": "Cerrar",
+    "manage": "Gestionar suscripción",
+    "manageDesc": "Actualiza el método de pago, ve facturas y cancela cuando quieras.",
+    "portalOpening": "Abriendo portal seguro…",
+    "portalError": "No fue posible abrir el portal. Inténtalo de nuevo.",
+    "portalNoCustomer": "Aún no tienes suscripción Stripe. Suscríbete para gestionarla."
   }
 }

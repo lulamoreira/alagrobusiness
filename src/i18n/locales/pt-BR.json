@@ -738,6 +738,11 @@
     "statusSuccessDesc": "Ativando sua assinatura Pro… isso leva alguns segundos.",
     "statusCancelTitle": "Checkout cancelado",
     "statusCancelDesc": "Nenhuma cobrança foi feita. Você pode tentar novamente quando quiser.",
-    "dismiss": "Fechar"
+    "dismiss": "Fechar",
+    "manage": "Gerenciar assinatura",
+    "manageDesc": "Atualize forma de pagamento, veja faturas e cancele quando quiser.",
+    "portalOpening": "Abrindo portal seguro…",
+    "portalError": "Não foi possível abrir o portal. Tente novamente.",
+    "portalNoCustomer": "Você ainda não tem assinatura Stripe. Assine para gerenciar."
   }
 }
