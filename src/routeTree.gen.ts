@@ -32,6 +32,7 @@ import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedVenderIndexRouteImport } from './routes/_authenticated.vender.index'
 import { Route as AuthenticatedMensagensIndexRouteImport } from './routes/_authenticated.mensagens.index'
 import { Route as AuthenticatedCursosIndexRouteImport } from './routes/_authenticated.cursos.index'
+import { Route as AuthenticatedCertificadosIndexRouteImport } from './routes/_authenticated.certificados.index'
 import { Route as AuthenticatedVenderNovoRouteImport } from './routes/_authenticated.vender.novo'
 import { Route as AuthenticatedMensagensConversaIdRouteImport } from './routes/_authenticated.mensagens.$conversaId'
 import { Route as AuthenticatedCursosIdRouteImport } from './routes/_authenticated.cursos.$id'
@@ -160,6 +161,12 @@ const AuthenticatedCursosIndexRoute =
     path: '/cursos/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedCertificadosIndexRoute =
+  AuthenticatedCertificadosIndexRouteImport.update({
+    id: '/certificados/',
+    path: '/certificados/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedVenderNovoRoute = AuthenticatedVenderNovoRouteImport.update({
   id: '/novo',
   path: '/novo',
@@ -233,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/certificados/': typeof AuthenticatedCertificadosIndexRoute
   '/cursos/': typeof AuthenticatedCursosIndexRoute
   '/mensagens/': typeof AuthenticatedMensagensIndexRoute
   '/vender/': typeof AuthenticatedVenderIndexRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/certificados': typeof AuthenticatedCertificadosIndexRoute
   '/cursos': typeof AuthenticatedCursosIndexRoute
   '/mensagens': typeof AuthenticatedMensagensIndexRoute
   '/vender': typeof AuthenticatedVenderIndexRoute
@@ -297,6 +306,7 @@ export interface FileRoutesById {
   '/_authenticated/cursos/$id': typeof AuthenticatedCursosIdRoute
   '/_authenticated/mensagens/$conversaId': typeof AuthenticatedMensagensConversaIdRoute
   '/_authenticated/vender/novo': typeof AuthenticatedVenderNovoRoute
+  '/_authenticated/certificados/': typeof AuthenticatedCertificadosIndexRoute
   '/_authenticated/cursos/': typeof AuthenticatedCursosIndexRoute
   '/_authenticated/mensagens/': typeof AuthenticatedMensagensIndexRoute
   '/_authenticated/vender/': typeof AuthenticatedVenderIndexRoute
@@ -331,6 +341,7 @@ export interface FileRouteTypes {
     | '/cursos/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
+    | '/certificados/'
     | '/cursos/'
     | '/mensagens/'
     | '/vender/'
@@ -361,6 +372,7 @@ export interface FileRouteTypes {
     | '/cursos/$id'
     | '/mensagens/$conversaId'
     | '/vender/novo'
+    | '/certificados'
     | '/cursos'
     | '/mensagens'
     | '/vender'
@@ -394,6 +406,7 @@ export interface FileRouteTypes {
     | '/_authenticated/cursos/$id'
     | '/_authenticated/mensagens/$conversaId'
     | '/_authenticated/vender/novo'
+    | '/_authenticated/certificados/'
     | '/_authenticated/cursos/'
     | '/_authenticated/mensagens/'
     | '/_authenticated/vender/'
@@ -573,6 +586,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCursosIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/certificados/': {
+      id: '/_authenticated/certificados/'
+      path: '/certificados'
+      fullPath: '/certificados/'
+      preLoaderRoute: typeof AuthenticatedCertificadosIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/vender/novo': {
       id: '/_authenticated/vender/novo'
       path: '/novo'
@@ -683,6 +703,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
   AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
   AuthenticatedCursosIdRoute: typeof AuthenticatedCursosIdRoute
+  AuthenticatedCertificadosIndexRoute: typeof AuthenticatedCertificadosIndexRoute
   AuthenticatedCursosIndexRoute: typeof AuthenticatedCursosIndexRoute
 }
 
@@ -705,6 +726,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,
   AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
   AuthenticatedCursosIdRoute: AuthenticatedCursosIdRoute,
+  AuthenticatedCertificadosIndexRoute: AuthenticatedCertificadosIndexRoute,
   AuthenticatedCursosIndexRoute: AuthenticatedCursosIndexRoute,
 }
 
