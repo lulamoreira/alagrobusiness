@@ -16,6 +16,47 @@ interface KpiCardProps {
   icon: typeof Package;
   accent?: boolean;
   hint?: string;
+  fullValue?: string;
+  fullHint?: string;
+}
+
+function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }: KpiCardProps) {
+  return (
+    <div className="group min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          {label}
+        </span>
+        <span
+          className={
+            accent
+              ? "rounded-full bg-primary/15 p-1.5 text-primary"
+              : "rounded-full bg-muted p-1.5 text-muted-foreground"
+          }
+        >
+          <Icon className="h-3.5 w-3.5" />
+        </span>
+      </div>
+      <div
+        title={fullValue}
+        className={
+          accent
+            ? "mt-3 font-display font-bold tabular-nums text-primary [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
+            : "mt-3 font-display font-bold tabular-nums text-foreground [font-size:clamp(1.25rem,4.5vw,1.875rem)] leading-tight break-words"
+        }
+      >
+        {value}
+      </div>
+      {hint ? (
+        <div
+          title={fullHint}
+          className="mt-1 text-xs font-medium text-muted-foreground tabular-nums break-words"
+        >
+          {hint}
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 function KpiCard({ label, value, icon: Icon, accent, hint }: KpiCardProps) {
