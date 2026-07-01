@@ -190,8 +190,16 @@ export function BusinessDashboard() {
   }
 
   const k = data!;
-  const revenue = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
-  const pendingFormatted = formatMoney(
+  const revenue = formatMoneyCompact(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const revenueFull = formatMoney(k.revenueBRL, userMoeda, userDolarPref, dolar ?? [], i18n.language);
+  const pendingCompact = formatMoneyCompact(
+    k.pendingBRL,
+    userMoeda,
+    userDolarPref,
+    dolar ?? [],
+    i18n.language,
+  );
+  const pendingFull = formatMoney(
     k.pendingBRL,
     userMoeda,
     userDolarPref,
@@ -199,7 +207,9 @@ export function BusinessDashboard() {
     i18n.language,
   );
   const pendingHint =
-    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFormatted }) : undefined;
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingCompact }) : undefined;
+  const pendingHintFull =
+    k.pendingBRL > 0 ? t("dashboard.business.pendingHint", { value: pendingFull }) : undefined;
 
   return (
     <section>
@@ -226,9 +236,11 @@ export function BusinessDashboard() {
         <KpiCard
           label={t("dashboard.business.revenue")}
           value={revenue}
+          fullValue={revenueFull}
           icon={Wallet}
           accent
           hint={pendingHint}
+          fullHint={pendingHintFull}
         />
       </div>
 
