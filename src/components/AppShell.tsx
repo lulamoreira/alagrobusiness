@@ -239,18 +239,27 @@ function GroupBlock({ group, pathname, unreadMessages, isPro, onNavigate }: Grou
 
 function NavTree({
   pathname,
-  isAdmin,
+  adminHas,
+  adminHasAny,
   isPro,
   unreadMessages,
   onNavigate,
 }: {
   pathname: string;
-  isAdmin: boolean;
+  adminHas: (r: import("@/lib/adminPerms").AdminResource) => boolean;
+  adminHasAny: boolean;
   isPro: boolean;
   unreadMessages: number;
   onNavigate?: () => void;
 }) {
-  const visibleGroups = GROUPS.filter((g) => !g.adminOnly || isAdmin);
+  const visibleGroups = GROUPS
+    .filter((g) => !g.adminOnly || adminHasAny)
+    .map((g) =>
+      g.id === "admin"
+        ? { ...g, items: g.items.filter((i) => !i.permKey || adminHas(i.permKey)) }
+        : g,
+    )
+    .filter((g) => g.items.length > 0);
   return (
     <div className="space-y-1">
       <NavLeaf
@@ -297,6 +306,7 @@ function NavTree({
     </div>
   );
 }
+
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
