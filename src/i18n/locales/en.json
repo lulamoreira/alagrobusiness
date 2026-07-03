@@ -917,12 +917,71 @@
       "reativarConfirmDesc": "Reactivate {{name}}? Access will be restored."
     }
   },
+  "adminModeracao": {
+    "navLabel": "Admin · Moderation",
+    "title": "Ad moderation",
+    "subtitle": "Review, pause, reactivate or remove ads on the platform.",
+    "onlyAdmin": "Admins only.",
+    "loading": "Loading…",
+    "empty": "No ads found.",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Title or product",
+    "filterStatus": "Status",
+    "filterCategoria": "Category",
+    "filterAll": "All",
+    "listTitle": "Ads",
+    "columns": {
+      "titulo": "Ad",
+      "vendedor": "Seller",
+      "preco": "Price",
+      "status": "Status",
+      "data": "Date",
+      "acoes": "Actions"
+    },
+    "status": { "ativo": "Active", "pausado": "Paused", "vendido": "Sold" },
+    "categoria": { "fruta": "Fruit", "grao": "Grain", "legumes": "Legumes", "vegetal": "Vegetable" },
+    "action": {
+      "ver": "View",
+      "pausar": "Pause",
+      "reativar": "Reactivate",
+      "remover": "Remove",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "motivoLabel": "Reason (shown to the seller)",
+      "motivoPlaceholder": "Describe the moderation reason",
+      "motivoRequired": "Please provide a reason.",
+      "pausarConfirmTitle": "Pause ad",
+      "pausarConfirmDesc": "Pause the ad \"{{titulo}}\"? The seller will be notified.",
+      "reativarConfirmTitle": "Reactivate ad",
+      "reativarConfirmDesc": "Reactivate the ad \"{{titulo}}\"? The seller will be notified.",
+      "removerConfirmTitle": "Remove ad",
+      "removerConfirmDesc": "Remove the ad \"{{titulo}}\"? This removal is permanent for the public.",
+      "pausarSuccess": "Ad paused.",
+      "reativarSuccess": "Ad reactivated.",
+      "removerSuccess": "Ad removed.",
+      "error": "Operation failed: {{detail}}"
+    },
+    "detail": {
+      "title": "Ad details",
+      "descricao": "Description",
+      "sem_descricao": "No description.",
+      "fotos": "Photos",
+      "sem_fotos": "No photos.",
+      "close": "Close"
+    }
+  },
   "notifications": {
     "approvedTitle": "Account approved",
     "approvedMsg": "Your account has been approved. Welcome to ALAGROBUSINESS!",
     "blockedTitle": "Access blocked",
     "blockedMsg": "Your access has been temporarily blocked. Please contact support.",
     "reactivatedTitle": "Access reactivated",
-    "reactivatedMsg": "Your access has been restored. Welcome back!"
+    "reactivatedMsg": "Your access has been restored. Welcome back!",
+    "adModeratedPausadoTitle": "Ad paused by moderation",
+    "adModeratedPausadoMsg": "One of your ads was paused by the moderation team.",
+    "adModeratedReativadoTitle": "Ad reactivated by moderation",
+    "adModeratedReativadoMsg": "One of your ads was reactivated by the moderation team.",
+    "adModeratedRemovidoTitle": "Ad removed by moderation",
+    "adModeratedRemovidoMsg": "One of your ads was removed by the moderation team."
   }
 }
