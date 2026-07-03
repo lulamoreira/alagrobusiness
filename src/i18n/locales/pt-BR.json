@@ -545,7 +545,27 @@
     "statusTrial": "Trial",
     "statusAtiva": "Ativa",
     "statusCancelada": "Cancelada",
-    "statusExpirada": "Expirada"
+    "statusExpirada": "Expirada",
+    "adminSectionTitle": "Administradores",
+    "adminSectionSubtitle": "Conceda ou revogue permissões de administrador. Marque apenas os recursos que este usuário deve acessar.",
+    "grantAdmin": "Tornar administrador",
+    "revokeAdmin": "Remover admin",
+    "editPerms": "Editar permissões",
+    "adminOnlySuper": "Apenas o dono do sistema pode gerenciar administradores.",
+    "adminsListEmpty": "Nenhum administrador cadastrado além do dono.",
+    "superAdminBadge": "Dono do sistema",
+    "resourcesTitle": "Recursos disponíveis",
+    "resource_acessos": "Acessos e cortesias",
+    "resource_gestao": "Gestão de cadastros e KPIs",
+    "resource_moderacao": "Moderação de anúncios",
+    "resource_cotacoes": "Cotações e commodities",
+    "resource_cursos": "Cursos e conteúdo",
+    "adminGranted": "Administrador criado.",
+    "adminRevoked": "Administrador removido.",
+    "permsUpdated": "Permissões atualizadas.",
+    "confirmGrantAdmin": "Conceder acesso de administrador",
+    "confirmRevokeAdmin": "Remover acesso de administrador?",
+    "youCannotEditSuper": "O dono do sistema não pode ser editado."
   },
   "weather": {
     "title": "Clima",
@@ -990,6 +1010,10 @@
     "adModeratedReativadoTitle": "Anúncio reativado pela moderação",
     "adModeratedReativadoMsg": "Um anúncio seu foi reativado pela equipe de moderação.",
     "adModeratedRemovidoTitle": "Anúncio removido pela moderação",
-    "adModeratedRemovidoMsg": "Um anúncio seu foi removido pela equipe de moderação."
+    "adModeratedRemovidoMsg": "Um anúncio seu foi removido pela equipe de moderação.",
+    "adminGrantedTitle": "Você agora é administrador",
+    "adminGrantedMsg": "Um novo perfil de administrador foi concedido a você. Faça login novamente para ver as áreas liberadas.",
+    "adminRevokedTitle": "Acesso de administrador removido",
+    "adminRevokedMsg": "Seu acesso de administrador foi removido."
   }
 }

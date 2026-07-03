@@ -996,6 +996,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          admin_permissoes: Json
           avatar_url: string | null
           categorias_interesse: Database["public"]["Enums"]["categoria_agro"][]
           cep: string | null
@@ -1006,6 +1007,7 @@ export type Database = {
           estado: string | null
           id: string
           idioma_preferido: Database["public"]["Enums"]["idioma_app"]
+          is_super_admin: boolean
           latitude: number | null
           longitude: number | null
           moeda_preferida: Database["public"]["Enums"]["moeda_app"]
@@ -1021,6 +1023,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          admin_permissoes?: Json
           avatar_url?: string | null
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
@@ -1031,6 +1034,7 @@ export type Database = {
           estado?: string | null
           id: string
           idioma_preferido?: Database["public"]["Enums"]["idioma_app"]
+          is_super_admin?: boolean
           latitude?: number | null
           longitude?: number | null
           moeda_preferida?: Database["public"]["Enums"]["moeda_app"]
@@ -1046,6 +1050,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          admin_permissoes?: Json
           avatar_url?: string | null
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
@@ -1056,6 +1061,7 @@ export type Database = {
           estado?: string | null
           id?: string
           idioma_preferido?: Database["public"]["Enums"]["idioma_app"]
+          is_super_admin?: boolean
           latitude?: number | null
           longitude?: number | null
           moeda_preferida?: Database["public"]["Enums"]["moeda_app"]
@@ -1235,11 +1241,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_grant_admin: {
+        Args: { p_permissoes: Json; p_usuario: string }
+        Returns: undefined
+      }
       admin_grant_plan: {
         Args: { p_dias?: number; p_plano_codigo?: string; p_usuario: string }
         Returns: undefined
       }
       admin_kpis: { Args: never; Returns: Json }
+      admin_list_admins: {
+        Args: never
+        Returns: {
+          admin_permissoes: Json
+          email: string
+          id: string
+          is_super_admin: boolean
+          nome_completo: string
+        }[]
+      }
       admin_list_cortesias: {
         Args: never
         Returns: {
@@ -1255,6 +1275,7 @@ export type Database = {
         Args: { p_acao: string; p_anuncio_id: string; p_motivo: string }
         Returns: undefined
       }
+      admin_revoke_admin: { Args: { p_usuario: string }; Returns: undefined }
       admin_revoke_plan: { Args: { p_usuario: string }; Returns: undefined }
       admin_search_users: {
         Args: { p_query: string }
@@ -1274,6 +1295,10 @@ export type Database = {
           p_status: Database["public"]["Enums"]["status_perfil"]
           p_usuario: string
         }
+        Returns: undefined
+      }
+      admin_update_admin_perms: {
+        Args: { p_permissoes: Json; p_usuario: string }
         Returns: undefined
       }
       complete_profile: {
@@ -1310,7 +1335,12 @@ export type Database = {
           out_status: string
         }[]
       }
+      has_admin_perm: {
+        Args: { _perm: string; _uid: string }
+        Returns: boolean
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_super_admin: { Args: { _uid: string }; Returns: boolean }
       marcar_mensagens_lidas: {
         Args: { p_conversa_id: string }
         Returns: undefined

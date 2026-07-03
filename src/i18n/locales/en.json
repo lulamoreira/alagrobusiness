@@ -545,7 +545,27 @@
     "statusTrial": "Trial",
     "statusAtiva": "Active",
     "statusCancelada": "Cancelled",
-    "statusExpirada": "Expired"
+    "statusExpirada": "Expired",
+    "adminSectionTitle": "Administrators",
+    "adminSectionSubtitle": "Grant or revoke admin permissions. Check only the resources this user should access.",
+    "grantAdmin": "Make administrator",
+    "revokeAdmin": "Remove admin",
+    "editPerms": "Edit permissions",
+    "adminOnlySuper": "Only the system owner can manage administrators.",
+    "adminsListEmpty": "No administrators besides the owner.",
+    "superAdminBadge": "System owner",
+    "resourcesTitle": "Available resources",
+    "resource_acessos": "Access and courtesies",
+    "resource_gestao": "User management and KPIs",
+    "resource_moderacao": "Ad moderation",
+    "resource_cotacoes": "Quotes and commodities",
+    "resource_cursos": "Courses and content",
+    "adminGranted": "Administrator created.",
+    "adminRevoked": "Administrator removed.",
+    "permsUpdated": "Permissions updated.",
+    "confirmGrantAdmin": "Grant administrator access",
+    "confirmRevokeAdmin": "Remove administrator access?",
+    "youCannotEditSuper": "The system owner cannot be edited."
   },
   "weather": {
     "title": "Weather",
@@ -990,6 +1010,10 @@
     "adModeratedReativadoTitle": "Ad reactivated by moderation",
     "adModeratedReativadoMsg": "One of your ads was reactivated by the moderation team.",
     "adModeratedRemovidoTitle": "Ad removed by moderation",
-    "adModeratedRemovidoMsg": "One of your ads was removed by the moderation team."
+    "adModeratedRemovidoMsg": "One of your ads was removed by the moderation team.",
+    "adminGrantedTitle": "You are now an administrator",
+    "adminGrantedMsg": "A new administrator profile has been granted to you. Sign in again to see the unlocked areas.",
+    "adminRevokedTitle": "Administrator access removed",
+    "adminRevokedMsg": "Your administrator access has been removed."
   }
 }

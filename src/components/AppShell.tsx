@@ -37,6 +37,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
+import { useAdminPerms } from "@/lib/adminPerms";
 
 type BadgeKey = "messages";
 
@@ -46,6 +47,7 @@ interface NavItem {
   icon: typeof LayoutDashboard;
   badgeKey?: BadgeKey;
   pro?: boolean;
+  permKey?: import("@/lib/adminPerms").AdminResource;
 }
 
 interface NavGroup {
@@ -55,6 +57,7 @@ interface NavGroup {
   items: NavItem[];
   adminOnly?: boolean;
 }
+
 
 const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
 const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
@@ -114,12 +117,13 @@ const GROUPS: NavGroup[] = [
     icon: ShieldCheck,
     adminOnly: true,
     items: [
-      { to: "/admin/cotacoes", labelKey: "adminQuotes.navLabel", icon: TrendingUp },
-      { to: "/admin/acessos", labelKey: "adminAccess.navLabel", icon: ShieldCheck },
-      { to: "/admin/cursos", labelKey: "adminCourses.navLabel", icon: GraduationCap },
-      { to: "/admin/gestao", labelKey: "adminGestao.navLabel", icon: BarChart3 },
-      { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck },
+      { to: "/admin/cotacoes", labelKey: "adminQuotes.navLabel", icon: TrendingUp, permKey: "cotacoes" },
+      { to: "/admin/acessos", labelKey: "adminAccess.navLabel", icon: ShieldCheck, permKey: "acessos" },
+      { to: "/admin/cursos", labelKey: "adminCourses.navLabel", icon: GraduationCap, permKey: "cursos" },
+      { to: "/admin/gestao", labelKey: "adminGestao.navLabel", icon: BarChart3, permKey: "gestao" },
+      { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck, permKey: "moderacao" },
     ],
+
   },
 ];
 
@@ -236,18 +240,27 @@ function GroupBlock({ group, pathname, unreadMessages, isPro, onNavigate }: Grou
 
 function NavTree({
   pathname,
-  isAdmin,
+  adminHas,
+  adminHasAny,
   isPro,
   unreadMessages,
   onNavigate,
 }: {
   pathname: string;
-  isAdmin: boolean;
+  adminHas: (r: import("@/lib/adminPerms").AdminResource) => boolean;
+  adminHasAny: boolean;
   isPro: boolean;
   unreadMessages: number;
   onNavigate?: () => void;
 }) {
-  const visibleGroups = GROUPS.filter((g) => !g.adminOnly || isAdmin);
+  const visibleGroups = GROUPS
+    .filter((g) => !g.adminOnly || adminHasAny)
+    .map((g) =>
+      g.id === "admin"
+        ? { ...g, items: g.items.filter((i) => !i.permKey || adminHas(i.permKey)) }
+        : g,
+    )
+    .filter((g) => g.items.length > 0);
   return (
     <div className="space-y-1">
       <NavLeaf
@@ -295,6 +308,7 @@ function NavTree({
   );
 }
 
+
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { profile, signOut } = useAuth();
@@ -302,7 +316,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const unreadMessages = useUnreadMessages();
   const { isPro } = usePlan();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isAdmin = profile?.tipo_perfil === "admin";
+  const { has: adminHas, hasAny: adminHasAny } = useAdminPerms();
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -316,7 +331,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <nav className="flex-1 overflow-y-auto px-3 pb-4">
           <NavTree
             pathname={pathname}
-            isAdmin={!!isAdmin}
+            adminHas={adminHas}
+            adminHasAny={adminHasAny}
             isPro={isPro}
             unreadMessages={unreadMessages}
           />
@@ -394,7 +410,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="px-3 py-3">
               <NavTree
                 pathname={pathname}
-                isAdmin={!!isAdmin}
+                adminHas={adminHas}
+            adminHasAny={adminHasAny}
                 isPro={isPro}
                 unreadMessages={unreadMessages}
                 onNavigate={() => setMobileOpen(false)}
