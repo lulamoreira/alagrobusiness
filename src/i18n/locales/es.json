@@ -93,7 +93,15 @@
     "reports": "Reportes",
     "plans": "Planes",
     "courses": "Cursos",
-    "certificates": "Certificados"
+    "certificates": "Certificados",
+    "groups": {
+      "business": "Negocios",
+      "management": "Gestión",
+      "market": "Mercado",
+      "learning": "Formación",
+      "account": "Cuenta",
+      "admin": "Administración"
+    }
   },
   "dashboard": {
     "hello": "Hola",
