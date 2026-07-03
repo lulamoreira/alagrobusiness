@@ -37,6 +37,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
+import { useAdminPerms } from "@/lib/adminPerms";
 
 type BadgeKey = "messages";
 
