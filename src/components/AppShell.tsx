@@ -193,6 +193,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               >
                 <ShieldCheck className="h-4 w-4" />
                 <span>{t("adminModeracao.navLabel")}</span>
+              </Link>
             </>
           )}
         </nav>
