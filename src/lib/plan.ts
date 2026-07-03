@@ -27,11 +27,27 @@ const FREE_FALLBACK: CurrentPlan = {
   limites: { max_anuncios: 2, max_alertas: 1, painel_completo: false, clube: false, cursos: "preview" },
 };
 
+const ADMIN_PLAN: CurrentPlan = {
+  codigo: "pro",
+  status: "ativa",
+  trial_ate: null,
+  dias_restantes: 0,
+  limites: {
+    max_anuncios: null,
+    max_alertas: null,
+    painel_completo: true,
+    clube: true,
+    cursos: "full",
+    admin: true,
+  },
+};
+
 export function usePlan() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const isAdmin = profile?.tipo_perfil === "admin";
   const query = useQuery({
     queryKey: ["current_plan", user?.id],
-    enabled: !!user,
+    enabled: !!user && !isAdmin,
     staleTime: 1000 * 60 * 5,
     queryFn: async (): Promise<CurrentPlan> => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,10 +57,10 @@ export function usePlan() {
     },
   });
 
-  const plan = query.data ?? FREE_FALLBACK;
-  const isPro = plan.limites?.painel_completo === true;
-  const emTrial = plan.status === "trial" && plan.dias_restantes > 0;
-  const ativo = plan.status === "ativa" && plan.codigo === "pro";
+  const plan = isAdmin ? ADMIN_PLAN : (query.data ?? FREE_FALLBACK);
+  const isPro = isAdmin || plan.limites?.painel_completo === true;
+  const emTrial = !isAdmin && plan.status === "trial" && plan.dias_restantes > 0;
+  const ativo = isAdmin || (plan.status === "ativa" && plan.codigo === "pro");
 
   return {
     plan,
@@ -54,7 +70,7 @@ export function usePlan() {
     emTrial,
     isProAtivo: ativo,
     diasRestantesTrial: emTrial ? plan.dias_restantes : 0,
-    loading: query.isLoading,
+    loading: !isAdmin && query.isLoading,
   };
 }
 
