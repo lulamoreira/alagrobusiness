@@ -1,11 +1,13 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { useState, useMemo, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "./Logo";
 import { LanguageSelector } from "./LanguageSelector";
 import { AmbientGlow } from "./AmbientGlow";
 import { PlanBadge, PlanBanner } from "./PlanStatus";
 import { usePlan } from "@/lib/plan";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -25,45 +27,106 @@ import {
   Crown,
   GraduationCap,
   Award,
+  Briefcase,
+  LineChart,
+  BookOpen,
+  UserCircle,
+  ChevronDown,
+  Menu,
 } from "lucide-react";
-
 
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
-import type { ReactNode } from "react";
+
+type BadgeKey = "messages";
 
 interface NavItem {
   to: string;
   labelKey: string;
   icon: typeof LayoutDashboard;
-  badgeKey?: "messages";
+  badgeKey?: BadgeKey;
   pro?: boolean;
 }
 
-const NAV: NavItem[] = [
-  { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
-  { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
-  { to: "/vender", labelKey: "nav.sell", icon: Store },
-  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
-  { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
-  { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
-  { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
-  { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
-  { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
-  { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
-  { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
-  { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
-  { to: "/certificados", labelKey: "nav.certificates", icon: Award },
-  { to: "/planos", labelKey: "nav.plans", icon: Crown },
-  { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
-];
+interface NavGroup {
+  id: string;
+  labelKey: string;
+  icon: typeof LayoutDashboard;
+  items: NavItem[];
+  adminOnly?: boolean;
+}
 
+const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
+const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
+
+const GROUPS: NavGroup[] = [
+  {
+    id: "business",
+    labelKey: "nav.groups.business",
+    icon: Briefcase,
+    items: [
+      { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
+      { to: "/vender", labelKey: "nav.sell", icon: Store },
+      { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
+    ],
+  },
+  {
+    id: "management",
+    labelKey: "nav.groups.management",
+    icon: LineChart,
+    items: [
+      { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
+      { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
+      { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
+    ],
+  },
+  {
+    id: "market",
+    labelKey: "nav.groups.market",
+    icon: TrendingUp,
+    items: [
+      { to: "/cotacao", labelKey: "nav.quote", icon: TrendingUp },
+      { to: "/noticias", labelKey: "nav.news", icon: Newspaper },
+      { to: "/alertas", labelKey: "nav.alerts", icon: Bell },
+    ],
+  },
+  {
+    id: "learning",
+    labelKey: "nav.groups.learning",
+    icon: BookOpen,
+    items: [
+      { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
+      { to: "/certificados", labelKey: "nav.certificates", icon: Award },
+    ],
+  },
+  {
+    id: "account",
+    labelKey: "nav.groups.account",
+    icon: UserCircle,
+    items: [
+      { to: "/planos", labelKey: "nav.plans", icon: Crown },
+      { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
+    ],
+  },
+  {
+    id: "admin",
+    labelKey: "nav.groups.admin",
+    icon: ShieldCheck,
+    adminOnly: true,
+    items: [
+      { to: "/admin/cotacoes", labelKey: "adminQuotes.navLabel", icon: TrendingUp },
+      { to: "/admin/acessos", labelKey: "adminAccess.navLabel", icon: ShieldCheck },
+      { to: "/admin/cursos", labelKey: "adminCourses.navLabel", icon: GraduationCap },
+      { to: "/admin/gestao", labelKey: "adminGestao.navLabel", icon: BarChart3 },
+      { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck },
+    ],
+  },
+];
 
 const MOBILE_NAV: NavItem[] = [
   { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
   { to: "/vender", labelKey: "nav.sell", icon: Store },
-  { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake },
   { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
 ];
 
@@ -85,17 +148,161 @@ function MobileBadge({ count }: { count: number }) {
   );
 }
 
+function isPathActive(pathname: string, to: string) {
+  return pathname === to || pathname.startsWith(`${to}/`);
+}
+
+interface NavLeafProps {
+  item: NavItem;
+  active: boolean;
+  badge: number;
+  isPro: boolean;
+  onNavigate?: () => void;
+}
+
+function NavLeaf({ item, active, badge, isPro, onNavigate }: NavLeafProps) {
+  const { t } = useTranslation();
+  const Icon = item.icon;
+  return (
+    <Link
+      to={item.to}
+      onClick={onNavigate}
+      className={cn(
+        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+        active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
+      )}
+    >
+      <Icon className="h-4 w-4 shrink-0" />
+      <span className="truncate">{t(item.labelKey)}</span>
+      {item.pro && !isPro && (
+        <Lock className="ml-1 h-3 w-3 shrink-0 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
+      )}
+      <Badge count={badge} />
+    </Link>
+  );
+}
+
+interface GroupBlockProps {
+  group: NavGroup;
+  pathname: string;
+  unreadMessages: number;
+  isPro: boolean;
+  onNavigate?: () => void;
+}
+
+function GroupBlock({ group, pathname, unreadMessages, isPro, onNavigate }: GroupBlockProps) {
+  const { t } = useTranslation();
+  const containsActive = useMemo(
+    () => group.items.some((i) => isPathActive(pathname, i.to)),
+    [group.items, pathname],
+  );
+  const [open, setOpen] = useState(containsActive);
+  const GroupIcon = group.icon;
+
+  return (
+    <div className="space-y-1">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-foreground/80 hover:bg-accent hover:text-foreground"
+        aria-expanded={open}
+      >
+        <GroupIcon className="h-4 w-4 shrink-0" />
+        <span className="truncate">{t(group.labelKey)}</span>
+        <ChevronDown
+          className={cn("ml-auto h-4 w-4 shrink-0 transition-transform", open ? "rotate-180" : "rotate-0")}
+        />
+      </button>
+      {open && (
+        <div className="ml-3 space-y-1 border-l border-border/60 pl-2">
+          {group.items.map((item) => {
+            const badge = item.badgeKey === "messages" ? unreadMessages : 0;
+            return (
+              <NavLeaf
+                key={item.to}
+                item={item}
+                active={isPathActive(pathname, item.to)}
+                badge={badge}
+                isPro={isPro}
+                onNavigate={onNavigate}
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NavTree({
+  pathname,
+  isAdmin,
+  isPro,
+  unreadMessages,
+  onNavigate,
+}: {
+  pathname: string;
+  isAdmin: boolean;
+  isPro: boolean;
+  unreadMessages: number;
+  onNavigate?: () => void;
+}) {
+  const visibleGroups = GROUPS.filter((g) => !g.adminOnly || isAdmin);
+  return (
+    <div className="space-y-1">
+      <NavLeaf
+        item={SOLO_TOP}
+        active={isPathActive(pathname, SOLO_TOP.to)}
+        badge={0}
+        isPro={isPro}
+        onNavigate={onNavigate}
+      />
+      {/* First: Negócios */}
+      {visibleGroups
+        .filter((g) => g.id === "business")
+        .map((g) => (
+          <GroupBlock
+            key={g.id}
+            group={g}
+            pathname={pathname}
+            unreadMessages={unreadMessages}
+            isPro={isPro}
+            onNavigate={onNavigate}
+          />
+        ))}
+      {/* Mensagens standalone */}
+      <NavLeaf
+        item={SOLO_MESSAGES}
+        active={isPathActive(pathname, SOLO_MESSAGES.to)}
+        badge={unreadMessages}
+        isPro={isPro}
+        onNavigate={onNavigate}
+      />
+      {/* Rest */}
+      {visibleGroups
+        .filter((g) => g.id !== "business")
+        .map((g) => (
+          <GroupBlock
+            key={g.id}
+            group={g}
+            pathname={pathname}
+            unreadMessages={unreadMessages}
+            isPro={isPro}
+            onNavigate={onNavigate}
+          />
+        ))}
+    </div>
+  );
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { profile, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const unreadMessages = useUnreadMessages();
   const { isPro } = usePlan();
-
-  const resolveBadge = (key?: NavItem["badgeKey"]) => {
-    if (key === "messages") return unreadMessages;
-    return 0;
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const isAdmin = profile?.tipo_perfil === "admin";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -106,98 +313,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="px-6 py-5">
           <Logo size="sm" />
         </div>
-        <nav className="flex-1 space-y-1 px-3">
-          {NAV.map((item) => {
-            const active =
-              pathname === item.to || pathname.startsWith(`${item.to}/`);
-            const Icon = item.icon;
-            const badge = resolveBadge(item.badgeKey);
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  active
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                <span>{t(item.labelKey)}</span>
-                {item.pro && !isPro && (
-                  <Lock className="ml-1 h-3 w-3 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
-                )}
-                <Badge count={badge} />
-              </Link>
-            );
-          })}
-          {profile?.tipo_perfil === "admin" && (
-            <>
-              <Link
-                to="/admin/cotacoes"
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  pathname.startsWith("/admin/cotacoes")
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span>{t("adminQuotes.navLabel")}</span>
-              </Link>
-              <Link
-                to="/admin/acessos"
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  pathname.startsWith("/admin/acessos")
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span>{t("adminAccess.navLabel")}</span>
-              </Link>
-              <Link
-                to="/admin/cursos"
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  pathname.startsWith("/admin/cursos")
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span>{t("adminCourses.navLabel")}</span>
-              </Link>
-              <Link
-                to="/admin/gestao"
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  pathname.startsWith("/admin/gestao")
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span>{t("adminGestao.navLabel")}</span>
-              </Link>
-              <Link
-                to="/admin/moderacao"
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  pathname.startsWith("/admin/moderacao")
-                    ? "bg-primary/15 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span>{t("adminModeracao.navLabel")}</span>
-              </Link>
-            </>
-          )}
+        <nav className="flex-1 overflow-y-auto px-3 pb-4">
+          <NavTree
+            pathname={pathname}
+            isAdmin={!!isAdmin}
+            isPro={isPro}
+            unreadMessages={unreadMessages}
+          />
         </nav>
-
         <button
           onClick={signOut}
           className="m-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
@@ -232,10 +355,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Mobile bottom nav */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 flex h-16 items-center justify-around border-t border-border bg-card/90 backdrop-blur-md lg:hidden">
         {MOBILE_NAV.map((item) => {
-          const active =
-            pathname === item.to || pathname.startsWith(`${item.to}/`);
+          const active = isPathActive(pathname, item.to);
           const Icon = item.icon;
-          const badge = resolveBadge(item.badgeKey);
+          const badge = item.badgeKey === "messages" ? unreadMessages : 0;
           return (
             <Link
               key={item.to}
@@ -253,6 +375,43 @@ export function AppShell({ children }: { children: ReactNode }) {
             </Link>
           );
         })}
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <button
+              type="button"
+              className="relative flex flex-col items-center gap-0.5 px-3 text-[10px] font-medium text-muted-foreground"
+            >
+              <Menu className="h-5 w-5" />
+              {t("nav.more")}
+            </button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-80 overflow-y-auto bg-card p-0">
+            <SheetHeader className="border-b border-border px-4 py-4">
+              <SheetTitle>
+                <Logo size="sm" />
+              </SheetTitle>
+            </SheetHeader>
+            <div className="px-3 py-3">
+              <NavTree
+                pathname={pathname}
+                isAdmin={!!isAdmin}
+                isPro={isPro}
+                unreadMessages={unreadMessages}
+                onNavigate={() => setMobileOpen(false)}
+              />
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  void signOut();
+                }}
+                className="mt-3 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+              >
+                <LogOut className="h-4 w-4" />
+                {t("common.logout")}
+              </button>
+            </div>
+          </SheetContent>
+        </Sheet>
       </nav>
     </div>
   );
