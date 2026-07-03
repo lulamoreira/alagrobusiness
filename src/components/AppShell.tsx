@@ -331,7 +331,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <nav className="flex-1 overflow-y-auto px-3 pb-4">
           <NavTree
             pathname={pathname}
-            isAdmin={!!isAdmin}
+            adminHas={adminHas}
+            adminHasAny={adminHasAny}
             isPro={isPro}
             unreadMessages={unreadMessages}
           />
@@ -409,7 +410,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="px-3 py-3">
               <NavTree
                 pathname={pathname}
-                isAdmin={!!isAdmin}
+                adminHas={adminHas}
+            adminHasAny={adminHasAny}
                 isPro={isPro}
                 unreadMessages={unreadMessages}
                 onNavigate={() => setMobileOpen(false)}
