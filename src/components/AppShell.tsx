@@ -315,7 +315,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const unreadMessages = useUnreadMessages();
   const { isPro } = usePlan();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isAdmin = profile?.tipo_perfil === "admin";
+  const { has: adminHas, hasAny: adminHasAny } = useAdminPerms();
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
