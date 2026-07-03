@@ -33,7 +33,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { formatMoneyCompact } from "@/lib/format";
+
+function formatPrice(value: number, moeda: string, locale: string) {
+  try {
+    return new Intl.NumberFormat(locale, { style: "currency", currency: moeda }).format(value);
+  } catch {
+    return `${value} ${moeda}`;
+  }
+}
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/admin/moderacao")({
@@ -255,7 +262,7 @@ function AdminModeracaoPage() {
                       <div className="text-xs text-muted-foreground">{ad.vendedor?.email ?? ""}</div>
                     </td>
                     <td className="px-3 py-2 text-right font-mono">
-                      {formatMoneyCompact(ad.preco, ad.moeda)}
+                      {formatPrice(ad.preco, ad.moeda, i18n.language)}
                     </td>
                     <td className="px-3 py-2">
                       <span
