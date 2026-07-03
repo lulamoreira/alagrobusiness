@@ -46,6 +46,7 @@ interface NavItem {
   icon: typeof LayoutDashboard;
   badgeKey?: BadgeKey;
   pro?: boolean;
+  permKey?: import("@/lib/adminPerms").AdminResource;
 }
 
 interface NavGroup {
@@ -55,6 +56,7 @@ interface NavGroup {
   items: NavItem[];
   adminOnly?: boolean;
 }
+
 
 const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
 const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
