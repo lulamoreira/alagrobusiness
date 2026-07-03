@@ -1010,6 +1010,10 @@
     "adModeratedReativadoTitle": "Anuncio reactivado por moderación",
     "adModeratedReativadoMsg": "Uno de tus anuncios fue reactivado por el equipo de moderación.",
     "adModeratedRemovidoTitle": "Anuncio eliminado por moderación",
-    "adModeratedRemovidoMsg": "Uno de tus anuncios fue eliminado por el equipo de moderación."
+    "adModeratedRemovidoMsg": "Uno de tus anuncios fue eliminado por el equipo de moderación.",
+    "adminGrantedTitle": "Ahora eres administrador",
+    "adminGrantedMsg": "Se te concedió un perfil de administrador. Vuelve a iniciar sesión para ver las áreas liberadas.",
+    "adminRevokedTitle": "Acceso de administrador removido",
+    "adminRevokedMsg": "Tu acceso de administrador fue removido."
   }
 }
