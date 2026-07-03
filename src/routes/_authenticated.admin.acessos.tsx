@@ -25,6 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { AdminManagementSection } from "@/components/AdminManagementSection";
 
 export const Route = createFileRoute("/_authenticated/admin/acessos")({
   component: AdminAcessosPage,
