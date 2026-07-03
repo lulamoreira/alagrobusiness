@@ -859,5 +859,70 @@
     "issuedAt": "Issue date",
     "platform": "Brazilian agribusiness education platform",
     "generating": "Generating PDF…"
+  },
+  "adminGestao": {
+    "navLabel": "Admin · Management",
+    "title": "Platform management",
+    "subtitle": "Global KPIs and account approvals.",
+    "onlyAdmin": "Restricted to administrators.",
+    "kpisTitle": "Global indicators",
+    "loading": "Loading…",
+    "empty": "No users found.",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "searchLabel": "Search user",
+    "searchPlaceholder": "Name or email",
+    "filterStatus": "Status",
+    "filterTipo": "Profile type",
+    "filterAll": "All",
+    "usersTitle": "Accounts",
+    "usersSubtitle": "Approve, block or reactivate platform users.",
+    "queueTitle": "Awaiting approval ({{count}})",
+    "queueHint": "Retailers and brands require manual approval before accessing internal areas.",
+    "kpi": {
+      "total": "Total accounts",
+      "aguardando": "Awaiting approval",
+      "bloqueados": "Blocked",
+      "ativos": "Active",
+      "transacoes": "Transactions",
+      "volume": "Financial volume",
+      "negociacao": "In negotiation",
+      "pro": "Pro subscribers"
+    },
+    "status": {
+      "ativo": "Active",
+      "aguardando_aprovacao": "Awaiting",
+      "bloqueado": "Blocked"
+    },
+    "tipo": {
+      "comprador": "Buyer",
+      "vendedor": "Seller",
+      "lojista": "Retailer",
+      "marca": "Brand",
+      "admin": "Admin"
+    },
+    "action": {
+      "aprovar": "Approve",
+      "bloquear": "Block",
+      "reativar": "Reactivate",
+      "aprovarSuccess": "Account approved.",
+      "bloquearSuccess": "User blocked.",
+      "reativarSuccess": "User reactivated.",
+      "error": "Operation failed: {{detail}}",
+      "aprovarConfirmTitle": "Approve account",
+      "aprovarConfirmDesc": "Approve the account of {{name}}? The user will gain access to all areas.",
+      "bloquearConfirmTitle": "Block user",
+      "bloquearConfirmDesc": "Block {{name}}? Access to internal areas will be denied.",
+      "reativarConfirmTitle": "Reactivate user",
+      "reativarConfirmDesc": "Reactivate {{name}}? Access will be restored."
+    }
+  },
+  "notifications": {
+    "approvedTitle": "Account approved",
+    "approvedMsg": "Your account has been approved. Welcome to ALAGROBUSINESS!",
+    "blockedTitle": "Access blocked",
+    "blockedMsg": "Your access has been temporarily blocked. Please contact support.",
+    "reactivatedTitle": "Access reactivated",
+    "reactivatedMsg": "Your access has been restored. Welcome back!"
   }
 }

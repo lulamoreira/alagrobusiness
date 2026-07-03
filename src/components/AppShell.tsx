@@ -170,6 +170,18 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <ShieldCheck className="h-4 w-4" />
                 <span>{t("adminCourses.navLabel")}</span>
               </Link>
+              <Link
+                to="/admin/gestao"
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                  pathname.startsWith("/admin/gestao")
+                    ? "bg-primary/15 text-primary"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                )}
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span>{t("adminGestao.navLabel")}</span>
+              </Link>
             </>
           )}
         </nav>

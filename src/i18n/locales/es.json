@@ -859,5 +859,70 @@
     "issuedAt": "Fecha de emisión",
     "platform": "Plataforma de educación del agronegocio brasileño",
     "generating": "Generando PDF…"
+  },
+  "adminGestao": {
+    "navLabel": "Admin · Gestión",
+    "title": "Gestión de la plataforma",
+    "subtitle": "Indicadores globales y aprobación de cuentas.",
+    "onlyAdmin": "Área restringida a administradores.",
+    "kpisTitle": "Indicadores globales",
+    "loading": "Cargando…",
+    "empty": "Ningún usuario encontrado.",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "searchLabel": "Buscar usuario",
+    "searchPlaceholder": "Nombre o correo",
+    "filterStatus": "Estado",
+    "filterTipo": "Tipo de perfil",
+    "filterAll": "Todos",
+    "usersTitle": "Cuentas",
+    "usersSubtitle": "Aprueba, bloquea o reactiva usuarios de la plataforma.",
+    "queueTitle": "Esperando aprobación ({{count}})",
+    "queueHint": "Tiendas y marcas requieren aprobación manual antes de acceder a las áreas internas.",
+    "kpi": {
+      "total": "Total de cuentas",
+      "aguardando": "Esperando aprobación",
+      "bloqueados": "Bloqueados",
+      "ativos": "Activos",
+      "transacoes": "Transacciones",
+      "volume": "Volumen financiero",
+      "negociacao": "En negociación",
+      "pro": "Suscriptores Pro"
+    },
+    "status": {
+      "ativo": "Activo",
+      "aguardando_aprovacao": "Esperando",
+      "bloqueado": "Bloqueado"
+    },
+    "tipo": {
+      "comprador": "Comprador",
+      "vendedor": "Vendedor",
+      "lojista": "Tienda",
+      "marca": "Marca",
+      "admin": "Admin"
+    },
+    "action": {
+      "aprovar": "Aprobar",
+      "bloquear": "Bloquear",
+      "reativar": "Reactivar",
+      "aprovarSuccess": "Cuenta aprobada.",
+      "bloquearSuccess": "Usuario bloqueado.",
+      "reativarSuccess": "Usuario reactivado.",
+      "error": "Fallo en la operación: {{detail}}",
+      "aprovarConfirmTitle": "Aprobar cuenta",
+      "aprovarConfirmDesc": "¿Aprobar la cuenta de {{name}}? El usuario tendrá acceso a todas las áreas.",
+      "bloquearConfirmTitle": "Bloquear usuario",
+      "bloquearConfirmDesc": "¿Bloquear a {{name}}? Se denegará el acceso a las áreas internas.",
+      "reativarConfirmTitle": "Reactivar usuario",
+      "reativarConfirmDesc": "¿Reactivar a {{name}}? Se restaurará el acceso."
+    }
+  },
+  "notifications": {
+    "approvedTitle": "Cuenta aprobada",
+    "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a ALAGROBUSINESS!",
+    "blockedTitle": "Acceso bloqueado",
+    "blockedMsg": "Tu acceso ha sido bloqueado temporalmente. Contacta con soporte.",
+    "reactivatedTitle": "Acceso reactivado",
+    "reactivatedMsg": "Tu acceso ha sido restaurado. ¡Bienvenido de vuelta!"
   }
 }

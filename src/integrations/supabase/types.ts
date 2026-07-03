@@ -1239,6 +1239,7 @@ export type Database = {
         Args: { p_dias?: number; p_plano_codigo?: string; p_usuario: string }
         Returns: undefined
       }
+      admin_kpis: { Args: never; Returns: Json }
       admin_list_cortesias: {
         Args: never
         Returns: {
@@ -1263,6 +1264,13 @@ export type Database = {
           status: string
           tipo_perfil: string
         }[]
+      }
+      admin_set_user_status: {
+        Args: {
+          p_status: Database["public"]["Enums"]["status_perfil"]
+          p_usuario: string
+        }
+        Returns: undefined
       }
       complete_profile: {
         Args: {
