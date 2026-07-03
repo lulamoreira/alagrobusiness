@@ -917,12 +917,71 @@
       "reativarConfirmDesc": "¿Reactivar a {{name}}? Se restaurará el acceso."
     }
   },
+  "adminModeracao": {
+    "navLabel": "Admin · Moderación",
+    "title": "Moderación de anuncios",
+    "subtitle": "Revisa, pausa, reactiva o elimina anuncios de la plataforma.",
+    "onlyAdmin": "Solo administradores.",
+    "loading": "Cargando…",
+    "empty": "No se encontraron anuncios.",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Título o producto",
+    "filterStatus": "Estado",
+    "filterCategoria": "Categoría",
+    "filterAll": "Todos",
+    "listTitle": "Anuncios",
+    "columns": {
+      "titulo": "Anuncio",
+      "vendedor": "Vendedor",
+      "preco": "Precio",
+      "status": "Estado",
+      "data": "Fecha",
+      "acoes": "Acciones"
+    },
+    "status": { "ativo": "Activo", "pausado": "Pausado", "vendido": "Vendido" },
+    "categoria": { "fruta": "Fruta", "grao": "Grano", "legumes": "Legumbres", "vegetal": "Vegetal" },
+    "action": {
+      "ver": "Ver",
+      "pausar": "Pausar",
+      "reativar": "Reactivar",
+      "remover": "Eliminar",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "motivoLabel": "Motivo (visible para el vendedor)",
+      "motivoPlaceholder": "Describe el motivo de la moderación",
+      "motivoRequired": "Indica un motivo.",
+      "pausarConfirmTitle": "Pausar anuncio",
+      "pausarConfirmDesc": "¿Pausar el anuncio \"{{titulo}}\"? El vendedor será notificado.",
+      "reativarConfirmTitle": "Reactivar anuncio",
+      "reativarConfirmDesc": "¿Reactivar el anuncio \"{{titulo}}\"? El vendedor será notificado.",
+      "removerConfirmTitle": "Eliminar anuncio",
+      "removerConfirmDesc": "¿Eliminar el anuncio \"{{titulo}}\"? La eliminación es definitiva para el público.",
+      "pausarSuccess": "Anuncio pausado.",
+      "reativarSuccess": "Anuncio reactivado.",
+      "removerSuccess": "Anuncio eliminado.",
+      "error": "Error en la operación: {{detail}}"
+    },
+    "detail": {
+      "title": "Detalles del anuncio",
+      "descricao": "Descripción",
+      "sem_descricao": "Sin descripción.",
+      "fotos": "Fotos",
+      "sem_fotos": "Sin fotos.",
+      "close": "Cerrar"
+    }
+  },
   "notifications": {
     "approvedTitle": "Cuenta aprobada",
     "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a ALAGROBUSINESS!",
     "blockedTitle": "Acceso bloqueado",
     "blockedMsg": "Tu acceso ha sido bloqueado temporalmente. Contacta con soporte.",
     "reactivatedTitle": "Acceso reactivado",
-    "reactivatedMsg": "Tu acceso ha sido restaurado. ¡Bienvenido de vuelta!"
+    "reactivatedMsg": "Tu acceso ha sido restaurado. ¡Bienvenido de vuelta!",
+    "adModeratedPausadoTitle": "Anuncio pausado por moderación",
+    "adModeratedPausadoMsg": "Uno de tus anuncios fue pausado por el equipo de moderación.",
+    "adModeratedReativadoTitle": "Anuncio reactivado por moderación",
+    "adModeratedReativadoMsg": "Uno de tus anuncios fue reactivado por el equipo de moderación.",
+    "adModeratedRemovidoTitle": "Anuncio eliminado por moderación",
+    "adModeratedRemovidoMsg": "Uno de tus anuncios fue eliminado por el equipo de moderación."
   }
 }

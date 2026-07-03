@@ -1251,6 +1251,10 @@ export type Database = {
           usuario_id: string
         }[]
       }
+      admin_moderar_anuncio: {
+        Args: { p_acao: string; p_anuncio_id: string; p_motivo: string }
+        Returns: undefined
+      }
       admin_revoke_plan: { Args: { p_usuario: string }; Returns: undefined }
       admin_search_users: {
         Args: { p_query: string }
