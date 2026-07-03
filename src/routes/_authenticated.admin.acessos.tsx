@@ -345,6 +345,8 @@ function AdminAcessosPage() {
         )}
       </section>
 
+      <AdminManagementSection />
+
       {/* Grant dialog */}
       <AlertDialog open={grantOpen} onOpenChange={setGrantOpen}>
         <AlertDialogContent>
