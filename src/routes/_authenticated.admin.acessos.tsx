@@ -670,53 +670,61 @@ function AdminAcessosPage() {
         {cortesias.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">{t("adminAccess.noCortesias")}</p>
         ) : (
-          <div className="mt-4 overflow-x-auto rounded-xl border border-border/50">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3">{t("adminAccess.user")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.email")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.currentPlan")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.expiration")}</th>
-                  <th className="px-4 py-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {cortesias.map((c) => (
-                  <tr key={c.usuario_id} className="border-t border-border/40">
-                    <td className="px-4 py-3">{c.nome_completo ?? "—"}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{c.email ?? "—"}</td>
-                    <td className="px-4 py-3">{planoNome(c.plano_codigo)}</td>
-                    <td className="px-4 py-3">{fmtDate(c.fim)}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end">
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => {
-                            setTarget({
-                              id: c.usuario_id,
-                              nome_completo: c.nome_completo,
-                              email: c.email,
-                              tipo_perfil: null,
-                              plano_codigo: c.plano_codigo,
-                              status: "ativa",
-                              origem: "admin_cortesia",
-                              fim: c.fim,
-                            });
-                            setRevokeOpen(true);
-                          }}
-                        >
-                          <Ban className="mr-1 h-4 w-4" />
-                          {t("adminAccess.revoke")}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {cortesias.map((c) => (
+              <div
+                key={c.usuario_id}
+                className="flex flex-col rounded-xl border border-border/50 bg-background/40 p-4"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-medium">{c.nome_completo ?? "—"}</p>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {c.email ?? "—"}
+                  </p>
+                </div>
+
+                <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                  <div>
+                    <dt className="text-muted-foreground">
+                      {t("adminAccess.currentPlan")}
+                    </dt>
+                    <dd className="mt-0.5">{planoNome(c.plano_codigo)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-muted-foreground">
+                      {t("adminAccess.expiration")}
+                    </dt>
+                    <dd className="mt-0.5">{fmtDate(c.fim)}</dd>
+                  </div>
+                </dl>
+
+                <div className="mt-4">
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="w-full"
+                    onClick={() => {
+                      setTarget({
+                        id: c.usuario_id,
+                        nome_completo: c.nome_completo,
+                        email: c.email,
+                        tipo_perfil: null,
+                        plano_codigo: c.plano_codigo,
+                        status: "ativa",
+                        origem: "admin_cortesia",
+                        fim: c.fim,
+                      });
+                      setRevokeOpen(true);
+                    }}
+                  >
+                    <Ban className="mr-1 h-4 w-4" />
+                    {t("adminAccess.revoke")}
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
+
         )}
       </section>
 
