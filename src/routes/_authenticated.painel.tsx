@@ -140,6 +140,35 @@ function PainelPage() {
         </div>
 
         {(() => {
+          const vis = prefs?.tipos_dolar_visiveis ?? [];
+          const show = vis.length === 0 || vis.includes(userDolarPref);
+          if (!show || !preferredDolarRow) return null;
+          return (
+            <Link
+              to="/cotacao"
+              className="group mb-3 block rounded-2xl border border-primary/40 bg-card p-5 transition-colors hover:border-primary"
+            >
+              <div className="text-xs uppercase tracking-wide text-primary/90">
+                {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
+              </div>
+              <div className="mt-2 flex items-baseline justify-between gap-2">
+                <span className="font-display text-xl font-bold text-foreground tabular-nums">
+                  {formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)}
+                </span>
+              </div>
+              <div className="mt-1">
+                <VariationBadge
+                  variation={preferredDolarVariation}
+                  locale={i18n.language}
+                  formatDelta={(v) => formatDolarValue(v, i18n.language)}
+                  size="sm"
+                />
+              </div>
+            </Link>
+          );
+        })()}
+
+        {(() => {
           const sel = prefs?.cotacoes_selecionadas ?? [];
           const featured = catalog
             .filter((c) => c.ativo)
@@ -190,37 +219,6 @@ function PainelPage() {
           );
         })()}
 
-
-        {(() => {
-          const vis = prefs?.tipos_dolar_visiveis ?? [];
-          const show = vis.length === 0 || vis.includes(userDolarPref);
-          if (!show || !preferredDolarRow) return null;
-          return (
-            <div className="mt-3">
-              <Link
-                to="/cotacao"
-                className="group block rounded-2xl border border-primary/40 bg-card p-5 transition-colors hover:border-primary"
-              >
-                <div className="text-xs uppercase tracking-wide text-primary/90">
-                  {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
-                </div>
-                <div className="mt-2 flex items-baseline justify-between gap-2">
-                  <span className="font-display text-xl font-bold text-foreground tabular-nums">
-                    {formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)}
-                  </span>
-                </div>
-                <div className="mt-1">
-                  <VariationBadge
-                    variation={preferredDolarVariation}
-                    locale={i18n.language}
-                    formatDelta={(v) => formatDolarValue(v, i18n.language)}
-                    size="sm"
-                  />
-                </div>
-              </Link>
-            </div>
-          );
-        })()}
       </section>
 
 
