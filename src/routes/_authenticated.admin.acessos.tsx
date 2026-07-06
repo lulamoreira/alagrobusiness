@@ -367,144 +367,300 @@ function AdminAcessosPage() {
         </div>
 
         {results.length > 0 ? (
-          <div className="mt-4 overflow-x-auto rounded-xl border border-border/50">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3">{t("adminAccess.user")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.email")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.currentPlan")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.status")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.origin")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.expiration")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.actions")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.map((r) => {
-                  const protectedRow = isProtected(r);
-                  const self = isSelf(r);
-                  const blocked = r.status === "bloqueado";
-                  // profile-level status comes from profiles, not from assinaturas.
-                  // We display status label (still assinatura), but block/unblock uses profile status.
-                  // We need a second field for profile status — reuse from separate load.
-                  return (
-                    <tr key={r.id} className="border-t border-border/40">
-                      <td className="px-4 py-3">
-                        {r.nome_completo ?? "—"}
-                        {protectedRow && (
-                          <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
-                            {t("adminAccess.superAdminBadge")}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">{r.email ?? "—"}</td>
-                      <td className="px-4 py-3">{planoNome(r.plano_codigo)}</td>
-                      <td className="px-4 py-3">{statusLabel(r.status)}</td>
-                      <td className="px-4 py-3">{originLabel(r.origem)}</td>
-                      <td className="px-4 py-3">{fmtDate(r.fim)}</td>
-                      <td className="px-4 py-3">
-                        <div className="flex flex-wrap justify-end gap-2">
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            onClick={() => {
+          <>
+            {/* Mobile: card list */}
+            <div className="mt-4 space-y-3 md:hidden">
+              {results.map((r) => {
+                const protectedRow = isProtected(r);
+                const self = isSelf(r);
+                const blocked = r.status === "bloqueado";
+                return (
+                  <div
+                    key={r.id}
+                    className="rounded-xl border border-border/50 bg-background/40 p-4"
+                  >
+                    <div className="flex min-w-0 items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="truncate font-medium">
+                          {r.nome_completo ?? "—"}
+                          {protectedRow && (
+                            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+                              {t("adminAccess.superAdminBadge")}
+                            </span>
+                          )}
+                        </p>
+                        <p className="mt-1 truncate text-xs text-muted-foreground">
+                          {r.email ?? "—"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                      <div>
+                        <dt className="text-muted-foreground">
+                          {t("adminAccess.currentPlan")}
+                        </dt>
+                        <dd className="mt-0.5">{planoNome(r.plano_codigo)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-muted-foreground">
+                          {t("adminAccess.status")}
+                        </dt>
+                        <dd className="mt-0.5">{statusLabel(r.status)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-muted-foreground">
+                          {t("adminAccess.origin")}
+                        </dt>
+                        <dd className="mt-0.5">{originLabel(r.origem)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-muted-foreground">
+                          {t("adminAccess.expiration")}
+                        </dt>
+                        <dd className="mt-0.5">{fmtDate(r.fim)}</dd>
+                      </div>
+                    </dl>
+
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="w-full"
+                        onClick={() => {
+                          setTarget(r);
+                          setGrantPlano("pro");
+                          setGrantMode("indefinite");
+                          setGrantDays("30");
+                          setGrantOpen(true);
+                        }}
+                      >
+                        <Gift className="mr-1 h-4 w-4" />
+                        {t("adminAccess.grant")}
+                      </Button>
+                      {canRevoke(r) && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="w-full"
+                          onClick={() => {
+                            setTarget(r);
+                            setRevokeOpen(true);
+                          }}
+                        >
+                          <Ban className="mr-1 h-4 w-4" />
+                          {t("adminAccess.revoke")}
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => openEdit(r)}
+                        disabled={protectedRow && !profile?.is_super_admin}
+                      >
+                        <Pencil className="mr-1 h-4 w-4" />
+                        {t("adminAccess.edit")}
+                      </Button>
+                      {!protectedRow && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => {
+                            if (blocked) {
+                              setStatus(r, "ativo");
+                            } else {
                               setTarget(r);
-                              setGrantPlano("pro");
-                              setGrantMode("indefinite");
-                              setGrantDays("30");
-                              setGrantOpen(true);
-                            }}
-                          >
-                            <Gift className="mr-1 h-4 w-4" />
-                            {t("adminAccess.grant")}
-                          </Button>
-                          {canRevoke(r) && (
+                              setBlockOpen(true);
+                            }
+                          }}
+                        >
+                          {blocked ? (
+                            <>
+                              <Unlock className="mr-1 h-4 w-4" />
+                              {t("adminAccess.unblock")}
+                            </>
+                          ) : (
+                            <>
+                              <Lock className="mr-1 h-4 w-4" />
+                              {t("adminAccess.block")}
+                            </>
+                          )}
+                        </Button>
+                      )}
+                      {!protectedRow && !self && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="w-full"
+                          onClick={() => {
+                            setTarget(r);
+                            setDeleteOpen(true);
+                          }}
+                        >
+                          <Trash2 className="mr-1 h-4 w-4" />
+                          {t("adminAccess.delete")}
+                        </Button>
+                      )}
+                      {!protectedRow && !self && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="col-span-2 w-full"
+                          onClick={() => {
+                            setTarget(r);
+                            setHardDeleteOpen(true);
+                          }}
+                        >
+                          <ShieldAlert className="mr-1 h-4 w-4" />
+                          {t("adminAccess.deleteHard")}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop: table */}
+            <div className="mt-4 hidden overflow-x-auto rounded-xl border border-border/50 md:block">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
+                  <tr>
+                    <th className="px-4 py-3">{t("adminAccess.user")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.email")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.currentPlan")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.status")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.origin")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.expiration")}</th>
+                    <th className="px-4 py-3">{t("adminAccess.actions")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((r) => {
+                    const protectedRow = isProtected(r);
+                    const self = isSelf(r);
+                    const blocked = r.status === "bloqueado";
+                    return (
+                      <tr key={r.id} className="border-t border-border/40">
+                        <td className="px-4 py-3">
+                          {r.nome_completo ?? "—"}
+                          {protectedRow && (
+                            <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+                              {t("adminAccess.superAdminBadge")}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground">{r.email ?? "—"}</td>
+                        <td className="px-4 py-3">{planoNome(r.plano_codigo)}</td>
+                        <td className="px-4 py-3">{statusLabel(r.status)}</td>
+                        <td className="px-4 py-3">{originLabel(r.origem)}</td>
+                        <td className="px-4 py-3">{fmtDate(r.fim)}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex flex-wrap justify-end gap-2">
                             <Button
                               size="sm"
-                              variant="destructive"
+                              variant="secondary"
                               onClick={() => {
                                 setTarget(r);
-                                setRevokeOpen(true);
+                                setGrantPlano("pro");
+                                setGrantMode("indefinite");
+                                setGrantDays("30");
+                                setGrantOpen(true);
                               }}
                             >
-                              <Ban className="mr-1 h-4 w-4" />
-                              {t("adminAccess.revoke")}
+                              <Gift className="mr-1 h-4 w-4" />
+                              {t("adminAccess.grant")}
                             </Button>
-                          )}
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => openEdit(r)}
-                            disabled={protectedRow && !profile?.is_super_admin}
-                          >
-                            <Pencil className="mr-1 h-4 w-4" />
-                            {t("adminAccess.edit")}
-                          </Button>
-                          {!protectedRow && (
+                            {canRevoke(r) && (
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => {
+                                  setTarget(r);
+                                  setRevokeOpen(true);
+                                }}
+                              >
+                                <Ban className="mr-1 h-4 w-4" />
+                                {t("adminAccess.revoke")}
+                              </Button>
+                            )}
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => {
-                                if (blocked) {
-                                  setStatus(r, "ativo");
-                                } else {
+                              onClick={() => openEdit(r)}
+                              disabled={protectedRow && !profile?.is_super_admin}
+                            >
+                              <Pencil className="mr-1 h-4 w-4" />
+                              {t("adminAccess.edit")}
+                            </Button>
+                            {!protectedRow && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  if (blocked) {
+                                    setStatus(r, "ativo");
+                                  } else {
+                                    setTarget(r);
+                                    setBlockOpen(true);
+                                  }
+                                }}
+                              >
+                                {blocked ? (
+                                  <>
+                                    <Unlock className="mr-1 h-4 w-4" />
+                                    {t("adminAccess.unblock")}
+                                  </>
+                                ) : (
+                                  <>
+                                    <Lock className="mr-1 h-4 w-4" />
+                                    {t("adminAccess.block")}
+                                  </>
+                                )}
+                              </Button>
+                            )}
+                            {!protectedRow && !self && (
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => {
                                   setTarget(r);
-                                  setBlockOpen(true);
-                                }
-                              }}
-                            >
-                              {blocked ? (
-                                <>
-                                  <Unlock className="mr-1 h-4 w-4" />
-                                  {t("adminAccess.unblock")}
-                                </>
-                              ) : (
-                                <>
-                                  <Lock className="mr-1 h-4 w-4" />
-                                  {t("adminAccess.block")}
-                                </>
-                              )}
-                            </Button>
-                          )}
-                          {!protectedRow && !self && (
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => {
-                                setTarget(r);
-                                setDeleteOpen(true);
-                              }}
-                            >
-                              <Trash2 className="mr-1 h-4 w-4" />
-                              {t("adminAccess.delete")}
-                            </Button>
-                          )}
-                          {!protectedRow && !self && (
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => {
-                                setTarget(r);
-                                setHardDeleteOpen(true);
-                              }}
-                            >
-                              <ShieldAlert className="mr-1 h-4 w-4" />
-                              {t("adminAccess.deleteHard")}
-                            </Button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                                  setDeleteOpen(true);
+                                }}
+                              >
+                                <Trash2 className="mr-1 h-4 w-4" />
+                                {t("adminAccess.delete")}
+                              </Button>
+                            )}
+                            {!protectedRow && !self && (
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => {
+                                  setTarget(r);
+                                  setHardDeleteOpen(true);
+                                }}
+                              >
+                                <ShieldAlert className="mr-1 h-4 w-4" />
+                                {t("adminAccess.deleteHard")}
+                              </Button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         ) : query && !searching ? (
           <p className="mt-4 text-sm text-muted-foreground">{t("adminAccess.noResults")}</p>
         ) : null}
       </section>
+
 
       {/* Active courtesies */}
       <section className="rounded-2xl border border-border/60 bg-card/40 p-5 backdrop-blur">
