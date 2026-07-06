@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { setTheme, isThemeName } from "@/lib/theme";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
