@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -7,6 +7,13 @@ import { SegmentedToggle } from "@/components/SegmentedToggle";
 import { PillButton } from "@/components/PillButton";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { setLang, type SupportedLang } from "@/i18n";
+import {
+  SUPPORTED_THEMES,
+  THEME_SWATCHES,
+  setTheme,
+  loadStoredTheme,
+  type ThemeName,
+} from "@/lib/theme";
 
 export const Route = createFileRoute("/_authenticated/configuracoes")({
   component: ConfigPage,
