@@ -15,7 +15,7 @@ export function applyTheme(theme: ThemeName) {
 export function setTheme(theme: ThemeName) {
   applyTheme(theme);
   if (typeof window !== "undefined") {
-    try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+    try { localStorage.setItem(STORAGE_KEY, theme); } catch { /* ignore */ }
   }
 }
 
@@ -24,7 +24,7 @@ export function loadStoredTheme(): ThemeName {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
     if (isThemeName(s)) return s;
-  } catch {}
+  } catch { /* ignore */ }
   return DEFAULT_THEME;
 }
 
@@ -32,5 +32,18 @@ export function initThemeFromStorage() {
   applyTheme(loadStoredTheme());
 }
 
-/** Inline script string to run in <head> before hydration to avoid FOUC. */
+/** Inline script to run in <head> pre-hydration to prevent theme flash. */
 export const THEME_BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}');if(t==='ecologico'||t==='terroso'||t==='chuva'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}})();`;
+
+export interface ThemeSwatch {
+  bg: string;
+  card: string;
+  primary: string;
+  fg: string;
+}
+
+export const THEME_SWATCHES: Record<ThemeName, ThemeSwatch> = {
+  ecologico: { bg: "#0B130E", card: "#121C15", primary: "#C2F04A", fg: "#EAF1EA" },
+  terroso:   { bg: "#15100A", card: "#221A11", primary: "#E3A83C", fg: "#F1EADF" },
+  chuva:     { bg: "#0C1319", card: "#13202A", primary: "#56B6E6", fg: "#E6EEF4" },
+};
