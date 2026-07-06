@@ -112,7 +112,7 @@ function PainelPage() {
   const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 md:space-y-8">
       <section>
         <h1 className="font-display text-2xl font-bold md:text-3xl">
           {t("dashboard.hello")}, {profile?.nome_completo?.split(" ")[0] ?? "👋"}
@@ -120,7 +120,12 @@ function PainelPage() {
         <p className="text-sm text-muted-foreground">{t("dashboard.summary")}</p>
       </section>
 
-      <BusinessDashboard />
+      <div className="md:hidden">
+        <MobilePainel />
+      </div>
+
+      <div className="hidden md:block md:space-y-8">
+        <BusinessDashboard />
 
       <section>
         <div className="mb-3 flex items-center justify-between">
