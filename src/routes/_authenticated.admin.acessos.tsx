@@ -273,6 +273,9 @@ function AdminAcessosPage() {
     } finally {
       setBusy(false);
     }
+  };
+
+
 
   const setStatus = async (r: UserRow, newStatus: "ativo" | "bloqueado" | "aguardando_aprovacao") => {
     setBusy(true);
