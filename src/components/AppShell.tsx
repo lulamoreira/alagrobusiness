@@ -326,7 +326,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="fixed left-0 top-0 z-30 hidden h-screen w-64 flex-col border-r border-border bg-card/40 backdrop-blur-md lg:flex">
         <div className="px-6 py-5">
-          <Logo size="sm" />
+          <Logo size="sm" to="/painel" />
         </div>
         <nav className="flex-1 overflow-y-auto px-3 pb-4">
           <NavTree
