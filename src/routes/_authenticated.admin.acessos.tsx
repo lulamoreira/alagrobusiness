@@ -49,6 +49,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { AdminManagementSection } from "@/components/AdminManagementSection";
+import { InviteCortesiaSection } from "@/components/InviteCortesiaSection";
 
 export const Route = createFileRoute("/_authenticated/admin/acessos")({
   component: AdminAcessosPage,
