@@ -156,7 +156,7 @@ function NegociacoesPage() {
           {STATUS_ORDER.map((s) => (
             <section
               key={s}
-              className="flex flex-col rounded-2xl border border-border bg-card/40 p-3"
+              className="flex min-w-0 flex-col rounded-2xl border border-border bg-card/40 p-3"
             >
               <header className="mb-3 flex items-center justify-between px-1">
                 <div className="flex items-center gap-2">
@@ -182,31 +182,44 @@ function NegociacoesPage() {
                   return (
                     <li
                       key={row.id}
-                      className="group rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/40"
+                      className="group min-w-0 rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/40"
                     >
-                      <div className="flex items-start gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setDetailsFor(row)}
+                        className="flex w-full items-start gap-3 text-left"
+                        aria-label={t("nego.viewDetails")}
+                      >
                         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
                           {initial}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-semibold">{buyerName}</p>
-                          <p className="truncate text-[11px] text-muted-foreground">
+                          <p className="break-words text-sm font-semibold leading-snug">{buyerName}</p>
+                          <p className="break-words text-[11px] text-muted-foreground leading-snug">
                             {row.anuncio?.titulo ?? "—"}
                           </p>
                         </div>
-                        <span className="text-[10px] text-muted-foreground tabular-nums">
+                        <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">
                           {new Date(time).toLocaleTimeString(i18n.language, {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
                         </span>
-                      </div>
+                      </button>
 
-                      <p className="mt-2 line-clamp-2 rounded-lg bg-background/40 px-2 py-1.5 text-[11px] text-muted-foreground">
+                      <p className="mt-2 line-clamp-2 rounded-lg bg-background/40 px-2 py-1.5 text-[11px] text-muted-foreground break-words">
                         {row.ultima?.conteudo ?? t("nego.noMessageYet")}
                       </p>
 
                       <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => setDetailsFor(row)}
+                          className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent"
+                        >
+                          <Info className="h-3 w-3" />
+                          {t("nego.viewDetails")}
+                        </button>
                         <Link
                           to="/mensagens/$conversaId"
                           params={{ conversaId: row.id }}
@@ -264,6 +277,109 @@ function NegociacoesPage() {
           ))}
         </div>
       )}
+
+      <Dialog open={!!detailsFor} onOpenChange={(o) => !o && setDetailsFor(null)}>
+        <DialogContent className="max-w-lg">
+          {detailsFor && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="break-words">
+                  {detailsFor.comprador?.nome_completo?.trim() || "—"}
+                </DialogTitle>
+                <DialogDescription>
+                  <span className="inline-flex items-center gap-2">
+                    <span className={cn("h-2 w-2 rounded-full", statusDot(detailsFor.status_negociacao))} />
+                    {t(`nego.status.${detailsFor.status_negociacao}`)}
+                  </span>
+                </DialogDescription>
+              </DialogHeader>
+
+              <dl className="grid grid-cols-1 gap-3 text-sm">
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t("nego.listing")}
+                  </dt>
+                  <dd className="mt-0.5 break-words font-medium">
+                    {detailsFor.anuncio?.titulo ?? "—"}
+                  </dd>
+                </div>
+
+                {detailsFor.anuncio && (
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("nego.price")}
+                      </dt>
+                      <dd className="mt-0.5 font-medium tabular-nums">
+                        {new Intl.NumberFormat(i18n.language, {
+                          style: "currency",
+                          currency: detailsFor.anuncio.moeda,
+                        }).format(Number(detailsFor.anuncio.preco))}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("nego.quantity")}
+                      </dt>
+                      <dd className="mt-0.5 font-medium tabular-nums">
+                        {new Intl.NumberFormat(i18n.language).format(
+                          Number(detailsFor.anuncio.quantidade_disponivel),
+                        )}
+                      </dd>
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t("nego.lastMessage")}
+                  </dt>
+                  <dd className="mt-0.5 whitespace-pre-wrap break-words rounded-lg bg-background/40 px-3 py-2 text-sm text-muted-foreground">
+                    {detailsFor.ultima?.conteudo ?? t("nego.noMessageYet")}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t("nego.lastActivity")}
+                  </dt>
+                  <dd className="mt-0.5 text-sm text-muted-foreground tabular-nums">
+                    {new Date(detailsFor.ultima?.created_at ?? detailsFor.last_message_at).toLocaleString(
+                      i18n.language,
+                    )}
+                  </dd>
+                </div>
+              </dl>
+
+              <DialogFooter className="gap-2 sm:gap-2">
+                <Link
+                  to="/mensagens/$conversaId"
+                  params={{ conversaId: detailsFor.id }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium hover:bg-accent"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  {t("nego.openChat")}
+                </Link>
+                {detailsFor.status_negociacao !== "fechado" && detailsFor.anuncio && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const row = detailsFor;
+                      setDetailsFor(null);
+                      setSoldFor(row);
+                    }}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/20"
+                  >
+                    <CheckCircle2 className="h-4 w-4" />
+                    {t("nego.registerSale")}
+                  </button>
+                )}
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       {soldFor?.anuncio && (
         <MarkAsSoldDialog
