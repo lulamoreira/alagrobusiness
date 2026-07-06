@@ -118,6 +118,46 @@ function ConfigPage() {
           />
         </div>
 
+        <div>
+          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {t("settings.theme")}
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {SUPPORTED_THEMES.map((name) => {
+              const sw = THEME_SWATCHES[name];
+              const active = tema === name;
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => onPickTheme(name)}
+                  aria-pressed={active}
+                  className={`group flex flex-col items-stretch gap-2 rounded-2xl border p-2 text-left transition ${
+                    active ? "border-primary ring-2 ring-primary/40" : "border-border hover:border-primary/50"
+                  }`}
+                >
+                  <div
+                    className="relative h-16 w-full overflow-hidden rounded-xl"
+                    style={{ background: sw.bg }}
+                  >
+                    <div
+                      className="absolute inset-2 rounded-lg"
+                      style={{ background: sw.card }}
+                    />
+                    <div
+                      className="absolute bottom-3 right-3 h-4 w-8 rounded-full"
+                      style={{ background: sw.primary }}
+                    />
+                  </div>
+                  <div className="px-1 text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                    {t(`settings.themes.${name}`)}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="flex items-center gap-3 pt-2">
           <PillButton onClick={save} disabled={saving}>
             {t("common.save")}
