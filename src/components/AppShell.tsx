@@ -363,7 +363,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       {/* Content */}
-      <main className="mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 lg:pl-72 lg:pr-8">
+      <main className="mx-auto min-w-0 max-w-7xl overflow-x-clip px-4 pb-24 pt-6 md:px-6 lg:pl-72 lg:pr-8">
         <PlanBanner />
         {children}
       </main>
