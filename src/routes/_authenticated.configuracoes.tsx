@@ -28,6 +28,27 @@ function ConfigPage() {
   );
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [tema, setTemaState] = useState<ThemeName>(loadStoredTheme());
+
+  useEffect(() => {
+    // Sync from profile prefs once loaded
+    if (!profile) return;
+    (async () => {
+      const { data } = await supabase
+        .from("preferencias")
+        .select("tema")
+        .eq("usuario_id", profile.id)
+        .maybeSingle();
+      if (data?.tema && (SUPPORTED_THEMES as readonly string[]).includes(data.tema)) {
+        setTemaState(data.tema as ThemeName);
+      }
+    })();
+  }, [profile]);
+
+  const onPickTheme = (next: ThemeName) => {
+    setTemaState(next);
+    setTheme(next); // apply + localStorage immediately
+  };
 
   const save = async () => {
     if (!profile) return;
