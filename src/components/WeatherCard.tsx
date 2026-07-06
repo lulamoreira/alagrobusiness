@@ -122,58 +122,60 @@ export function WeatherCard() {
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-xs uppercase tracking-wide text-muted-foreground">
-            {t("weather.title")}
+      <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:items-center">
+        <div className="flex items-start justify-between gap-3 md:justify-start md:gap-5">
+          <div className="min-w-0">
+            <div className="text-xs uppercase tracking-wide text-muted-foreground">
+              {t("weather.title")}
+            </div>
+            <div className="mt-1 truncate font-display text-base font-semibold">{data.regiao}</div>
+            <div className="mt-2 flex items-baseline gap-2">
+              <span className="font-display text-4xl font-bold tabular-nums leading-none">
+                {numFmt.format(Math.round(data.temperatura))}°
+              </span>
+              <span className="text-sm text-muted-foreground">{t(condKey)}</span>
+            </div>
           </div>
-          <div className="mt-1 font-display text-base font-semibold">{data.regiao}</div>
+          <ConditionIcon keyName={condKey} className="h-10 w-10 shrink-0 text-primary" />
         </div>
-        <ConditionIcon keyName={condKey} className="h-10 w-10 text-primary" />
-      </div>
 
-      <div className="mt-3 flex items-baseline gap-3">
-        <span className="font-display text-4xl font-bold tabular-nums">
-          {numFmt.format(Math.round(data.temperatura))}°
-        </span>
-        <span className="text-sm text-muted-foreground">{t(condKey)}</span>
+        {next.length > 0 && (
+          <div className="min-w-0">
+            <div className="mb-2 text-xs uppercase tracking-wide text-muted-foreground">
+              {t("weather.forecast")}
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {next.map((d) => (
+                <div
+                  key={d.data}
+                  className="rounded-xl border border-border/60 bg-background/40 p-2 text-center"
+                >
+                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                    {dateFmt.format(new Date(d.data))}
+                  </div>
+                  <ConditionIcon
+                    keyName={d.condicao ?? "weather.unknown"}
+                    className="mx-auto my-1 h-5 w-5 text-primary/90"
+                  />
+                  <div className="text-xs tabular-nums">
+                    <span className="font-semibold">
+                      {d.max != null ? `${numFmt.format(Math.round(d.max))}°` : "—"}
+                    </span>{" "}
+                    <span className="text-muted-foreground">
+                      {d.min != null ? `${numFmt.format(Math.round(d.min))}°` : "—"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {next.length > 0 && (
-        <div className="mt-5">
-          <div className="mb-2 text-xs uppercase tracking-wide text-muted-foreground">
-            {t("weather.forecast")}
-          </div>
-          <div className="grid grid-cols-4 gap-2">
-            {next.map((d) => (
-              <div
-                key={d.data}
-                className="rounded-xl border border-border/60 bg-background/40 p-2 text-center"
-              >
-                <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                  {dateFmt.format(new Date(d.data))}
-                </div>
-                <ConditionIcon
-                  keyName={d.condicao ?? "weather.unknown"}
-                  className="mx-auto my-1 h-5 w-5 text-primary/90"
-                />
-                <div className="text-xs tabular-nums">
-                  <span className="font-semibold">
-                    {d.max != null ? `${numFmt.format(Math.round(d.max))}°` : "—"}
-                  </span>{" "}
-                  <span className="text-muted-foreground">
-                    {d.min != null ? `${numFmt.format(Math.round(d.min))}°` : "—"}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="mt-4 text-[10px] text-muted-foreground">
         {t("weather.updatedAt")} {timeFmt.format(new Date(data.atualizado_em))}
       </div>
     </div>
+
   );
 }
