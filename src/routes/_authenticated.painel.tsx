@@ -19,6 +19,7 @@ import { useCommoditiesCatalog, useQuotePreferences, nomeFor } from "@/lib/catal
 import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
 import { BusinessDashboard } from "@/components/BusinessDashboard";
+import { MobilePainel } from "@/components/MobilePainel";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
