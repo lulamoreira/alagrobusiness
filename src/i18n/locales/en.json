@@ -359,6 +359,13 @@
     "moveTo": "Move to",
     "moveError": "Could not move the negotiation.",
     "buyer": "Buyer",
+    "details": "Details",
+    "viewDetails": "View details",
+    "listing": "Listing",
+    "price": "Price",
+    "quantity": "Quantity",
+    "lastActivity": "Last activity",
+    "close": "Close",
     "status": {
       "iniciado": "Started",
       "em_negociacao": "In negotiation",
