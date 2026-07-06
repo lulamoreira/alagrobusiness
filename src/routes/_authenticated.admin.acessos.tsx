@@ -14,7 +14,10 @@ import {
   Lock,
   Unlock,
   Check,
+  ShieldAlert,
 } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { adminHardDeleteUser } from "@/lib/adminHardDelete.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
