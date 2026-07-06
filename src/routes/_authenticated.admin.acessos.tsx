@@ -96,6 +96,7 @@ function AdminAcessosPage() {
   const [revokeOpen, setRevokeOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [hardDeleteOpen, setHardDeleteOpen] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
   const [target, setTarget] = useState<UserRow | null>(null);
   const [grantPlano, setGrantPlano] = useState("pro");
