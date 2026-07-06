@@ -480,6 +480,19 @@ function AdminAcessosPage() {
                               {t("adminAccess.delete")}
                             </Button>
                           )}
+                          {!protectedRow && !self && (
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => {
+                                setTarget(r);
+                                setHardDeleteOpen(true);
+                              }}
+                            >
+                              <ShieldAlert className="mr-1 h-4 w-4" />
+                              {t("adminAccess.deleteHard")}
+                            </Button>
+                          )}
                         </div>
                       </td>
                     </tr>
