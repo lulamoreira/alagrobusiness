@@ -67,6 +67,7 @@ function ConfigPage() {
         moeda,
         tipo_dolar: tipoDolar,
         idioma: i18n.language as SupportedLang,
+        tema,
       })
       .eq("usuario_id", profile.id);
     setSaving(false);
