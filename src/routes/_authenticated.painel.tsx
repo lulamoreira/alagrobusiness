@@ -11,10 +11,10 @@ import {
   computeVariation,
   groupCommodityHistory,
   groupDolarHistory,
-  PAINEL_MAX_FEATURED,
   type CommodityRow,
   type DolarHistoryRow,
 } from "@/lib/quotes";
+
 import { useCommoditiesCatalog, useQuotePreferences, nomeFor } from "@/lib/catalog";
 import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -145,7 +145,7 @@ function PainelPage() {
             .filter((c) => c.ativo)
             .filter((c) => (commodityGroups.get(c.codigo)?.length ?? 0) > 0)
             .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)))
-            .slice(0, PAINEL_MAX_FEATURED);
+            .slice(0, 6);
 
           if (featured.length === 0) {
             return (
@@ -156,7 +156,7 @@ function PainelPage() {
           }
 
           return (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
               {featured.map((c) => {
                 const history = commodityGroups.get(c.codigo) ?? [];
                 const latest = history[history.length - 1];
@@ -189,6 +189,7 @@ function PainelPage() {
             </div>
           );
         })()}
+
 
         {(() => {
           const vis = prefs?.tipos_dolar_visiveis ?? [];
@@ -223,9 +224,10 @@ function PainelPage() {
       </section>
 
 
-      <section className="grid gap-4 md:grid-cols-2">
+      <section>
         <WeatherCard />
       </section>
+
 
       <section>
         <h2 className="mb-3 font-display text-lg font-bold">{t("dashboard.news")}</h2>
