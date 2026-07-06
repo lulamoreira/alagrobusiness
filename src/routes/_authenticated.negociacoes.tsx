@@ -61,6 +61,7 @@ function NegociacoesPage() {
   const [moveError, setMoveError] = useState<string | null>(null);
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const [soldFor, setSoldFor] = useState<Row | null>(null);
+  const [detailsFor, setDetailsFor] = useState<Row | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["negociacoes", user?.id],
