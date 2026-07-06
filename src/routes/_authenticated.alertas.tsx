@@ -70,7 +70,7 @@ function useEncodedRenderer() {
   const { t } = useTranslation();
   return (raw: string | null | undefined): string => {
     if (!raw) return "";
-    if (!raw.includes("::")) return raw;
+    if (!raw.includes("::")) return t(raw, { defaultValue: raw });
     const [key, ...args] = raw.split("::");
     if (key === "alerts.notif.commodityTitle") {
       const [product, condition, value, currency] = args;
