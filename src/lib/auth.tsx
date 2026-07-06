@@ -30,6 +30,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq("id", uid)
       .maybeSingle();
     setProfile(data ?? null);
+    // Apply theme preference from server
+    const { data: prefs } = await supabase
+      .from("preferencias")
+      .select("tema")
+      .eq("usuario_id", uid)
+      .maybeSingle();
+    if (prefs && isThemeName(prefs.tema)) setTheme(prefs.tema);
   };
 
   useEffect(() => {
