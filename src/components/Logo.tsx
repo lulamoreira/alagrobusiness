@@ -1,17 +1,19 @@
+import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
+  to?: string;
 }
 
-export function Logo({ className, size = "md" }: LogoProps) {
+export function Logo({ className, size = "md", to }: LogoProps) {
   const sizes = {
     sm: "text-lg",
     md: "text-2xl",
     lg: "text-4xl md:text-5xl",
   };
-  return (
+  const content = (
     <div className={cn("flex items-center gap-2 font-display font-bold tracking-tight", sizes[size], className)}>
       <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
         <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
@@ -20,5 +22,11 @@ export function Logo({ className, size = "md" }: LogoProps) {
       </span>
       <span className="text-foreground">ALAGRO<span className="text-primary">BUSINESS</span></span>
     </div>
+  );
+  if (!to) return content;
+  return (
+    <Link to={to} className="inline-block">
+      {content}
+    </Link>
   );
 }

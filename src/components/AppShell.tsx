@@ -326,7 +326,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="fixed left-0 top-0 z-30 hidden h-screen w-64 flex-col border-r border-border bg-card/40 backdrop-blur-md lg:flex">
         <div className="px-6 py-5">
-          <Logo size="sm" />
+          <Logo size="sm" to="/painel" />
         </div>
         <nav className="flex-1 overflow-y-auto px-3 pb-4">
           <NavTree
@@ -349,7 +349,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/70 px-4 backdrop-blur-md lg:pl-72 lg:pr-8">
         <div className="lg:hidden">
-          <Logo size="sm" />
+          <Logo size="sm" to="/painel" />
         </div>
         <div className="ml-auto flex items-center gap-3">
           <PlanBadge />
@@ -404,7 +404,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <SheetContent side="right" className="w-80 overflow-y-auto bg-card p-0">
             <SheetHeader className="border-b border-border px-4 py-4">
               <SheetTitle>
-                <Logo size="sm" />
+                <Logo size="sm" to="/painel" />
               </SheetTitle>
             </SheetHeader>
             <div className="px-3 py-3">
