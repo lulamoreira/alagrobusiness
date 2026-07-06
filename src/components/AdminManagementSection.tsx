@@ -176,85 +176,90 @@ export function AdminManagementSection() {
             {t("adminAccess.adminsListEmpty")}
           </p>
         ) : (
-          <div className="overflow-x-auto rounded-xl border border-border/50">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3">{t("adminAccess.user")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.email")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.resourcesTitle")}</th>
-                  <th className="px-4 py-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {admins.map((a) => (
-                  <tr key={a.id} className="border-t border-border/40">
-                    <td className="px-4 py-3">
-                      <span className="mr-2">{a.nome_completo ?? "—"}</span>
-                      {a.is_super_admin && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium text-primary">
-                          <Crown className="h-3 w-3" />
-                          {t("adminAccess.superAdminBadge")}
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{a.email ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {a.is_super_admin
-                          ? ADMIN_RESOURCES.map((r) => (
-                              <span
-                                key={r}
-                                className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium text-primary"
-                              >
-                                {t(`adminAccess.resource_${r}`)}
-                              </span>
-                            ))
-                          : ADMIN_RESOURCES.filter((r) => a.admin_permissoes?.[r]).map(
-                              (r) => (
-                                <span
-                                  key={r}
-                                  className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary/90"
-                                >
-                                  {t(`adminAccess.resource_${r}`)}
-                                </span>
-                              ),
-                            )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        {a.is_super_admin ? (
-                          <span className="text-xs text-muted-foreground">
-                            {t("adminAccess.youCannotEditSuper")}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {admins.map((a) => (
+              <div
+                key={a.id}
+                className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4"
+              >
+                <div className="flex min-w-0 items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium">
+                      {a.nome_completo ?? "—"}
+                    </p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {a.email ?? "—"}
+                    </p>
+                  </div>
+                  {a.is_super_admin && (
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium text-primary">
+                      <Crown className="h-3 w-3" />
+                      {t("adminAccess.superAdminBadge")}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <p className="mb-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                    {t("adminAccess.resourcesTitle")}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {a.is_super_admin
+                      ? ADMIN_RESOURCES.map((r) => (
+                          <span
+                            key={r}
+                            className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium text-primary"
+                          >
+                            {t(`adminAccess.resource_${r}`)}
                           </span>
-                        ) : (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              onClick={() => openEdit(a)}
+                        ))
+                      : ADMIN_RESOURCES.filter((r) => a.admin_permissoes?.[r]).map(
+                          (r) => (
+                            <span
+                              key={r}
+                              className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary/90"
                             >
-                              <ShieldCheck className="mr-1 h-4 w-4" />
-                              {t("adminAccess.editPerms")}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => openRevoke(a)}
-                            >
-                              <Ban className="mr-1 h-4 w-4" />
-                              {t("adminAccess.revokeAdmin")}
-                            </Button>
-                          </>
+                              {t(`adminAccess.resource_${r}`)}
+                            </span>
+                          ),
                         )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    {!a.is_super_admin &&
+                      !ADMIN_RESOURCES.some((r) => a.admin_permissoes?.[r]) && (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
+                  </div>
+                </div>
+
+                <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
+                  {a.is_super_admin ? (
+                    <span className="col-span-2 text-center text-xs text-muted-foreground">
+                      {t("adminAccess.youCannotEditSuper")}
+                    </span>
+                  ) : (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => openEdit(a)}
+                      >
+                        <ShieldCheck className="mr-1 h-4 w-4" />
+                        {t("adminAccess.editPerms")}
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => openRevoke(a)}
+                      >
+                        <Ban className="mr-1 h-4 w-4" />
+                        {t("adminAccess.revokeAdmin")}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
+
         )}
       </div>
 
@@ -282,35 +287,30 @@ export function AdminManagementSection() {
         </div>
 
         {candidates.length > 0 && (
-          <div className="mt-3 overflow-x-auto rounded-xl border border-border/50">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3">{t("adminAccess.user")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.email")}</th>
-                  <th className="px-4 py-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {candidates.map((c) => (
-                  <tr key={c.id} className="border-t border-border/40">
-                    <td className="px-4 py-3">{c.nome_completo ?? "—"}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{c.email ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end">
-                        <Button size="sm" onClick={() => openGrant(c)}>
-                          <UserPlus className="mr-1 h-4 w-4" />
-                          {t("adminAccess.grantAdmin")}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {candidates.map((c) => (
+              <div
+                key={c.id}
+                className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">
+                    {c.nome_completo ?? "—"}
+                  </p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {c.email ?? "—"}
+                  </p>
+                </div>
+                <Button size="sm" className="mt-auto w-full" onClick={() => openGrant(c)}>
+                  <UserPlus className="mr-1 h-4 w-4" />
+                  {t("adminAccess.grantAdmin")}
+                </Button>
+              </div>
+            ))}
           </div>
         )}
       </div>
+
 
       {/* Dialog: grant/edit/revoke */}
       <AlertDialog open={mode !== null} onOpenChange={(o) => !o && close()}>
