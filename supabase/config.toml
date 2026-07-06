@@ -30,6 +30,9 @@ verify_jwt = true
 [functions.create-portal-session]
 verify_jwt = true
 
+[functions.enviar-convite]
+verify_jwt = true
+
 
 
 
