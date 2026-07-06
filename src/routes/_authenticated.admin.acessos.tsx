@@ -257,6 +257,23 @@ function AdminAcessosPage() {
     await Promise.all([runSearch(), loadCortesias()]);
   };
 
+  const hardDeleteFn = useServerFn(adminHardDeleteUser);
+  const doHardDelete = async () => {
+    if (!target) return;
+    setBusy(true);
+    try {
+      await hardDeleteFn({ data: { userId: target.id } });
+      toast.success(t("adminAccess.hardDeleted"));
+      setHardDeleteOpen(false);
+      setTarget(null);
+      await Promise.all([runSearch(), loadCortesias()]);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err);
+      toast.error(t("adminAccess.errorHardDelete", { detail }));
+    } finally {
+      setBusy(false);
+    }
+
   const setStatus = async (r: UserRow, newStatus: "ativo" | "bloqueado" | "aguardando_aprovacao") => {
     setBusy(true);
     const { error } = await supabase.rpc("admin_acessos_set_status" as never, {
