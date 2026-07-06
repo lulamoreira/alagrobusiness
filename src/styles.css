@@ -36,26 +36,77 @@
 
 :root {
   --radius: 1.125rem;
-  /* ALAGROBUSINESS dark theme (default) */
-  --background: oklch(0.18 0.02 150);
-  --foreground: oklch(0.96 0.01 130);
-  --card: oklch(0.22 0.025 150);
-  --card-foreground: oklch(0.96 0.01 130);
-  --popover: oklch(0.22 0.025 150);
-  --popover-foreground: oklch(0.96 0.01 130);
-  --primary: oklch(0.91 0.21 124);
-  --primary-foreground: oklch(0.18 0.02 150);
-  --secondary: oklch(0.28 0.03 150);
-  --secondary-foreground: oklch(0.96 0.01 130);
-  --muted: oklch(0.26 0.025 150);
-  --muted-foreground: oklch(0.68 0.02 140);
-  --accent: oklch(0.32 0.04 150);
-  --accent-foreground: oklch(0.96 0.01 130);
+}
+
+/* ============== THEMES (dark premium) ============== */
+/* Ecológico (padrão) */
+:root,
+:root[data-theme="ecologico"] {
+  --background: #0B130E;
+  --foreground: #EAF1EA;
+  --card: #121C15;
+  --card-foreground: #EAF1EA;
+  --popover: #121C15;
+  --popover-foreground: #EAF1EA;
+  --primary: #C2F04A;
+  --primary-foreground: #0B130E;
+  --secondary: #1a2620;
+  --secondary-foreground: #EAF1EA;
+  --muted: #17211a;
+  --muted-foreground: #8A9590;
+  --accent: #1e2b23;
+  --accent-foreground: #EAF1EA;
   --destructive: oklch(0.65 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(1 0 0 / 7%);
-  --input: oklch(1 0 0 / 8%);
-  --ring: oklch(0.91 0.21 124);
+  --border: rgba(255, 255, 255, 0.07);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #C2F04A;
+}
+
+/* Terroso */
+:root[data-theme="terroso"] {
+  --background: #15100A;
+  --foreground: #F1EADF;
+  --card: #221A11;
+  --card-foreground: #F1EADF;
+  --popover: #221A11;
+  --popover-foreground: #F1EADF;
+  --primary: #E3A83C;
+  --primary-foreground: #15100A;
+  --secondary: #2b2116;
+  --secondary-foreground: #F1EADF;
+  --muted: #251c13;
+  --muted-foreground: #A6957E;
+  --accent: #33261a;
+  --accent-foreground: #F1EADF;
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: rgba(255, 240, 220, 0.08);
+  --input: rgba(255, 240, 220, 0.09);
+  --ring: #E3A83C;
+}
+
+/* Chuva */
+:root[data-theme="chuva"] {
+  --background: #0C1319;
+  --foreground: #E6EEF4;
+  --card: #13202A;
+  --card-foreground: #E6EEF4;
+  --popover: #13202A;
+  --popover-foreground: #E6EEF4;
+  --primary: #56B6E6;
+  --primary-foreground: #0C1319;
+  --secondary: #1a2836;
+  --secondary-foreground: #E6EEF4;
+  --muted: #172532;
+  --muted-foreground: #8FA0AC;
+  --accent: #1f3040;
+  --accent-foreground: #E6EEF4;
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: rgba(200, 220, 255, 0.08);
+  --input: rgba(200, 220, 255, 0.09);
+  --ring: #56B6E6;
 }
 
 html, body {

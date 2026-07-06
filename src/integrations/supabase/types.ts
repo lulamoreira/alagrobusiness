@@ -1000,6 +1000,7 @@ export type Database = {
           id: string
           idioma: Database["public"]["Enums"]["idioma_app"]
           moeda: Database["public"]["Enums"]["moeda_app"]
+          tema: Database["public"]["Enums"]["tema_app"]
           temas_noticias: string[]
           tipo_dolar: Database["public"]["Enums"]["tipo_dolar"]
           tipos_dolar_visiveis: string[]
@@ -1013,6 +1014,7 @@ export type Database = {
           id?: string
           idioma?: Database["public"]["Enums"]["idioma_app"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
+          tema?: Database["public"]["Enums"]["tema_app"]
           temas_noticias?: string[]
           tipo_dolar?: Database["public"]["Enums"]["tipo_dolar"]
           tipos_dolar_visiveis?: string[]
@@ -1026,6 +1028,7 @@ export type Database = {
           id?: string
           idioma?: Database["public"]["Enums"]["idioma_app"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
+          tema?: Database["public"]["Enums"]["tema_app"]
           temas_noticias?: string[]
           tipo_dolar?: Database["public"]["Enums"]["tipo_dolar"]
           tipos_dolar_visiveis?: string[]
@@ -1487,6 +1490,7 @@ export type Database = {
       pagamento_status: "aguardando" | "recebido"
       status_anuncio: "ativo" | "pausado" | "vendido"
       status_perfil: "ativo" | "aguardando_aprovacao" | "bloqueado"
+      tema_app: "ecologico" | "terroso" | "chuva"
       tipo_dolar: "comercial" | "turismo" | "paralelo"
       tipo_evento:
         | "plantio"
@@ -1634,6 +1638,7 @@ export const Constants = {
       pagamento_status: ["aguardando", "recebido"],
       status_anuncio: ["ativo", "pausado", "vendido"],
       status_perfil: ["ativo", "aguardando_aprovacao", "bloqueado"],
+      tema_app: ["ecologico", "terroso", "chuva"],
       tipo_dolar: ["comercial", "turismo", "paralelo"],
       tipo_evento: [
         "plantio",

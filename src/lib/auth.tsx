@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { setTheme, isThemeName } from "@/lib/theme";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -29,6 +30,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq("id", uid)
       .maybeSingle();
     setProfile(data ?? null);
+    // Apply theme preference from server
+    const { data: prefs } = await supabase
+      .from("preferencias")
+      .select("tema")
+      .eq("usuario_id", uid)
+      .maybeSingle();
+    if (prefs && isThemeName(prefs.tema)) setTheme(prefs.tema);
   };
 
   useEffect(() => {

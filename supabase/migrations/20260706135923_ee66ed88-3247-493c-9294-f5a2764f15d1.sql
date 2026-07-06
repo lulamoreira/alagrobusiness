@@ -1,0 +1,2 @@
+DO $$ BEGIN CREATE TYPE public.tema_app AS ENUM ('ecologico', 'terroso', 'chuva'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+ALTER TABLE public.preferencias ADD COLUMN IF NOT EXISTS tema public.tema_app NOT NULL DEFAULT 'ecologico';

@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth";
 import "@/i18n";
 import { detectAndApplyLang } from "@/i18n";
+import { initThemeFromStorage, THEME_BOOT_SCRIPT } from "@/lib/theme";
 
 function NotFoundComponent() {
   const { t } = useTranslation();
@@ -104,9 +105,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" data-theme="ecologico">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       </head>
       <body className="bg-background text-foreground antialiased">
         {children}
@@ -121,6 +123,7 @@ function RootComponent() {
 
   useEffect(() => {
     detectAndApplyLang();
+    initThemeFromStorage();
   }, []);
 
   return (

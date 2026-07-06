@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -7,6 +7,13 @@ import { SegmentedToggle } from "@/components/SegmentedToggle";
 import { PillButton } from "@/components/PillButton";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { setLang, type SupportedLang } from "@/i18n";
+import {
+  SUPPORTED_THEMES,
+  THEME_SWATCHES,
+  setTheme,
+  loadStoredTheme,
+  type ThemeName,
+} from "@/lib/theme";
 
 export const Route = createFileRoute("/_authenticated/configuracoes")({
   component: ConfigPage,
@@ -21,6 +28,27 @@ function ConfigPage() {
   );
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [tema, setTemaState] = useState<ThemeName>(loadStoredTheme());
+
+  useEffect(() => {
+    // Sync from profile prefs once loaded
+    if (!profile) return;
+    (async () => {
+      const { data } = await supabase
+        .from("preferencias")
+        .select("tema")
+        .eq("usuario_id", profile.id)
+        .maybeSingle();
+      if (data?.tema && (SUPPORTED_THEMES as readonly string[]).includes(data.tema)) {
+        setTemaState(data.tema as ThemeName);
+      }
+    })();
+  }, [profile]);
+
+  const onPickTheme = (next: ThemeName) => {
+    setTemaState(next);
+    setTheme(next); // apply + localStorage immediately
+  };
 
   const save = async () => {
     if (!profile) return;
@@ -39,6 +67,7 @@ function ConfigPage() {
         moeda,
         tipo_dolar: tipoDolar,
         idioma: i18n.language as SupportedLang,
+        tema,
       })
       .eq("usuario_id", profile.id);
     setSaving(false);
@@ -87,6 +116,46 @@ function ConfigPage() {
               { value: "paralelo", label: t("settings.paralelo") },
             ]}
           />
+        </div>
+
+        <div>
+          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {t("settings.theme")}
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {SUPPORTED_THEMES.map((name) => {
+              const sw = THEME_SWATCHES[name];
+              const active = tema === name;
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => onPickTheme(name)}
+                  aria-pressed={active}
+                  className={`group flex flex-col items-stretch gap-2 rounded-2xl border p-2 text-left transition ${
+                    active ? "border-primary ring-2 ring-primary/40" : "border-border hover:border-primary/50"
+                  }`}
+                >
+                  <div
+                    className="relative h-16 w-full overflow-hidden rounded-xl"
+                    style={{ background: sw.bg }}
+                  >
+                    <div
+                      className="absolute inset-2 rounded-lg"
+                      style={{ background: sw.card }}
+                    />
+                    <div
+                      className="absolute bottom-3 right-3 h-4 w-8 rounded-full"
+                      style={{ background: sw.primary }}
+                    />
+                  </div>
+                  <div className="px-1 text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                    {t(`settings.themes.${name}`)}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="flex items-center gap-3 pt-2">
