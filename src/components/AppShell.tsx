@@ -349,7 +349,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/70 px-4 backdrop-blur-md lg:pl-72 lg:pr-8">
         <div className="lg:hidden">
-          <Logo size="sm" />
+          <Logo size="sm" to="/painel" />
         </div>
         <div className="ml-auto flex items-center gap-3">
           <PlanBadge />
