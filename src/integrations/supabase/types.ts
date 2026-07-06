@@ -563,6 +563,54 @@ export type Database = {
           },
         ]
       }
+      convites_cortesia: {
+        Row: {
+          created_at: string
+          criado_por: string | null
+          deleted_at: string | null
+          dias: number | null
+          email: string
+          expira_em: string
+          id: string
+          plano_codigo: string
+          status: Database["public"]["Enums"]["convite_status"]
+          token: string
+          updated_at: string
+          usado_em: string | null
+          usado_por: string | null
+        }
+        Insert: {
+          created_at?: string
+          criado_por?: string | null
+          deleted_at?: string | null
+          dias?: number | null
+          email: string
+          expira_em?: string
+          id?: string
+          plano_codigo?: string
+          status?: Database["public"]["Enums"]["convite_status"]
+          token?: string
+          updated_at?: string
+          usado_em?: string | null
+          usado_por?: string | null
+        }
+        Update: {
+          created_at?: string
+          criado_por?: string | null
+          deleted_at?: string | null
+          dias?: number | null
+          email?: string
+          expira_em?: string
+          id?: string
+          plano_codigo?: string
+          status?: Database["public"]["Enums"]["convite_status"]
+          token?: string
+          updated_at?: string
+          usado_em?: string | null
+          usado_por?: string | null
+        }
+        Relationships: []
+      }
       cotacoes_commodities: {
         Row: {
           atualizado_em: string
@@ -1241,12 +1289,41 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _aplicar_cortesia: {
+        Args: { p_dias: number; p_plano_codigo: string; p_usuario: string }
+        Returns: undefined
+      }
       admin_acessos_set_status: {
         Args: {
           p_status: Database["public"]["Enums"]["status_perfil"]
           p_usuario: string
         }
         Returns: undefined
+      }
+      admin_cancelar_convite: { Args: { p_id: string }; Returns: undefined }
+      admin_criar_convite: {
+        Args: { p_dias?: number; p_email: string; p_plano?: string }
+        Returns: {
+          created_at: string
+          criado_por: string | null
+          deleted_at: string | null
+          dias: number | null
+          email: string
+          expira_em: string
+          id: string
+          plano_codigo: string
+          status: Database["public"]["Enums"]["convite_status"]
+          token: string
+          updated_at: string
+          usado_em: string | null
+          usado_por: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "convites_cortesia"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       admin_delete_user: { Args: { p_usuario: string }; Returns: undefined }
       admin_grant_admin: {
@@ -1278,6 +1355,30 @@ export type Database = {
           plano_codigo: string
           usuario_id: string
         }[]
+      }
+      admin_listar_convites: {
+        Args: never
+        Returns: {
+          created_at: string
+          criado_por: string | null
+          deleted_at: string | null
+          dias: number | null
+          email: string
+          expira_em: string
+          id: string
+          plano_codigo: string
+          status: Database["public"]["Enums"]["convite_status"]
+          token: string
+          updated_at: string
+          usado_em: string | null
+          usado_por: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "convites_cortesia"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       admin_moderar_anuncio: {
         Args: { p_acao: string; p_anuncio_id: string; p_motivo: string }
@@ -1377,6 +1478,7 @@ export type Database = {
     Enums: {
       assinatura_status: "trial" | "ativa" | "cancelada" | "expirada"
       categoria_agro: "fruta" | "grao" | "legumes" | "vegetal"
+      convite_status: "pendente" | "usado" | "cancelado" | "expirado"
       idioma_app: "pt-BR" | "en" | "es"
       modalidade_entrega: "retirada" | "entrega" | "ambos"
       moeda_app: "BRL" | "USD" | "EUR"
@@ -1523,6 +1625,7 @@ export const Constants = {
     Enums: {
       assinatura_status: ["trial", "ativa", "cancelada", "expirada"],
       categoria_agro: ["fruta", "grao", "legumes", "vegetal"],
+      convite_status: ["pendente", "usado", "cancelado", "expirado"],
       idioma_app: ["pt-BR", "en", "es"],
       modalidade_entrega: ["retirada", "entrega", "ambos"],
       moeda_app: ["BRL", "USD", "EUR"],
