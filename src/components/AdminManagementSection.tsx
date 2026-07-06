@@ -287,35 +287,30 @@ export function AdminManagementSection() {
         </div>
 
         {candidates.length > 0 && (
-          <div className="mt-3 overflow-x-auto rounded-xl border border-border/50">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3">{t("adminAccess.user")}</th>
-                  <th className="px-4 py-3">{t("adminAccess.email")}</th>
-                  <th className="px-4 py-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {candidates.map((c) => (
-                  <tr key={c.id} className="border-t border-border/40">
-                    <td className="px-4 py-3">{c.nome_completo ?? "—"}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{c.email ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end">
-                        <Button size="sm" onClick={() => openGrant(c)}>
-                          <UserPlus className="mr-1 h-4 w-4" />
-                          {t("adminAccess.grantAdmin")}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {candidates.map((c) => (
+              <div
+                key={c.id}
+                className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">
+                    {c.nome_completo ?? "—"}
+                  </p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {c.email ?? "—"}
+                  </p>
+                </div>
+                <Button size="sm" className="mt-auto w-full" onClick={() => openGrant(c)}>
+                  <UserPlus className="mr-1 h-4 w-4" />
+                  {t("adminAccess.grantAdmin")}
+                </Button>
+              </div>
+            ))}
           </div>
         )}
       </div>
+
 
       {/* Dialog: grant/edit/revoke */}
       <AlertDialog open={mode !== null} onOpenChange={(o) => !o && close()}>
