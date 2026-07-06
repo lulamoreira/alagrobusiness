@@ -220,7 +220,7 @@ export function BusinessDashboard() {
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5">
         <KpiCard label={t("dashboard.business.productsListed")} value={nf.format(k.listedCount)} icon={Package} />
         <KpiCard
           label={t("dashboard.business.volumeListed")}
@@ -233,16 +233,19 @@ export function BusinessDashboard() {
           value={nf.format(k.negotiatingCount)}
           icon={MessageCircle}
         />
-        <KpiCard
-          label={t("dashboard.business.revenue")}
-          value={revenue}
-          fullValue={revenueFull}
-          icon={Wallet}
-          accent
-          hint={pendingHint}
-          fullHint={pendingHintFull}
-        />
+        <div className="sm:col-span-2 md:col-span-4 xl:col-span-1">
+          <KpiCard
+            label={t("dashboard.business.revenue")}
+            value={revenue}
+            fullValue={revenueFull}
+            icon={Wallet}
+            accent
+            hint={pendingHint}
+            fullHint={pendingHintFull}
+          />
+        </div>
       </div>
+
 
       <UpcomingEventsMini />
     </section>
