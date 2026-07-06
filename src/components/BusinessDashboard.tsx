@@ -64,7 +64,7 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint, 
 
   if (to) {
     return (
-      <Link to={to as string} className={className}>
+      <Link to={to as never} className={className}>
         {content}
       </Link>
     );
