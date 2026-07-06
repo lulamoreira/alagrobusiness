@@ -2,7 +2,19 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { Loader2, Search, ShieldCheck, Gift, X, Ban } from "lucide-react";
+import {
+  Loader2,
+  Search,
+  ShieldCheck,
+  Gift,
+  X,
+  Ban,
+  Pencil,
+  Trash2,
+  Lock,
+  Unlock,
+  Check,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -25,6 +37,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { AdminManagementSection } from "@/components/AdminManagementSection";
 
 export const Route = createFileRoute("/_authenticated/admin/acessos")({
@@ -40,6 +60,8 @@ interface UserRow {
   status: string | null;
   origem: string | null;
   fim: string | null;
+  is_super_admin?: boolean;
+  telefone?: string | null;
 }
 
 interface CortesiaRow {
@@ -58,7 +80,7 @@ interface PlanoOpt {
 
 function AdminAcessosPage() {
   const { t, i18n } = useTranslation();
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
@@ -69,11 +91,18 @@ function AdminAcessosPage() {
 
   const [grantOpen, setGrantOpen] = useState(false);
   const [revokeOpen, setRevokeOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [blockOpen, setBlockOpen] = useState(false);
   const [target, setTarget] = useState<UserRow | null>(null);
   const [grantPlano, setGrantPlano] = useState("pro");
   const [grantMode, setGrantMode] = useState<"indefinite" | "days">("indefinite");
   const [grantDays, setGrantDays] = useState<string>("30");
   const [busy, setBusy] = useState(false);
+
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editPhone, setEditPhone] = useState("");
 
   useEffect(() => {
     if (profile && profile.tipo_perfil !== "admin") {
@@ -110,12 +139,36 @@ function AdminAcessosPage() {
     const { data, error } = await supabase.rpc("admin_search_users" as never, {
       p_query: query,
     } as never);
-    setSearching(false);
     if (error) {
+      setSearching(false);
       toast.error(error.message);
       return;
     }
-    setResults((data ?? []) as UserRow[]);
+    const rows = (data ?? []) as UserRow[];
+    // enrich with is_super_admin + telefone (admin can read profiles via RLS)
+    if (rows.length > 0) {
+      const ids = rows.map((r) => r.id);
+      const { data: extra } = await supabase
+        .from("profiles")
+        .select("id, is_super_admin, telefone")
+        .in("id", ids);
+      const map = new Map<string, { is_super_admin: boolean; telefone: string | null }>();
+      (extra ?? []).forEach((p) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const row: any = p;
+        map.set(row.id, {
+          is_super_admin: !!row.is_super_admin,
+          telefone: row.telefone ?? null,
+        });
+      });
+      rows.forEach((r) => {
+        const m = map.get(r.id);
+        r.is_super_admin = m?.is_super_admin ?? false;
+        r.telefone = m?.telefone ?? null;
+      });
+    }
+    setSearching(false);
+    setResults(rows);
   };
 
   const doGrant = async () => {
@@ -155,6 +208,70 @@ function AdminAcessosPage() {
     await Promise.all([runSearch(), loadCortesias()]);
   };
 
+  const openEdit = (r: UserRow) => {
+    setTarget(r);
+    setEditName(r.nome_completo ?? "");
+    setEditEmail(r.email ?? "");
+    setEditPhone(r.telefone ?? "");
+    setEditOpen(true);
+  };
+
+  const doEdit = async () => {
+    if (!target) return;
+    setBusy(true);
+    const { error } = await supabase.rpc("admin_update_user" as never, {
+      p_usuario: target.id,
+      p_nome: editName,
+      p_email: editEmail,
+      p_telefone: editPhone,
+    } as never);
+    setBusy(false);
+    if (error) {
+      toast.error(t("adminAccess.errorSave", { detail: error.message }));
+      return;
+    }
+    toast.success(t("adminAccess.saved"));
+    setEditOpen(false);
+    setTarget(null);
+    await runSearch();
+  };
+
+  const doDelete = async () => {
+    if (!target) return;
+    setBusy(true);
+    const { error } = await supabase.rpc("admin_delete_user" as never, {
+      p_usuario: target.id,
+    } as never);
+    setBusy(false);
+    if (error) {
+      toast.error(t("adminAccess.errorDelete", { detail: error.message }));
+      return;
+    }
+    toast.success(t("adminAccess.deleted"));
+    setDeleteOpen(false);
+    setTarget(null);
+    await Promise.all([runSearch(), loadCortesias()]);
+  };
+
+  const setStatus = async (r: UserRow, newStatus: "ativo" | "bloqueado" | "aguardando_aprovacao") => {
+    setBusy(true);
+    const { error } = await supabase.rpc("admin_acessos_set_status" as never, {
+      p_usuario: r.id,
+      p_status: newStatus,
+    } as never);
+    setBusy(false);
+    if (error) {
+      toast.error(t("adminAccess.errorStatus", { detail: error.message }));
+      return;
+    }
+    if (newStatus === "bloqueado") toast.success(t("adminAccess.blocked"));
+    else if (newStatus === "ativo") toast.success(t("adminAccess.unblocked"));
+    else toast.success(t("adminAccess.saved"));
+    setBlockOpen(false);
+    setTarget(null);
+    await runSearch();
+  };
+
   const planoNome = (codigo: string | null) => {
     if (!codigo) return t("adminAccess.noPlan");
     const p = planos.find((x) => x.codigo === codigo);
@@ -181,8 +298,10 @@ function AdminAcessosPage() {
   };
 
   const canRevoke = (r: UserRow) => r.status === "ativa" && r.origem === "admin_cortesia";
+  const isProtected = (r: UserRow) => !!r.is_super_admin;
+  const isSelf = (r: UserRow) => r.id === user?.id;
 
-  const grantTitle = useMemo(() => t("adminAccess.grantTitle"), [i18n.language]);
+  const grantTitle = useMemo(() => t("adminAccess.grantTitle"), [i18n.language, t]);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-8 p-4 md:p-8">
@@ -234,51 +353,114 @@ function AdminAcessosPage() {
                   <th className="px-4 py-3">{t("adminAccess.status")}</th>
                   <th className="px-4 py-3">{t("adminAccess.origin")}</th>
                   <th className="px-4 py-3">{t("adminAccess.expiration")}</th>
-                  <th className="px-4 py-3" />
+                  <th className="px-4 py-3">{t("adminAccess.actions")}</th>
                 </tr>
               </thead>
               <tbody>
-                {results.map((r) => (
-                  <tr key={r.id} className="border-t border-border/40">
-                    <td className="px-4 py-3">{r.nome_completo ?? "—"}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{r.email ?? "—"}</td>
-                    <td className="px-4 py-3">{planoNome(r.plano_codigo)}</td>
-                    <td className="px-4 py-3">{statusLabel(r.status)}</td>
-                    <td className="px-4 py-3">{originLabel(r.origem)}</td>
-                    <td className="px-4 py-3">{fmtDate(r.fim)}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          onClick={() => {
-                            setTarget(r);
-                            setGrantPlano("pro");
-                            setGrantMode("indefinite");
-                            setGrantDays("30");
-                            setGrantOpen(true);
-                          }}
-                        >
-                          <Gift className="mr-1 h-4 w-4" />
-                          {t("adminAccess.grant")}
-                        </Button>
-                        {canRevoke(r) && (
+                {results.map((r) => {
+                  const protectedRow = isProtected(r);
+                  const self = isSelf(r);
+                  const blocked = r.status === "bloqueado";
+                  // profile-level status comes from profiles, not from assinaturas.
+                  // We display status label (still assinatura), but block/unblock uses profile status.
+                  // We need a second field for profile status — reuse from separate load.
+                  return (
+                    <tr key={r.id} className="border-t border-border/40">
+                      <td className="px-4 py-3">
+                        {r.nome_completo ?? "—"}
+                        {protectedRow && (
+                          <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+                            {t("adminAccess.superAdminBadge")}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">{r.email ?? "—"}</td>
+                      <td className="px-4 py-3">{planoNome(r.plano_codigo)}</td>
+                      <td className="px-4 py-3">{statusLabel(r.status)}</td>
+                      <td className="px-4 py-3">{originLabel(r.origem)}</td>
+                      <td className="px-4 py-3">{fmtDate(r.fim)}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-wrap justify-end gap-2">
                           <Button
                             size="sm"
-                            variant="destructive"
+                            variant="secondary"
                             onClick={() => {
                               setTarget(r);
-                              setRevokeOpen(true);
+                              setGrantPlano("pro");
+                              setGrantMode("indefinite");
+                              setGrantDays("30");
+                              setGrantOpen(true);
                             }}
                           >
-                            <Ban className="mr-1 h-4 w-4" />
-                            {t("adminAccess.revoke")}
+                            <Gift className="mr-1 h-4 w-4" />
+                            {t("adminAccess.grant")}
                           </Button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          {canRevoke(r) && (
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => {
+                                setTarget(r);
+                                setRevokeOpen(true);
+                              }}
+                            >
+                              <Ban className="mr-1 h-4 w-4" />
+                              {t("adminAccess.revoke")}
+                            </Button>
+                          )}
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => openEdit(r)}
+                            disabled={protectedRow && !profile?.is_super_admin}
+                          >
+                            <Pencil className="mr-1 h-4 w-4" />
+                            {t("adminAccess.edit")}
+                          </Button>
+                          {!protectedRow && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                if (blocked) {
+                                  setStatus(r, "ativo");
+                                } else {
+                                  setTarget(r);
+                                  setBlockOpen(true);
+                                }
+                              }}
+                            >
+                              {blocked ? (
+                                <>
+                                  <Unlock className="mr-1 h-4 w-4" />
+                                  {t("adminAccess.unblock")}
+                                </>
+                              ) : (
+                                <>
+                                  <Lock className="mr-1 h-4 w-4" />
+                                  {t("adminAccess.block")}
+                                </>
+                              )}
+                            </Button>
+                          )}
+                          {!protectedRow && !self && (
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => {
+                                setTarget(r);
+                                setDeleteOpen(true);
+                              }}
+                            >
+                              <Trash2 className="mr-1 h-4 w-4" />
+                              {t("adminAccess.delete")}
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -440,6 +622,116 @@ function AdminAcessosPage() {
                 <Ban className="mr-1 h-4 w-4" />
               )}
               {t("adminAccess.confirmRevoke")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Edit dialog */}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("adminAccess.editUserTitle")}</DialogTitle>
+            <DialogDescription>
+              {target?.nome_completo ?? target?.email ?? ""}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-name">{t("adminAccess.fieldName")}</Label>
+              <Input
+                id="edit-name"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-email">{t("adminAccess.fieldEmail")}</Label>
+              <Input
+                id="edit-email"
+                type="email"
+                value={editEmail}
+                onChange={(e) => setEditEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-phone">{t("adminAccess.fieldPhone")}</Label>
+              <Input
+                id="edit-phone"
+                value={editPhone}
+                onChange={(e) => setEditPhone(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" disabled={busy} onClick={() => setEditOpen(false)}>
+              <X className="mr-1 h-4 w-4" />
+              {t("adminAccess.cancel")}
+            </Button>
+            <Button disabled={busy} onClick={doEdit}>
+              {busy ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Check className="mr-1 h-4 w-4" />
+              )}
+              {t("common.save")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Block dialog */}
+      <AlertDialog open={blockOpen} onOpenChange={setBlockOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("adminAccess.confirmBlockTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("adminAccess.confirmBlockDesc")}
+              <br />
+              <span className="mt-2 block text-foreground">
+                {target?.nome_completo ?? target?.email ?? ""}
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>{t("adminAccess.cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={busy}
+              onClick={() => target && setStatus(target, "bloqueado")}
+            >
+              {busy ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Lock className="mr-1 h-4 w-4" />
+              )}
+              {t("adminAccess.block")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete dialog */}
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("adminAccess.confirmDeleteTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("adminAccess.confirmDeleteDesc")}
+              <br />
+              <span className="mt-2 block text-foreground">
+                {target?.nome_completo ?? target?.email ?? ""}
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>{t("adminAccess.cancel")}</AlertDialogCancel>
+            <AlertDialogAction disabled={busy} onClick={doDelete}>
+              {busy ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Trash2 className="mr-1 h-4 w-4" />
+              )}
+              {t("adminAccess.confirmDelete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

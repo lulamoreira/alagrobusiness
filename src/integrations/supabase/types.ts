@@ -1241,6 +1241,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_acessos_set_status: {
+        Args: {
+          p_status: Database["public"]["Enums"]["status_perfil"]
+          p_usuario: string
+        }
+        Returns: undefined
+      }
+      admin_delete_user: { Args: { p_usuario: string }; Returns: undefined }
       admin_grant_admin: {
         Args: { p_permissoes: Json; p_usuario: string }
         Returns: undefined
@@ -1299,6 +1307,15 @@ export type Database = {
       }
       admin_update_admin_perms: {
         Args: { p_permissoes: Json; p_usuario: string }
+        Returns: undefined
+      }
+      admin_update_user: {
+        Args: {
+          p_email: string
+          p_nome: string
+          p_telefone: string
+          p_usuario: string
+        }
         Returns: undefined
       }
       complete_profile: {
