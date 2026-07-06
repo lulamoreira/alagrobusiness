@@ -18,11 +18,12 @@ interface KpiCardProps {
   hint?: string;
   fullValue?: string;
   fullHint?: string;
+  to?: string;
 }
 
-function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }: KpiCardProps) {
-  return (
-    <div className="group min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
+function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint, to }: KpiCardProps) {
+  const content = (
+    <>
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {label}
@@ -55,9 +56,22 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }
           {hint}
         </div>
       ) : null}
-    </div>
+    </>
   );
+
+  const className =
+    "group block min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60";
+
+  if (to) {
+    return (
+      <Link to={to as never} className={className}>
+        {content}
+      </Link>
+    );
+  }
+  return <div className={className}>{content}</div>;
 }
+
 
 
 
@@ -221,17 +235,29 @@ export function BusinessDashboard() {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5">
-        <KpiCard label={t("dashboard.business.productsListed")} value={nf.format(k.listedCount)} icon={Package} />
+        <KpiCard
+          label={t("dashboard.business.productsListed")}
+          value={nf.format(k.listedCount)}
+          icon={Package}
+          to="/vender"
+        />
         <KpiCard
           label={t("dashboard.business.volumeListed")}
           value={formatVolume(k.volumeKg, t, i18n.language)}
           icon={Boxes}
+          to="/vender"
         />
-        <KpiCard label={t("dashboard.business.sold")} value={nf.format(k.soldCount)} icon={CheckCircle2} />
+        <KpiCard
+          label={t("dashboard.business.sold")}
+          value={nf.format(k.soldCount)}
+          icon={CheckCircle2}
+          to="/financeiro"
+        />
         <KpiCard
           label={t("dashboard.business.inNegotiation")}
           value={nf.format(k.negotiatingCount)}
           icon={MessageCircle}
+          to="/negociacoes"
         />
         <div className="sm:col-span-2 md:col-span-4 xl:col-span-1">
           <KpiCard
@@ -242,9 +268,11 @@ export function BusinessDashboard() {
             accent
             hint={pendingHint}
             fullHint={pendingHintFull}
+            to="/financeiro"
           />
         </div>
       </div>
+
 
 
       <UpcomingEventsMini />
