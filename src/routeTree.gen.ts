@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CompletarCadastroRouteImport } from './routes/completar-cadastro'
 import { Route as CadastroRouteImport } from './routes/cadastro'
@@ -29,6 +30,8 @@ import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authen
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
 import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated.agenda'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as AuthenticatedVenderIndexRouteImport } from './routes/_authenticated.vender.index'
 import { Route as AuthenticatedMensagensIndexRouteImport } from './routes/_authenticated.mensagens.index'
 import { Route as AuthenticatedCursosIndexRouteImport } from './routes/_authenticated.cursos.index'
@@ -43,8 +46,14 @@ import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated.admin.acessos'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
 
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -146,6 +155,18 @@ const AuthenticatedAgendaRoute = AuthenticatedAgendaRouteImport.update({
   path: '/agenda',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedVenderIndexRoute =
   AuthenticatedVenderIndexRouteImport.update({
     id: '/',
@@ -227,6 +248,12 @@ const AuthenticatedAdminAcessosRoute =
     path: '/admin/acessos',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedVenderEditarIdRoute =
   AuthenticatedVenderEditarIdRouteImport.update({
     id: '/editar/$id',
@@ -241,6 +268,9 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
@@ -254,6 +284,7 @@ export interface FileRoutesByFullPath {
   '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -277,6 +308,9 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
   '/comprar': typeof AuthenticatedComprarRoute
@@ -288,6 +322,7 @@ export interface FileRoutesByTo {
   '/painel': typeof AuthenticatedPainelRoute
   '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -313,6 +348,9 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
@@ -326,6 +364,7 @@ export interface FileRoutesById {
   '/_authenticated/planos': typeof AuthenticatedPlanosRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -351,6 +390,9 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/mcp'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
     | '/comprar'
@@ -364,6 +406,7 @@ export interface FileRouteTypes {
     | '/planos'
     | '/relatorios'
     | '/vender'
+    | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -387,6 +430,9 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/mcp'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
     | '/comprar'
@@ -398,6 +444,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/planos'
     | '/relatorios'
+    | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -422,6 +469,9 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/completar-cadastro'
     | '/login'
+    | '/mcp'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/agenda'
     | '/_authenticated/alertas'
     | '/_authenticated/comprar'
@@ -435,6 +485,7 @@ export interface FileRouteTypes {
     | '/_authenticated/planos'
     | '/_authenticated/relatorios'
     | '/_authenticated/vender'
+    | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/admin/cursos'
@@ -460,10 +511,21 @@ export interface RootRouteChildren {
   CadastroRoute: typeof CadastroRoute
   CompletarCadastroRoute: typeof CompletarCadastroRoute
   LoginRoute: typeof LoginRoute
+  McpRoute: typeof McpRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -604,6 +666,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAgendaRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/vender/': {
       id: '/_authenticated/vender/'
       path: '/'
@@ -701,6 +777,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/acessos'
       preLoaderRoute: typeof AuthenticatedAdminAcessosRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/vender/editar/$id': {
       id: '/_authenticated/vender/editar/$id'
@@ -808,6 +891,11 @@ const rootRouteChildren: RootRouteChildren = {
   CadastroRoute: CadastroRoute,
   CompletarCadastroRoute: CompletarCadastroRoute,
   LoginRoute: LoginRoute,
+  McpRoute: McpRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
