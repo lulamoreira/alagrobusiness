@@ -224,9 +224,10 @@ function PainelPage() {
       </section>
 
 
-      <section className="grid gap-4 md:grid-cols-2">
+      <section>
         <WeatherCard />
       </section>
+
 
       <section>
         <h2 className="mb-3 font-display text-lg font-bold">{t("dashboard.news")}</h2>
