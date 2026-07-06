@@ -3,11 +3,19 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Handshake, MessageSquare, CheckCircle2, ChevronDown } from "lucide-react";
+import { Handshake, MessageSquare, CheckCircle2, ChevronDown, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { cn } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/negociacoes")({
   component: () => (<ProGate featureKey="plan.feature.negotiations"><NegociacoesPage /></ProGate>),
