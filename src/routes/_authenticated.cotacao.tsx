@@ -257,78 +257,6 @@ function CotacaoPage() {
         </div>
       </section>
 
-      {/* Commodities */}
-      <section className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-display text-lg font-bold">{t("quote.commoditiesTitle")}</h2>
-          <RangeToggle value={commodityRange} onChange={setCommodityRange} />
-        </div>
-
-        {visibleCommodities.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-border bg-card/30 p-6 text-center text-sm text-muted-foreground">
-            {t("quote.emptyWithFilters")}
-          </p>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {visibleCommodities.map((c) => {
-              const history = commodityGroups.get(c.codigo) ?? [];
-              const ranged = filterRange(history, commodityRange);
-              const latest = history[history.length - 1];
-              const unidade = unidades?.find((u) => u.id === latest?.unidade_id);
-              const variation = computeVariation(history.map((h) => h.valor));
-
-              return (
-                <article
-                  key={c.codigo}
-                  className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5"
-                >
-                  <header className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <h3 className="truncate font-display text-base font-bold text-foreground">
-                        {nomeFor(c, i18n.language)}
-                      </h3>
-                      {unidade && (
-                        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                          {t(`units.${unidade.nome_chave}`)}
-                        </p>
-                      )}
-                    </div>
-                    {latest?.fonte && (
-                      <SourceBadge fonte={latest.fonte} fonteUrl={latest.fonte_url ?? undefined} />
-                    )}
-                  </header>
-
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-display text-2xl font-bold text-primary tabular-nums">
-                      {formatValueInUserCurrency(latest.valor)}
-                    </span>
-                    <VariationBadge
-                      variation={variation}
-                      locale={i18n.language}
-                      formatDelta={formatValueInUserCurrency}
-                    />
-                  </div>
-
-                  <Sparkline
-                    points={ranged.map((r) => ({ data: r.data, value: r.valor }))}
-                    formatValue={formatValueInUserCurrency}
-                  />
-
-                  <p className="text-[10px] text-muted-foreground">
-                    {t("quote.lastUpdate")}{" "}
-                    {new Date(latest.data).toLocaleDateString(i18n.language, {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
       {/* Dollar */}
       {dolarTiposAvailable.length > 0 && (
         <section className="space-y-4">
@@ -417,6 +345,79 @@ function CotacaoPage() {
           </div>
         </section>
       )}
+
+      {/* Commodities */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-display text-lg font-bold">{t("quote.commoditiesTitle")}</h2>
+          <RangeToggle value={commodityRange} onChange={setCommodityRange} />
+        </div>
+
+        {visibleCommodities.length === 0 ? (
+          <p className="rounded-2xl border border-dashed border-border bg-card/30 p-6 text-center text-sm text-muted-foreground">
+            {t("quote.emptyWithFilters")}
+          </p>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {visibleCommodities.map((c) => {
+              const history = commodityGroups.get(c.codigo) ?? [];
+              const ranged = filterRange(history, commodityRange);
+              const latest = history[history.length - 1];
+              const unidade = unidades?.find((u) => u.id === latest?.unidade_id);
+              const variation = computeVariation(history.map((h) => h.valor));
+
+              return (
+                <article
+                  key={c.codigo}
+                  className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5"
+                >
+                  <header className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <h3 className="truncate font-display text-base font-bold text-foreground">
+                        {nomeFor(c, i18n.language)}
+                      </h3>
+                      {unidade && (
+                        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                          {t(`units.${unidade.nome_chave}`)}
+                        </p>
+                      )}
+                    </div>
+                    {latest?.fonte && (
+                      <SourceBadge fonte={latest.fonte} fonteUrl={latest.fonte_url ?? undefined} />
+                    )}
+                  </header>
+
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-bold text-primary tabular-nums">
+                      {formatValueInUserCurrency(latest.valor)}
+                    </span>
+                    <VariationBadge
+                      variation={variation}
+                      locale={i18n.language}
+                      formatDelta={formatValueInUserCurrency}
+                    />
+                  </div>
+
+                  <Sparkline
+                    points={ranged.map((r) => ({ data: r.data, value: r.valor }))}
+                    formatValue={formatValueInUserCurrency}
+                  />
+
+                  <p className="text-[10px] text-muted-foreground">
+                    {t("quote.lastUpdate")}{" "}
+                    {new Date(latest.data).toLocaleDateString(i18n.language, {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
     </div>
   );
 }
