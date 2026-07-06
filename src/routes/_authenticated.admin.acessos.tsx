@@ -729,6 +729,8 @@ function AdminAcessosPage() {
         )}
       </section>
 
+      <InviteCortesiaSection />
+
       <AdminManagementSection />
 
       {/* Grant dialog */}
