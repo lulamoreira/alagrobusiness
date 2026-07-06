@@ -18,11 +18,12 @@ interface KpiCardProps {
   hint?: string;
   fullValue?: string;
   fullHint?: string;
+  to?: string;
 }
 
-function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }: KpiCardProps) {
-  return (
-    <div className="group min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40">
+function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint, to }: KpiCardProps) {
+  const content = (
+    <>
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {label}
@@ -55,9 +56,22 @@ function KpiCard({ label, value, icon: Icon, accent, hint, fullValue, fullHint }
           {hint}
         </div>
       ) : null}
-    </div>
+    </>
   );
+
+  const className =
+    "group block min-w-0 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60";
+
+  if (to) {
+    return (
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    );
+  }
+  return <div className={className}>{content}</div>;
 }
+
 
 
 
