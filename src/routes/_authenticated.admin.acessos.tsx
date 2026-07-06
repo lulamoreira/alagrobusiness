@@ -773,6 +773,33 @@ function AdminAcessosPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Hard delete dialog */}
+      <AlertDialog open={hardDeleteOpen} onOpenChange={setHardDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("adminAccess.confirmHardDeleteTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("adminAccess.confirmHardDeleteDesc")}
+              <br />
+              <span className="mt-2 block text-foreground">
+                {target?.nome_completo ?? target?.email ?? ""}
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>{t("adminAccess.cancel")}</AlertDialogCancel>
+            <AlertDialogAction disabled={busy} onClick={doHardDelete}>
+              {busy ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <ShieldAlert className="mr-1 h-4 w-4" />
+              )}
+              {t("adminAccess.confirmHardDelete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
