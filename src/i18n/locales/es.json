@@ -147,7 +147,13 @@
     "comercial": "Comercial",
     "turismo": "Turismo",
     "paralelo": "Paralelo",
-    "saved": "Preferencias guardadas"
+    "saved": "Preferencias guardadas",
+    "theme": "Tema",
+    "themes": {
+      "ecologico": "Ecológico",
+      "terroso": "Terroso",
+      "chuva": "Lluvia"
+    }
   },
   "placeholders": {
     "soon": "Próximamente",
@@ -623,7 +629,6 @@
     "inviteErrorCreate": "Error al crear invitación: {{detail}}",
     "inviteInvalidEmail": "Ingresa un correo válido."
   },
-
   "weather": {
     "title": "Clima",
     "now": "Ahora",
@@ -1023,8 +1028,17 @@
       "data": "Fecha",
       "acoes": "Acciones"
     },
-    "status": { "ativo": "Activo", "pausado": "Pausado", "vendido": "Vendido" },
-    "categoria": { "fruta": "Fruta", "grao": "Grano", "legumes": "Legumbres", "vegetal": "Vegetal" },
+    "status": {
+      "ativo": "Activo",
+      "pausado": "Pausado",
+      "vendido": "Vendido"
+    },
+    "categoria": {
+      "fruta": "Fruta",
+      "grao": "Grano",
+      "legumes": "Legumbres",
+      "vegetal": "Vegetal"
+    },
     "action": {
       "ver": "Ver",
       "pausar": "Pausar",

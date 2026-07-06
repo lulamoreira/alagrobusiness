@@ -147,7 +147,13 @@
     "comercial": "Commercial",
     "turismo": "Tourism",
     "paralelo": "Parallel",
-    "saved": "Preferences saved"
+    "saved": "Preferences saved",
+    "theme": "Theme",
+    "themes": {
+      "ecologico": "Ecological",
+      "terroso": "Earthy",
+      "chuva": "Rain"
+    }
   },
   "placeholders": {
     "soon": "Coming soon",
@@ -623,7 +629,6 @@
     "inviteErrorCreate": "Failed to create invite: {{detail}}",
     "inviteInvalidEmail": "Enter a valid email."
   },
-
   "weather": {
     "title": "Weather",
     "now": "Now",
@@ -1023,8 +1028,17 @@
       "data": "Date",
       "acoes": "Actions"
     },
-    "status": { "ativo": "Active", "pausado": "Paused", "vendido": "Sold" },
-    "categoria": { "fruta": "Fruit", "grao": "Grain", "legumes": "Legumes", "vegetal": "Vegetable" },
+    "status": {
+      "ativo": "Active",
+      "pausado": "Paused",
+      "vendido": "Sold"
+    },
+    "categoria": {
+      "fruta": "Fruit",
+      "grao": "Grain",
+      "legumes": "Legumes",
+      "vegetal": "Vegetable"
+    },
     "action": {
       "ver": "View",
       "pausar": "Pause",
