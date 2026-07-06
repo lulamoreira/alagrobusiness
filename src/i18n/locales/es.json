@@ -359,6 +359,13 @@
     "moveTo": "Mover a",
     "moveError": "No se pudo mover la negociación.",
     "buyer": "Comprador",
+    "details": "Detalles",
+    "viewDetails": "Ver detalles",
+    "listing": "Anuncio",
+    "price": "Precio",
+    "quantity": "Cantidad",
+    "lastActivity": "Última actividad",
+    "close": "Cerrar",
     "status": {
       "iniciado": "Iniciada",
       "em_negociacao": "En negociación",
