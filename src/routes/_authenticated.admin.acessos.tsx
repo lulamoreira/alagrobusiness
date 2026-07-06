@@ -14,7 +14,10 @@ import {
   Lock,
   Unlock,
   Check,
+  ShieldAlert,
 } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { adminHardDeleteUser } from "@/lib/adminHardDelete.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -93,6 +96,7 @@ function AdminAcessosPage() {
   const [revokeOpen, setRevokeOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [hardDeleteOpen, setHardDeleteOpen] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
   const [target, setTarget] = useState<UserRow | null>(null);
   const [grantPlano, setGrantPlano] = useState("pro");
@@ -252,6 +256,26 @@ function AdminAcessosPage() {
     setTarget(null);
     await Promise.all([runSearch(), loadCortesias()]);
   };
+
+  const hardDeleteFn = useServerFn(adminHardDeleteUser);
+  const doHardDelete = async () => {
+    if (!target) return;
+    setBusy(true);
+    try {
+      await hardDeleteFn({ data: { userId: target.id } });
+      toast.success(t("adminAccess.hardDeleted"));
+      setHardDeleteOpen(false);
+      setTarget(null);
+      await Promise.all([runSearch(), loadCortesias()]);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err);
+      toast.error(t("adminAccess.errorHardDelete", { detail }));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+
 
   const setStatus = async (r: UserRow, newStatus: "ativo" | "bloqueado" | "aguardando_aprovacao") => {
     setBusy(true);
@@ -454,6 +478,19 @@ function AdminAcessosPage() {
                             >
                               <Trash2 className="mr-1 h-4 w-4" />
                               {t("adminAccess.delete")}
+                            </Button>
+                          )}
+                          {!protectedRow && !self && (
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => {
+                                setTarget(r);
+                                setHardDeleteOpen(true);
+                              }}
+                            >
+                              <ShieldAlert className="mr-1 h-4 w-4" />
+                              {t("adminAccess.deleteHard")}
                             </Button>
                           )}
                         </div>
@@ -732,6 +769,33 @@ function AdminAcessosPage() {
                 <Trash2 className="mr-1 h-4 w-4" />
               )}
               {t("adminAccess.confirmDelete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Hard delete dialog */}
+      <AlertDialog open={hardDeleteOpen} onOpenChange={setHardDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("adminAccess.confirmHardDeleteTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("adminAccess.confirmHardDeleteDesc")}
+              <br />
+              <span className="mt-2 block text-foreground">
+                {target?.nome_completo ?? target?.email ?? ""}
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>{t("adminAccess.cancel")}</AlertDialogCancel>
+            <AlertDialogAction disabled={busy} onClick={doHardDelete}>
+              {busy ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <ShieldAlert className="mr-1 h-4 w-4" />
+              )}
+              {t("adminAccess.confirmHardDelete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
