@@ -241,6 +241,7 @@ function PainelPage() {
           </p>
         )}
       </section>
+      </div>
     </div>
   );
 }
