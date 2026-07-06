@@ -404,7 +404,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <SheetContent side="right" className="w-80 overflow-y-auto bg-card p-0">
             <SheetHeader className="border-b border-border px-4 py-4">
               <SheetTitle>
-                <Logo size="sm" />
+                <Logo size="sm" to="/painel" />
               </SheetTitle>
             </SheetHeader>
             <div className="px-3 py-3">
