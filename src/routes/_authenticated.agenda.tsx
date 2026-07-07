@@ -355,13 +355,14 @@ function AgendaPage() {
               </button>
             </div>
 
-            <div className="mb-1 grid grid-cols-7 gap-1 text-center text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <div className="mb-1 grid grid-cols-7 gap-0.5 text-center text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:gap-1">
               {weekDays.map((d, i) => (
                 <div key={i}>{d}</div>
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
+
               {Array.from({ length: monthRange.startWeekday }).map((_, i) => (
                 <div key={`blank-${i}`} className="aspect-square" />
               ))}
