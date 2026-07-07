@@ -108,7 +108,7 @@ function CompleteProfilePage() {
     await refreshProfile();
     const status = data as string;
     if (status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao" });
-    else navigate({ to: "/" });
+    else navigate({ to: "/painel" });
   };
 
   if (loading || !user) {
