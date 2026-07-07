@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CompletarCadastroRouteImport } from './routes/completar-cadastro'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BloqueadoRouteImport } from './routes/bloqueado'
@@ -45,6 +46,7 @@ import { Route as AuthenticatedAdminModeracaoRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenticated.admin.gestao'
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
+import { Route as AuthenticatedAdminContatosRouteImport } from './routes/_authenticated.admin.contatos'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated.admin.acessos'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
@@ -57,6 +59,11 @@ const McpRoute = McpRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompletarCadastroRoute = CompletarCadastroRouteImport.update({
@@ -242,6 +249,12 @@ const AuthenticatedAdminCotacoesRoute =
     path: '/admin/cotacoes',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedAdminContatosRoute =
+  AuthenticatedAdminContatosRouteImport.update({
+    id: '/admin/contatos',
+    path: '/admin/contatos',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminAcessosRoute =
   AuthenticatedAdminAcessosRouteImport.update({
     id: '/admin/acessos',
@@ -267,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -286,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
@@ -307,6 +322,7 @@ export interface FileRoutesByTo {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -324,6 +340,7 @@ export interface FileRoutesByTo {
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
@@ -347,6 +364,7 @@ export interface FileRoutesById {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -366,6 +384,7 @@ export interface FileRoutesById {
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/_authenticated/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/_authenticated/admin/gestao': typeof AuthenticatedAdminGestaoRoute
@@ -389,6 +408,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/contato'
     | '/login'
     | '/mcp'
     | '/.mcp/list-tools'
@@ -408,6 +428,7 @@ export interface FileRouteTypes {
     | '/vender'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
+    | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
     | '/admin/gestao'
@@ -429,6 +450,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/contato'
     | '/login'
     | '/mcp'
     | '/.mcp/list-tools'
@@ -446,6 +468,7 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
+    | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
     | '/admin/gestao'
@@ -468,6 +491,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/contato'
     | '/login'
     | '/mcp'
     | '/.mcp/list-tools'
@@ -487,6 +511,7 @@ export interface FileRouteTypes {
     | '/_authenticated/vender'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/acessos'
+    | '/_authenticated/admin/contatos'
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/admin/cursos'
     | '/_authenticated/admin/gestao'
@@ -510,6 +535,7 @@ export interface RootRouteChildren {
   BloqueadoRoute: typeof BloqueadoRoute
   CadastroRoute: typeof CadastroRoute
   CompletarCadastroRoute: typeof CompletarCadastroRoute
+  ContatoRoute: typeof ContatoRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
@@ -531,6 +557,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/completar-cadastro': {
@@ -771,6 +804,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCotacoesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/contatos': {
+      id: '/_authenticated/admin/contatos'
+      path: '/admin/contatos'
+      fullPath: '/admin/contatos'
+      preLoaderRoute: typeof AuthenticatedAdminContatosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/admin/acessos': {
       id: '/_authenticated/admin/acessos'
       path: '/admin/acessos'
@@ -842,6 +882,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
+  AuthenticatedAdminContatosRoute: typeof AuthenticatedAdminContatosRoute
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
   AuthenticatedAdminGestaoRoute: typeof AuthenticatedAdminGestaoRoute
@@ -868,6 +909,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
+  AuthenticatedAdminContatosRoute: AuthenticatedAdminContatosRoute,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,
   AuthenticatedAdminGestaoRoute: AuthenticatedAdminGestaoRoute,
@@ -890,6 +932,7 @@ const rootRouteChildren: RootRouteChildren = {
   BloqueadoRoute: BloqueadoRoute,
   CadastroRoute: CadastroRoute,
   CompletarCadastroRoute: CompletarCadastroRoute,
+  ContatoRoute: ContatoRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
