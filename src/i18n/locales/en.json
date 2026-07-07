@@ -19,7 +19,12 @@
     "all": "All",
     "remove": "Remove",
     "confirm": "Confirm",
-    "by": "by"
+    "by": "by",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "edit": "Edit",
+    "delete": "Delete",
+    "error": "An error occurred"
   },
   "splash": {
     "title": "ALAGROBUSINESS",
