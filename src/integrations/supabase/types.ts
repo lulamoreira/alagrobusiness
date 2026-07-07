@@ -1266,6 +1266,60 @@ export type Database = {
         }
         Relationships: []
       }
+      vantagens: {
+        Row: {
+          ativo: boolean
+          categoria: string | null
+          created_at: string
+          cupom: string | null
+          deleted_at: string | null
+          desconto: string
+          descricao: string | null
+          id: string
+          link_url: string | null
+          ordem: number
+          parceiro_logo_url: string | null
+          parceiro_nome: string
+          titulo: string
+          updated_at: string
+          validade: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          categoria?: string | null
+          created_at?: string
+          cupom?: string | null
+          deleted_at?: string | null
+          desconto: string
+          descricao?: string | null
+          id?: string
+          link_url?: string | null
+          ordem?: number
+          parceiro_logo_url?: string | null
+          parceiro_nome: string
+          titulo: string
+          updated_at?: string
+          validade?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          categoria?: string | null
+          created_at?: string
+          cupom?: string | null
+          deleted_at?: string | null
+          desconto?: string
+          descricao?: string | null
+          id?: string
+          link_url?: string | null
+          ordem?: number
+          parceiro_logo_url?: string | null
+          parceiro_nome?: string
+          titulo?: string
+          updated_at?: string
+          validade?: string | null
+        }
+        Relationships: []
+      }
       vendas: {
         Row: {
           anuncio_id: string

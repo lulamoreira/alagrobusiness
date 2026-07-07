@@ -19,7 +19,12 @@
     "all": "Todos",
     "remove": "Quitar",
     "confirm": "Confirmar",
-    "by": "por"
+    "by": "por",
+    "saved": "Guardado",
+    "deleted": "Eliminado",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "error": "Ocurrió un error"
   },
   "splash": {
     "title": "ALAGROBUSINESS",
@@ -1303,6 +1308,51 @@
       "s4": { "title": "4. Derechos del titular", "body": "Puedes solicitar acceso, corrección, portabilidad o eliminación de tus datos en cualquier momento, conforme a la ley." },
       "s5": { "title": "5. Seguridad", "body": "Adoptamos medidas técnicas y organizativas para proteger los datos contra accesos no autorizados, pérdida o alteración indebida." },
       "s6": { "title": "6. Contacto", "body": "Si tienes dudas sobre esta política, contáctanos por el canal oficial de atención. (Borrador — reemplazar por el texto jurídico oficial.)" }
+    }
+  },
+  "clube": {
+    "navLabel": "Club",
+    "title": "Club de Ventajas",
+    "subtitle": "Beneficios exclusivos negociados para suscriptores Pro.",
+    "empty": "No hay ventajas disponibles ahora.",
+    "filterAll": "Todas",
+    "coupon": "Cupón",
+    "copied": "¡Cupón copiado!",
+    "copyError": "No se pudo copiar.",
+    "redeem": "Aprovechar",
+    "validUntil": "Válido hasta"
+  },
+  "adminVantagens": {
+    "navLabel": "Ventajas",
+    "title": "Club de Ventajas",
+    "subtitle": "Registra y administra las ventajas exclusivas del club.",
+    "new": "Nueva ventaja",
+    "editing": "Editando ventaja",
+    "creating": "Nueva ventaja",
+    "empty": "Ninguna ventaja registrada aún.",
+    "inactive": "Inactiva",
+    "confirmDelete": "¿Eliminar esta ventaja?",
+    "fields": {
+      "titulo": "Título",
+      "parceiro": "Socio",
+      "desconto": "Descuento",
+      "categoria": "Categoría",
+      "cupom": "Cupón",
+      "link": "Enlace para aprovechar",
+      "logo": "URL del logo del socio",
+      "validade": "Validez",
+      "ordem": "Orden",
+      "ativo": "Activa",
+      "descricao": "Descripción"
+    },
+    "placeholders": {
+      "desconto": "Ej.: 20% de descuento"
+    },
+    "errors": {
+      "titulo": "Ingresa un título",
+      "parceiro": "Ingresa el socio",
+      "desconto": "Ingresa el descuento",
+      "link": "URL inválida (usa http:// o https://)"
     }
   }
 }

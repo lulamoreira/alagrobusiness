@@ -34,6 +34,7 @@ import {
   ChevronDown,
   Menu,
   Mail,
+  Sparkles,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -101,6 +102,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
       { to: "/certificados", labelKey: "nav.certificates", icon: Award },
+      { to: "/clube", labelKey: "clube.navLabel", icon: Sparkles, pro: true },
     ],
   },
   {
@@ -124,6 +126,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/gestao", labelKey: "adminGestao.navLabel", icon: BarChart3, permKey: "gestao" },
       { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck, permKey: "moderacao" },
       { to: "/admin/contatos", labelKey: "adminContatos.navLabel", icon: Mail },
+      { to: "/admin/vantagens", labelKey: "adminVantagens.navLabel", icon: Sparkles },
     ],
 
   },

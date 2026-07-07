@@ -33,6 +33,7 @@ import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authentic
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
+import { Route as AuthenticatedClubeRouteImport } from './routes/_authenticated.clube'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
 import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated.agenda'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -46,6 +47,7 @@ import { Route as AuthenticatedMensagensConversaIdRouteImport } from './routes/_
 import { Route as AuthenticatedCursosIdRouteImport } from './routes/_authenticated.cursos.$id'
 import { Route as AuthenticatedCertificadoCodigoRouteImport } from './routes/_authenticated.certificado.$codigo'
 import { Route as AuthenticatedAnuncioIdRouteImport } from './routes/_authenticated.anuncio.$id'
+import { Route as AuthenticatedAdminVantagensRouteImport } from './routes/_authenticated.admin.vantagens'
 import { Route as AuthenticatedAdminModeracaoRouteImport } from './routes/_authenticated.admin.moderacao'
 import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenticated.admin.gestao'
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
@@ -176,6 +178,11 @@ const AuthenticatedComprarRoute = AuthenticatedComprarRouteImport.update({
   path: '/comprar',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedClubeRoute = AuthenticatedClubeRouteImport.update({
+  id: '/clube',
+  path: '/clube',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
   id: '/alertas',
   path: '/alertas',
@@ -249,6 +256,12 @@ const AuthenticatedAnuncioIdRoute = AuthenticatedAnuncioIdRouteImport.update({
   path: '/anuncio/$id',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminVantagensRoute =
+  AuthenticatedAdminVantagensRouteImport.update({
+    id: '/admin/vantagens',
+    path: '/admin/vantagens',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminModeracaoRoute =
   AuthenticatedAdminModeracaoRouteImport.update({
     id: '/admin/moderacao',
@@ -314,6 +327,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
+  '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
@@ -333,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/admin/moderacao': typeof AuthenticatedAdminModeracaoRoute
+  '/admin/vantagens': typeof AuthenticatedAdminVantagensRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/certificado/$codigo': typeof AuthenticatedCertificadoCodigoRoute
   '/cursos/$id': typeof AuthenticatedCursosIdRoute
@@ -360,6 +375,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
+  '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
@@ -377,6 +393,7 @@ export interface FileRoutesByTo {
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/admin/moderacao': typeof AuthenticatedAdminModeracaoRoute
+  '/admin/vantagens': typeof AuthenticatedAdminVantagensRoute
   '/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/certificado/$codigo': typeof AuthenticatedCertificadoCodigoRoute
   '/cursos/$id': typeof AuthenticatedCursosIdRoute
@@ -406,6 +423,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
+  '/_authenticated/clube': typeof AuthenticatedClubeRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
@@ -425,6 +443,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
   '/_authenticated/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/_authenticated/admin/moderacao': typeof AuthenticatedAdminModeracaoRoute
+  '/_authenticated/admin/vantagens': typeof AuthenticatedAdminVantagensRoute
   '/_authenticated/anuncio/$id': typeof AuthenticatedAnuncioIdRoute
   '/_authenticated/certificado/$codigo': typeof AuthenticatedCertificadoCodigoRoute
   '/_authenticated/cursos/$id': typeof AuthenticatedCursosIdRoute
@@ -454,6 +473,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
+    | '/clube'
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
@@ -473,6 +493,7 @@ export interface FileRouteTypes {
     | '/admin/cursos'
     | '/admin/gestao'
     | '/admin/moderacao'
+    | '/admin/vantagens'
     | '/anuncio/$id'
     | '/certificado/$codigo'
     | '/cursos/$id'
@@ -500,6 +521,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
+    | '/clube'
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
@@ -517,6 +539,7 @@ export interface FileRouteTypes {
     | '/admin/cursos'
     | '/admin/gestao'
     | '/admin/moderacao'
+    | '/admin/vantagens'
     | '/anuncio/$id'
     | '/certificado/$codigo'
     | '/cursos/$id'
@@ -545,6 +568,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/agenda'
     | '/_authenticated/alertas'
+    | '/_authenticated/clube'
     | '/_authenticated/comprar'
     | '/_authenticated/configuracoes'
     | '/_authenticated/cotacao'
@@ -564,6 +588,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/cursos'
     | '/_authenticated/admin/gestao'
     | '/_authenticated/admin/moderacao'
+    | '/_authenticated/admin/vantagens'
     | '/_authenticated/anuncio/$id'
     | '/_authenticated/certificado/$codigo'
     | '/_authenticated/cursos/$id'
@@ -765,6 +790,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedComprarRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/clube': {
+      id: '/_authenticated/clube'
+      path: '/clube'
+      fullPath: '/clube'
+      preLoaderRoute: typeof AuthenticatedClubeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/alertas': {
       id: '/_authenticated/alertas'
       path: '/alertas'
@@ -854,6 +886,13 @@ declare module '@tanstack/react-router' {
       path: '/anuncio/$id'
       fullPath: '/anuncio/$id'
       preLoaderRoute: typeof AuthenticatedAnuncioIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/vantagens': {
+      id: '/_authenticated/admin/vantagens'
+      path: '/admin/vantagens'
+      fullPath: '/admin/vantagens'
+      preLoaderRoute: typeof AuthenticatedAdminVantagensRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/admin/moderacao': {
@@ -950,6 +989,7 @@ const AuthenticatedVenderRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedAgendaRoute: typeof AuthenticatedAgendaRoute
   AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
+  AuthenticatedClubeRoute: typeof AuthenticatedClubeRoute
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
@@ -967,6 +1007,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
   AuthenticatedAdminGestaoRoute: typeof AuthenticatedAdminGestaoRoute
   AuthenticatedAdminModeracaoRoute: typeof AuthenticatedAdminModeracaoRoute
+  AuthenticatedAdminVantagensRoute: typeof AuthenticatedAdminVantagensRoute
   AuthenticatedAnuncioIdRoute: typeof AuthenticatedAnuncioIdRoute
   AuthenticatedCertificadoCodigoRoute: typeof AuthenticatedCertificadoCodigoRoute
   AuthenticatedCursosIdRoute: typeof AuthenticatedCursosIdRoute
@@ -977,6 +1018,7 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAgendaRoute: AuthenticatedAgendaRoute,
   AuthenticatedAlertasRoute: AuthenticatedAlertasRoute,
+  AuthenticatedClubeRoute: AuthenticatedClubeRoute,
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
@@ -994,6 +1036,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,
   AuthenticatedAdminGestaoRoute: AuthenticatedAdminGestaoRoute,
   AuthenticatedAdminModeracaoRoute: AuthenticatedAdminModeracaoRoute,
+  AuthenticatedAdminVantagensRoute: AuthenticatedAdminVantagensRoute,
   AuthenticatedAnuncioIdRoute: AuthenticatedAnuncioIdRoute,
   AuthenticatedCertificadoCodigoRoute: AuthenticatedCertificadoCodigoRoute,
   AuthenticatedCursosIdRoute: AuthenticatedCursosIdRoute,
