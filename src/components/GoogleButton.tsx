@@ -25,7 +25,7 @@ export function GoogleButton({ label, fullWidth, className, onError }: GoogleBut
       }
       // If popup flow succeeded, session is set — navigate to root.
       if (!result.redirected) {
-        window.location.href = "/";
+        window.location.href = "/painel";
       }
     } catch (e) {
       onError?.(e instanceof Error ? e.message : String(e));

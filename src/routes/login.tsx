@@ -40,7 +40,7 @@ function LoginPage() {
       setServerError(t("auth.error"));
       return;
     }
-    navigate({ to: "/" });
+    navigate({ to: "/painel" });
   };
 
   return (

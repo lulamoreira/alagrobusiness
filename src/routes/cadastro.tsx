@@ -97,7 +97,7 @@ function SignupPage() {
       setServerError(t("signup.error"));
       return;
     }
-    navigate({ to: "/" });
+    navigate({ to: "/painel" });
   };
 
   const perfilOptions = [
