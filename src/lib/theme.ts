@@ -1,4 +1,4 @@
-export const SUPPORTED_THEMES = ["ecologico", "terroso", "chuva"] as const;
+export const SUPPORTED_THEMES = ["ecologico", "terroso", "chuva", "classico"] as const;
 export type ThemeName = (typeof SUPPORTED_THEMES)[number];
 export const DEFAULT_THEME: ThemeName = "ecologico";
 const STORAGE_KEY = "alagro_theme";
@@ -33,7 +33,7 @@ export function initThemeFromStorage() {
 }
 
 /** Inline script to run in <head> pre-hydration to prevent theme flash. */
-export const THEME_BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}');if(t==='ecologico'||t==='terroso'||t==='chuva'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}})();`;
+export const THEME_BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}');if(t==='ecologico'||t==='terroso'||t==='chuva'||t==='classico'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}})();`;
 
 export interface ThemeSwatch {
   bg: string;
@@ -46,4 +46,6 @@ export const THEME_SWATCHES: Record<ThemeName, ThemeSwatch> = {
   ecologico: { bg: "#0B130E", card: "#121C15", primary: "#C2F04A", fg: "#EAF1EA" },
   terroso:   { bg: "#15100A", card: "#221A11", primary: "#E3A83C", fg: "#F1EADF" },
   chuva:     { bg: "#0C1319", card: "#13202A", primary: "#56B6E6", fg: "#E6EEF4" },
+  classico:  { bg: "#4CA935", card: "#3E8E2B", primary: "#F5E625", fg: "#FFFFFF" },
 };
+
