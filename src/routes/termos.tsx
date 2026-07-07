@@ -7,8 +7,8 @@ export const Route = createFileRoute("/termos")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Termos de Uso — ALAGROBUSINESS" },
-      { name: "description", content: "Termos de Uso do ALAGROBUSINESS." },
+      { title: "Termos de Uso — AGROBUSINESS" },
+      { name: "description", content: "Termos de Uso do AGROBUSINESS." },
       { name: "robots", content: "noindex" },
     ],
   }),

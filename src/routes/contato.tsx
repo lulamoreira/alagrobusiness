@@ -25,10 +25,10 @@ export const Route = createFileRoute("/contato")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Contato — ALAGROBUSINESS" },
-      { name: "description", content: "Fale com o ALAGROBUSINESS. Envie sua dúvida, sugestão ou parceria." },
-      { property: "og:title", content: "Contato — ALAGROBUSINESS" },
-      { property: "og:description", content: "Fale com o ALAGROBUSINESS." },
+      { title: "Contato — AGROBUSINESS" },
+      { name: "description", content: "Fale com o AGROBUSINESS. Envie sua dúvida, sugestão ou parceria." },
+      { property: "og:title", content: "Contato — AGROBUSINESS" },
+      { property: "og:description", content: "Fale com o AGROBUSINESS." },
     ],
   }),
   component: ContactPage,

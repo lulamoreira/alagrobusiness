@@ -1,5 +1,5 @@
 
-# ALAGROBUSINESS — Fase 0 (revisada com correções de segurança)
+# AGROBUSINESS — Fase 0 (revisada com correções de segurança)
 
 Plataforma do agronegócio brasileiro. Entrega: identidade visual premium responsiva (mobile/tablet/desktop), autenticação segura, fundação de banco, i18n (pt-BR/en/es), notícias do agro (job 12h) e cotação do dólar (job diário).
 

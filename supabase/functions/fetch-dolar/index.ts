@@ -39,7 +39,7 @@ async function fetchWithRetry(url: string, tries = 3): Promise<Response | null> 
   for (let i = 0; i < tries; i++) {
     try {
       const r = await fetch(url, {
-        headers: { "User-Agent": "ALAGROBUSINESS/1.0", Accept: "application/json" },
+        headers: { "User-Agent": "AGROBUSINESS/1.0", Accept: "application/json" },
       });
       if (r.ok) return r;
       if (r.status !== 429 && r.status < 500) return r;

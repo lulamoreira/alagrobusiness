@@ -7,8 +7,8 @@ export const Route = createFileRoute("/privacidade")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Política de Privacidade — ALAGROBUSINESS" },
-      { name: "description", content: "Política de Privacidade do ALAGROBUSINESS." },
+      { title: "Política de Privacidade — AGROBUSINESS" },
+      { name: "description", content: "Política de Privacidade do AGROBUSINESS." },
       { name: "robots", content: "noindex" },
     ],
   }),

@@ -10,10 +10,10 @@ const corsHeaders = {
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const PRODUCT_NAME = "ALAGROBUSINESS Pro";
-const PRODUCT_LOOKUP = "alagrobusiness_pro";
-const PRICE_MENSAL_LOOKUP = "alagrobusiness_pro_mensal";
-const PRICE_ANUAL_LOOKUP = "alagrobusiness_pro_anual";
+const PRODUCT_NAME = "AGROBUSINESS Pro";
+const PRODUCT_LOOKUP = "agrobusiness_pro";
+const PRICE_MENSAL_LOOKUP = "agrobusiness_pro_mensal";
+const PRICE_ANUAL_LOOKUP = "agrobusiness_pro_anual";
 const AMOUNT_MENSAL = 7990; // R$ 79,90
 const AMOUNT_ANUAL = 79900; // R$ 799,00
 
