@@ -33,6 +33,7 @@ import {
   UserCircle,
   ChevronDown,
   Menu,
+  Mail,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
