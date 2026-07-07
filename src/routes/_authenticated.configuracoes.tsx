@@ -67,7 +67,7 @@ function ConfigPage() {
         moeda,
         tipo_dolar: tipoDolar,
         idioma: i18n.language as SupportedLang,
-        tema,
+        tema: tema as "ecologico" | "terroso" | "chuva",
       })
       .eq("usuario_id", profile.id);
     setSaving(false);
