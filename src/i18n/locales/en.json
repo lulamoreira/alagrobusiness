@@ -1093,5 +1093,125 @@
     "adminGrantedMsg": "A new administrator profile has been granted to you. Sign in again to see the unlocked areas.",
     "adminRevokedTitle": "Administrator access removed",
     "adminRevokedMsg": "Your administrator access has been removed."
+  },
+  "public": {
+    "nav": {
+      "signin": "Sign in",
+      "signup": "Create account",
+      "contact": "Contact",
+      "howItWorks": "How it works"
+    },
+    "hero": {
+      "eyebrow": "The Brazilian agribusiness platform",
+      "title": "From the field to the market, all in one place.",
+      "subtitle": "List, negotiate and track commodity prices, weather, news and courses — a platform built for producers, buyers, stores and brands.",
+      "ctaPrimary": "Create free account",
+      "ctaSecondary": "How it works"
+    },
+    "audience": {
+      "title": "Built for the whole agribusiness chain",
+      "subtitle": "Profiles designed for your role.",
+      "producer": {
+        "title": "Producer",
+        "desc": "List your production, receive offers and track your sales in a complete dashboard."
+      },
+      "buyer": {
+        "title": "Buyer",
+        "desc": "Find suppliers by region and category, negotiate via chat and close deals safely."
+      },
+      "shop": {
+        "title": "Store",
+        "desc": "Expand your storefront, manage inventory and reach producers across Brazil."
+      },
+      "brand": {
+        "title": "Brand",
+        "desc": "Connect with end producers, publish content and strengthen your presence in agri."
+      },
+      "cta": "Sign up"
+    },
+    "features": {
+      "title": "Everything you need",
+      "subtitle": "Professional tools in a single platform.",
+      "marketplace": {
+        "title": "Marketplace",
+        "desc": "Listings of fruits, grains, legumes and vegetables with photos, price and chat."
+      },
+      "quotes": {
+        "title": "Prices & Weather",
+        "desc": "Commodity prices, USD rate and weather forecast right in your dashboard."
+      },
+      "news": {
+        "title": "News",
+        "desc": "Curated agribusiness news around the topics that matter to you."
+      },
+      "learning": {
+        "title": "Learning area",
+        "desc": "Courses and certificates to keep up and stand out in your business."
+      },
+      "club": {
+        "title": "Benefits club",
+        "desc": "Exclusive perks for ALAGROBUSINESS subscribers and partners."
+      }
+    },
+    "how": {
+      "title": "How it works",
+      "subtitle": "From sign-up to your first deal in minutes.",
+      "step1": { "title": "Sign up", "desc": "Create your free account and pick your profile." },
+      "step2": { "title": "List or buy", "desc": "Publish your products or browse the marketplace." },
+      "step3": { "title": "Chat & negotiate", "desc": "Talk directly with the other party, safely." },
+      "step4": { "title": "Manage in your dashboard", "desc": "Track sales, alerts and agenda in one place." }
+    },
+    "finalCta": {
+      "title": "Ready to start?",
+      "subtitle": "Join producers, buyers, stores and brands across the agri chain.",
+      "primary": "Create free account",
+      "secondary": "Talk to us"
+    },
+    "footer": {
+      "tagline": "Brazilian agribusiness marketplace.",
+      "about": "About",
+      "contact": "Contact",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "rights": "All rights reserved."
+    }
+  },
+  "contact": {
+    "title": "Talk to us",
+    "subtitle": "Send us a message — we'll get back to you soon.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "successTitle": "Message sent!",
+    "successMsg": "We got your message and will reply shortly.",
+    "sendAnother": "Send another message",
+    "errorGeneric": "Could not send. Please try again in a moment.",
+    "errorRate": "Too many messages in a short time. Please wait a few minutes.",
+    "seoTitle": "Contact — ALAGROBUSINESS",
+    "seoDesc": "Contact ALAGROBUSINESS. Send your question, feedback or partnership."
+  },
+  "adminContatos": {
+    "navLabel": "Contacts",
+    "title": "Contact messages",
+    "subtitle": "Messages sent through the public contact form.",
+    "empty": "No messages received.",
+    "unread": "Unread",
+    "read": "Read",
+    "markRead": "Mark as read",
+    "markUnread": "Mark as unread",
+    "from": "From",
+    "subject": "Subject",
+    "message": "Message",
+    "sentAt": "Sent at",
+    "filterAll": "All",
+    "filterUnread": "Unread"
+  },
+  "validation2": {
+    "nameMin": "Enter your name",
+    "subjectMin": "Enter a subject",
+    "messageMin": "Write a message with at least 10 characters"
   }
 }
