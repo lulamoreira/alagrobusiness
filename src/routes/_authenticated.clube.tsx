@@ -27,7 +27,6 @@ interface VantagemRow {
 }
 
 function ClubePage() {
-  const { t } = useTranslation();
   return (
     <ProGate requires="clube" featureKey="clube.title">
       <ClubeContent />
