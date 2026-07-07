@@ -34,6 +34,7 @@ import {
   ChevronDown,
   Menu,
   Mail,
+  Sparkles,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
