@@ -33,6 +33,7 @@ import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authentic
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
+import { Route as AuthenticatedClubeRouteImport } from './routes/_authenticated.clube'
 import { Route as AuthenticatedAlertasRouteImport } from './routes/_authenticated.alertas'
 import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated.agenda'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -176,6 +177,11 @@ const AuthenticatedComprarRoute = AuthenticatedComprarRouteImport.update({
   path: '/comprar',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedClubeRoute = AuthenticatedClubeRouteImport.update({
+  id: '/clube',
+  path: '/clube',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedAlertasRoute = AuthenticatedAlertasRouteImport.update({
   id: '/alertas',
   path: '/alertas',
@@ -314,6 +320,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
+  '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
@@ -360,6 +367,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/alertas': typeof AuthenticatedAlertasRoute
+  '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
@@ -406,6 +414,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/alertas': typeof AuthenticatedAlertasRoute
+  '/_authenticated/clube': typeof AuthenticatedClubeRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
@@ -454,6 +463,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
+    | '/clube'
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
@@ -500,6 +510,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/agenda'
     | '/alertas'
+    | '/clube'
     | '/comprar'
     | '/configuracoes'
     | '/cotacao'
@@ -545,6 +556,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/agenda'
     | '/_authenticated/alertas'
+    | '/_authenticated/clube'
     | '/_authenticated/comprar'
     | '/_authenticated/configuracoes'
     | '/_authenticated/cotacao'
@@ -765,6 +777,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedComprarRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/clube': {
+      id: '/_authenticated/clube'
+      path: '/clube'
+      fullPath: '/clube'
+      preLoaderRoute: typeof AuthenticatedClubeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/alertas': {
       id: '/_authenticated/alertas'
       path: '/alertas'
@@ -950,6 +969,7 @@ const AuthenticatedVenderRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedAgendaRoute: typeof AuthenticatedAgendaRoute
   AuthenticatedAlertasRoute: typeof AuthenticatedAlertasRoute
+  AuthenticatedClubeRoute: typeof AuthenticatedClubeRoute
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
@@ -977,6 +997,7 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAgendaRoute: AuthenticatedAgendaRoute,
   AuthenticatedAlertasRoute: AuthenticatedAlertasRoute,
+  AuthenticatedClubeRoute: AuthenticatedClubeRoute,
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
