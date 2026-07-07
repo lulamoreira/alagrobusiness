@@ -101,6 +101,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
       { to: "/certificados", labelKey: "nav.certificates", icon: Award },
+      { to: "/clube", labelKey: "clube.navLabel", icon: Sparkles, pro: true },
     ],
   },
   {
