@@ -1309,5 +1309,50 @@
       "s5": { "title": "5. Security", "body": "We adopt technical and organizational measures to protect data against unauthorized access, loss or improper alteration." },
       "s6": { "title": "6. Contact", "body": "For questions about this policy, contact us via the official support channel. (Draft — replace with the official legal text.)" }
     }
+  },
+  "clube": {
+    "navLabel": "Club",
+    "title": "Advantages Club",
+    "subtitle": "Exclusive benefits negotiated for Pro members.",
+    "empty": "No advantages available right now.",
+    "filterAll": "All",
+    "coupon": "Coupon",
+    "copied": "Coupon copied!",
+    "copyError": "Couldn't copy.",
+    "redeem": "Redeem",
+    "validUntil": "Valid until"
+  },
+  "adminVantagens": {
+    "navLabel": "Advantages",
+    "title": "Advantages Club",
+    "subtitle": "Create and manage the club's exclusive advantages.",
+    "new": "New advantage",
+    "editing": "Editing advantage",
+    "creating": "New advantage",
+    "empty": "No advantages registered yet.",
+    "inactive": "Inactive",
+    "confirmDelete": "Remove this advantage?",
+    "fields": {
+      "titulo": "Title",
+      "parceiro": "Partner",
+      "desconto": "Discount",
+      "categoria": "Category",
+      "cupom": "Coupon",
+      "link": "Redeem link",
+      "logo": "Partner logo URL",
+      "validade": "Valid until",
+      "ordem": "Order",
+      "ativo": "Active",
+      "descricao": "Description"
+    },
+    "placeholders": {
+      "desconto": "e.g. 20% off"
+    },
+    "errors": {
+      "titulo": "Enter a title",
+      "parceiro": "Enter the partner",
+      "desconto": "Enter the discount",
+      "link": "Invalid URL (use http:// or https://)"
+    }
   }
 }
