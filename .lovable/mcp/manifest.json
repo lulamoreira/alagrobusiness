@@ -7,15 +7,15 @@
   },
   "mcp": {
     "server": {
-      "name": "alagrobusiness-mcp",
+      "name": "agrobusiness-mcp",
       "version": "0.1.0",
-      "title": "ALAGROBUSINESS MCP"
+      "title": "AGROBUSINESS MCP"
     },
     "tools": [
       {
         "name": "list_noticias",
         "title": "List agro news",
-        "description": "List the latest Brazilian agribusiness news collected by ALAGROBUSINESS.",
+        "description": "List the latest Brazilian agribusiness news collected by AGROBUSINESS.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -44,7 +44,7 @@
       {
         "name": "get_cotacao_dolar",
         "title": "Get USD/BRL quote",
-        "description": "Get the latest USD/BRL exchange rate tracked by ALAGROBUSINESS.",
+        "description": "Get the latest USD/BRL exchange rate tracked by AGROBUSINESS.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -72,7 +72,7 @@
       {
         "name": "list_anuncios",
         "title": "List marketplace listings",
-        "description": "List active public marketplace ads (anúncios) on ALAGROBUSINESS.",
+        "description": "List active public marketplace ads (anúncios) on AGROBUSINESS.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,

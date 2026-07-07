@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "ALAGROBUSINESS",
+    "appName": "AGROBUSINESS",
     "tagline": "El agronegocio brasileño, conectado.",
     "loading": "Cargando…",
     "save": "Guardar",
@@ -27,7 +27,7 @@
     "error": "Ocurrió un error"
   },
   "splash": {
-    "title": "ALAGROBUSINESS",
+    "title": "AGROBUSINESS",
     "subtitle": "Marketplace del agronegocio brasileño",
     "enter": "Entrar",
     "create": "Crear cuenta"
@@ -1086,7 +1086,7 @@
   },
   "notifications": {
     "approvedTitle": "Cuenta aprobada",
-    "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a ALAGROBUSINESS!",
+    "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a AGROBUSINESS!",
     "blockedTitle": "Acceso bloqueado",
     "blockedMsg": "Tu acceso ha sido bloqueado temporalmente. Contacta con soporte.",
     "reactivatedTitle": "Acceso reactivado",
@@ -1158,7 +1158,7 @@
       },
       "club": {
         "title": "Club de beneficios",
-        "desc": "Beneficios exclusivos para suscriptores y socios de ALAGROBUSINESS."
+        "desc": "Beneficios exclusivos para suscriptores y socios de AGROBUSINESS."
       }
     },
     "how": {
@@ -1198,8 +1198,8 @@
     "sendAnother": "Enviar otro mensaje",
     "errorGeneric": "No se pudo enviar. Inténtalo en un momento.",
     "errorRate": "Demasiados mensajes en poco tiempo. Espera unos minutos.",
-    "seoTitle": "Contacto — ALAGROBUSINESS",
-    "seoDesc": "Habla con ALAGROBUSINESS. Envía tu duda, sugerencia o alianza."
+    "seoTitle": "Contacto — AGROBUSINESS",
+    "seoDesc": "Habla con AGROBUSINESS. Envía tu duda, sugerencia o alianza."
   },
   "adminContatos": {
     "navLabel": "Contactos",
@@ -1228,7 +1228,7 @@
       "title": "Vende directo — sin intermediarios entre tú y el mercado.",
       "subtitle": "Publica tu cosecha, recibe ofertas de compradores verificados y gestiona todo en un panel hecho para el campo.",
       "cta": "Crear cuenta como Productor",
-      "benefitsTitle": "Por qué ALAGROBUSINESS para ti",
+      "benefitsTitle": "Por qué AGROBUSINESS para ti",
       "benefitsSubtitle": "Herramientas pensadas para quien produce.",
       "b1": { "title": "Mayor alcance", "desc": "Tus anuncios llegan a compradores en todo Brasil, con filtros por región y categoría." },
       "b2": { "title": "Negociación directa", "desc": "Habla por chat con el comprador, sin intermediarios, y cierra a tu manera." },
@@ -1246,7 +1246,7 @@
       "title": "Conecta tu marca con quien realmente decide en el campo.",
       "subtitle": "Fortalece tu presencia en el agro brasileño con un canal directo al productor, a la tienda y al comprador profesional.",
       "cta": "Crear cuenta como Marca",
-      "benefitsTitle": "Por qué ALAGROBUSINESS para tu marca",
+      "benefitsTitle": "Por qué AGROBUSINESS para tu marca",
       "benefitsSubtitle": "Una vitrina premium para el agronegocio.",
       "b1": { "title": "Presencia cualificada", "desc": "Tu marca junto al contenido, cotizaciones y noticias que el productor consume a diario." },
       "b2": { "title": "Canal con el productor", "desc": "Publica lanzamientos, campañas y materiales al público correcto." },
@@ -1264,7 +1264,7 @@
       "title": "Amplía tu tienda y llega a productores en todo Brasil.",
       "subtitle": "Publica tu catálogo, gestiona stock y cierra más ventas — con un canal directo a quien produce en el campo.",
       "cta": "Crear cuenta como Tienda",
-      "benefitsTitle": "Por qué ALAGROBUSINESS para tu tienda",
+      "benefitsTitle": "Por qué AGROBUSINESS para tu tienda",
       "benefitsSubtitle": "Vitrina, negociación y gestión en un solo lugar.",
       "b1": { "title": "Vitrina nacional", "desc": "Tus productos aparecen para productores y compradores en todo el país." },
       "b2": { "title": "Gestión simple", "desc": "Controla stock, precios y estado de cada ítem desde el panel." },
@@ -1279,9 +1279,9 @@
     }
   },
   "about": {
-    "title": "Sobre ALAGROBUSINESS",
+    "title": "Sobre AGROBUSINESS",
     "subtitle": "Una plataforma hecha para conectar toda la cadena del agronegocio brasileño.",
-    "p1": "ALAGROBUSINESS nació para darle al productor rural, al comprador, a la tienda y a la marca del agro un único lugar para encontrarse, negociar y crecer juntos.",
+    "p1": "AGROBUSINESS nació para darle al productor rural, al comprador, a la tienda y a la marca del agro un único lugar para encontrarse, negociar y crecer juntos.",
     "p2": "Reunimos marketplace, cotizaciones, clima, noticias, cursos y un club de ventajas en una experiencia simple, mobile-first y pensada para quien vive el campo.",
     "p3": "Nuestro compromiso es con la transparencia, la seguridad de la información y el respeto a las leyes de privacidad — para que cada usuario controle sus datos y negociaciones.",
     "mission": { "title": "Misión", "desc": "Conectar el agronegocio brasileño con tecnología, transparencia y simplicidad." },
@@ -1293,11 +1293,11 @@
     "draftNotice": "Este texto es un borrador y debe ser reemplazado por el contenido jurídico oficial proporcionado por el abogado responsable. No constituye asesoría legal.",
     "terms": {
       "title": "Términos de Uso",
-      "s1": { "title": "1. Aceptación", "body": "Al usar ALAGROBUSINESS declaras haber leído y aceptado estos Términos. Si no estás de acuerdo, no uses la plataforma." },
+      "s1": { "title": "1. Aceptación", "body": "Al usar AGROBUSINESS declaras haber leído y aceptado estos Términos. Si no estás de acuerdo, no uses la plataforma." },
       "s2": { "title": "2. Registro y cuenta", "body": "El usuario es responsable por la información brindada en el registro y por mantener la confidencialidad de sus credenciales." },
       "s3": { "title": "3. Uso de la plataforma", "body": "Se prohíbe usar el servicio con fines ilícitos, fraudulentos, ofensivos o que violen derechos de terceros." },
-      "s4": { "title": "4. Anuncios y negociaciones", "body": "Las negociaciones entre usuarios son responsabilidad de las partes. ALAGROBUSINESS actúa como intermediario de conexión." },
-      "s5": { "title": "5. Propiedad intelectual", "body": "Todo el contenido, marca y software de ALAGROBUSINESS está protegido por derechos de autor y demás leyes aplicables." },
+      "s4": { "title": "4. Anuncios y negociaciones", "body": "Las negociaciones entre usuarios son responsabilidad de las partes. AGROBUSINESS actúa como intermediario de conexión." },
+      "s5": { "title": "5. Propiedad intelectual", "body": "Todo el contenido, marca y software de AGROBUSINESS está protegido por derechos de autor y demás leyes aplicables." },
       "s6": { "title": "6. Cambios", "body": "Estos Términos pueden actualizarse en cualquier momento. Consulta esta página con frecuencia. (Borrador — reemplazar por el texto jurídico oficial.)" }
     },
     "privacy": {

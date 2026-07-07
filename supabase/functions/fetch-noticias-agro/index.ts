@@ -115,7 +115,7 @@ Deno.serve(async (req) => {
   for (const feed of FEEDS) {
     try {
       const resp = await fetch(feed.url, {
-        headers: { "User-Agent": "ALAGROBUSINESS/1.0 (+rss-bot)" },
+        headers: { "User-Agent": "AGROBUSINESS/1.0 (+rss-bot)" },
       });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const xml = await resp.text();

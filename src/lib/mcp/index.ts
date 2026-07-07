@@ -4,10 +4,10 @@ import getDolarTool from "./tools/get-dolar";
 import listAnunciosTool from "./tools/list-anuncios";
 
 export default defineMcp({
-  name: "alagrobusiness-mcp",
-  title: "ALAGROBUSINESS MCP",
+  name: "agrobusiness-mcp",
+  title: "AGROBUSINESS MCP",
   version: "0.1.0",
   instructions:
-    "Public read-only tools for ALAGROBUSINESS: latest Brazilian agribusiness news, USD/BRL exchange rate, and active marketplace listings.",
+    "Public read-only tools for AGROBUSINESS: latest Brazilian agribusiness news, USD/BRL exchange rate, and active marketplace listings.",
   tools: [listNoticiasTool, getDolarTool, listAnunciosTool],
 });

@@ -5,7 +5,7 @@ import { z } from "zod";
 export default defineTool({
   name: "list_noticias",
   title: "List agro news",
-  description: "List the latest Brazilian agribusiness news collected by ALAGROBUSINESS.",
+  description: "List the latest Brazilian agribusiness news collected by AGROBUSINESS.",
   inputSchema: {
     limit: z.number().int().min(1).max(50).default(10).describe("How many news items to return (1-50)."),
     tema: z.string().optional().describe("Optional theme filter (e.g. soja, milho, cafe, boi)."),

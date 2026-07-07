@@ -17,9 +17,9 @@ interface Payload {
 }
 
 const SUBJECTS: Record<string, string> = {
-  "pt-BR": "Você ganhou acesso Pro no ALAGROBUSINESS",
-  en: "You've been granted Pro access on ALAGROBUSINESS",
-  es: "Ganaste acceso Pro en ALAGROBUSINESS",
+  "pt-BR": "Você ganhou acesso Pro no AGROBUSINESS",
+  en: "You've been granted Pro access on AGROBUSINESS",
+  es: "Ganaste acceso Pro en AGROBUSINESS",
 };
 
 function bodyHtml(lang: string, link: string, dias: number | null | undefined) {
@@ -37,19 +37,19 @@ function bodyHtml(lang: string, link: string, dias: number | null | undefined) {
         };
   const t: Record<string, { title: string; p1: string; cta: string; foot: string }> = {
     "pt-BR": {
-      title: "Cortesia ALAGROBUSINESS",
+      title: "Cortesia AGROBUSINESS",
       p1: `Você recebeu <b>${dur["pt-BR"]}</b>. Crie sua conta com este mesmo e-mail para ativar automaticamente.`,
       cta: "Criar conta",
       foot: "Se você não esperava este convite, ignore esta mensagem.",
     },
     en: {
-      title: "ALAGROBUSINESS courtesy",
+      title: "AGROBUSINESS courtesy",
       p1: `You received <b>${dur.en}</b>. Sign up with this same email to activate automatically.`,
       cta: "Create account",
       foot: "If you were not expecting this invite, ignore this message.",
     },
     es: {
-      title: "Cortesía ALAGROBUSINESS",
+      title: "Cortesía AGROBUSINESS",
       p1: `Recibiste <b>${dur.es}</b>. Crea tu cuenta con este mismo correo para activarla automáticamente.`,
       cta: "Crear cuenta",
       foot: "Si no esperabas esta invitación, ignora este mensaje.",
@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const from = Deno.env.get("RESEND_FROM") || "ALAGROBUSINESS <onboarding@resend.dev>";
+    const from = Deno.env.get("RESEND_FROM") || "AGROBUSINESS <onboarding@resend.dev>";
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {

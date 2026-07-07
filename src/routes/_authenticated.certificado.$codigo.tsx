@@ -76,7 +76,7 @@ function CertificadoPage() {
       const w = pdf.internal.pageSize.getWidth();
       const h = pdf.internal.pageSize.getHeight();
       pdf.addImage(img, "JPEG", 0, 0, w, h);
-      pdf.save(`ALAGROBUSINESS-${data.codigo}.pdf`);
+      pdf.save(`AGROBUSINESS-${data.codigo}.pdf`);
     } catch (err) {
       console.error(err);
       toast.error(t("courses.certificateError"));
@@ -152,7 +152,7 @@ function CertificadoPage() {
                     className="text-sm font-black tracking-[0.2em] text-primary"
                     style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
                   >
-                    ALAGROBUSINESS
+                    AGROBUSINESS
                   </div>
                   <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
                     {t("certificates.platform")}

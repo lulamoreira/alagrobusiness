@@ -5,7 +5,7 @@ import { z } from "zod";
 export default defineTool({
   name: "list_anuncios",
   title: "List marketplace listings",
-  description: "List active public marketplace ads (anúncios) on ALAGROBUSINESS.",
+  description: "List active public marketplace ads (anúncios) on AGROBUSINESS.",
   inputSchema: {
     limit: z.number().int().min(1).max(50).default(10).describe("How many ads to return (1-50)."),
     categoria: z.string().optional().describe("Optional category filter (e.g. fruta, grao, legumes, vegetal)."),

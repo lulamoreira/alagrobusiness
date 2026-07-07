@@ -20,7 +20,7 @@ export function Logo({ className, size = "md", to }: LogoProps) {
           <path d="M12 2C8 6 5 9 5 13a7 7 0 0 0 14 0c0-4-3-7-7-11Z" fill="currentColor" />
         </svg>
       </span>
-      <span className="text-foreground">ALAGRO<span className="text-primary">BUSINESS</span></span>
+      <span className="text-foreground">AGRO<span className="text-primary">BUSINESS</span></span>
     </div>
   );
   if (!to) return content;

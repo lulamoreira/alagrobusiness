@@ -12,7 +12,7 @@ const corsHeaders = {
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const PORTAL_LOOKUP = "alagrobusiness_portal_v1";
+const PORTAL_LOOKUP = "agrobusiness_portal_v1";
 
 async function stripeCall(path: string, form?: Record<string, string>, method: "GET" | "POST" = form ? "POST" : "GET") {
   const url = `https://api.stripe.com/v1${path}`;
@@ -39,7 +39,7 @@ async function ensurePortalConfiguration(): Promise<string> {
 
   const form: Record<string, string> = {
     "metadata[lookup]": PORTAL_LOOKUP,
-    "business_profile[headline]": "ALAGROBUSINESS",
+    "business_profile[headline]": "AGROBUSINESS",
     "features[customer_update][enabled]": "true",
     "features[customer_update][allowed_updates][0]": "email",
     "features[customer_update][allowed_updates][1]": "tax_id",
@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
 
     const originHeader = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
     const originClean = originHeader.replace(/\/$/, "");
-    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://alagrobusiness.lovable.app";
+    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://agrobusiness.lovable.app";
     const returnUrl = `${origin}/planos`;
 
     const session = await stripeCall(`/billing_portal/sessions`, {
