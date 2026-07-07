@@ -86,7 +86,7 @@ export function AnuncioPhoto({
   return (
     <div
       aria-label={t("buy.noPhoto")}
-      className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_60%),linear-gradient(135deg,#13201A,#0F1A14)] text-muted-foreground"
+      className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_60%),linear-gradient(135deg,color-mix(in_oklab,var(--card)_92%,var(--primary)_8%),var(--card))] text-muted-foreground"
     >
       <Sprout className={compact ? "h-5 w-5 text-primary/70" : "h-8 w-8 text-primary/70"} strokeWidth={1.5} />
       {!compact && productLabel && (
