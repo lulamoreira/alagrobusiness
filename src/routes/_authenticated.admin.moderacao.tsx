@@ -236,94 +236,136 @@ function AdminModeracaoPage() {
             {t("adminModeracao.empty")}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-3 py-2 text-left">{t("adminModeracao.columns.titulo")}</th>
-                  <th className="px-3 py-2 text-left">{t("adminModeracao.columns.vendedor")}</th>
-                  <th className="px-3 py-2 text-right">{t("adminModeracao.columns.preco")}</th>
-                  <th className="px-3 py-2 text-left">{t("adminModeracao.columns.status")}</th>
-                  <th className="px-3 py-2 text-left">{t("adminModeracao.columns.data")}</th>
-                  <th className="px-3 py-2 text-right">{t("adminModeracao.columns.acoes")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((ad) => (
-                  <tr key={ad.id} className="border-t border-border/60">
-                    <td className="px-3 py-2">
-                      <div className="font-medium">{ad.titulo}</div>
-                      <div className="text-xs text-muted-foreground">
+          <>
+            {/* Mobile: card list */}
+            <ul className="space-y-3 md:hidden">
+              {filtered.map((ad) => (
+                <li key={ad.id} className="rounded-xl border border-border/60 bg-card/40 p-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="truncate font-medium">{ad.titulo}</div>
+                      <div className="truncate text-xs text-muted-foreground">
                         {ad.produto} · {t(`adminModeracao.categoria.${ad.categoria}`)}
                       </div>
-                    </td>
-                    <td className="px-3 py-2">
-                      <div>{ad.vendedor?.nome_completo ?? "—"}</div>
-                      <div className="text-xs text-muted-foreground">{ad.vendedor?.email ?? ""}</div>
-                    </td>
-                    <td className="px-3 py-2 text-right font-mono">
-                      {formatPrice(ad.preco, ad.moeda, i18n.language)}
-                    </td>
-                    <td className="px-3 py-2">
-                      <span
-                        className={cn(
-                          "inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-                          ad.status === "ativo" && "bg-primary/15 text-primary",
-                          ad.status === "pausado" && "bg-muted text-muted-foreground",
-                          ad.status === "vendido" && "bg-secondary/40 text-secondary-foreground",
-                        )}
-                      >
-                        {t(`adminModeracao.status.${ad.status}`)}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2 text-xs text-muted-foreground">
-                      {dateFmt.format(new Date(ad.created_at))}
-                    </td>
-                    <td className="px-3 py-2">
-                      <div className="flex flex-wrap justify-end gap-2">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => setDetail(ad)}
-                          title={t("adminModeracao.action.ver")}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        {ad.status !== "pausado" && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => openConfirm(ad, "pausar")}
-                          >
-                            <PauseCircle className="mr-1 h-4 w-4" />
-                            {t("adminModeracao.action.pausar")}
-                          </Button>
-                        )}
-                        {ad.status === "pausado" && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => openConfirm(ad, "reativar")}
-                          >
-                            <PlayCircle className="mr-1 h-4 w-4" />
-                            {t("adminModeracao.action.reativar")}
-                          </Button>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => openConfirm(ad, "remover")}
-                        >
-                          <Trash2 className="mr-1 h-4 w-4" />
-                          {t("adminModeracao.action.remover")}
-                        </Button>
-                      </div>
-                    </td>
+                    </div>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                        ad.status === "ativo" && "bg-primary/15 text-primary",
+                        ad.status === "pausado" && "bg-muted text-muted-foreground",
+                        ad.status === "vendido" && "bg-secondary/40 text-secondary-foreground",
+                      )}
+                    >
+                      {t(`adminModeracao.status.${ad.status}`)}
+                    </span>
+                  </div>
+                  <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
+                    <dt className="text-muted-foreground">{t("adminModeracao.columns.vendedor")}</dt>
+                    <dd className="min-w-0 truncate text-right">{ad.vendedor?.nome_completo ?? "—"}</dd>
+                    <dt className="text-muted-foreground">{t("adminModeracao.columns.preco")}</dt>
+                    <dd className="text-right font-mono">{formatPrice(ad.preco, ad.moeda, i18n.language)}</dd>
+                    <dt className="text-muted-foreground">{t("adminModeracao.columns.data")}</dt>
+                    <dd className="text-right text-muted-foreground">{dateFmt.format(new Date(ad.created_at))}</dd>
+                  </dl>
+                  <div className="mt-3 flex flex-wrap justify-end gap-2">
+                    <Button size="sm" variant="ghost" onClick={() => setDetail(ad)} title={t("adminModeracao.action.ver")}>
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    {ad.status !== "pausado" && (
+                      <Button size="sm" variant="outline" onClick={() => openConfirm(ad, "pausar")}>
+                        <PauseCircle className="mr-1 h-4 w-4" />
+                        {t("adminModeracao.action.pausar")}
+                      </Button>
+                    )}
+                    {ad.status === "pausado" && (
+                      <Button size="sm" variant="outline" onClick={() => openConfirm(ad, "reativar")}>
+                        <PlayCircle className="mr-1 h-4 w-4" />
+                        {t("adminModeracao.action.reativar")}
+                      </Button>
+                    )}
+                    <Button size="sm" variant="destructive" onClick={() => openConfirm(ad, "remover")}>
+                      <Trash2 className="mr-1 h-4 w-4" />
+                      {t("adminModeracao.action.remover")}
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Desktop: table */}
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full text-sm">
+                <thead className="text-xs uppercase text-muted-foreground">
+                  <tr>
+                    <th className="px-3 py-2 text-left">{t("adminModeracao.columns.titulo")}</th>
+                    <th className="px-3 py-2 text-left">{t("adminModeracao.columns.vendedor")}</th>
+                    <th className="px-3 py-2 text-right">{t("adminModeracao.columns.preco")}</th>
+                    <th className="px-3 py-2 text-left">{t("adminModeracao.columns.status")}</th>
+                    <th className="px-3 py-2 text-left">{t("adminModeracao.columns.data")}</th>
+                    <th className="px-3 py-2 text-right">{t("adminModeracao.columns.acoes")}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {filtered.map((ad) => (
+                    <tr key={ad.id} className="border-t border-border/60">
+                      <td className="px-3 py-2">
+                        <div className="font-medium">{ad.titulo}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {ad.produto} · {t(`adminModeracao.categoria.${ad.categoria}`)}
+                        </div>
+                      </td>
+                      <td className="px-3 py-2">
+                        <div>{ad.vendedor?.nome_completo ?? "—"}</div>
+                        <div className="text-xs text-muted-foreground">{ad.vendedor?.email ?? ""}</div>
+                      </td>
+                      <td className="px-3 py-2 text-right font-mono">
+                        {formatPrice(ad.preco, ad.moeda, i18n.language)}
+                      </td>
+                      <td className="px-3 py-2">
+                        <span
+                          className={cn(
+                            "inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                            ad.status === "ativo" && "bg-primary/15 text-primary",
+                            ad.status === "pausado" && "bg-muted text-muted-foreground",
+                            ad.status === "vendido" && "bg-secondary/40 text-secondary-foreground",
+                          )}
+                        >
+                          {t(`adminModeracao.status.${ad.status}`)}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2 text-xs text-muted-foreground">
+                        {dateFmt.format(new Date(ad.created_at))}
+                      </td>
+                      <td className="px-3 py-2">
+                        <div className="flex flex-wrap justify-end gap-2">
+                          <Button size="sm" variant="ghost" onClick={() => setDetail(ad)} title={t("adminModeracao.action.ver")}>
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          {ad.status !== "pausado" && (
+                            <Button size="sm" variant="outline" onClick={() => openConfirm(ad, "pausar")}>
+                              <PauseCircle className="mr-1 h-4 w-4" />
+                              {t("adminModeracao.action.pausar")}
+                            </Button>
+                          )}
+                          {ad.status === "pausado" && (
+                            <Button size="sm" variant="outline" onClick={() => openConfirm(ad, "reativar")}>
+                              <PlayCircle className="mr-1 h-4 w-4" />
+                              {t("adminModeracao.action.reativar")}
+                            </Button>
+                          )}
+                          <Button size="sm" variant="destructive" onClick={() => openConfirm(ad, "remover")}>
+                            <Trash2 className="mr-1 h-4 w-4" />
+                            {t("adminModeracao.action.remover")}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+
         )}
       </section>
 

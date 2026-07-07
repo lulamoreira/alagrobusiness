@@ -7,6 +7,8 @@ import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 import { Loader2, Pencil, Plus, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
 import { useCommoditiesCatalog, nomeFor, type CatalogItem } from "@/lib/catalog";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/_authenticated/admin/cotacoes")({
   component: AdminCotacoesPage,
@@ -381,7 +383,98 @@ function AdminCotacoesPage() {
 
 
       <section className="overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-md">
-        <div className="overflow-x-auto">
+        {/* Mobile: card list */}
+        <ul className="divide-y divide-border md:hidden">
+          {catalog.map((item: CatalogItem) => {
+            const produto = item.codigo;
+            const cur = atuais[produto];
+            const isEditing = editing === produto;
+            const unidadeLabel = cur?.unidade_id
+              ? t(`units.${unidades.find((u) => u.id === cur.unidade_id)?.nome_chave ?? ""}`, { defaultValue: "—" })
+              : "—";
+            return (
+              <li key={produto} className="p-3">
+                <div className="mb-2 flex items-start justify-between gap-2">
+                  <div className="min-w-0 font-medium">{nomeFor(item, i18n.language)}</div>
+                  {!isEditing && cur && <SourceBadge fonte={cur.fonte} url={cur.fonte_url} />}
+                </div>
+                {isEditing ? (
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-3 gap-2">
+                      <input
+                        type="number" step="0.0001" min="0"
+                        value={editValor}
+                        onChange={(e) => setEditValor(e.target.value)}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                        placeholder={t("adminQuotes.tableValue")}
+                      />
+                      <select
+                        value={editUnidade}
+                        onChange={(e) => setEditUnidade(e.target.value)}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                      >
+                        {unidades.map((u) => (
+                          <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`)}</option>
+                        ))}
+                      </select>
+                      <select
+                        value={editMoeda}
+                        onChange={(e) => setEditMoeda(e.target.value as Moeda)}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                      >
+                        <option value="BRL">BRL</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                      </select>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={saveManual}
+                        disabled={busy}
+                        className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+                      >
+                        <Save className="h-3.5 w-3.5" /> {t("adminQuotes.save")}
+                      </button>
+                      <button
+                        onClick={() => setEditing(null)}
+                        className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                      >
+                        <X className="h-3.5 w-3.5" /> {t("adminQuotes.cancel")}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
+                      <dt className="text-muted-foreground">{t("adminQuotes.tableValue")}</dt>
+                      <dd className="text-right">{cur ? cur.valor.toLocaleString(i18n.language) : "—"}</dd>
+                      <dt className="text-muted-foreground">{t("adminQuotes.tableUnit")}</dt>
+                      <dd className="text-right text-muted-foreground">{unidadeLabel}</dd>
+                      <dt className="text-muted-foreground">{t("adminQuotes.tableCurrency")}</dt>
+                      <dd className="text-right text-muted-foreground">{cur?.moeda ?? "—"}</dd>
+                      <dt className="text-muted-foreground">{t("adminQuotes.tableDate")}</dt>
+                      <dd className="text-right text-muted-foreground">
+                        {cur?.data ?? <span className="italic">{t("adminQuotes.noCurrent")}</span>}
+                      </dd>
+                    </dl>
+                    <div className="mt-2 flex justify-end">
+                      <button
+                        onClick={() => startEdit(produto)}
+                        className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                        {cur ? t("adminQuotes.edit") : t("adminQuotes.manualLaunch")}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Desktop: table */}
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[820px] text-sm">
             <thead className="bg-card/70 text-left text-xs uppercase tracking-wider text-muted-foreground">
               <tr>
@@ -494,6 +587,7 @@ function AdminCotacoesPage() {
         )}
       </section>
 
+
       {preview && (
         <section className="rounded-2xl border border-primary/30 bg-primary/5 p-4 md:p-6">
           <header className="mb-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -513,7 +607,74 @@ function AdminCotacoesPage() {
           {preview.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted-foreground">{t("adminQuotes.previewEmpty")}</p>
           ) : (
-            <div className="overflow-x-auto">
+          <>
+            {/* Mobile: card list */}
+            <ul className="space-y-3 md:hidden">
+              {preview.map((p, idx) => {
+                const missing = !p._skipped && !p.unidade_id;
+                const c = catalog.find((x) => x.codigo === p.produto);
+                return (
+                  <li
+                    key={idx}
+                    className={cn(
+                      "rounded-xl border border-border/60 bg-card/40 p-3",
+                      p._skipped && "opacity-50",
+                      missing && "bg-destructive/10 ring-1 ring-inset ring-destructive/40",
+                    )}
+                  >
+                    <div className="mb-2 flex items-start justify-between gap-2">
+                      <div className="min-w-0 font-medium">{c ? nomeFor(c, i18n.language) : p.produto}</div>
+                      {p.fonte_url && (
+                        <a
+                          href={p.fonte_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex shrink-0 items-center gap-1 text-xs text-primary hover:underline"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span className="max-w-[110px] truncate">{new URL(p.fonte_url).hostname}</span>
+                        </a>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <input
+                        type="number" step="0.0001" min="0"
+                        value={p.valor}
+                        onChange={(e) => updatePreview(idx, { valor: e.target.value })}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                        placeholder={t("adminQuotes.tableValue")}
+                      />
+                      <select
+                        value={p.unidade_id ?? ""}
+                        onChange={(e) => updatePreview(idx, { unidade_id: e.target.value })}
+                        className={`min-w-0 rounded-lg border bg-background px-2 py-1 text-sm ${missing ? "border-destructive" : "border-border"}`}
+                      >
+                        <option value="">—</option>
+                        {unidades.map((u) => (
+                          <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`)}</option>
+                        ))}
+                      </select>
+                      <select
+                        value={p.moeda ?? "BRL"}
+                        onChange={(e) => updatePreview(idx, { moeda: e.target.value as Moeda })}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                      >
+                        <option value="BRL">BRL</option>
+                        <option value="USD">USD</option>
+                      </select>
+                    </div>
+                    {p._skipped && (
+                      <p className="mt-2 text-xs italic text-muted-foreground">
+                        {t("adminQuotes.previewSkippedManual")}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Desktop: table */}
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[760px] text-sm">
                 <thead className="text-left text-xs uppercase tracking-wider text-muted-foreground">
                   <tr>
@@ -588,6 +749,8 @@ function AdminCotacoesPage() {
                 </tbody>
               </table>
             </div>
+          </>
+
           )}
         </section>
       )}
