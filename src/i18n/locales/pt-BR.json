@@ -1309,5 +1309,50 @@
       "s5": { "title": "5. Segurança", "body": "Adotamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado, perda ou alteração indevida." },
       "s6": { "title": "6. Contato", "body": "Em caso de dúvidas sobre esta política, entre em contato pelo canal oficial de atendimento. (Rascunho — substituir pelo texto jurídico oficial.)" }
     }
+  },
+  "clube": {
+    "navLabel": "Clube",
+    "title": "Clube de Vantagens",
+    "subtitle": "Benefícios exclusivos negociados para assinantes Pro.",
+    "empty": "Nenhuma vantagem disponível no momento.",
+    "filterAll": "Todas",
+    "coupon": "Cupom",
+    "copied": "Cupom copiado!",
+    "copyError": "Não foi possível copiar.",
+    "redeem": "Aproveitar",
+    "validUntil": "Válido até"
+  },
+  "adminVantagens": {
+    "navLabel": "Vantagens",
+    "title": "Clube de Vantagens",
+    "subtitle": "Cadastre e gerencie as vantagens exclusivas do Clube.",
+    "new": "Nova vantagem",
+    "editing": "Editando vantagem",
+    "creating": "Nova vantagem",
+    "empty": "Nenhuma vantagem cadastrada.",
+    "inactive": "Inativa",
+    "confirmDelete": "Remover esta vantagem?",
+    "fields": {
+      "titulo": "Título",
+      "parceiro": "Parceiro",
+      "desconto": "Desconto",
+      "categoria": "Categoria",
+      "cupom": "Cupom",
+      "link": "Link para aproveitar",
+      "logo": "URL do logo do parceiro",
+      "validade": "Validade",
+      "ordem": "Ordem",
+      "ativo": "Ativa",
+      "descricao": "Descrição"
+    },
+    "placeholders": {
+      "desconto": "Ex.: 20% de desconto"
+    },
+    "errors": {
+      "titulo": "Informe um título",
+      "parceiro": "Informe o parceiro",
+      "desconto": "Informe o desconto",
+      "link": "URL inválida (use http:// ou https://)"
+    }
   }
 }
