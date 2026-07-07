@@ -7,6 +7,8 @@ import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 import { Loader2, Pencil, Plus, RefreshCw, Save, X, ExternalLink, ShieldCheck } from "lucide-react";
 import { useCommoditiesCatalog, nomeFor, type CatalogItem } from "@/lib/catalog";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/_authenticated/admin/cotacoes")({
   component: AdminCotacoesPage,
