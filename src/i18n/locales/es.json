@@ -44,7 +44,10 @@
     "subtitle": "Únete a la plataforma del agro brasileño",
     "profileType": "Tipo de perfil",
     "buyer": "Comprador",
-    "seller": "Vendedor",
+    "seller": "Productor",
+    "shop": "Tienda",
+    "brand": "Marca",
+    "approvalNotice": "Las cuentas de tienda y marca pasan por aprobación del equipo antes de acceder al panel.",
     "name": "Nombre completo",
     "phone": "Teléfono",
     "country": "País",
@@ -1213,5 +1216,93 @@
     "nameMin": "Ingresa tu nombre",
     "subjectMin": "Ingresa un asunto",
     "messageMin": "Escribe un mensaje de al menos 10 caracteres"
+  },
+  "segment": {
+    "produtor": {
+      "eyebrow": "Para productores rurales",
+      "title": "Vende directo — sin intermediarios entre tú y el mercado.",
+      "subtitle": "Publica tu cosecha, recibe ofertas de compradores verificados y gestiona todo en un panel hecho para el campo.",
+      "cta": "Crear cuenta como Productor",
+      "benefitsTitle": "Por qué ALAGROBUSINESS para ti",
+      "benefitsSubtitle": "Herramientas pensadas para quien produce.",
+      "b1": { "title": "Mayor alcance", "desc": "Tus anuncios llegan a compradores en todo Brasil, con filtros por región y categoría." },
+      "b2": { "title": "Negociación directa", "desc": "Habla por chat con el comprador, sin intermediarios, y cierra a tu manera." },
+      "b3": { "title": "Panel de ventas", "desc": "Sigue facturación, propuestas abiertas e historial de ventas en tiempo real." },
+      "b4": { "title": "Cotizaciones y clima", "desc": "Precios de commodities, dólar y clima para decidir cuándo vender." },
+      "howTitle": "Cómo funciona para ti",
+      "s1": { "title": "Regístrate como Productor", "desc": "Cuenta gratis, con las categorías que produces." },
+      "s2": { "title": "Publica tus lotes", "desc": "Sube fotos, define precio y cantidad — el anuncio aparece en la búsqueda." },
+      "s3": { "title": "Negocia y gestiona", "desc": "Responde propuestas en el chat y registra ventas en tu panel." },
+      "finalTitle": "¿Listo para vender mejor?",
+      "finalSubtitle": "Empieza ahora — el registro toma menos de 2 minutos."
+    },
+    "marca": {
+      "eyebrow": "Para marcas del agro",
+      "title": "Conecta tu marca con quien realmente decide en el campo.",
+      "subtitle": "Fortalece tu presencia en el agro brasileño con un canal directo al productor, a la tienda y al comprador profesional.",
+      "cta": "Crear cuenta como Marca",
+      "benefitsTitle": "Por qué ALAGROBUSINESS para tu marca",
+      "benefitsSubtitle": "Una vitrina premium para el agronegocio.",
+      "b1": { "title": "Presencia cualificada", "desc": "Tu marca junto al contenido, cotizaciones y noticias que el productor consume a diario." },
+      "b2": { "title": "Canal con el productor", "desc": "Publica lanzamientos, campañas y materiales al público correcto." },
+      "b3": { "title": "Insights del agro", "desc": "Sigue tendencias de búsqueda, categorías en alza y comportamiento del mercado." },
+      "b4": { "title": "Soporte dedicado", "desc": "Nuestro equipo te ayuda a configurar tu presencia y sacar el máximo de la plataforma." },
+      "howTitle": "Cómo funciona para tu marca",
+      "s1": { "title": "Registra la marca", "desc": "Solicita acceso — las cuentas de marca pasan por aprobación del equipo." },
+      "s2": { "title": "Activa tu vitrina", "desc": "Con la cuenta aprobada, publica contenido, campañas y materiales." },
+      "s3": { "title": "Mide resultados", "desc": "Sigue el alcance y la interacción con la audiencia del agro." },
+      "finalTitle": "¿Vamos a fortalecer tu marca en el agro?",
+      "finalSubtitle": "Solicita acceso y nuestro equipo te contacta."
+    },
+    "lojista": {
+      "eyebrow": "Para tiendas del agro",
+      "title": "Amplía tu tienda y llega a productores en todo Brasil.",
+      "subtitle": "Publica tu catálogo, gestiona stock y cierra más ventas — con un canal directo a quien produce en el campo.",
+      "cta": "Crear cuenta como Tienda",
+      "benefitsTitle": "Por qué ALAGROBUSINESS para tu tienda",
+      "benefitsSubtitle": "Vitrina, negociación y gestión en un solo lugar.",
+      "b1": { "title": "Vitrina nacional", "desc": "Tus productos aparecen para productores y compradores en todo el país." },
+      "b2": { "title": "Gestión simple", "desc": "Controla stock, precios y estado de cada ítem desde el panel." },
+      "b3": { "title": "Negociación por chat", "desc": "Atiende propuestas en tiempo real y cierra sin salir de la plataforma." },
+      "b4": { "title": "Reportes claros", "desc": "Ve qué se vende, qué no, y dónde enfocar tu energía." },
+      "howTitle": "Cómo funciona para tu tienda",
+      "s1": { "title": "Registra la tienda", "desc": "Solicita acceso — las cuentas de tienda pasan por aprobación del equipo." },
+      "s2": { "title": "Publica el catálogo", "desc": "Tras la aprobación, publica productos con fotos, precio y stock." },
+      "s3": { "title": "Vende y gestiona", "desc": "Responde propuestas, marca ventas y sigue todo en el panel." },
+      "finalTitle": "¿Vamos a ampliar tu tienda en el agro?",
+      "finalSubtitle": "Solicita acceso y empieza a vender en todo Brasil."
+    }
+  },
+  "about": {
+    "title": "Sobre ALAGROBUSINESS",
+    "subtitle": "Una plataforma hecha para conectar toda la cadena del agronegocio brasileño.",
+    "p1": "ALAGROBUSINESS nació para darle al productor rural, al comprador, a la tienda y a la marca del agro un único lugar para encontrarse, negociar y crecer juntos.",
+    "p2": "Reunimos marketplace, cotizaciones, clima, noticias, cursos y un club de ventajas en una experiencia simple, mobile-first y pensada para quien vive el campo.",
+    "p3": "Nuestro compromiso es con la transparencia, la seguridad de la información y el respeto a las leyes de privacidad — para que cada usuario controle sus datos y negociaciones.",
+    "mission": { "title": "Misión", "desc": "Conectar el agronegocio brasileño con tecnología, transparencia y simplicidad." },
+    "vision": { "title": "Visión", "desc": "Ser la principal plataforma del agro brasileño, del campo a la industria." },
+    "values": { "title": "Valores", "desc": "Confianza, cercanía con el productor y evolución continua." }
+  },
+  "legal": {
+    "updatedAt": "Borrador — sujeto a revisión jurídica.",
+    "draftNotice": "Este texto es un borrador y debe ser reemplazado por el contenido jurídico oficial proporcionado por el abogado responsable. No constituye asesoría legal.",
+    "terms": {
+      "title": "Términos de Uso",
+      "s1": { "title": "1. Aceptación", "body": "Al usar ALAGROBUSINESS declaras haber leído y aceptado estos Términos. Si no estás de acuerdo, no uses la plataforma." },
+      "s2": { "title": "2. Registro y cuenta", "body": "El usuario es responsable por la información brindada en el registro y por mantener la confidencialidad de sus credenciales." },
+      "s3": { "title": "3. Uso de la plataforma", "body": "Se prohíbe usar el servicio con fines ilícitos, fraudulentos, ofensivos o que violen derechos de terceros." },
+      "s4": { "title": "4. Anuncios y negociaciones", "body": "Las negociaciones entre usuarios son responsabilidad de las partes. ALAGROBUSINESS actúa como intermediario de conexión." },
+      "s5": { "title": "5. Propiedad intelectual", "body": "Todo el contenido, marca y software de ALAGROBUSINESS está protegido por derechos de autor y demás leyes aplicables." },
+      "s6": { "title": "6. Cambios", "body": "Estos Términos pueden actualizarse en cualquier momento. Consulta esta página con frecuencia. (Borrador — reemplazar por el texto jurídico oficial.)" }
+    },
+    "privacy": {
+      "title": "Política de Privacidad",
+      "s1": { "title": "1. Qué datos recolectamos", "body": "Recolectamos datos del registro (nombre, correo, teléfono, ubicación, categorías de interés) y datos de uso, conforme a la ley de privacidad." },
+      "s2": { "title": "2. Cómo usamos los datos", "body": "Usamos los datos para prestar el servicio, personalizar la experiencia, garantizar seguridad y cumplir obligaciones legales." },
+      "s3": { "title": "3. Compartición", "body": "No vendemos datos personales. Compartimos solo con proveedores esenciales al funcionamiento y cuando lo exige la ley." },
+      "s4": { "title": "4. Derechos del titular", "body": "Puedes solicitar acceso, corrección, portabilidad o eliminación de tus datos en cualquier momento, conforme a la ley." },
+      "s5": { "title": "5. Seguridad", "body": "Adoptamos medidas técnicas y organizativas para proteger los datos contra accesos no autorizados, pérdida o alteración indebida." },
+      "s6": { "title": "6. Contacto", "body": "Si tienes dudas sobre esta política, contáctanos por el canal oficial de atención. (Borrador — reemplazar por el texto jurídico oficial.)" }
+    }
   }
 }

@@ -58,10 +58,10 @@ function PublicHome() {
   }, [user, profile, loading, navigate]);
 
   const audiences = [
-    { icon: Sparkles, key: "producer" },
-    { icon: ShoppingCart, key: "buyer" },
-    { icon: Store, key: "shop" },
-    { icon: Building2, key: "brand" },
+    { icon: Sparkles, key: "producer", to: "/para/$perfil" as const, params: { perfil: "produtor" }, search: undefined },
+    { icon: ShoppingCart, key: "buyer", to: "/cadastro" as const, params: undefined, search: { perfil: "comprador" } },
+    { icon: Store, key: "shop", to: "/para/$perfil" as const, params: { perfil: "lojista" }, search: undefined },
+    { icon: Building2, key: "brand", to: "/para/$perfil" as const, params: { perfil: "marca" }, search: undefined },
   ] as const;
 
   const features = [
@@ -136,7 +136,7 @@ function PublicHome() {
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
         <SectionHeader title={t("public.audience.title")} subtitle={t("public.audience.subtitle")} />
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {audiences.map(({ icon: Icon, key }) => (
+          {audiences.map(({ icon: Icon, key, to, params, search }) => (
             <div
               key={key}
               className="group flex flex-col rounded-2xl border border-border bg-card/60 p-6 backdrop-blur transition hover:border-primary/50 hover:bg-card"
@@ -150,9 +150,23 @@ function PublicHome() {
               <p className="mt-2 flex-1 text-sm text-muted-foreground">
                 {t(`public.audience.${key}.desc`)}
               </p>
-              <Link to="/cadastro" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                {t("public.audience.cta")} <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
+              {to === "/para/$perfil" ? (
+                <Link
+                  to="/para/$perfil"
+                  params={params!}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary"
+                >
+                  {t("public.audience.cta")} <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              ) : (
+                <Link
+                  to="/cadastro"
+                  search={search!}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary"
+                >
+                  {t("public.audience.cta")} <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
             </div>
           ))}
         </div>
@@ -237,10 +251,10 @@ function PublicHome() {
             <p className="mt-3 text-sm text-muted-foreground">{t("public.footer.tagline")}</p>
           </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <a href="#how" className="hover:text-foreground">{t("public.footer.about")}</a>
+            <Link to="/sobre" className="hover:text-foreground">{t("public.footer.about")}</Link>
             <Link to="/contato" className="hover:text-foreground">{t("public.footer.contact")}</Link>
-            <a href="#" className="hover:text-foreground">{t("public.footer.terms")}</a>
-            <a href="#" className="hover:text-foreground">{t("public.footer.privacy")}</a>
+            <Link to="/termos" className="hover:text-foreground">{t("public.footer.terms")}</Link>
+            <Link to="/privacidade" className="hover:text-foreground">{t("public.footer.privacy")}</Link>
           </nav>
         </div>
         <div className="border-t border-border/40 px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
