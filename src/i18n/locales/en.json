@@ -160,7 +160,8 @@
     "themes": {
       "ecologico": "Ecological",
       "terroso": "Earthy",
-      "chuva": "Rain"
+      "chuva": "Rain",
+      "classico": "Classic"
     }
   },
   "placeholders": {

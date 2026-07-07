@@ -61,15 +61,17 @@ function ConfigPage() {
         idioma_preferido: i18n.language as SupportedLang,
       })
       .eq("id", profile.id);
-    await supabase
-      .from("preferencias")
-      .update({
-        moeda,
-        tipo_dolar: tipoDolar,
-        idioma: i18n.language as SupportedLang,
-        tema,
-      })
-      .eq("usuario_id", profile.id);
+    if (tema !== "classico") {
+      await supabase
+        .from("preferencias")
+        .update({
+          moeda,
+          tipo_dolar: tipoDolar,
+          idioma: i18n.language as SupportedLang,
+          tema,
+        })
+        .eq("usuario_id", profile.id);
+    }
     setSaving(false);
     setSaved(true);
     await refreshProfile();

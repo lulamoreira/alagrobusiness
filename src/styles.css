@@ -109,6 +109,29 @@
   --ring: #56B6E6;
 }
 
+/* Clássico (verde vivo estilo mockup original) */
+:root[data-theme="classico"] {
+  --background: #4CA935;
+  --foreground: #FFFFFF;
+  --card: #3E8E2B;
+  --card-foreground: #FFFFFF;
+  --popover: #3E8E2B;
+  --popover-foreground: #FFFFFF;
+  --primary: #F5E625;
+  --primary-foreground: #1E4A15;
+  --secondary: #367525;
+  --secondary-foreground: #FFFFFF;
+  --muted: #3A8229;
+  --muted-foreground: #E4F3DC;
+  --accent: #F5E625;
+  --accent-foreground: #1E4A15;
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: rgba(255, 255, 255, 0.22);
+  --input: rgba(255, 255, 255, 0.18);
+  --ring: #F5E625;
+}
+
 html, body {
   background-color: var(--background);
   color: var(--foreground);
