@@ -1,8 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
+import { fallback, zodValidator } from "@tanstack/zod-adapter";
 import { supabase } from "@/integrations/supabase/client";
 import { signupSchema, type SignupInput } from "@/lib/schemas";
 import { AmbientGlow } from "@/components/AmbientGlow";
@@ -17,37 +19,61 @@ import { GoogleButton } from "@/components/GoogleButton";
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 
+// Slugs vindos das páginas /para/... e slugs diretos aceitos
+const PERFIL_MAP: Record<string, SignupInput["tipo_perfil"]> = {
+  comprador: "comprador",
+  vendedor: "vendedor",
+  produtor: "vendedor",
+  lojista: "lojista",
+  marca: "marca",
+};
+
+const searchSchema = z.object({
+  perfil: fallback(z.string(), "").default(""),
+});
+
 export const Route = createFileRoute("/cadastro")({
   ssr: false,
+  validateSearch: zodValidator(searchSchema),
   component: SignupPage,
 });
 
 function SignupPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { perfil } = Route.useSearch();
   const [serverError, setServerError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  const initialTipo = PERFIL_MAP[perfil?.toLowerCase() ?? ""] ?? "comprador";
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      tipo_perfil: "comprador",
+      tipo_perfil: initialTipo,
       pais: "Brasil",
       categorias_interesse: [],
       lgpd_aceito: false as unknown as true,
     },
   });
 
+  // Sincroniza mudanças na querystring (ex.: navegação entre funis)
+  useEffect(() => {
+    const mapped = PERFIL_MAP[perfil?.toLowerCase() ?? ""];
+    if (mapped) setValue("tipo_perfil", mapped);
+  }, [perfil, setValue]);
+
   const onSubmit = async (data: SignupInput) => {
     setSubmitting(true);
     setServerError(null);
     // Importante: tipo_perfil é sanitizado no servidor pelo trigger handle_new_user.
-    // Mesmo que alguém envie 'admin', o trigger rebaixa para 'comprador'.
+    // Marca e lojista entram como 'aguardando_aprovacao'.
     const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
@@ -73,6 +99,13 @@ function SignupPage() {
     }
     navigate({ to: "/" });
   };
+
+  const perfilOptions = [
+    { value: "comprador" as const, label: t("signup.buyer") },
+    { value: "vendedor" as const, label: t("signup.seller") },
+    { value: "lojista" as const, label: t("signup.shop") },
+    { value: "marca" as const, label: t("signup.brand") },
+  ];
 
   return (
     <div className="relative flex min-h-screen items-center justify-center px-4 py-8">
@@ -106,15 +139,16 @@ function SignupPage() {
               name="tipo_perfil"
               render={({ field }) => (
                 <SegmentedToggle
+                  className="flex-wrap"
                   value={field.value}
                   onChange={field.onChange}
-                  options={[
-                    { value: "comprador", label: t("signup.buyer") },
-                    { value: "vendedor", label: t("signup.seller") },
-                  ]}
+                  options={perfilOptions}
                 />
               )}
             />
+            {(initialTipo === "lojista" || initialTipo === "marca") && (
+              <p className="mt-2 text-xs text-muted-foreground">{t("signup.approvalNotice")}</p>
+            )}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
