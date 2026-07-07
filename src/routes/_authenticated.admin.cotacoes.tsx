@@ -605,7 +605,74 @@ function AdminCotacoesPage() {
           {preview.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted-foreground">{t("adminQuotes.previewEmpty")}</p>
           ) : (
-            <div className="overflow-x-auto">
+          <>
+            {/* Mobile: card list */}
+            <ul className="space-y-3 md:hidden">
+              {preview.map((p, idx) => {
+                const missing = !p._skipped && !p.unidade_id;
+                const c = catalog.find((x) => x.codigo === p.produto);
+                return (
+                  <li
+                    key={idx}
+                    className={cn(
+                      "rounded-xl border border-border/60 bg-card/40 p-3",
+                      p._skipped && "opacity-50",
+                      missing && "bg-destructive/10 ring-1 ring-inset ring-destructive/40",
+                    )}
+                  >
+                    <div className="mb-2 flex items-start justify-between gap-2">
+                      <div className="min-w-0 font-medium">{c ? nomeFor(c, i18n.language) : p.produto}</div>
+                      {p.fonte_url && (
+                        <a
+                          href={p.fonte_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex shrink-0 items-center gap-1 text-xs text-primary hover:underline"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span className="max-w-[110px] truncate">{new URL(p.fonte_url).hostname}</span>
+                        </a>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <input
+                        type="number" step="0.0001" min="0"
+                        value={p.valor}
+                        onChange={(e) => updatePreview(idx, { valor: e.target.value })}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                        placeholder={t("adminQuotes.tableValue")}
+                      />
+                      <select
+                        value={p.unidade_id ?? ""}
+                        onChange={(e) => updatePreview(idx, { unidade_id: e.target.value })}
+                        className={`min-w-0 rounded-lg border bg-background px-2 py-1 text-sm ${missing ? "border-destructive" : "border-border"}`}
+                      >
+                        <option value="">—</option>
+                        {unidades.map((u) => (
+                          <option key={u.id} value={u.id}>{t(`units.${u.nome_chave}`)}</option>
+                        ))}
+                      </select>
+                      <select
+                        value={p.moeda ?? "BRL"}
+                        onChange={(e) => updatePreview(idx, { moeda: e.target.value as Moeda })}
+                        className="min-w-0 rounded-lg border border-border bg-background px-2 py-1 text-sm"
+                      >
+                        <option value="BRL">BRL</option>
+                        <option value="USD">USD</option>
+                      </select>
+                    </div>
+                    {p._skipped && (
+                      <p className="mt-2 text-xs italic text-muted-foreground">
+                        {t("adminQuotes.previewSkippedManual")}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Desktop: table */}
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[760px] text-sm">
                 <thead className="text-left text-xs uppercase tracking-wider text-muted-foreground">
                   <tr>
@@ -680,6 +747,8 @@ function AdminCotacoesPage() {
                 </tbody>
               </table>
             </div>
+          </>
+
           )}
         </section>
       )}
