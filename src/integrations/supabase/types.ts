@@ -505,6 +505,51 @@ export type Database = {
           },
         ]
       }
+      contatos: {
+        Row: {
+          assunto: string
+          created_at: string
+          deleted_at: string | null
+          email: string
+          id: string
+          ip: string | null
+          lida: boolean
+          mensagem: string
+          nome: string
+          origem: string | null
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          assunto: string
+          created_at?: string
+          deleted_at?: string | null
+          email: string
+          id?: string
+          ip?: string | null
+          lida?: boolean
+          mensagem: string
+          nome: string
+          origem?: string | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          assunto?: string
+          created_at?: string
+          deleted_at?: string | null
+          email?: string
+          id?: string
+          ip?: string | null
+          lida?: boolean
+          mensagem?: string
+          nome?: string
+          origem?: string | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       conversas: {
         Row: {
           anuncio_id: string

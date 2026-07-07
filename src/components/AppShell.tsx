@@ -33,6 +33,7 @@ import {
   UserCircle,
   ChevronDown,
   Menu,
+  Mail,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -122,6 +123,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/cursos", labelKey: "adminCourses.navLabel", icon: GraduationCap, permKey: "cursos" },
       { to: "/admin/gestao", labelKey: "adminGestao.navLabel", icon: BarChart3, permKey: "gestao" },
       { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck, permKey: "moderacao" },
+      { to: "/admin/contatos", labelKey: "adminContatos.navLabel", icon: Mail },
     ],
 
   },

@@ -1093,5 +1093,125 @@
     "adminGrantedMsg": "Um novo perfil de administrador foi concedido a você. Faça login novamente para ver as áreas liberadas.",
     "adminRevokedTitle": "Acesso de administrador removido",
     "adminRevokedMsg": "Seu acesso de administrador foi removido."
+  },
+  "public": {
+    "nav": {
+      "signin": "Entrar",
+      "signup": "Criar conta",
+      "contact": "Contato",
+      "howItWorks": "Como funciona"
+    },
+    "hero": {
+      "eyebrow": "Plataforma do agronegócio brasileiro",
+      "title": "Do campo ao mercado, tudo em um só lugar.",
+      "subtitle": "Anuncie, negocie e acompanhe cotações, clima, notícias e cursos — em uma plataforma pensada para produtores, compradores, lojistas e marcas do agro.",
+      "ctaPrimary": "Criar conta grátis",
+      "ctaSecondary": "Como funciona"
+    },
+    "audience": {
+      "title": "Feito para todo o agronegócio",
+      "subtitle": "Perfis desenhados para o seu papel na cadeia.",
+      "producer": {
+        "title": "Produtor",
+        "desc": "Anuncie sua produção, receba propostas e acompanhe suas vendas em um painel completo."
+      },
+      "buyer": {
+        "title": "Comprador",
+        "desc": "Encontre fornecedores por região e categoria, negocie por chat e feche negócios com segurança."
+      },
+      "shop": {
+        "title": "Lojista",
+        "desc": "Amplie sua vitrine, gerencie estoque e alcance produtores em todo o Brasil."
+      },
+      "brand": {
+        "title": "Marca",
+        "desc": "Conecte-se com o produtor final, publique conteúdo e fortaleça sua presença no agro."
+      },
+      "cta": "Cadastrar"
+    },
+    "features": {
+      "title": "Tudo o que você precisa",
+      "subtitle": "Ferramentas profissionais em uma única plataforma.",
+      "marketplace": {
+        "title": "Marketplace",
+        "desc": "Anúncios de frutas, grãos, legumes e vegetais com fotos, preço e negociação por chat."
+      },
+      "quotes": {
+        "title": "Cotações & Clima",
+        "desc": "Cotação de commodities, dólar e previsão do tempo direto no seu painel."
+      },
+      "news": {
+        "title": "Notícias",
+        "desc": "Curadoria de notícias do agro por temas do seu interesse."
+      },
+      "learning": {
+        "title": "Área de ensino",
+        "desc": "Cursos e certificados para se atualizar e destacar seu negócio."
+      },
+      "club": {
+        "title": "Clube de vantagens",
+        "desc": "Benefícios exclusivos para assinantes e parceiros do ALAGROBUSINESS."
+      }
+    },
+    "how": {
+      "title": "Como funciona",
+      "subtitle": "Do cadastro à primeira negociação em minutos.",
+      "step1": { "title": "Cadastre-se", "desc": "Crie sua conta grátis e escolha o seu perfil." },
+      "step2": { "title": "Anuncie ou compre", "desc": "Publique seus produtos ou navegue pelo marketplace." },
+      "step3": { "title": "Negocie no chat", "desc": "Converse diretamente com a outra parte, com segurança." },
+      "step4": { "title": "Gerencie no painel", "desc": "Acompanhe vendas, alertas e agenda em um só lugar." }
+    },
+    "finalCta": {
+      "title": "Pronto para começar?",
+      "subtitle": "Junte-se a produtores, compradores, lojistas e marcas em toda a cadeia do agro.",
+      "primary": "Criar conta grátis",
+      "secondary": "Falar com a gente"
+    },
+    "footer": {
+      "tagline": "Marketplace do agronegócio brasileiro.",
+      "about": "Sobre",
+      "contact": "Contato",
+      "terms": "Termos",
+      "privacy": "Privacidade",
+      "rights": "Todos os direitos reservados."
+    }
+  },
+  "contact": {
+    "title": "Fale com a gente",
+    "subtitle": "Envie sua mensagem — nossa equipe responde em breve.",
+    "name": "Nome",
+    "email": "E-mail",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "send": "Enviar mensagem",
+    "sending": "Enviando…",
+    "successTitle": "Mensagem enviada!",
+    "successMsg": "Recebemos sua mensagem e retornaremos em breve.",
+    "sendAnother": "Enviar outra mensagem",
+    "errorGeneric": "Não foi possível enviar. Tente novamente em instantes.",
+    "errorRate": "Muitas mensagens em pouco tempo. Aguarde alguns minutos.",
+    "seoTitle": "Contato — ALAGROBUSINESS",
+    "seoDesc": "Fale com o ALAGROBUSINESS. Envie sua dúvida, sugestão ou parceria."
+  },
+  "adminContatos": {
+    "navLabel": "Contatos",
+    "title": "Contatos recebidos",
+    "subtitle": "Mensagens enviadas pelo formulário público de contato.",
+    "empty": "Nenhuma mensagem recebida.",
+    "unread": "Não lida",
+    "read": "Lida",
+    "markRead": "Marcar como lida",
+    "markUnread": "Marcar como não lida",
+    "from": "De",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "sentAt": "Enviada em",
+    "filterAll": "Todas",
+    "filterUnread": "Não lidas"
+  },
+  "validation2": {
+    "nameMin": "Informe seu nome",
+    "subjectMin": "Informe um assunto",
+    "messageMin": "Escreva uma mensagem com pelo menos 10 caracteres"
   }
 }
