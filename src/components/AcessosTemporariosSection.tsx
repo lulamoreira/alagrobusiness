@@ -294,6 +294,7 @@ export function AcessosTemporariosSection() {
   };
 
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString(i18n.language) : "—");
+  const nomePlano = (p: PlanoOpt) => p.nome?.[i18n.language] ?? p.nome?.["pt-BR"] ?? p.codigo;
 
   const badge = (e: Estado) => {
     const cls: Record<Estado, string> = {
