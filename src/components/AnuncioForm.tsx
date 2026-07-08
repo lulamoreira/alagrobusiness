@@ -85,6 +85,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
   const [categoria, setCategoria] = useState<Category>(initial?.categoria ?? "grao");
+  const [catalogoItemId, setCatalogoItemId] = useState<string | null>(initial?.catalogo_item_id ?? null);
+
   const [produto, setProduto] = useState(initial?.produto ?? "");
   const [qualidade, setQualidade] = useState(initial?.qualidade ?? "");
   const [dataColheita, setDataColheita] = useState(initial?.data_colheita ?? "");
