@@ -113,6 +113,17 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
     staleTime: 1000 * 60 * 5,
   });
 
+  const { data: catalogo } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+    enabled: !!item.catalogo_item_id,
+  });
+  const catalogoPath = catalogo && item.catalogo_item_id
+    ? catalogoPathLabel(catalogo, item.catalogo_item_id, i18n.language)
+    : null;
+
+
   const priceUnit = units.find((u) => u.id === item.preco_unidade_id);
   const qtyUnit = units.find((u) => u.id === item.quantidade_unidade_id);
 
