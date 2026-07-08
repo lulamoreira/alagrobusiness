@@ -136,7 +136,38 @@ export function AcessosTemporariosSection() {
     setPlanos((data ?? []) as PlanoOpt[]);
   };
 
+  const PWD_LS_KEY = "demo_pwd_cache_v1";
+  const savePwd = (login: string, senha: string) => {
+    setPwdByLogin((prev) => {
+      const next = { ...prev, [login]: senha };
+      try {
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(PWD_LS_KEY, JSON.stringify(next));
+        }
+      } catch { /* ignore */ }
+      return next;
+    });
+  };
+  const forgetPwd = (login: string) => {
+    setPwdByLogin((prev) => {
+      const next = { ...prev };
+      delete next[login];
+      try {
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(PWD_LS_KEY, JSON.stringify(next));
+        }
+      } catch { /* ignore */ }
+      return next;
+    });
+  };
+
   useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        const raw = window.localStorage.getItem(PWD_LS_KEY);
+        if (raw) setPwdByLogin(JSON.parse(raw) as Record<string, string>);
+      }
+    } catch { /* ignore */ }
     load();
     loadPlanos();
     const id = setInterval(load, 60_000);
