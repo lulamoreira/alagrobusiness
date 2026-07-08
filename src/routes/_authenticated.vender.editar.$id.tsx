@@ -25,6 +25,8 @@ function EditPage() {
     titulo: data.titulo,
     descricao: data.descricao,
     categoria: data.categoria,
+    catalogo_item_id: data.catalogo_item_id ?? null,
+
     produto: data.produto,
     qualidade: data.qualidade,
     data_colheita: data.data_colheita,
