@@ -267,7 +267,6 @@
     "category": "Category",
     "catalogoCategory": "Category (catalog)",
     "catalogoHint": "Pick the most specific category available.",
-
     "product": "Product",
     "productPh": "E.g. Soy, Coffee, Tomato...",
     "quality": "Quality",
@@ -307,7 +306,6 @@
     "sortPriceDesc": "Highest price",
     "filterCategory": "Category",
     "filterCatalogo": "Category (catalog)",
-
     "filterState": "State",
     "filterQuality": "Quality",
     "filterCertifications": "Certifications",
@@ -1124,7 +1122,6 @@
   "public": {
     "learnMore": "Discover the platform",
     "nav": {
-
       "signin": "Sign in",
       "signup": "Create account",
       "contact": "Contact",
@@ -1549,6 +1546,39 @@
     "createdManual": "Invite created. Email not configured — send the link manually.",
     "updated": "Time adjusted.",
     "revoked": "Temporary access revoked.",
-    "invalidDays": "Enter a valid number of days."
+    "invalidDays": "Enter a valid number of days.",
+    "emailInviteTitle": "Email invite (advanced)"
+  },
+  "demoAccess": {
+    "createTitle": "New demo account",
+    "createHint": "Creates an account with login + password (no real email). The countdown starts on first login.",
+    "login": "Login",
+    "password": "Password",
+    "label": "Label (optional)",
+    "labelPlaceholder": "e.g. ACME Client",
+    "plan": "Granted plan",
+    "daysFromFirstAccess": "Days from 1st access",
+    "createBtn": "Create demo account",
+    "created": "Demo account created.",
+    "createdTitle": "Demo account created",
+    "createdDesc": "Copy the login and password — they won't be shown again.",
+    "loginShort": "login",
+    "invalidLogin": "Enter a valid login (min 2 chars).",
+    "invalidPassword": "Password must be at least 6 characters.",
+    "edit": "Edit",
+    "editTitle": "Edit demo account",
+    "newPassword": "Reset password (optional)",
+    "newPasswordHint": "Leave blank to keep current",
+    "save": "Save",
+    "saved": "Changes saved.",
+    "delete": "Delete",
+    "deleted": "Demo account deleted.",
+    "deleteTitle": "Delete demo account?",
+    "deleteConfirm": "This permanently removes the account \"{{name}}\". Cannot be undone.",
+    "reactivate": "Restart trial",
+    "reactivated": "Trial restarted — waiting for first access.",
+    "addDaysLabel": "Add days",
+    "addBtn": "Add",
+    "copied": "Copied."
   }
 }
