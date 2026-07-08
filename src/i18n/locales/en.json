@@ -1579,6 +1579,11 @@
     "reactivated": "Trial restarted — waiting for first access.",
     "addDaysLabel": "Add days",
     "addBtn": "Add",
-    "copied": "Copied."
+    "copied": "Copied.",
+    "credentialsTitle": "Access credentials",
+    "copyLogin": "Copy login",
+    "passwordNote": "The password is not stored. If needed, use \"Edit\" to reset it.",
+    "adjustTimeGroup": "Adjust time",
+    "manageGroup": "Manage"
   }
 }
