@@ -534,6 +534,7 @@
     "navLabel": "Admin · Access",
     "title": "Access & complimentary plans",
     "subtitle": "Grant or revoke Pro access to users. Complimentary access is independent from payments.",
+    "quickNav": "Quick navigation",
     "searchLabel": "Search user",
     "searchPlaceholder": "User email or name",
     "search": "Search",

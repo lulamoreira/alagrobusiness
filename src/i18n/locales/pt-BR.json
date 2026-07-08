@@ -536,6 +536,7 @@
     "navLabel": "Admin · Acessos",
     "title": "Acessos e cortesias",
     "subtitle": "Conceda ou revogue acesso Pro para usuários. Cortesias são independentes de pagamento.",
+    "quickNav": "Navegação rápida",
     "searchLabel": "Buscar usuário",
     "searchPlaceholder": "E-mail ou nome do usuário",
     "search": "Buscar",
