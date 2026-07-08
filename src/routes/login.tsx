@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/lib/auth";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
   const [serverError, setServerError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const {
@@ -27,6 +30,24 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (!profile) return;
+    if (!profile.perfil_completo) navigate({ to: "/completar-cadastro", replace: true });
+    else if (profile.status === "ativo") navigate({ to: "/painel", replace: true });
+    else if (profile.status === "bloqueado") navigate({ to: "/bloqueado", replace: true });
+    else if (profile.status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao", replace: true });
+  }, [user, profile, authLoading, navigate]);
+
+  if (authLoading || user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-10 w-10 animate-pulse rounded-full bg-primary/40" />
+      </div>
+    );
+  }
+
 
   const onSubmit = async (data: LoginInput) => {
     setSubmitting(true);
@@ -93,6 +114,12 @@ function LoginPage() {
             {t("auth.signupHere")}
           </Link>
         </div>
+        <div className="text-center">
+          <Link to="/conheca" className="text-xs text-muted-foreground hover:text-foreground">
+            {t("public.learnMore")}
+          </Link>
+        </div>
+
       </div>
     </div>
   );
