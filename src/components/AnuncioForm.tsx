@@ -269,6 +269,15 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         />
       </div>
 
+      <div className="rounded-2xl border border-border bg-card/40 p-4">
+        <CatalogoCascade
+          label={t("form.catalogoCategory")}
+          value={catalogoItemId}
+          onChange={setCatalogoItemId}
+        />
+        <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-3">
         <div>
           <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.category")}</label>
@@ -293,6 +302,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
           onChange={(e) => setDataColheita(e.target.value)}
         />
       </div>
+
+
 
       <div>
         <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.photos")}</label>
