@@ -35,6 +35,8 @@ import {
   Menu,
   Mail,
   Sparkles,
+  FolderTree,
+
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
