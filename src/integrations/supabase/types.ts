@@ -614,6 +614,7 @@ export type Database = {
           criado_por: string | null
           deleted_at: string | null
           dias: number | null
+          duracao_horas: number | null
           email: string
           expira_em: string
           id: string
@@ -629,6 +630,7 @@ export type Database = {
           criado_por?: string | null
           deleted_at?: string | null
           dias?: number | null
+          duracao_horas?: number | null
           email: string
           expira_em?: string
           id?: string
@@ -644,6 +646,7 @@ export type Database = {
           criado_por?: string | null
           deleted_at?: string | null
           dias?: number | null
+          duracao_horas?: number | null
           email?: string
           expira_em?: string
           id?: string
@@ -1395,6 +1398,10 @@ export type Database = {
         Args: { p_dias: number; p_plano_codigo: string; p_usuario: string }
         Returns: undefined
       }
+      _aplicar_cortesia_horas: {
+        Args: { p_horas: number; p_plano_codigo: string; p_usuario: string }
+        Returns: undefined
+      }
       admin_acessos_set_status: {
         Args: {
           p_status: Database["public"]["Enums"]["status_perfil"]
@@ -1403,30 +1410,62 @@ export type Database = {
         Returns: undefined
       }
       admin_cancelar_convite: { Args: { p_id: string }; Returns: undefined }
-      admin_criar_convite: {
-        Args: { p_dias?: number; p_email: string; p_plano?: string }
-        Returns: {
-          created_at: string
-          criado_por: string | null
-          deleted_at: string | null
-          dias: number | null
-          email: string
-          expira_em: string
-          id: string
-          plano_codigo: string
-          status: Database["public"]["Enums"]["convite_status"]
-          token: string
-          updated_at: string
-          usado_em: string | null
-          usado_por: string | null
-        }
-        SetofOptions: {
-          from: "*"
-          to: "convites_cortesia"
-          isOneToOne: true
-          isSetofReturn: false
-        }
-      }
+      admin_criar_convite:
+        | {
+            Args: { p_dias?: number; p_email: string; p_plano?: string }
+            Returns: {
+              created_at: string
+              criado_por: string | null
+              deleted_at: string | null
+              dias: number | null
+              duracao_horas: number | null
+              email: string
+              expira_em: string
+              id: string
+              plano_codigo: string
+              status: Database["public"]["Enums"]["convite_status"]
+              token: string
+              updated_at: string
+              usado_em: string | null
+              usado_por: string | null
+            }
+            SetofOptions: {
+              from: "*"
+              to: "convites_cortesia"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
+        | {
+            Args: {
+              p_dias?: number
+              p_email: string
+              p_horas?: number
+              p_plano?: string
+            }
+            Returns: {
+              created_at: string
+              criado_por: string | null
+              deleted_at: string | null
+              dias: number | null
+              duracao_horas: number | null
+              email: string
+              expira_em: string
+              id: string
+              plano_codigo: string
+              status: Database["public"]["Enums"]["convite_status"]
+              token: string
+              updated_at: string
+              usado_em: string | null
+              usado_por: string | null
+            }
+            SetofOptions: {
+              from: "*"
+              to: "convites_cortesia"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
       admin_delete_user: { Args: { p_usuario: string }; Returns: undefined }
       admin_grant_admin: {
         Args: { p_permissoes: Json; p_usuario: string }
@@ -1437,6 +1476,22 @@ export type Database = {
         Returns: undefined
       }
       admin_kpis: { Args: never; Returns: Json }
+      admin_list_acessos_temporarios: {
+        Args: never
+        Returns: {
+          assinatura_fim: string
+          assinatura_status: string
+          convite_id: string
+          criado_em: string
+          duracao_horas: number
+          email: string
+          expira_em: string
+          plano_codigo: string
+          status_convite: string
+          usado_em: string
+          usuario_id: string
+        }[]
+      }
       admin_list_admins: {
         Args: never
         Returns: {
@@ -1465,6 +1520,7 @@ export type Database = {
           criado_por: string | null
           deleted_at: string | null
           dias: number | null
+          duracao_horas: number | null
           email: string
           expira_em: string
           id: string
@@ -1506,6 +1562,10 @@ export type Database = {
           p_status: Database["public"]["Enums"]["status_perfil"]
           p_usuario: string
         }
+        Returns: undefined
+      }
+      admin_temporario_ajustar_horas: {
+        Args: { p_convite_id: string; p_delta_horas: number }
         Returns: undefined
       }
       admin_update_admin_perms: {
