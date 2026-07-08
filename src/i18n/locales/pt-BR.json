@@ -265,6 +265,9 @@
     "description": "Descrição",
     "descriptionPh": "Detalhes do produto, lote, processo de colheita...",
     "category": "Categoria",
+    "catalogoCategory": "Categoria (catálogo)",
+    "catalogoHint": "Escolha a categoria mais específica possível.",
+
     "product": "Produto",
     "productPh": "Ex.: Soja, Café, Tomate...",
     "quality": "Qualidade",
