@@ -300,6 +300,7 @@ export function AcessosTemporariosSection() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = (e2 as any) || (data && (data as any).error);
       if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
+      if (editing.login) savePwd(editing.login, editNovaSenha);
     }
     toast.success(t("demoAccess.saved"));
     setEditing(null);
