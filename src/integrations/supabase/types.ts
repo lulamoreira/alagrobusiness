@@ -672,6 +672,10 @@ export type Database = {
           email: string
           expira_em: string
           id: string
+          iniciado_em: string | null
+          is_demo: boolean
+          label: string | null
+          login: string | null
           plano_codigo: string
           status: Database["public"]["Enums"]["convite_status"]
           token: string
@@ -688,6 +692,10 @@ export type Database = {
           email: string
           expira_em?: string
           id?: string
+          iniciado_em?: string | null
+          is_demo?: boolean
+          label?: string | null
+          login?: string | null
           plano_codigo?: string
           status?: Database["public"]["Enums"]["convite_status"]
           token?: string
@@ -704,6 +712,10 @@ export type Database = {
           email?: string
           expira_em?: string
           id?: string
+          iniciado_em?: string | null
+          is_demo?: boolean
+          label?: string | null
+          login?: string | null
           plano_codigo?: string
           status?: Database["public"]["Enums"]["convite_status"]
           token?: string
@@ -1160,6 +1172,7 @@ export type Database = {
           estado: string | null
           id: string
           idioma_preferido: Database["public"]["Enums"]["idioma_app"]
+          is_demo: boolean
           is_super_admin: boolean
           latitude: number | null
           longitude: number | null
@@ -1187,6 +1200,7 @@ export type Database = {
           estado?: string | null
           id: string
           idioma_preferido?: Database["public"]["Enums"]["idioma_app"]
+          is_demo?: boolean
           is_super_admin?: boolean
           latitude?: number | null
           longitude?: number | null
@@ -1214,6 +1228,7 @@ export type Database = {
           estado?: string | null
           id?: string
           idioma_preferido?: Database["public"]["Enums"]["idioma_app"]
+          is_demo?: boolean
           is_super_admin?: boolean
           latitude?: number | null
           longitude?: number | null
@@ -1540,6 +1555,10 @@ export type Database = {
               email: string
               expira_em: string
               id: string
+              iniciado_em: string | null
+              is_demo: boolean
+              label: string | null
+              login: string | null
               plano_codigo: string
               status: Database["public"]["Enums"]["convite_status"]
               token: string
@@ -1570,6 +1589,10 @@ export type Database = {
               email: string
               expira_em: string
               id: string
+              iniciado_em: string | null
+              is_demo: boolean
+              label: string | null
+              login: string | null
               plano_codigo: string
               status: Database["public"]["Enums"]["convite_status"]
               token: string
@@ -1585,6 +1608,15 @@ export type Database = {
             }
           }
       admin_delete_user: { Args: { p_usuario: string }; Returns: undefined }
+      admin_demo_editar: {
+        Args: { p_convite_id: string; p_label: string; p_plano: string }
+        Returns: undefined
+      }
+      admin_demo_reativar: {
+        Args: { p_convite_id: string; p_horas: number }
+        Returns: undefined
+      }
+      admin_demo_revogar: { Args: { p_convite_id: string }; Returns: undefined }
       admin_grant_admin: {
         Args: { p_permissoes: Json; p_usuario: string }
         Returns: undefined
@@ -1604,6 +1636,10 @@ export type Database = {
           duracao_horas: number
           email: string
           expira_em: string
+          iniciado_em: string
+          is_demo: boolean
+          label: string
+          login: string
           plano_codigo: string
           status_convite: string
           usado_em: string
@@ -1642,6 +1678,10 @@ export type Database = {
           email: string
           expira_em: string
           id: string
+          iniciado_em: string | null
+          is_demo: boolean
+          label: string | null
+          login: string | null
           plano_codigo: string
           status: Database["public"]["Enums"]["convite_status"]
           token: string
@@ -1699,6 +1739,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      ativar_acesso_demo_se_pendente: { Args: never; Returns: Json }
       catalogo_subtree_ids: {
         Args: { p_id: string }
         Returns: {
