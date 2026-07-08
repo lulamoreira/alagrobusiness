@@ -128,6 +128,7 @@ export type Database = {
       anuncios: {
         Row: {
           aceita_permuta: boolean
+          catalogo_item_id: string | null
           categoria: Database["public"]["Enums"]["categoria_agro"]
           cep: string | null
           certificacoes: string[]
@@ -158,6 +159,7 @@ export type Database = {
         }
         Insert: {
           aceita_permuta?: boolean
+          catalogo_item_id?: string | null
           categoria: Database["public"]["Enums"]["categoria_agro"]
           cep?: string | null
           certificacoes?: string[]
@@ -188,6 +190,7 @@ export type Database = {
         }
         Update: {
           aceita_permuta?: boolean
+          catalogo_item_id?: string | null
           categoria?: Database["public"]["Enums"]["categoria_agro"]
           cep?: string | null
           certificacoes?: string[]
@@ -217,6 +220,13 @@ export type Database = {
           vendedor_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "anuncios_catalogo_item_id_fkey"
+            columns: ["catalogo_item_id"]
+            isOneToOne: false
+            referencedRelation: "categorias_catalogo"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "anuncios_preco_unidade_id_fkey"
             columns: ["preco_unidade_id"]
@@ -380,6 +390,50 @@ export type Database = {
             columns: ["aula_id"]
             isOneToOne: true
             referencedRelation: "aulas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categorias_catalogo: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          deleted_at: string | null
+          icone: string | null
+          id: string
+          nome: Json
+          ordem: number
+          parent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          deleted_at?: string | null
+          icone?: string | null
+          id?: string
+          nome: Json
+          ordem?: number
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          deleted_at?: string | null
+          icone?: string | null
+          id?: string
+          nome?: Json
+          ordem?: number
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categorias_catalogo_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categorias_catalogo"
             referencedColumns: ["id"]
           },
         ]
@@ -1446,6 +1500,34 @@ export type Database = {
         Returns: undefined
       }
       admin_cancelar_convite: { Args: { p_id: string }; Returns: undefined }
+      admin_catalogo_delete: { Args: { p_id: string }; Returns: undefined }
+      admin_catalogo_upsert: {
+        Args: {
+          p_ativo: boolean
+          p_icone: string
+          p_id: string
+          p_nome: Json
+          p_ordem: number
+          p_parent_id: string
+        }
+        Returns: {
+          ativo: boolean
+          created_at: string
+          deleted_at: string | null
+          icone: string | null
+          id: string
+          nome: Json
+          ordem: number
+          parent_id: string | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "categorias_catalogo"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       admin_criar_convite:
         | {
             Args: { p_dias?: number; p_email: string; p_plano?: string }
@@ -1616,6 +1698,12 @@ export type Database = {
           p_usuario: string
         }
         Returns: undefined
+      }
+      catalogo_subtree_ids: {
+        Args: { p_id: string }
+        Returns: {
+          id: string
+        }[]
       }
       complete_profile: {
         Args: {
