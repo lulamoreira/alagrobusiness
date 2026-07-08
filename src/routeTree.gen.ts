@@ -15,6 +15,7 @@ import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as ConhecaRouteImport } from './routes/conheca'
 import { Route as CompletarCadastroRouteImport } from './routes/completar-cadastro'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BloqueadoRouteImport } from './routes/bloqueado'
@@ -85,6 +86,11 @@ const LoginRoute = LoginRouteImport.update({
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConhecaRoute = ConhecaRouteImport.update({
+  id: '/conheca',
+  path: '/conheca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompletarCadastroRoute = CompletarCadastroRouteImport.update({
@@ -317,6 +323,7 @@ export interface FileRoutesByFullPath {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/conheca': typeof ConhecaRoute
   '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -365,6 +372,7 @@ export interface FileRoutesByTo {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/conheca': typeof ConhecaRoute
   '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -413,6 +421,7 @@ export interface FileRoutesById {
   '/bloqueado': typeof BloqueadoRoute
   '/cadastro': typeof CadastroRoute
   '/completar-cadastro': typeof CompletarCadastroRoute
+  '/conheca': typeof ConhecaRoute
   '/contato': typeof ContatoRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -463,6 +472,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/conheca'
     | '/contato'
     | '/login'
     | '/mcp'
@@ -511,6 +521,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/conheca'
     | '/contato'
     | '/login'
     | '/mcp'
@@ -558,6 +569,7 @@ export interface FileRouteTypes {
     | '/bloqueado'
     | '/cadastro'
     | '/completar-cadastro'
+    | '/conheca'
     | '/contato'
     | '/login'
     | '/mcp'
@@ -608,6 +620,7 @@ export interface RootRouteChildren {
   BloqueadoRoute: typeof BloqueadoRoute
   CadastroRoute: typeof CadastroRoute
   CompletarCadastroRoute: typeof CompletarCadastroRoute
+  ConhecaRoute: typeof ConhecaRoute
   ContatoRoute: typeof ContatoRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
@@ -662,6 +675,13 @@ declare module '@tanstack/react-router' {
       path: '/contato'
       fullPath: '/contato'
       preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conheca': {
+      id: '/conheca'
+      path: '/conheca'
+      fullPath: '/conheca'
+      preLoaderRoute: typeof ConhecaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/completar-cadastro': {
@@ -1055,6 +1075,7 @@ const rootRouteChildren: RootRouteChildren = {
   BloqueadoRoute: BloqueadoRoute,
   CadastroRoute: CadastroRoute,
   CompletarCadastroRoute: CompletarCadastroRoute,
+  ConhecaRoute: ConhecaRoute,
   ContatoRoute: ContatoRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
