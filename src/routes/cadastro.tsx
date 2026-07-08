@@ -245,6 +245,12 @@ function SignupPage() {
               {t("signup.loginHere")}
             </Link>
           </p>
+          <p className="text-center">
+            <Link to="/conheca" className="text-xs text-muted-foreground hover:text-foreground">
+              {t("public.learnMore")}
+            </Link>
+          </p>
+
         </form>
       </div>
     </div>
