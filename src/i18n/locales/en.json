@@ -265,6 +265,9 @@
     "description": "Description",
     "descriptionPh": "Product details, batch, harvest process...",
     "category": "Category",
+    "catalogoCategory": "Category (catalog)",
+    "catalogoHint": "Pick the most specific category available.",
+
     "product": "Product",
     "productPh": "E.g. Soy, Coffee, Tomato...",
     "quality": "Quality",
