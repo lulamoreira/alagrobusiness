@@ -118,6 +118,14 @@ function BuyPage() {
       );
     }
     if (category) list = list.filter((a) => (a as unknown as { categoria: string }).categoria === category);
+    if (catalogoFilter && catalogoNodes) {
+      const allowed = new Set(catalogoSubtreeIds(catalogoNodes, catalogoFilter));
+      list = list.filter((a) => {
+        const cid = (a as unknown as { catalogo_item_id?: string | null }).catalogo_item_id;
+        return cid ? allowed.has(cid) : false;
+      });
+    }
+
     if (state.trim()) list = list.filter((a) => (a.estado ?? "").toLowerCase().includes(state.trim().toLowerCase()));
     if (quality.trim()) list = list.filter((a) => (a.qualidade ?? "").toLowerCase().includes(quality.trim().toLowerCase()));
     if (certs.length > 0) list = list.filter((a) => certs.every((c) => a.certificacoes?.includes(c)));
