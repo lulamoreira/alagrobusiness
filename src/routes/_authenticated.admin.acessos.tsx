@@ -726,80 +726,132 @@ function AdminAcessosPage() {
         ) : query && !searching ? (
           <p className="mt-4 text-sm text-muted-foreground">{t("adminAccess.noResults")}</p>
         ) : null}
-      </section>
-
+        </AccordionContent>
+      </AccordionItem>
 
       {/* Active courtesies */}
-      <section className="rounded-2xl border border-border/60 bg-card/40 p-5 backdrop-blur">
-        <h2 className="font-display text-lg font-semibold">
-          {t("adminAccess.activeCortesias")}
-        </h2>
-        {cortesias.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">{t("adminAccess.noCortesias")}</p>
-        ) : (
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {cortesias.map((c) => (
-              <div
-                key={c.usuario_id}
-                className="flex flex-col rounded-xl border border-border/50 bg-background/40 p-4"
-              >
-                <div className="min-w-0">
-                  <p className="truncate font-medium">{c.nome_completo ?? "—"}</p>
-                  <p className="mt-1 truncate text-xs text-muted-foreground">
-                    {c.email ?? "—"}
-                  </p>
-                </div>
-
-                <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
-                  <div>
-                    <dt className="text-muted-foreground">
-                      {t("adminAccess.currentPlan")}
-                    </dt>
-                    <dd className="mt-0.5">{planoNome(c.plano_codigo)}</dd>
+      <AccordionItem
+        id="sec-cortesias"
+        value="cortesias"
+        className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur"
+      >
+        <AccordionTrigger className="px-5 py-4 hover:no-underline">
+          <span className="flex items-center gap-2 text-left font-display text-base font-semibold">
+            <Gift className="h-4 w-4 text-primary" />
+            {t("adminAccess.activeCortesias")}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent className="px-5 pb-5">
+          {cortesias.length === 0 ? (
+            <p className="mt-1 text-sm text-muted-foreground">{t("adminAccess.noCortesias")}</p>
+          ) : (
+            <div className="mt-1 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {cortesias.map((c) => (
+                <div
+                  key={c.usuario_id}
+                  className="flex flex-col rounded-xl border border-border/50 bg-background/40 p-4"
+                >
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{c.nome_completo ?? "—"}</p>
+                    <p className="mt-1 truncate text-xs text-muted-foreground">
+                      {c.email ?? "—"}
+                    </p>
                   </div>
-                  <div>
-                    <dt className="text-muted-foreground">
-                      {t("adminAccess.expiration")}
-                    </dt>
-                    <dd className="mt-0.5">{fmtDate(c.fim)}</dd>
+
+                  <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                    <div>
+                      <dt className="text-muted-foreground">
+                        {t("adminAccess.currentPlan")}
+                      </dt>
+                      <dd className="mt-0.5">{planoNome(c.plano_codigo)}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-muted-foreground">
+                        {t("adminAccess.expiration")}
+                      </dt>
+                      <dd className="mt-0.5">{fmtDate(c.fim)}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4">
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="w-full"
+                      onClick={() => {
+                        setTarget({
+                          id: c.usuario_id,
+                          nome_completo: c.nome_completo,
+                          email: c.email,
+                          tipo_perfil: null,
+                          plano_codigo: c.plano_codigo,
+                          status: "ativa",
+                          origem: "admin_cortesia",
+                          fim: c.fim,
+                        });
+                        setRevokeOpen(true);
+                      }}
+                    >
+                      <Ban className="mr-1 h-4 w-4" />
+                      {t("adminAccess.revoke")}
+                    </Button>
                   </div>
-                </dl>
-
-                <div className="mt-4">
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="w-full"
-                    onClick={() => {
-                      setTarget({
-                        id: c.usuario_id,
-                        nome_completo: c.nome_completo,
-                        email: c.email,
-                        tipo_perfil: null,
-                        plano_codigo: c.plano_codigo,
-                        status: "ativa",
-                        origem: "admin_cortesia",
-                        fim: c.fim,
-                      });
-                      setRevokeOpen(true);
-                    }}
-                  >
-                    <Ban className="mr-1 h-4 w-4" />
-                    {t("adminAccess.revoke")}
-                  </Button>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+        </AccordionContent>
+      </AccordionItem>
 
-        )}
-      </section>
+      <AccordionItem
+        id="sec-invite"
+        value="invite"
+        className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur"
+      >
+        <AccordionTrigger className="px-5 py-4 hover:no-underline">
+          <span className="flex items-center gap-2 text-left font-display text-base font-semibold">
+            <Mail className="h-4 w-4 text-primary" />
+            {t("adminAccess.inviteSectionTitle")}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent className="px-5 pb-5">
+          <InviteCortesiaSection />
+        </AccordionContent>
+      </AccordionItem>
 
-      <InviteCortesiaSection />
+      <AccordionItem
+        id="sec-temp"
+        value="temp"
+        className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur"
+      >
+        <AccordionTrigger className="px-5 py-4 hover:no-underline">
+          <span className="flex items-center gap-2 text-left font-display text-base font-semibold">
+            <Timer className="h-4 w-4 text-primary" />
+            {t("tempAccess.title")}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent className="px-5 pb-5">
+          <AcessosTemporariosSection />
+        </AccordionContent>
+      </AccordionItem>
 
-      <AcessosTemporariosSection />
+      <AccordionItem
+        id="sec-admins"
+        value="admins"
+        className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur"
+      >
+        <AccordionTrigger className="px-5 py-4 hover:no-underline">
+          <span className="flex items-center gap-2 text-left font-display text-base font-semibold">
+            <ShieldCheck className="h-4 w-4 text-primary" />
+            {t("adminAccess.adminSectionTitle")}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent className="px-5 pb-5">
+          <AdminManagementSection />
+        </AccordionContent>
+      </AccordionItem>
+      </Accordion>
 
-      <AdminManagementSection />
 
       {/* Grant dialog */}
       <AlertDialog open={grantOpen} onOpenChange={setGrantOpen}>
