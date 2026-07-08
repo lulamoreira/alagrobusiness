@@ -350,7 +350,7 @@ export function AcessosTemporariosSection() {
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {planos.map((p) => (
-                  <SelectItem key={p.codigo} value={p.codigo}>{(p.nome ?? p.codigo).toString()}</SelectItem>
+                  <SelectItem key={p.codigo} value={p.codigo}>{nomePlano(p)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -540,7 +540,7 @@ export function AcessosTemporariosSection() {
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {planos.map((p) => (
-                    <SelectItem key={p.codigo} value={p.codigo}>{(p.nome ?? p.codigo).toString()}</SelectItem>
+                    <SelectItem key={p.codigo} value={p.codigo}>{nomePlano(p)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
