@@ -267,7 +267,6 @@
     "category": "Categoría",
     "catalogoCategory": "Categoría (catálogo)",
     "catalogoHint": "Elige la categoría más específica posible.",
-
     "product": "Producto",
     "productPh": "Ej.: Soja, Café, Tomate...",
     "quality": "Calidad",
@@ -307,7 +306,6 @@
     "sortPriceDesc": "Mayor precio",
     "filterCategory": "Categoría",
     "filterCatalogo": "Categoría (catálogo)",
-
     "filterState": "Estado",
     "filterQuality": "Calidad",
     "filterCertifications": "Certificaciones",
@@ -1124,7 +1122,6 @@
   "public": {
     "learnMore": "Conoce la plataforma",
     "nav": {
-
       "signin": "Entrar",
       "signup": "Crear cuenta",
       "contact": "Contacto",
@@ -1549,6 +1546,39 @@
     "createdManual": "Invitación creada. Correo no configurado — envía el enlace manualmente.",
     "updated": "Tiempo ajustado.",
     "revoked": "Acceso temporal revocado.",
-    "invalidDays": "Ingresa un número válido de días."
+    "invalidDays": "Ingresa un número válido de días.",
+    "emailInviteTitle": "Invitación por correo (avanzado)"
+  },
+  "demoAccess": {
+    "createTitle": "Nueva cuenta demo",
+    "createHint": "Crea una cuenta con login y contraseña (sin correo real). La cuenta comienza en el primer acceso.",
+    "login": "Login",
+    "password": "Contraseña",
+    "label": "Etiqueta (opcional)",
+    "labelPlaceholder": "Ej.: Cliente ACME",
+    "plan": "Plan otorgado",
+    "daysFromFirstAccess": "Días desde el 1.er acceso",
+    "createBtn": "Crear cuenta demo",
+    "created": "Cuenta demo creada.",
+    "createdTitle": "Cuenta demo creada",
+    "createdDesc": "Copia el login y la contraseña — no se mostrarán de nuevo.",
+    "loginShort": "login",
+    "invalidLogin": "Ingresa un login válido (mín. 2 caracteres).",
+    "invalidPassword": "La contraseña debe tener al menos 6 caracteres.",
+    "edit": "Editar",
+    "editTitle": "Editar cuenta demo",
+    "newPassword": "Restablecer contraseña (opcional)",
+    "newPasswordHint": "Dejar vacío para no cambiar",
+    "save": "Guardar",
+    "saved": "Cambios guardados.",
+    "delete": "Eliminar",
+    "deleted": "Cuenta demo eliminada.",
+    "deleteTitle": "¿Eliminar cuenta demo?",
+    "deleteConfirm": "Esto elimina permanentemente la cuenta \"{{name}}\". No se puede deshacer.",
+    "reactivate": "Reiniciar prueba",
+    "reactivated": "Prueba reiniciada — esperando primer acceso.",
+    "addDaysLabel": "Agregar días",
+    "addBtn": "Sumar",
+    "copied": "Copiado."
   }
 }
