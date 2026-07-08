@@ -306,6 +306,8 @@
     "sortPriceAsc": "Lowest price",
     "sortPriceDesc": "Highest price",
     "filterCategory": "Category",
+    "filterCatalogo": "Category (catalog)",
+
     "filterState": "State",
     "filterQuality": "Quality",
     "filterCertifications": "Certifications",
