@@ -19,7 +19,7 @@ import { AmbientGlow } from "@/components/AmbientGlow";
 import { Logo } from "@/components/Logo";
 import { PillButton } from "@/components/PillButton";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { useAuth } from "@/lib/auth";
+
 
 export const Route = createFileRoute("/conheca")({
   ssr: false,
