@@ -26,8 +26,8 @@ export function useAdminPerms(): AdminPerms {
   const isSuperAdmin = !!p?.is_super_admin;
   const perms = (p?.admin_permissoes ?? {}) as Record<string, boolean>;
   const has = (r: AdminResource) =>
-    isSuperAdmin || (isAdmin && perms[r] === true);
+    isAdmin && (isSuperAdmin || perms[r] === true);
   const hasAny =
-    isSuperAdmin || (isAdmin && ADMIN_RESOURCES.some((r) => perms[r] === true));
+    isAdmin && (isSuperAdmin || ADMIN_RESOURCES.some((r) => perms[r] === true));
   return { isAdmin, isSuperAdmin, perms, has, hasAny };
 }
