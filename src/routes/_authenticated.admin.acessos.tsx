@@ -54,6 +54,12 @@ import {
 import { AdminManagementSection } from "@/components/AdminManagementSection";
 import { InviteCortesiaSection } from "@/components/InviteCortesiaSection";
 import { AcessosTemporariosSection } from "@/components/AcessosTemporariosSection";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/_authenticated/admin/acessos")({
   component: AdminAcessosPage,
