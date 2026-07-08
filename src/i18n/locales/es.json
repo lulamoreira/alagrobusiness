@@ -660,7 +660,20 @@
     "drizzle": "Llovizna",
     "rain": "Lluvia",
     "snow": "Nieve",
-    "thunderstorm": "Tormenta"
+    "thunderstorm": "Tormenta",
+    "addLocation": "Añadir ubicación",
+    "manageLocations": "Gestionar ubicaciones de clima"
+  },
+  "weatherLocations": {
+    "title": "Ubicaciones de clima",
+    "subtitle": "Elige las ciudades que aparecerán en tu panel.",
+    "empty": "Aún no has añadido ninguna ubicación.",
+    "addLabel": "Añadir ciudad",
+    "searchPlaceholder": "Buscar ciudad (Brasil)...",
+    "searching": "Buscando...",
+    "noResults": "No se encontró ninguna ciudad",
+    "alreadyAdded": "Ya añadida",
+    "remove": "Eliminar"
   },
   "finance": {
     "title": "Financiero",

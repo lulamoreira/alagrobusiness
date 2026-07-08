@@ -107,33 +107,67 @@ Deno.serve(async (req) => {
   const authErr = await checkCronAuth(req, supabase);
   if (authErr) return authErr;
 
-  // Regiões distintas a partir de profiles.
-  const { data: profs, error: profErr } = await supabase
-    .from("profiles")
-    .select("cidade, estado, latitude, longitude")
-    .is("deleted_at", null)
-    .not("cidade", "is", null);
-
-  if (profErr) {
-    return new Response(JSON.stringify({ ok: false, error: String(profErr.message) }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  }
-
   const seen = new Map<string, { cidade: string; estado: string | null; lat: number | null; lon: number | null }>();
-  for (const p of profs ?? []) {
-    const cidade = (p.cidade as string | null)?.trim();
-    if (!cidade) continue;
-    const estado = ((p.estado as string | null) ?? "").trim() || null;
-    const key = `${cidade} - ${estado ?? ""}`.trim();
-    const prev = seen.get(key);
-    const lat = p.latitude != null ? Number(p.latitude) : null;
-    const lon = p.longitude != null ? Number(p.longitude) : null;
-    if (!prev || (prev.lat == null && lat != null)) {
-      seen.set(key, { cidade, estado, lat, lon });
+
+  // Paginação em profiles
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    const { data: profs, error: profErr } = await supabase
+      .from("profiles")
+      .select("cidade, estado, latitude, longitude")
+      .is("deleted_at", null)
+      .not("cidade", "is", null)
+      .order("id", { ascending: true })
+      .range(from, from + PAGE - 1);
+    if (profErr) {
+      return new Response(JSON.stringify({ ok: false, error: String(profErr.message) }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
+    const rows = profs ?? [];
+    for (const p of rows) {
+      const cidade = (p.cidade as string | null)?.trim();
+      if (!cidade) continue;
+      const estado = ((p.estado as string | null) ?? "").trim() || null;
+      const key = `${cidade} - ${estado ?? ""}`.trim();
+      const prev = seen.get(key);
+      const lat = p.latitude != null ? Number(p.latitude) : null;
+      const lon = p.longitude != null ? Number(p.longitude) : null;
+      if (!prev || (prev.lat == null && lat != null)) {
+        seen.set(key, { cidade, estado, lat, lon });
+      }
+    }
+    if (rows.length < PAGE) break;
   }
+
+  // Paginação em usuario_clima_locais
+  for (let from = 0; ; from += PAGE) {
+    const { data: locs, error: locErr } = await supabase
+      .from("usuario_clima_locais")
+      .select("cidade, estado, regiao")
+      .is("deleted_at", null)
+      .order("id", { ascending: true })
+      .range(from, from + PAGE - 1);
+    if (locErr) {
+      return new Response(JSON.stringify({ ok: false, error: String(locErr.message) }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const rows = locs ?? [];
+    for (const l of rows) {
+      const cidade = (l.cidade as string | null)?.trim();
+      if (!cidade) continue;
+      const estado = ((l.estado as string | null) ?? "").trim() || null;
+      const key = ((l.regiao as string | null) ?? `${cidade} - ${estado ?? ""}`).trim();
+      if (!seen.has(key)) {
+        seen.set(key, { cidade, estado, lat: null, lon: null });
+      }
+    }
+    if (rows.length < PAGE) break;
+  }
+
 
   const results: Array<{ regiao: string; status: string; error?: string }> = [];
 

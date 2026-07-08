@@ -1269,6 +1269,42 @@ export type Database = {
         }
         Relationships: []
       }
+      usuario_clima_locais: {
+        Row: {
+          cidade: string
+          created_at: string
+          deleted_at: string | null
+          estado: string | null
+          id: string
+          ordem: number
+          regiao: string
+          updated_at: string
+          usuario_id: string
+        }
+        Insert: {
+          cidade: string
+          created_at?: string
+          deleted_at?: string | null
+          estado?: string | null
+          id?: string
+          ordem?: number
+          regiao: string
+          updated_at?: string
+          usuario_id: string
+        }
+        Update: {
+          cidade?: string
+          created_at?: string
+          deleted_at?: string | null
+          estado?: string | null
+          id?: string
+          ordem?: number
+          regiao?: string
+          updated_at?: string
+          usuario_id?: string
+        }
+        Relationships: []
+      }
       vantagens: {
         Row: {
           ativo: boolean

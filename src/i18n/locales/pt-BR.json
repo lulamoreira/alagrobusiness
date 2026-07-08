@@ -660,7 +660,20 @@
     "drizzle": "Garoa",
     "rain": "Chuva",
     "snow": "Neve",
-    "thunderstorm": "Tempestade"
+    "thunderstorm": "Tempestade",
+    "addLocation": "Adicionar local",
+    "manageLocations": "Gerenciar locais de clima"
+  },
+  "weatherLocations": {
+    "title": "Locais de clima",
+    "subtitle": "Escolha as cidades que aparecerão no seu painel.",
+    "empty": "Você ainda não escolheu nenhum local.",
+    "addLabel": "Adicionar cidade",
+    "searchPlaceholder": "Buscar cidade (Brasil)...",
+    "searching": "Buscando...",
+    "noResults": "Nenhuma cidade encontrada",
+    "alreadyAdded": "Já adicionada",
+    "remove": "Remover"
   },
   "finance": {
     "title": "Financeiro",
