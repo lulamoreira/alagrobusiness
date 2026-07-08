@@ -191,6 +191,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         titulo: titulo.trim(),
         descricao: descricao.trim() || null,
         categoria,
+        catalogo_item_id: catalogoItemId,
+
         produto: produto.trim(),
         qualidade: qualidade.trim() || null,
         data_colheita: dataColheita || null,
