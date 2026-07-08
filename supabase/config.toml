@@ -39,3 +39,12 @@ verify_jwt = false
 
 
 
+
+[functions.admin-criar-demo]
+verify_jwt = true
+
+[functions.admin-demo-reset-senha]
+verify_jwt = true
+
+[functions.admin-demo-apagar]
+verify_jwt = true
