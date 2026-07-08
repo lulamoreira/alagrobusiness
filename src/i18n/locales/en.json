@@ -1584,6 +1584,10 @@
     "copyLogin": "Copy login",
     "passwordNote": "The password is not stored. If needed, use \"Edit\" to reset it.",
     "adjustTimeGroup": "Adjust time",
-    "manageGroup": "Manage"
+    "manageGroup": "Manage",
+    "copyPassword": "Copy password",
+    "copyAll": "Copy login and password",
+    "sendWhatsapp": "Send via WhatsApp",
+    "waMessage": "Hi! 🌱\n\nYour access credentials for the AGROBUSINESS platform are ready:\n\n🔑 Login: {{login}}\n🔒 Password: {{senha}}\n🌐 Sign in: {{url}}\n\nFor security, please change your password on first sign-in. Enjoy!"
   }
 }

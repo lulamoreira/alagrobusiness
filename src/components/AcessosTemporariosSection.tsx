@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { Loader2, Timer, Send, Ban, Plus, Minus, Pencil, Trash2, KeyRound, RotateCcw, Copy, Sparkles } from "lucide-react";
+import { Loader2, Timer, Send, Ban, Plus, Minus, Pencil, Trash2, KeyRound, RotateCcw, Copy, Sparkles, MessageCircle, ClipboardCopy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -291,6 +291,19 @@ export function AcessosTemporariosSection() {
     } catch {
       toast.error("clipboard");
     }
+  };
+
+  const buildCredMessage = (login: string, senha: string) =>
+    t("demoAccess.waMessage", {
+      login,
+      senha,
+      url: typeof window !== "undefined" ? window.location.origin : "",
+    });
+
+  const shareWhatsapp = (login: string, senha: string) => {
+    const msg = buildCredMessage(login, senha);
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    if (typeof window !== "undefined") window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString(i18n.language) : "—");
@@ -589,14 +602,53 @@ export function AcessosTemporariosSection() {
             <DialogDescription>{t("demoAccess.createdDesc")}</DialogDescription>
           </DialogHeader>
           {criado && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Input readOnly value={criado.login} />
-                <Button size="icon" variant="secondary" onClick={() => copy(criado.login)}><Copy className="h-4 w-4" /></Button>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label className="text-xs">{t("demoAccess.login")}</Label>
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={criado.login} className="font-mono" />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    aria-label={t("demoAccess.copyLogin")}
+                    onClick={() => copy(criado.login)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Input readOnly value={criado.senha} />
-                <Button size="icon" variant="secondary" onClick={() => copy(criado.senha)}><Copy className="h-4 w-4" /></Button>
+              <div className="space-y-2">
+                <Label className="text-xs">{t("demoAccess.password")}</Label>
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={criado.senha} className="font-mono" />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    aria-label={t("demoAccess.copyPassword")}
+                    onClick={() => copy(criado.senha)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 pt-1 sm:flex-row">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => copy(buildCredMessage(criado.login, criado.senha))}
+                >
+                  <ClipboardCopy className="mr-2 h-4 w-4" />
+                  {t("demoAccess.copyAll")}
+                </Button>
+                <Button
+                  type="button"
+                  className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
+                  onClick={() => shareWhatsapp(criado.login, criado.senha)}
+                >
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  {t("demoAccess.sendWhatsapp")}
+                </Button>
               </div>
             </div>
           )}

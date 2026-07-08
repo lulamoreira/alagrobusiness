@@ -1587,6 +1587,10 @@
     "copyLogin": "Copiar login",
     "passwordNote": "A senha não fica guardada. Se precisar, use \"Editar\" para redefinir.",
     "adjustTimeGroup": "Ajustar tempo",
-    "manageGroup": "Gerenciar"
+    "manageGroup": "Gerenciar",
+    "copyPassword": "Copiar senha",
+    "copyAll": "Copiar login e senha",
+    "sendWhatsapp": "Enviar por WhatsApp",
+    "waMessage": "Olá! 🌱\n\nSeus dados de acesso à plataforma AGROBUSINESS estão prontos:\n\n🔑 Login: {{login}}\n🔒 Senha: {{senha}}\n🌐 Acesse: {{url}}\n\nPor segurança, altere sua senha no primeiro acesso. Bom uso!"
   }
 }
