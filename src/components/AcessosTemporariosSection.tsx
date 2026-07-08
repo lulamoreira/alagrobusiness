@@ -480,6 +480,27 @@ export function AcessosTemporariosSection() {
                           <Copy className="h-4 w-4" />
                         </Button>
                       </div>
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="flex-1"
+                          onClick={() => copy(buildLoginOnlyMessage(r.login!))}
+                        >
+                          <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.copyLoginLink")}
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
+                          onClick={() => shareWhatsappLoginOnly(r.login!)}
+                        >
+                          <MessageCircle className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.sendWhatsapp")}
+                        </Button>
+                      </div>
                       <p className="text-[11px] leading-snug text-muted-foreground">
                         {t("demoAccess.passwordNote")}
                       </p>
