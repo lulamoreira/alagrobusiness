@@ -1582,6 +1582,11 @@
     "reactivated": "Teste reiniciado — aguardando primeiro acesso.",
     "addDaysLabel": "Adicionar dias",
     "addBtn": "Somar",
-    "copied": "Copiado."
+    "copied": "Copiado.",
+    "credentialsTitle": "Credenciais de acesso",
+    "copyLogin": "Copiar login",
+    "passwordNote": "A senha não fica guardada. Se precisar, use \"Editar\" para redefinir.",
+    "adjustTimeGroup": "Ajustar tempo",
+    "manageGroup": "Gerenciar"
   }
 }
