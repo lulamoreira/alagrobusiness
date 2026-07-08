@@ -109,6 +109,7 @@ export function AcessosTemporariosSection() {
 
   // Add-days input per row
   const [addDaysMap, setAddDaysMap] = useState<Record<string, string>>({});
+  const [sharePwdMap, setSharePwdMap] = useState<Record<string, string>>({});
 
   // Delete confirm
   const [confirmDelete, setConfirmDelete] = useState<Row | null>(null);
@@ -480,29 +481,50 @@ export function AcessosTemporariosSection() {
                           <Copy className="h-4 w-4" />
                         </Button>
                       </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground" htmlFor={`pwd-${r.convite_id}`}>
+                          {t("demoAccess.password")}
+                        </Label>
+                        <Input
+                          id={`pwd-${r.convite_id}`}
+                          type="text"
+                          className="h-9 font-mono"
+                          placeholder={t("demoAccess.sharePwdPlaceholder")}
+                          value={sharePwdMap[r.convite_id] ?? ""}
+                          onChange={(e) =>
+                            setSharePwdMap((m) => ({ ...m, [r.convite_id]: e.target.value }))
+                          }
+                        />
+                      </div>
                       <div className="flex flex-col gap-2 sm:flex-row">
                         <Button
                           type="button"
                           size="sm"
                           variant="outline"
                           className="flex-1"
-                          onClick={() => copy(buildLoginOnlyMessage(r.login!))}
+                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          onClick={() =>
+                            copy(buildCredMessage(r.login!, sharePwdMap[r.convite_id]!.trim()))
+                          }
                         >
                           <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
-                          {t("demoAccess.copyLoginLink")}
+                          {t("demoAccess.copyAll")}
                         </Button>
                         <Button
                           type="button"
                           size="sm"
                           className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
-                          onClick={() => shareWhatsappLoginOnly(r.login!)}
+                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          onClick={() =>
+                            shareWhatsapp(r.login!, sharePwdMap[r.convite_id]!.trim())
+                          }
                         >
                           <MessageCircle className="mr-2 h-3.5 w-3.5" />
                           {t("demoAccess.sendWhatsapp")}
                         </Button>
                       </div>
                       <p className="text-[11px] leading-snug text-muted-foreground">
-                        {t("demoAccess.passwordNote")}
+                        {t("demoAccess.sharePwdNote")}
                       </p>
                     </div>
                   )}
