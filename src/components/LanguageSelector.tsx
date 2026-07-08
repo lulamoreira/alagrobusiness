@@ -22,13 +22,13 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-2 sm:px-3"
         aria-label={active.label}
       >
         <Globe className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
-        <span aria-hidden>{active.flag}</span>
+        <span aria-hidden className="hidden sm:inline">{active.flag}</span>
         <span>{active.label}</span>
-        <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+        <ChevronDown className="hidden h-3.5 w-3.5 text-muted-foreground sm:inline" aria-hidden />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[10rem]">
         {LANGS.map((l) => {
