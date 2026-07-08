@@ -55,6 +55,14 @@ function DetailPage() {
     staleTime: 1000 * 60 * 30,
   });
 
+  const { data: catalogo } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+    enabled: !!anuncio?.catalogo_item_id,
+  });
+
+
   if (isLoading) {
     return <p className="text-sm text-muted-foreground">{t("common.loading")}</p>;
   }
