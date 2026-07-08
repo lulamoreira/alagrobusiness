@@ -660,7 +660,20 @@
     "drizzle": "Drizzle",
     "rain": "Rain",
     "snow": "Snow",
-    "thunderstorm": "Thunderstorm"
+    "thunderstorm": "Thunderstorm",
+    "addLocation": "Add location",
+    "manageLocations": "Manage weather locations"
+  },
+  "weatherLocations": {
+    "title": "Weather locations",
+    "subtitle": "Choose the cities that will appear on your dashboard.",
+    "empty": "You haven't added any location yet.",
+    "addLabel": "Add city",
+    "searchPlaceholder": "Search city (Brazil)...",
+    "searching": "Searching...",
+    "noResults": "No city found",
+    "alreadyAdded": "Already added",
+    "remove": "Remove"
   },
   "finance": {
     "title": "Finance",

@@ -28,6 +28,8 @@ import {
 import { useCommoditiesCatalog, useQuotePreferences, nomeFor } from "@/lib/catalog";
 import { VariationBadge } from "@/components/VariationBadge";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { useMeusClimaLocais } from "@/components/WeatherCard";
+import { buildRegiaoKey } from "@/lib/climaLocais";
 
 type DolarTipo = "comercial" | "turismo" | "paralelo";
 
@@ -364,73 +366,98 @@ type ClimaRow = {
   atualizado_em: string;
 };
 
-function buildRegiaoKey(cidade: string | null | undefined, estado: string | null | undefined) {
-  const c = (cidade ?? "").trim();
-  if (!c) return null;
-  const e = (estado ?? "").trim();
-  return `${c} - ${e}`.trim();
-}
-
 function WeatherMobile() {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
-  const regiao = buildRegiaoKey(profile?.cidade, profile?.estado);
+  const meus = useMeusClimaLocais();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["clima", regiao],
-    enabled: !!regiao,
-    queryFn: async (): Promise<ClimaRow | null> => {
+  const fallbackRegiao = buildRegiaoKey(profile?.cidade, profile?.estado);
+  const locais =
+    (meus.data ?? []).length > 0
+      ? (meus.data ?? []).map((l) => ({ id: l.id, regiao: l.regiao }))
+      : fallbackRegiao
+        ? [{ id: "profile", regiao: fallbackRegiao }]
+        : [];
+
+  const { data: climaMap, isLoading } = useQuery({
+    queryKey: ["clima_multi_mobile", locais.map((l) => l.regiao).sort().join("|")],
+    enabled: locais.length > 0,
+    queryFn: async (): Promise<Record<string, ClimaRow>> => {
       const { data } = await supabase
         .from("clima")
         .select("regiao, temperatura, condicao, previsao, atualizado_em")
-        .eq("regiao", regiao!)
+        .in("regiao", locais.map((l) => l.regiao))
         .is("deleted_at", null)
-        .order("atualizado_em", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (!data) return null;
-      return {
-        regiao: data.regiao as string,
-        temperatura: data.temperatura != null ? Number(data.temperatura) : null,
-        condicao: (data.condicao as string | null) ?? null,
-        previsao: (data.previsao as unknown as PrevisaoDia[] | null) ?? null,
-        atualizado_em: data.atualizado_em as string,
-      };
+        .order("atualizado_em", { ascending: false });
+      const out: Record<string, ClimaRow> = {};
+      for (const row of data ?? []) {
+        const r = row.regiao as string;
+        if (out[r]) continue;
+        out[r] = {
+          regiao: r,
+          temperatura: row.temperatura != null ? Number(row.temperatura) : null,
+          condicao: (row.condicao as string | null) ?? null,
+          previsao: (row.previsao as unknown as PrevisaoDia[] | null) ?? null,
+          atualizado_em: row.atualizado_em as string,
+        };
+      }
+      return out;
     },
   });
 
   const nf = new Intl.NumberFormat(i18n.language, { maximumFractionDigits: 0 });
 
-  if (!regiao) return <p className="text-xs text-muted-foreground">{t("weather.noRegion")}</p>;
-  if (isLoading) return <div className="h-10 animate-pulse rounded-lg bg-muted/30" />;
-  if (!data || data.temperatura == null)
-    return <p className="text-xs text-muted-foreground">{t("weather.empty")}</p>;
-
-  const condKey = data.condicao ?? "weather.unknown";
-  const Icon = WEATHER_ICONS[condKey] ?? HelpCircle;
-  const today = (data.previsao ?? [])[0];
+  if (locais.length === 0) {
+    return (
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs text-muted-foreground">{t("weather.noRegion")}</p>
+        <Link to="/configuracoes" className="text-xs font-semibold text-primary">
+          {t("weather.addLocation")}
+        </Link>
+      </div>
+    );
+  }
+  if (isLoading) return <div className="h-14 animate-pulse rounded-lg bg-muted/30" />;
 
   return (
-    <div className="flex items-center gap-3">
-      <Icon className="h-8 w-8 shrink-0 text-primary" />
-      <div className="min-w-0 flex-1">
-        <div className="truncate text-xs font-medium text-foreground">{data.regiao}</div>
-        <div className="truncate text-[11px] text-muted-foreground">{t(condKey)}</div>
-      </div>
-      <div className="text-right">
-        <div className="font-display text-xl font-bold tabular-nums leading-none">
-          {nf.format(Math.round(data.temperatura))}°
-        </div>
-        {today && (today.max != null || today.min != null) && (
-          <div className="mt-1 text-[10px] tabular-nums text-muted-foreground">
-            {today.max != null ? `${nf.format(Math.round(today.max))}°` : "—"}{" "}
-            {today.min != null ? `${nf.format(Math.round(today.min))}°` : "—"}
+    <div className="-mx-1 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-1">
+      {locais.map((l) => {
+        const data = climaMap?.[l.regiao];
+        const condKey = data?.condicao ?? "weather.unknown";
+        const Icon = WEATHER_ICONS[condKey] ?? HelpCircle;
+        const today = (data?.previsao ?? [])[0];
+        return (
+          <div
+            key={l.id}
+            className="min-w-[16rem] shrink-0 snap-start rounded-xl border border-border bg-card p-3"
+          >
+            <div className="flex items-center gap-3">
+              <Icon className="h-8 w-8 shrink-0 text-primary" />
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-xs font-medium text-foreground">{l.regiao}</div>
+                <div className="truncate text-[11px] text-muted-foreground">
+                  {data?.temperatura == null ? t("weather.empty") : t(condKey)}
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="font-display text-xl font-bold tabular-nums leading-none">
+                  {data?.temperatura != null ? `${nf.format(Math.round(data.temperatura))}°` : "—"}
+                </div>
+                {today && (today.max != null || today.min != null) && (
+                  <div className="mt-1 text-[10px] tabular-nums text-muted-foreground">
+                    {today.max != null ? `${nf.format(Math.round(today.max))}°` : "—"}{" "}
+                    {today.min != null ? `${nf.format(Math.round(today.min))}°` : "—"}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+        );
+      })}
     </div>
   );
 }
+
 
 interface NewsRow {
   id: string;
