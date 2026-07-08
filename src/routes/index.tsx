@@ -93,9 +93,6 @@ function PublicHome() {
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <LanguageSelector />
-            <Link to="/login">
-              <PillButton variant="secondary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signin")}</PillButton>
-            </Link>
             <Link to="/cadastro">
               <PillButton variant="primary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signup")}</PillButton>
             </Link>
