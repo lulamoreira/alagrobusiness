@@ -109,7 +109,7 @@ export function AcessosTemporariosSection() {
 
   // Add-days input per row
   const [addDaysMap, setAddDaysMap] = useState<Record<string, string>>({});
-  const [sharePwdMap, setSharePwdMap] = useState<Record<string, string>>({});
+  const [pwdByLogin, setPwdByLogin] = useState<Record<string, string>>({});
 
   // Delete confirm
   const [confirmDelete, setConfirmDelete] = useState<Row | null>(null);
@@ -136,7 +136,38 @@ export function AcessosTemporariosSection() {
     setPlanos((data ?? []) as PlanoOpt[]);
   };
 
+  const PWD_LS_KEY = "demo_pwd_cache_v1";
+  const savePwd = (login: string, senha: string) => {
+    setPwdByLogin((prev) => {
+      const next = { ...prev, [login]: senha };
+      try {
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(PWD_LS_KEY, JSON.stringify(next));
+        }
+      } catch { /* ignore */ }
+      return next;
+    });
+  };
+  const forgetPwd = (login: string) => {
+    setPwdByLogin((prev) => {
+      const next = { ...prev };
+      delete next[login];
+      try {
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(PWD_LS_KEY, JSON.stringify(next));
+        }
+      } catch { /* ignore */ }
+      return next;
+    });
+  };
+
   useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        const raw = window.localStorage.getItem(PWD_LS_KEY);
+        if (raw) setPwdByLogin(JSON.parse(raw) as Record<string, string>);
+      }
+    } catch { /* ignore */ }
     load();
     loadPlanos();
     const id = setInterval(load, 60_000);
@@ -189,7 +220,9 @@ export function AcessosTemporariosSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = (error as any) || (data && (data as any).error);
     if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
-    setCriado({ login: demoLogin.trim().toLowerCase(), senha: demoSenha });
+    const loginCriado = demoLogin.trim().toLowerCase();
+    setCriado({ login: loginCriado, senha: demoSenha });
+    savePwd(loginCriado, demoSenha);
     setDemoLogin(""); setDemoSenha(""); setDemoLabel("");
     toast.success(t("demoAccess.created"));
     await load();
@@ -267,6 +300,7 @@ export function AcessosTemporariosSection() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = (e2 as any) || (data && (data as any).error);
       if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
+      if (editing.login) savePwd(editing.login, editNovaSenha);
     }
     toast.success(t("demoAccess.saved"));
     setEditing(null);
@@ -280,6 +314,7 @@ export function AcessosTemporariosSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = (error as any) || (data && (data as any).error);
     if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
+    if (r.login) forgetPwd(r.login);
     toast.success(t("demoAccess.deleted"));
     setConfirmDelete(null);
     await load();
@@ -490,10 +525,8 @@ export function AcessosTemporariosSection() {
                           type="text"
                           className="h-9 font-mono"
                           placeholder={t("demoAccess.sharePwdPlaceholder")}
-                          value={sharePwdMap[r.convite_id] ?? ""}
-                          onChange={(e) =>
-                            setSharePwdMap((m) => ({ ...m, [r.convite_id]: e.target.value }))
-                          }
+                          value={pwdByLogin[r.login!] ?? ""}
+                          onChange={(e) => savePwd(r.login!, e.target.value)}
                         />
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row">
@@ -502,9 +535,9 @@ export function AcessosTemporariosSection() {
                           size="sm"
                           variant="outline"
                           className="flex-1"
-                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
-                            copy(buildCredMessage(r.login!, sharePwdMap[r.convite_id]!.trim()))
+                            copy(buildCredMessage(r.login!, pwdByLogin[r.login!]!.trim()))
                           }
                         >
                           <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
@@ -514,9 +547,9 @@ export function AcessosTemporariosSection() {
                           type="button"
                           size="sm"
                           className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
-                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
-                            shareWhatsapp(r.login!, sharePwdMap[r.convite_id]!.trim())
+                            shareWhatsapp(r.login!, pwdByLogin[r.login!]!.trim())
                           }
                         >
                           <MessageCircle className="mr-2 h-3.5 w-3.5" />
