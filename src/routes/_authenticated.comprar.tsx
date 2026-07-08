@@ -79,6 +79,12 @@ function BuyPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  const { data: catalogoNodes } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+  });
+
 
   const { data: unidades } = useQuery({
     queryKey: ["unidades_all"],
