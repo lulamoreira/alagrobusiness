@@ -397,99 +397,181 @@ export function AcessosTemporariosSection() {
         ) : rows.length === 0 ? (
           <p className="text-sm text-muted-foreground">{t("tempAccess.listEmpty")}</p>
         ) : (
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {[...demos, ...invites].map((r) => {
               const est = classify(r);
               const alvo = est === "pendente" ? r.expira_em : r.assinatura_fim;
               const primeiroAcesso = r.iniciado_em ?? r.usado_em;
+              const nomeExibido = r.is_demo ? (r.label || r.login || r.email) : r.email;
+              const totalH = r.duracao_horas || 0;
+              const totalD = Math.floor(totalH / 24);
+              const restH = totalH % 24;
+              const duracaoAmigavel =
+                totalD > 0 && restH === 0
+                  ? `${totalD} ${t("tempAccess.daysShort")}`
+                  : totalD > 0
+                    ? `${totalD}d ${restH}h`
+                    : `${totalH}h`;
               return (
-                <div key={r.convite_id} className="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/40 p-4">
-                  <div className="flex min-w-0 items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {r.is_demo ? (r.label || r.login || r.email) : r.email}
-                      </p>
-                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                        {r.is_demo ? `${t("demoAccess.loginShort")}: ${r.login ?? r.email}` : r.email}
-                      </p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
-                        {r.plano_codigo.toUpperCase()} · {(r.duracao_horas / 24).toFixed(1)} {t("tempAccess.daysShort")}
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
+                <div
+                  key={r.convite_id}
+                  className="flex flex-col gap-5 rounded-xl border border-border/50 bg-background/40 p-5"
+                >
+                  {/* 1) CABEÇALHO */}
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2">
+                      <h3
+                        className="min-w-0 flex-1 break-words text-sm font-semibold leading-snug"
+                        title={nomeExibido}
+                      >
+                        {nomeExibido}
+                      </h3>
                       {r.is_demo && (
-                        <span className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                        <span className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
                           Demo
                         </span>
                       )}
-                      {badge(est)}
                     </div>
+                    <div>{badge(est)}</div>
                   </div>
 
-                  <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
-                    <div>
-                      <dt className="text-muted-foreground">{t("tempAccess.firstAccess")}</dt>
-                      <dd>{primeiroAcesso ? fmt(primeiroAcesso) : t("tempAccess.notYet")}</dd>
+                  {/* 2) CREDENCIAIS (só demo) */}
+                  {r.is_demo && r.login && (
+                    <div className="space-y-2 rounded-lg border border-primary/25 bg-primary/5 p-3">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-primary/80">
+                        {t("demoAccess.credentialsTitle")}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <code className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
+                          {r.login}
+                        </code>
+                        <Button
+                          size="icon"
+                          variant="secondary"
+                          className="shrink-0"
+                          aria-label={t("demoAccess.copyLogin")}
+                          title={t("demoAccess.copyLogin")}
+                          onClick={() => copy(r.login!)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <p className="text-[11px] leading-snug text-muted-foreground">
+                        {t("demoAccess.passwordNote")}
+                      </p>
                     </div>
-                    <div>
-                      <dt className="text-muted-foreground">
-                        {est === "pendente" ? t("tempAccess.inviteExpiresAt") : t("tempAccess.accessExpiresAt")}
+                  )}
+
+                  {/* 3) DADOS */}
+                  <dl className="grid grid-cols-2 gap-x-3 gap-y-3 text-xs">
+                    <div className="space-y-0.5">
+                      <dt className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                        {t("demoAccess.plan")}
                       </dt>
-                      <dd>{fmt(alvo)}</dd>
+                      <dd className="font-medium">
+                        {r.plano_codigo.toUpperCase()}{" "}
+                        <span className="text-muted-foreground">· {duracaoAmigavel}</span>
+                      </dd>
                     </div>
-                    <div className="col-span-2">
-                      <dt className="text-muted-foreground">{t("tempAccess.remaining")}</dt>
-                      <dd className="font-medium">{est === "expirado" ? t("tempAccess.expiredLabel") : fmtRestante(alvo, t)}</dd>
+                    <div className="space-y-0.5">
+                      <dt className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                        {t("tempAccess.firstAccess")}
+                      </dt>
+                      <dd className="break-words">
+                        {primeiroAcesso ? fmt(primeiroAcesso) : t("tempAccess.notYet")}
+                      </dd>
+                    </div>
+                    <div className="space-y-0.5">
+                      <dt className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                        {est === "pendente"
+                          ? t("tempAccess.inviteExpiresAt")
+                          : t("tempAccess.accessExpiresAt")}
+                      </dt>
+                      <dd className="break-words">{fmt(alvo)}</dd>
+                    </div>
+                    <div className="space-y-0.5">
+                      <dt className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                        {t("tempAccess.remaining")}
+                      </dt>
+                      <dd className="text-sm font-semibold text-foreground">
+                        {est === "expirado" ? t("tempAccess.expiredLabel") : fmtRestante(alvo, t)}
+                      </dd>
                     </div>
                   </dl>
 
-                  {est !== "expirado" && (
-                    <>
-                      <div className="flex items-end gap-2">
-                        <div className="flex-1 space-y-1">
-                          <Label className="text-[11px]" htmlFor={`add-${r.convite_id}`}>{t("demoAccess.addDaysLabel")}</Label>
-                          <Input
-                            id={`add-${r.convite_id}`}
-                            type="number"
-                            className="h-9"
-                            value={addDaysMap[r.convite_id] ?? ""}
-                            onChange={(e) => setAddDaysMap((m) => ({ ...m, [r.convite_id]: e.target.value }))}
-                            placeholder="7"
-                          />
+                  {/* 4) AÇÕES */}
+                  <div className="mt-auto space-y-4">
+                    {est !== "expirado" && (
+                      <div className="space-y-2">
+                        <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                          {t("demoAccess.adjustTimeGroup")}
+                        </p>
+                        <div className="flex items-end gap-2">
+                          <div className="min-w-0 flex-1 space-y-1">
+                            <Label className="text-[11px]" htmlFor={`add-${r.convite_id}`}>
+                              {t("demoAccess.addDaysLabel")}
+                            </Label>
+                            <Input
+                              id={`add-${r.convite_id}`}
+                              type="number"
+                              className="h-9"
+                              value={addDaysMap[r.convite_id] ?? ""}
+                              onChange={(e) =>
+                                setAddDaysMap((m) => ({ ...m, [r.convite_id]: e.target.value }))
+                              }
+                              placeholder="7"
+                            />
+                          </div>
+                          <Button size="sm" className="shrink-0" onClick={() => adicionarDias(r)}>
+                            <Plus className="mr-1 h-3 w-3" /> {t("demoAccess.addBtn")}
+                          </Button>
                         </div>
-                        <Button size="sm" onClick={() => adicionarDias(r)}>
-                          <Plus className="mr-1 h-3 w-3" /> {t("demoAccess.addBtn")}
-                        </Button>
+                        <div className="grid grid-cols-4 gap-1.5">
+                          <Button size="sm" variant="secondary" onClick={() => ajustar(r.convite_id, 24)}>+1d</Button>
+                          <Button size="sm" variant="secondary" onClick={() => ajustar(r.convite_id, 12)}>+12h</Button>
+                          <Button size="sm" variant="outline" onClick={() => ajustar(r.convite_id, -24)}>
+                            <Minus className="h-3 w-3" />1d
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => ajustar(r.convite_id, -12)}>
+                            <Minus className="h-3 w-3" />12h
+                          </Button>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-4 gap-1">
-                        <Button size="sm" variant="secondary" onClick={() => ajustar(r.convite_id, 24)}>+1d</Button>
-                        <Button size="sm" variant="secondary" onClick={() => ajustar(r.convite_id, 12)}>+12h</Button>
-                        <Button size="sm" variant="outline" onClick={() => ajustar(r.convite_id, -24)}><Minus className="h-3 w-3" />1d</Button>
-                        <Button size="sm" variant="outline" onClick={() => ajustar(r.convite_id, -12)}><Minus className="h-3 w-3" />12h</Button>
-                      </div>
-                    </>
-                  )}
+                    )}
 
-                  <div className="mt-auto grid grid-cols-2 gap-2">
-                    {r.is_demo && (
-                      <Button size="sm" variant="secondary" onClick={() => abrirEdit(r)}>
-                        <Pencil className="mr-1 h-3 w-3" /> {t("demoAccess.edit")}
-                      </Button>
-                    )}
-                    {est === "expirado" && r.is_demo ? (
-                      <Button size="sm" variant="secondary" onClick={() => reativar(r)}>
-                        <RotateCcw className="mr-1 h-3 w-3" /> {t("demoAccess.reactivate")}
-                      </Button>
-                    ) : (
-                      <Button size="sm" variant="destructive" onClick={() => revogar(r)}>
-                        <Ban className="mr-1 h-4 w-4" /> {t("tempAccess.revokeNow")}
-                      </Button>
-                    )}
-                    {r.is_demo && (
-                      <Button size="sm" variant="destructive" className="col-span-2" onClick={() => setConfirmDelete(r)}>
-                        <Trash2 className="mr-1 h-3 w-3" /> {t("demoAccess.delete")}
-                      </Button>
-                    )}
+                    <div className="space-y-2 border-t border-border/40 pt-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("demoAccess.manageGroup")}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {r.is_demo && (
+                          <Button size="sm" variant="secondary" onClick={() => abrirEdit(r)}>
+                            <Pencil className="mr-1 h-3 w-3" /> {t("demoAccess.edit")}
+                          </Button>
+                        )}
+                        {est === "expirado" && r.is_demo ? (
+                          <Button size="sm" variant="secondary" onClick={() => reativar(r)}>
+                            <RotateCcw className="mr-1 h-3 w-3" /> {t("demoAccess.reactivate")}
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="destructive" onClick={() => revogar(r)}>
+                            <Ban className="mr-1 h-4 w-4" /> {t("tempAccess.revokeNow")}
+                          </Button>
+                        )}
+                      </div>
+                      {r.is_demo && (
+                        <div className="flex justify-end pt-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-7 px-2 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive"
+                            onClick={() => setConfirmDelete(r)}
+                          >
+                            <Trash2 className="mr-1 h-3 w-3" /> {t("demoAccess.delete")}
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
@@ -497,6 +579,7 @@ export function AcessosTemporariosSection() {
           </div>
         )}
       </div>
+
 
       {/* Dialog: credenciais criadas */}
       <Dialog open={!!criado} onOpenChange={(o) => !o && setCriado(null)}>

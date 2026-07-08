@@ -1579,6 +1579,11 @@
     "reactivated": "Prueba reiniciada — esperando primer acceso.",
     "addDaysLabel": "Agregar días",
     "addBtn": "Sumar",
-    "copied": "Copiado."
+    "copied": "Copiado.",
+    "credentialsTitle": "Credenciales de acceso",
+    "copyLogin": "Copiar login",
+    "passwordNote": "La contraseña no se guarda. Si es necesario, usa \"Editar\" para restablecerla.",
+    "adjustTimeGroup": "Ajustar tiempo",
+    "manageGroup": "Gestionar"
   }
 }
