@@ -50,7 +50,7 @@ interface Row {
   assinatura_status: string | null;
 }
 
-interface PlanoOpt { codigo: string; nome: string | null }
+interface PlanoOpt { codigo: string; nome: Record<string, string> | null }
 
 type Estado = "pendente" | "ativo" | "expirado";
 
@@ -294,6 +294,7 @@ export function AcessosTemporariosSection() {
   };
 
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString(i18n.language) : "—");
+  const nomePlano = (p: PlanoOpt) => p.nome?.[i18n.language] ?? p.nome?.["pt-BR"] ?? p.codigo;
 
   const badge = (e: Estado) => {
     const cls: Record<Estado, string> = {
@@ -349,7 +350,7 @@ export function AcessosTemporariosSection() {
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {planos.map((p) => (
-                  <SelectItem key={p.codigo} value={p.codigo}>{(p.nome ?? p.codigo).toString()}</SelectItem>
+                  <SelectItem key={p.codigo} value={p.codigo}>{nomePlano(p)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -539,7 +540,7 @@ export function AcessosTemporariosSection() {
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {planos.map((p) => (
-                    <SelectItem key={p.codigo} value={p.codigo}>{(p.nome ?? p.codigo).toString()}</SelectItem>
+                    <SelectItem key={p.codigo} value={p.codigo}>{nomePlano(p)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
