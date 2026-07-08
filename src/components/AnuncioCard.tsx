@@ -172,7 +172,11 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
         <div className="min-w-0">
           <h3 className="truncate font-display text-base font-bold text-foreground">{item.produto}</h3>
           <p className="truncate text-xs text-muted-foreground">{item.titulo}</p>
+          {catalogoPath && (
+            <p className="mt-0.5 truncate text-[10px] uppercase tracking-wide text-primary/80">{catalogoPath}</p>
+          )}
         </div>
+
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
           {location && (
