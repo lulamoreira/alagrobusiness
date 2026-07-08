@@ -28,6 +28,7 @@ export interface AnuncioFormInitial {
   titulo: string;
   descricao: string | null;
   categoria: Category;
+  catalogo_item_id: string | null;
   produto: string;
   qualidade: string | null;
   data_colheita: string | null;
@@ -46,6 +47,7 @@ export interface AnuncioFormInitial {
   cep: string | null;
   fotos: string[];
 }
+
 
 interface AnuncioFormProps {
   mode: "create" | "edit";
