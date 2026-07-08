@@ -8,6 +8,7 @@ import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
 
 export interface AnuncioCardData {
   id: string;
@@ -26,7 +27,9 @@ export interface AnuncioCardData {
   aceita_permuta: boolean;
   certificacoes: string[];
   vendedor_id: string;
+  catalogo_item_id?: string | null;
 }
+
 
 interface AnuncioCardProps {
   item: AnuncioCardData;
@@ -110,6 +113,17 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
     staleTime: 1000 * 60 * 5,
   });
 
+  const { data: catalogo } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+    enabled: !!item.catalogo_item_id,
+  });
+  const catalogoPath = catalogo && item.catalogo_item_id
+    ? catalogoPathLabel(catalogo, item.catalogo_item_id, i18n.language)
+    : null;
+
+
   const priceUnit = units.find((u) => u.id === item.preco_unidade_id);
   const qtyUnit = units.find((u) => u.id === item.quantidade_unidade_id);
 
@@ -158,7 +172,11 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
         <div className="min-w-0">
           <h3 className="truncate font-display text-base font-bold text-foreground">{item.produto}</h3>
           <p className="truncate text-xs text-muted-foreground">{item.titulo}</p>
+          {catalogoPath && (
+            <p className="mt-0.5 truncate text-[10px] uppercase tracking-wide text-primary/80">{catalogoPath}</p>
+          )}
         </div>
+
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
           {location && (

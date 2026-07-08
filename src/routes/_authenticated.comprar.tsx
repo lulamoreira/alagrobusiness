@@ -6,7 +6,10 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
+import { CatalogoCascade } from "@/components/CatalogoCascade";
+import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
 
@@ -45,7 +48,9 @@ function BuyPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
+  const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
+
   const [quality, setQuality] = useState("");
   const [certs, setCerts] = useState<string[]>([]);
   const [acceptsBarter, setAcceptsBarter] = useState<boolean | null>(null);
@@ -74,6 +79,12 @@ function BuyPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  const { data: catalogoNodes } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+  });
+
 
   const { data: unidades } = useQuery({
     queryKey: ["unidades_all"],
@@ -107,6 +118,14 @@ function BuyPage() {
       );
     }
     if (category) list = list.filter((a) => (a as unknown as { categoria: string }).categoria === category);
+    if (catalogoFilter && catalogoNodes) {
+      const allowed = new Set(catalogoSubtreeIds(catalogoNodes, catalogoFilter));
+      list = list.filter((a) => {
+        const cid = (a as unknown as { catalogo_item_id?: string | null }).catalogo_item_id;
+        return cid ? allowed.has(cid) : false;
+      });
+    }
+
     if (state.trim()) list = list.filter((a) => (a.estado ?? "").toLowerCase().includes(state.trim().toLowerCase()));
     if (quality.trim()) list = list.filter((a) => (a.qualidade ?? "").toLowerCase().includes(quality.trim().toLowerCase()));
     if (certs.length > 0) list = list.filter((a) => certs.every((c) => a.certificacoes?.includes(c)));
@@ -118,10 +137,12 @@ function BuyPage() {
     if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
     else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
     return list;
-  }, [anuncios, search, category, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
+  }, [anuncios, search, category, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
 
   const clearFilters = () => {
     setCategory(null);
+    setCatalogoFilter(null);
+
     setState("");
     setQuality("");
     setCerts([]);
@@ -198,6 +219,14 @@ function BuyPage() {
               ))}
             </div>
           </div>
+
+          <CatalogoCascade
+            label={t("buy.filterCatalogo")}
+            value={catalogoFilter}
+            onChange={setCatalogoFilter}
+            allowClear
+          />
+
 
           <div className="grid gap-3 md:grid-cols-3">
             <DarkInput label={t("buy.filterState")} value={state} onChange={(e) => setState(e.target.value)} />

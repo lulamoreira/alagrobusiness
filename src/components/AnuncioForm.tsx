@@ -11,6 +11,8 @@ import { PhotoDropzone, type PhotoItem } from "@/components/PhotoDropzone";
 import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 import { handlePaywallError } from "@/components/PlanStatus";
+import { CatalogoCascade } from "@/components/CatalogoCascade";
+
 
 const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
@@ -26,6 +28,7 @@ export interface AnuncioFormInitial {
   titulo: string;
   descricao: string | null;
   categoria: Category;
+  catalogo_item_id: string | null;
   produto: string;
   qualidade: string | null;
   data_colheita: string | null;
@@ -44,6 +47,7 @@ export interface AnuncioFormInitial {
   cep: string | null;
   fotos: string[];
 }
+
 
 interface AnuncioFormProps {
   mode: "create" | "edit";
@@ -81,6 +85,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
   const [categoria, setCategoria] = useState<Category>(initial?.categoria ?? "grao");
+  const [catalogoItemId, setCatalogoItemId] = useState<string | null>(initial?.catalogo_item_id ?? null);
+
   const [produto, setProduto] = useState(initial?.produto ?? "");
   const [qualidade, setQualidade] = useState(initial?.qualidade ?? "");
   const [dataColheita, setDataColheita] = useState(initial?.data_colheita ?? "");
@@ -185,6 +191,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         titulo: titulo.trim(),
         descricao: descricao.trim() || null,
         categoria,
+        catalogo_item_id: catalogoItemId,
+
         produto: produto.trim(),
         qualidade: qualidade.trim() || null,
         data_colheita: dataColheita || null,
@@ -261,6 +269,15 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         />
       </div>
 
+      <div className="rounded-2xl border border-border bg-card/40 p-4">
+        <CatalogoCascade
+          label={t("form.catalogoCategory")}
+          value={catalogoItemId}
+          onChange={setCatalogoItemId}
+        />
+        <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-3">
         <div>
           <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.category")}</label>
@@ -285,6 +302,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
           onChange={(e) => setDataColheita(e.target.value)}
         />
       </div>
+
+
 
       <div>
         <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.photos")}</label>

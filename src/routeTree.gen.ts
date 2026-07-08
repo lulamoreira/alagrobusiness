@@ -54,6 +54,7 @@ import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
 import { Route as AuthenticatedAdminContatosRouteImport } from './routes/_authenticated.admin.contatos'
+import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated.admin.catalogo'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated.admin.acessos'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedVenderEditarIdRouteImport } from './routes/_authenticated.vender.editar.$id'
@@ -298,6 +299,12 @@ const AuthenticatedAdminContatosRoute =
     path: '/admin/contatos',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedAdminCatalogoRoute =
+  AuthenticatedAdminCatalogoRouteImport.update({
+    id: '/admin/catalogo',
+    path: '/admin/catalogo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminAcessosRoute =
   AuthenticatedAdminAcessosRouteImport.update({
     id: '/admin/acessos',
@@ -349,6 +356,7 @@ export interface FileRoutesByFullPath {
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -396,6 +404,7 @@ export interface FileRoutesByTo {
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -447,6 +456,7 @@ export interface FileRoutesById {
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/_authenticated/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -498,6 +508,7 @@ export interface FileRouteTypes {
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
+    | '/admin/catalogo'
     | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -545,6 +556,7 @@ export interface FileRouteTypes {
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
+    | '/admin/catalogo'
     | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -595,6 +607,7 @@ export interface FileRouteTypes {
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/acessos'
+    | '/_authenticated/admin/catalogo'
     | '/_authenticated/admin/contatos'
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/admin/cursos'
@@ -950,6 +963,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminContatosRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/catalogo': {
+      id: '/_authenticated/admin/catalogo'
+      path: '/admin/catalogo'
+      fullPath: '/admin/catalogo'
+      preLoaderRoute: typeof AuthenticatedAdminCatalogoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/admin/acessos': {
       id: '/_authenticated/admin/acessos'
       path: '/admin/acessos'
@@ -1022,6 +1042,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
+  AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
   AuthenticatedAdminContatosRoute: typeof AuthenticatedAdminContatosRoute
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
@@ -1051,6 +1072,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
+  AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
   AuthenticatedAdminContatosRoute: AuthenticatedAdminContatosRoute,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,

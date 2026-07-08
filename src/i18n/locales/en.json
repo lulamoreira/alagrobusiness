@@ -265,6 +265,9 @@
     "description": "Description",
     "descriptionPh": "Product details, batch, harvest process...",
     "category": "Category",
+    "catalogoCategory": "Category (catalog)",
+    "catalogoHint": "Pick the most specific category available.",
+
     "product": "Product",
     "productPh": "E.g. Soy, Coffee, Tomato...",
     "quality": "Quality",
@@ -303,6 +306,8 @@
     "sortPriceAsc": "Lowest price",
     "sortPriceDesc": "Highest price",
     "filterCategory": "Category",
+    "filterCatalogo": "Category (catalog)",
+
     "filterState": "State",
     "filterQuality": "Quality",
     "filterCertifications": "Certifications",
@@ -1490,6 +1495,36 @@
       "desconto": "Enter the discount",
       "link": "Invalid URL (use http:// or https://)"
     }
+  },
+  "catalogo": {
+    "selectRoot": "Select a category…",
+    "selectSub": "Select…"
+  },
+  "adminCatalogo": {
+    "navLabel": "Catalog",
+    "title": "Category catalog",
+    "subtitle": "Manage the tree of categories, subcategories and items used in listings.",
+    "newRoot": "New top category",
+    "addChild": "Add subcategory",
+    "empty": "No categories yet.",
+    "inactive": "inactive",
+    "confirmDelete": "Remove \"{{name}}\" and everything under it?",
+    "deleted": "Category removed.",
+    "errorDelete": "Could not remove.",
+    "errorSave": "Could not save.",
+    "errorNomePt": "Portuguese name is required.",
+    "saved": "Category saved.",
+    "createTitle": "New category",
+    "editTitle": "Edit category",
+    "editorHint": "Portuguese name is required. English and Spanish are optional.",
+    "namePt": "Name (pt-BR)",
+    "nameEn": "Name (en)",
+    "nameEs": "Name (es)",
+    "parent": "Parent",
+    "parentRoot": "— No parent (top level) —",
+    "order": "Order",
+    "icon": "Icon (optional)",
+    "active": "Active"
   },
   "tempAccess": {
     "title": "Temporary access (starts on first login)",

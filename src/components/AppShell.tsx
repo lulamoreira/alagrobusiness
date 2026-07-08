@@ -35,6 +35,8 @@ import {
   Menu,
   Mail,
   Sparkles,
+  FolderTree,
+
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -127,6 +129,8 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/moderacao", labelKey: "adminModeracao.navLabel", icon: ShieldCheck, permKey: "moderacao" },
       { to: "/admin/contatos", labelKey: "adminContatos.navLabel", icon: Mail },
       { to: "/admin/vantagens", labelKey: "adminVantagens.navLabel", icon: Sparkles },
+      { to: "/admin/catalogo", labelKey: "adminCatalogo.navLabel", icon: FolderTree },
+
     ],
 
   },

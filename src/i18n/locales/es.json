@@ -265,6 +265,9 @@
     "description": "Descripción",
     "descriptionPh": "Detalles del producto, lote, proceso de cosecha...",
     "category": "Categoría",
+    "catalogoCategory": "Categoría (catálogo)",
+    "catalogoHint": "Elige la categoría más específica posible.",
+
     "product": "Producto",
     "productPh": "Ej.: Soja, Café, Tomate...",
     "quality": "Calidad",
@@ -303,6 +306,8 @@
     "sortPriceAsc": "Menor precio",
     "sortPriceDesc": "Mayor precio",
     "filterCategory": "Categoría",
+    "filterCatalogo": "Categoría (catálogo)",
+
     "filterState": "Estado",
     "filterQuality": "Calidad",
     "filterCertifications": "Certificaciones",
@@ -1490,6 +1495,36 @@
       "desconto": "Ingresa el descuento",
       "link": "URL inválida (usa http:// o https://)"
     }
+  },
+  "catalogo": {
+    "selectRoot": "Elige una categoría…",
+    "selectSub": "Elige…"
+  },
+  "adminCatalogo": {
+    "navLabel": "Catálogo",
+    "title": "Catálogo de categorías",
+    "subtitle": "Administra el árbol de categorías, subcategorías e ítems usados en los anuncios.",
+    "newRoot": "Nueva categoría (raíz)",
+    "addChild": "Agregar subcategoría",
+    "empty": "Aún no hay categorías.",
+    "inactive": "inactiva",
+    "confirmDelete": "¿Eliminar \"{{name}}\" y todo lo que contiene?",
+    "deleted": "Categoría eliminada.",
+    "errorDelete": "No se pudo eliminar.",
+    "errorSave": "No se pudo guardar.",
+    "errorNomePt": "El nombre en portugués es obligatorio.",
+    "saved": "Categoría guardada.",
+    "createTitle": "Nueva categoría",
+    "editTitle": "Editar categoría",
+    "editorHint": "El nombre en portugués es obligatorio. Inglés y español son opcionales.",
+    "namePt": "Nombre (pt-BR)",
+    "nameEn": "Nombre (en)",
+    "nameEs": "Nombre (es)",
+    "parent": "Padre",
+    "parentRoot": "— Sin padre (raíz) —",
+    "order": "Orden",
+    "icon": "Ícono (opcional)",
+    "active": "Activa"
   },
   "tempAccess": {
     "title": "Accesos temporales (cuenta desde el 1.º acceso)",

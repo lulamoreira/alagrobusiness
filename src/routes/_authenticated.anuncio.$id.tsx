@@ -10,6 +10,8 @@ import { AnuncioPhoto } from "@/components/AnuncioCard";
 import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
+import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
 
@@ -52,6 +54,14 @@ function DetailPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+
+  const { data: catalogo } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+    enabled: !!anuncio?.catalogo_item_id,
+  });
+
 
   if (isLoading) {
     return <p className="text-sm text-muted-foreground">{t("common.loading")}</p>;
@@ -154,11 +164,14 @@ function DetailPage() {
         <div className="space-y-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-              {t(`categories.${anuncio.categoria}`)}
+              {anuncio.catalogo_item_id && catalogo
+                ? catalogoPathLabel(catalogo, anuncio.catalogo_item_id, i18n.language)
+                : t(`categories.${anuncio.categoria}`)}
             </p>
             <h1 className="font-display text-2xl font-bold md:text-3xl">{anuncio.produto}</h1>
             <p className="text-sm text-muted-foreground">{anuncio.titulo}</p>
           </div>
+
 
           <div className="rounded-2xl border border-border bg-card p-5">
             <p className="font-display text-3xl font-bold text-primary">{priceLabel}</p>
