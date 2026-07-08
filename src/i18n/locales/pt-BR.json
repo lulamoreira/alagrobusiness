@@ -1491,6 +1491,36 @@
       "link": "URL inválida (use http:// ou https://)"
     }
   },
+  "catalogo": {
+    "selectRoot": "Selecione uma categoria…",
+    "selectSub": "Selecione…"
+  },
+  "adminCatalogo": {
+    "navLabel": "Catálogo",
+    "title": "Catálogo de categorias",
+    "subtitle": "Gerencie a árvore de categorias, subcategorias e itens usados nos anúncios.",
+    "newRoot": "Nova categoria (topo)",
+    "addChild": "Adicionar subcategoria",
+    "empty": "Nenhuma categoria cadastrada.",
+    "inactive": "inativa",
+    "confirmDelete": "Remover \"{{name}}\" e todos os itens abaixo?",
+    "deleted": "Categoria removida.",
+    "errorDelete": "Não foi possível remover.",
+    "errorSave": "Não foi possível salvar.",
+    "errorNomePt": "O nome em português é obrigatório.",
+    "saved": "Categoria salva.",
+    "createTitle": "Nova categoria",
+    "editTitle": "Editar categoria",
+    "editorHint": "Nome em português é obrigatório. Inglês e espanhol são opcionais.",
+    "namePt": "Nome (pt-BR)",
+    "nameEn": "Nome (en)",
+    "nameEs": "Nome (es)",
+    "parent": "Pai",
+    "parentRoot": "— Sem pai (topo) —",
+    "order": "Ordem",
+    "icon": "Ícone (opcional)",
+    "active": "Ativa"
+  },
   "tempAccess": {
     "title": "Acessos temporários (contagem no 1º acesso)",
     "subtitle": "Envie um convite Pro para um e-mail específico. Os dias só começam a contar quando a pessoa acessa pela primeira vez.",
