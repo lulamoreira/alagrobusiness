@@ -8,6 +8,7 @@ import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
 
 export interface AnuncioCardData {
   id: string;
@@ -26,7 +27,9 @@ export interface AnuncioCardData {
   aceita_permuta: boolean;
   certificacoes: string[];
   vendedor_id: string;
+  catalogo_item_id?: string | null;
 }
+
 
 interface AnuncioCardProps {
   item: AnuncioCardData;
