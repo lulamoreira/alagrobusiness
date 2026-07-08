@@ -50,7 +50,7 @@ interface Row {
   assinatura_status: string | null;
 }
 
-interface PlanoOpt { codigo: string; nome: string | null }
+interface PlanoOpt { codigo: string; nome: Record<string, string> | null }
 
 type Estado = "pendente" | "ativo" | "expirado";
 
