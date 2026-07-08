@@ -300,11 +300,22 @@ export function AcessosTemporariosSection() {
       url: typeof window !== "undefined" ? window.location.origin : "",
     });
 
-  const shareWhatsapp = (login: string, senha: string) => {
-    const msg = buildCredMessage(login, senha);
+  const buildLoginOnlyMessage = (login: string) =>
+    t("demoAccess.waMessageLoginOnly", {
+      login,
+      url: typeof window !== "undefined" ? window.location.origin : "",
+    });
+
+  const openWhatsapp = (msg: string) => {
     const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
     if (typeof window !== "undefined") window.open(url, "_blank", "noopener,noreferrer");
   };
+
+  const shareWhatsapp = (login: string, senha: string) =>
+    openWhatsapp(buildCredMessage(login, senha));
+
+  const shareWhatsappLoginOnly = (login: string) =>
+    openWhatsapp(buildLoginOnlyMessage(login));
 
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString(i18n.language) : "—");
   const nomePlano = (p: PlanoOpt) => p.nome?.[i18n.language] ?? p.nome?.["pt-BR"] ?? p.codigo;
