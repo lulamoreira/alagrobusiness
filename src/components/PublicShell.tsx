@@ -15,19 +15,19 @@ export function PublicShell({ children }: PublicShellProps) {
     <div className="relative min-h-screen">
       <AmbientGlow />
       <header className="sticky top-0 z-40 border-b border-border/40 bg-background/70 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-6xl items-center gap-2 px-3 py-3 sm:gap-3 sm:px-6">
           <Logo size="sm" to="/" />
           <nav className="ml-6 hidden items-center gap-5 text-sm text-muted-foreground md:flex">
             <Link to="/sobre" className="hover:text-foreground">{t("public.footer.about")}</Link>
             <Link to="/contato" className="hover:text-foreground">{t("public.nav.contact")}</Link>
           </nav>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
             <LanguageSelector />
             <Link to="/login">
-              <PillButton variant="secondary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signin")}</PillButton>
+              <PillButton variant="secondary" className="px-3 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signin")}</PillButton>
             </Link>
             <Link to="/cadastro">
-              <PillButton variant="primary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signup")}</PillButton>
+              <PillButton variant="primary" className="px-3 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signup")}</PillButton>
             </Link>
           </div>
         </div>
