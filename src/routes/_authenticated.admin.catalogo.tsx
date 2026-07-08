@@ -275,13 +275,14 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
     if (nomeEs.trim()) nome.es = nomeEs.trim();
 
     const { error } = await supabase.rpc("admin_catalogo_upsert", {
-      p_id: initial?.id ?? undefined as unknown as string,
-      p_parent_id: parentId ?? undefined as unknown as string,
+      p_id: initial?.id ?? (null as unknown as string),
+      p_parent_id: parentId ?? (null as unknown as string),
       p_nome: nome,
       p_ordem: Number(ordem) || 0,
       p_ativo: ativo,
-      p_icone: icone.trim() || undefined as unknown as string,
+      p_icone: icone.trim() || (null as unknown as string),
     });
+
     setSaving(false);
     if (error) {
       toast.error(t("adminCatalogo.errorSave"));
