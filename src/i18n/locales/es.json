@@ -1117,7 +1117,9 @@
     "adminRevokedMsg": "Tu acceso de administrador fue removido."
   },
   "public": {
+    "learnMore": "Conoce la plataforma",
     "nav": {
+
       "signin": "Entrar",
       "signup": "Crear cuenta",
       "contact": "Contacto",
