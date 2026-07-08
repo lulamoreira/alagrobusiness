@@ -314,6 +314,7 @@ export function AcessosTemporariosSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = (error as any) || (data && (data as any).error);
     if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
+    if (r.login) forgetPwd(r.login);
     toast.success(t("demoAccess.deleted"));
     setConfirmDelete(null);
     await load();
