@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth";
+import { Toaster } from "@/components/ui/sonner";
 import "@/i18n";
 import { detectAndApplyLang } from "@/i18n";
 import { initThemeFromStorage, THEME_BOOT_SCRIPT } from "@/lib/theme";
