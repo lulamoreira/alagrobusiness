@@ -525,10 +525,8 @@ export function AcessosTemporariosSection() {
                           type="text"
                           className="h-9 font-mono"
                           placeholder={t("demoAccess.sharePwdPlaceholder")}
-                          value={sharePwdMap[r.convite_id] ?? ""}
-                          onChange={(e) =>
-                            setSharePwdMap((m) => ({ ...m, [r.convite_id]: e.target.value }))
-                          }
+                          value={pwdByLogin[r.login!] ?? ""}
+                          onChange={(e) => savePwd(r.login!, e.target.value)}
                         />
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row">
@@ -537,9 +535,9 @@ export function AcessosTemporariosSection() {
                           size="sm"
                           variant="outline"
                           className="flex-1"
-                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
-                            copy(buildCredMessage(r.login!, sharePwdMap[r.convite_id]!.trim()))
+                            copy(buildCredMessage(r.login!, pwdByLogin[r.login!]!.trim()))
                           }
                         >
                           <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
@@ -549,9 +547,9 @@ export function AcessosTemporariosSection() {
                           type="button"
                           size="sm"
                           className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
-                          disabled={!(sharePwdMap[r.convite_id] ?? "").trim()}
+                          disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
-                            shareWhatsapp(r.login!, sharePwdMap[r.convite_id]!.trim())
+                            shareWhatsapp(r.login!, pwdByLogin[r.login!]!.trim())
                           }
                         >
                           <MessageCircle className="mr-2 h-3.5 w-3.5" />
