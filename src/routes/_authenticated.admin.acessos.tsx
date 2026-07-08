@@ -366,8 +366,52 @@ function AdminAcessosPage() {
         </div>
       </header>
 
+      {/* Quick nav */}
+      <nav
+        aria-label={t("adminAccess.quickNav")}
+        className="flex flex-wrap gap-2 rounded-2xl border border-border/60 bg-card/40 p-3 backdrop-blur"
+      >
+        {[
+          { id: "search", icon: Search, label: t("adminAccess.searchLabel") },
+          { id: "cortesias", icon: Gift, label: t("adminAccess.activeCortesias") },
+          { id: "invite", icon: Mail, label: t("adminAccess.inviteSectionTitle") },
+          { id: "temp", icon: Timer, label: t("tempAccess.title") },
+          { id: "admins", icon: ShieldCheck, label: t("adminAccess.adminSectionTitle") },
+        ].map(({ id, icon: Icon, label }) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => goToSection(id)}
+            className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-medium text-foreground/80 transition-colors hover:border-primary/50 hover:bg-primary/10 hover:text-primary"
+            title={label}
+            aria-label={label}
+          >
+            <Icon className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">{label}</span>
+          </button>
+        ))}
+      </nav>
+
+      <Accordion
+        type="multiple"
+        value={openSecs}
+        onValueChange={(v) => setOpenSecs(v as string[])}
+        className="space-y-4"
+      >
       {/* Search */}
-      <section className="rounded-2xl border border-border/60 bg-card/40 p-5 backdrop-blur">
+      <AccordionItem
+        id="sec-search"
+        value="search"
+        className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur"
+      >
+        <AccordionTrigger className="px-5 py-4 hover:no-underline">
+          <span className="flex items-center gap-2 text-left font-display text-base font-semibold">
+            <Search className="h-4 w-4 text-primary" />
+            {t("adminAccess.searchLabel")}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent className="px-5 pb-5">
+
         <Label htmlFor="q" className="text-sm">
           {t("adminAccess.searchLabel")}
         </Label>
