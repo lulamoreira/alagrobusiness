@@ -22,6 +22,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
   const [serverError, setServerError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const {
@@ -29,6 +30,24 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (!profile) return;
+    if (!profile.perfil_completo) navigate({ to: "/completar-cadastro", replace: true });
+    else if (profile.status === "ativo") navigate({ to: "/painel", replace: true });
+    else if (profile.status === "bloqueado") navigate({ to: "/bloqueado", replace: true });
+    else if (profile.status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao", replace: true });
+  }, [user, profile, authLoading, navigate]);
+
+  if (authLoading || user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-10 w-10 animate-pulse rounded-full bg-primary/40" />
+      </div>
+    );
+  }
+
 
   const onSubmit = async (data: LoginInput) => {
     setSubmitting(true);
