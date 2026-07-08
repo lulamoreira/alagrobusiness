@@ -50,6 +50,7 @@ import {
 } from "@/components/ui/dialog";
 import { AdminManagementSection } from "@/components/AdminManagementSection";
 import { InviteCortesiaSection } from "@/components/InviteCortesiaSection";
+import { AcessosTemporariosSection } from "@/components/AcessosTemporariosSection";
 
 export const Route = createFileRoute("/_authenticated/admin/acessos")({
   component: AdminAcessosPage,
@@ -730,6 +731,8 @@ function AdminAcessosPage() {
       </section>
 
       <InviteCortesiaSection />
+
+      <AcessosTemporariosSection />
 
       <AdminManagementSection />
 
