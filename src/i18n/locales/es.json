@@ -1588,6 +1588,8 @@
     "copyPassword": "Copiar contraseña",
     "copyAll": "Copiar login y contraseña",
     "sendWhatsapp": "Enviar por WhatsApp",
-    "waMessage": "¡Hola! 🌱\n\nTus credenciales de acceso a la plataforma AGROBUSINESS están listas:\n\n🔑 Login: {{login}}\n🔒 Contraseña: {{senha}}\n🌐 Ingresa: {{url}}\n\nPor seguridad, cambia tu contraseña en el primer acceso. ¡Buen uso!"
+    "waMessage": "¡Hola! 🌱\n\nTus credenciales de acceso a la plataforma AGROBUSINESS están listas:\n\n🔑 Login: {{login}}\n🔒 Contraseña: {{senha}}\n🌐 Ingresa: {{url}}\n\nPor seguridad, cambia tu contraseña en el primer acceso. ¡Buen uso!",
+    "copyLoginLink": "Copiar login y enlace",
+    "waMessageLoginOnly": "¡Hola! 🌱\n\nTu login de acceso a la plataforma AGROBUSINESS:\n\n🔑 Login: {{login}}\n🌐 Ingresa: {{url}}\n\nSi necesitas la contraseña, avísame y te la envío enseguida."
   }
 }

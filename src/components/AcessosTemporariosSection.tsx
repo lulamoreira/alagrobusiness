@@ -300,11 +300,22 @@ export function AcessosTemporariosSection() {
       url: typeof window !== "undefined" ? window.location.origin : "",
     });
 
-  const shareWhatsapp = (login: string, senha: string) => {
-    const msg = buildCredMessage(login, senha);
+  const buildLoginOnlyMessage = (login: string) =>
+    t("demoAccess.waMessageLoginOnly", {
+      login,
+      url: typeof window !== "undefined" ? window.location.origin : "",
+    });
+
+  const openWhatsapp = (msg: string) => {
     const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
     if (typeof window !== "undefined") window.open(url, "_blank", "noopener,noreferrer");
   };
+
+  const shareWhatsapp = (login: string, senha: string) =>
+    openWhatsapp(buildCredMessage(login, senha));
+
+  const shareWhatsappLoginOnly = (login: string) =>
+    openWhatsapp(buildLoginOnlyMessage(login));
 
   const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString(i18n.language) : "—");
   const nomePlano = (p: PlanoOpt) => p.nome?.[i18n.language] ?? p.nome?.["pt-BR"] ?? p.codigo;
@@ -467,6 +478,27 @@ export function AcessosTemporariosSection() {
                           onClick={() => copy(r.login!)}
                         >
                           <Copy className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="flex-1"
+                          onClick={() => copy(buildLoginOnlyMessage(r.login!))}
+                        >
+                          <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.copyLoginLink")}
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
+                          onClick={() => shareWhatsappLoginOnly(r.login!)}
+                        >
+                          <MessageCircle className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.sendWhatsapp")}
                         </Button>
                       </div>
                       <p className="text-[11px] leading-snug text-muted-foreground">
