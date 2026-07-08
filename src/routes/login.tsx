@@ -114,6 +114,12 @@ function LoginPage() {
             {t("auth.signupHere")}
           </Link>
         </div>
+        <div className="text-center">
+          <Link to="/conheca" className="text-xs text-muted-foreground hover:text-foreground">
+            {t("public.learnMore")}
+          </Link>
+        </div>
+
       </div>
     </div>
   );
