@@ -6,7 +6,10 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
+import { CatalogoCascade } from "@/components/CatalogoCascade";
+import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
 
