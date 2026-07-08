@@ -109,7 +109,7 @@ export function AcessosTemporariosSection() {
 
   // Add-days input per row
   const [addDaysMap, setAddDaysMap] = useState<Record<string, string>>({});
-  const [sharePwdMap, setSharePwdMap] = useState<Record<string, string>>({});
+  const [pwdByLogin, setPwdByLogin] = useState<Record<string, string>>({});
 
   // Delete confirm
   const [confirmDelete, setConfirmDelete] = useState<Row | null>(null);
