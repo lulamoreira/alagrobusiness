@@ -602,14 +602,53 @@ export function AcessosTemporariosSection() {
             <DialogDescription>{t("demoAccess.createdDesc")}</DialogDescription>
           </DialogHeader>
           {criado && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Input readOnly value={criado.login} />
-                <Button size="icon" variant="secondary" onClick={() => copy(criado.login)}><Copy className="h-4 w-4" /></Button>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label className="text-xs">{t("demoAccess.login")}</Label>
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={criado.login} className="font-mono" />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    aria-label={t("demoAccess.copyLogin")}
+                    onClick={() => copy(criado.login)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Input readOnly value={criado.senha} />
-                <Button size="icon" variant="secondary" onClick={() => copy(criado.senha)}><Copy className="h-4 w-4" /></Button>
+              <div className="space-y-2">
+                <Label className="text-xs">{t("demoAccess.password")}</Label>
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={criado.senha} className="font-mono" />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    aria-label={t("demoAccess.copyPassword")}
+                    onClick={() => copy(criado.senha)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 pt-1 sm:flex-row">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => copy(buildCredMessage(criado.login, criado.senha))}
+                >
+                  <ClipboardCopy className="mr-2 h-4 w-4" />
+                  {t("demoAccess.copyAll")}
+                </Button>
+                <Button
+                  type="button"
+                  className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
+                  onClick={() => shareWhatsapp(criado.login, criado.senha)}
+                >
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  {t("demoAccess.sendWhatsapp")}
+                </Button>
               </div>
             </div>
           )}
