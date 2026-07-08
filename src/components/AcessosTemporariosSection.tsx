@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { Loader2, Timer, Send, Ban, Plus, Minus, Pencil, Trash2, KeyRound, RotateCcw, Copy, Sparkles } from "lucide-react";
+import { Loader2, Timer, Send, Ban, Plus, Minus, Pencil, Trash2, KeyRound, RotateCcw, Copy, Sparkles, MessageCircle, ClipboardCopy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
