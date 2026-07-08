@@ -220,7 +220,9 @@ export function AcessosTemporariosSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = (error as any) || (data && (data as any).error);
     if (err) return toast.error(typeof err === "string" ? err : (err.message ?? "erro"));
-    setCriado({ login: demoLogin.trim().toLowerCase(), senha: demoSenha });
+    const loginCriado = demoLogin.trim().toLowerCase();
+    setCriado({ login: loginCriado, senha: demoSenha });
+    savePwd(loginCriado, demoSenha);
     setDemoLogin(""); setDemoSenha(""); setDemoLabel("");
     toast.success(t("demoAccess.created"));
     await load();
