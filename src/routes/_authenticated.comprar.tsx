@@ -220,6 +220,14 @@ function BuyPage() {
             </div>
           </div>
 
+          <CatalogoCascade
+            label={t("buy.filterCatalogo")}
+            value={catalogoFilter}
+            onChange={setCatalogoFilter}
+            allowClear
+          />
+
+
           <div className="grid gap-3 md:grid-cols-3">
             <DarkInput label={t("buy.filterState")} value={state} onChange={(e) => setState(e.target.value)} />
             <DarkInput label={t("buy.filterQuality")} value={quality} onChange={(e) => setQuality(e.target.value)} />
