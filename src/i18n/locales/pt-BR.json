@@ -1165,10 +1165,22 @@
     "how": {
       "title": "Como funciona",
       "subtitle": "Do cadastro à primeira negociação em minutos.",
-      "step1": { "title": "Cadastre-se", "desc": "Crie sua conta grátis e escolha o seu perfil." },
-      "step2": { "title": "Anuncie ou compre", "desc": "Publique seus produtos ou navegue pelo marketplace." },
-      "step3": { "title": "Negocie no chat", "desc": "Converse diretamente com a outra parte, com segurança." },
-      "step4": { "title": "Gerencie no painel", "desc": "Acompanhe vendas, alertas e agenda em um só lugar." }
+      "step1": {
+        "title": "Cadastre-se",
+        "desc": "Crie sua conta grátis e escolha o seu perfil."
+      },
+      "step2": {
+        "title": "Anuncie ou compre",
+        "desc": "Publique seus produtos ou navegue pelo marketplace."
+      },
+      "step3": {
+        "title": "Negocie no chat",
+        "desc": "Converse diretamente com a outra parte, com segurança."
+      },
+      "step4": {
+        "title": "Gerencie no painel",
+        "desc": "Acompanhe vendas, alertas e agenda em um só lugar."
+      }
     },
     "finalCta": {
       "title": "Pronto para começar?",
@@ -1231,14 +1243,35 @@
       "cta": "Criar conta como Produtor",
       "benefitsTitle": "Por que o AGROBUSINESS pra você",
       "benefitsSubtitle": "Ferramentas pensadas para quem produz.",
-      "b1": { "title": "Mais alcance", "desc": "Seus anúncios chegam a compradores em todo o Brasil, com filtros por região e categoria." },
-      "b2": { "title": "Negociação direta", "desc": "Fale por chat com o comprador, sem atravessador, e feche pelo canal que já conhece." },
-      "b3": { "title": "Painel de vendas", "desc": "Acompanhe faturamento, propostas em aberto e histórico de vendas em tempo real." },
-      "b4": { "title": "Cotações e clima", "desc": "Preço de commodities, dólar e previsão do tempo para decidir a hora certa de vender." },
+      "b1": {
+        "title": "Mais alcance",
+        "desc": "Seus anúncios chegam a compradores em todo o Brasil, com filtros por região e categoria."
+      },
+      "b2": {
+        "title": "Negociação direta",
+        "desc": "Fale por chat com o comprador, sem atravessador, e feche pelo canal que já conhece."
+      },
+      "b3": {
+        "title": "Painel de vendas",
+        "desc": "Acompanhe faturamento, propostas em aberto e histórico de vendas em tempo real."
+      },
+      "b4": {
+        "title": "Cotações e clima",
+        "desc": "Preço de commodities, dólar e previsão do tempo para decidir a hora certa de vender."
+      },
       "howTitle": "Como funciona pra você",
-      "s1": { "title": "Cadastre-se como Produtor", "desc": "Conta grátis, com seleção de categorias que você produz." },
-      "s2": { "title": "Publique seus lotes", "desc": "Suba fotos, defina preço e quantidade — o anúncio já aparece na busca." },
-      "s3": { "title": "Negocie e gerencie", "desc": "Responda propostas no chat e registre as vendas no seu painel." },
+      "s1": {
+        "title": "Cadastre-se como Produtor",
+        "desc": "Conta grátis, com seleção de categorias que você produz."
+      },
+      "s2": {
+        "title": "Publique seus lotes",
+        "desc": "Suba fotos, defina preço e quantidade — o anúncio já aparece na busca."
+      },
+      "s3": {
+        "title": "Negocie e gerencie",
+        "desc": "Responda propostas no chat e registre as vendas no seu painel."
+      },
       "finalTitle": "Pronto para vender melhor?",
       "finalSubtitle": "Comece agora — o cadastro leva menos de 2 minutos."
     },
@@ -1249,14 +1282,35 @@
       "cta": "Criar conta como Marca",
       "benefitsTitle": "Por que o AGROBUSINESS pra sua marca",
       "benefitsSubtitle": "Uma vitrine premium para o agronegócio.",
-      "b1": { "title": "Presença qualificada", "desc": "Sua marca ao lado de conteúdo, cotações e notícias que o produtor consome todo dia." },
-      "b2": { "title": "Canal com o produtor", "desc": "Publique lançamentos, campanhas e materiais direto para o público certo." },
-      "b3": { "title": "Insights do agro", "desc": "Acompanhe tendências de busca, categorias em alta e comportamento do mercado." },
-      "b4": { "title": "Suporte dedicado", "desc": "Nossa equipe ajuda a configurar sua presença e a extrair o melhor da plataforma." },
+      "b1": {
+        "title": "Presença qualificada",
+        "desc": "Sua marca ao lado de conteúdo, cotações e notícias que o produtor consome todo dia."
+      },
+      "b2": {
+        "title": "Canal com o produtor",
+        "desc": "Publique lançamentos, campanhas e materiais direto para o público certo."
+      },
+      "b3": {
+        "title": "Insights do agro",
+        "desc": "Acompanhe tendências de busca, categorias em alta e comportamento do mercado."
+      },
+      "b4": {
+        "title": "Suporte dedicado",
+        "desc": "Nossa equipe ajuda a configurar sua presença e a extrair o melhor da plataforma."
+      },
       "howTitle": "Como funciona pra sua marca",
-      "s1": { "title": "Cadastre a marca", "desc": "Solicite acesso — contas de marca passam por aprovação da equipe." },
-      "s2": { "title": "Ative sua vitrine", "desc": "Com o cadastro aprovado, publique conteúdo, campanhas e materiais." },
-      "s3": { "title": "Meça o resultado", "desc": "Acompanhe alcance e engajamento com o público do agro." },
+      "s1": {
+        "title": "Cadastre a marca",
+        "desc": "Solicite acesso — contas de marca passam por aprovação da equipe."
+      },
+      "s2": {
+        "title": "Ative sua vitrine",
+        "desc": "Com o cadastro aprovado, publique conteúdo, campanhas e materiais."
+      },
+      "s3": {
+        "title": "Meça o resultado",
+        "desc": "Acompanhe alcance e engajamento com o público do agro."
+      },
       "finalTitle": "Vamos fortalecer sua marca no agro?",
       "finalSubtitle": "Solicite acesso e nossa equipe entra em contato."
     },
@@ -1267,14 +1321,35 @@
       "cta": "Criar conta como Lojista",
       "benefitsTitle": "Por que o AGROBUSINESS pra sua loja",
       "benefitsSubtitle": "Vitrine, negociação e gestão em um só lugar.",
-      "b1": { "title": "Vitrine nacional", "desc": "Seus produtos aparecem para produtores e compradores em todo o país." },
-      "b2": { "title": "Gestão simples", "desc": "Controle estoque, preços e status de cada item pelo painel." },
-      "b3": { "title": "Negociação por chat", "desc": "Atenda propostas em tempo real e feche a venda sem sair da plataforma." },
-      "b4": { "title": "Relatórios claros", "desc": "Veja o que vende, o que não vende e onde investir sua energia." },
+      "b1": {
+        "title": "Vitrine nacional",
+        "desc": "Seus produtos aparecem para produtores e compradores em todo o país."
+      },
+      "b2": {
+        "title": "Gestão simples",
+        "desc": "Controle estoque, preços e status de cada item pelo painel."
+      },
+      "b3": {
+        "title": "Negociação por chat",
+        "desc": "Atenda propostas em tempo real e feche a venda sem sair da plataforma."
+      },
+      "b4": {
+        "title": "Relatórios claros",
+        "desc": "Veja o que vende, o que não vende e onde investir sua energia."
+      },
       "howTitle": "Como funciona pra sua loja",
-      "s1": { "title": "Cadastre a loja", "desc": "Solicite acesso — contas de lojista passam por aprovação da equipe." },
-      "s2": { "title": "Publique o catálogo", "desc": "Após aprovação, cadastre produtos com fotos, preço e estoque." },
-      "s3": { "title": "Venda e gerencie", "desc": "Responda propostas, marque vendas e acompanhe tudo no painel." },
+      "s1": {
+        "title": "Cadastre a loja",
+        "desc": "Solicite acesso — contas de lojista passam por aprovação da equipe."
+      },
+      "s2": {
+        "title": "Publique o catálogo",
+        "desc": "Após aprovação, cadastre produtos com fotos, preço e estoque."
+      },
+      "s3": {
+        "title": "Venda e gerencie",
+        "desc": "Responda propostas, marque vendas e acompanhe tudo no painel."
+      },
       "finalTitle": "Vamos ampliar sua loja no agro?",
       "finalSubtitle": "Solicite acesso e comece a vender para todo o Brasil."
     }
@@ -1285,30 +1360,75 @@
     "p1": "O AGROBUSINESS nasceu para dar ao produtor rural, ao comprador, ao lojista e à marca do agro um lugar único para se encontrar, negociar e crescer juntos.",
     "p2": "Reunimos marketplace, cotações, clima, notícias, cursos e um clube de vantagens em uma experiência simples, mobile-first e pensada para quem vive o campo.",
     "p3": "Nosso compromisso é com transparência, segurança da informação e respeito à LGPD — para que cada usuário tenha controle sobre seus dados e suas negociações.",
-    "mission": { "title": "Missão", "desc": "Conectar o agronegócio brasileiro com tecnologia, transparência e simplicidade." },
-    "vision": { "title": "Visão", "desc": "Ser a principal plataforma do agro brasileiro, do campo à indústria." },
-    "values": { "title": "Valores", "desc": "Confiança, proximidade com o produtor e evolução contínua." }
+    "mission": {
+      "title": "Missão",
+      "desc": "Conectar o agronegócio brasileiro com tecnologia, transparência e simplicidade."
+    },
+    "vision": {
+      "title": "Visão",
+      "desc": "Ser a principal plataforma do agro brasileiro, do campo à indústria."
+    },
+    "values": {
+      "title": "Valores",
+      "desc": "Confiança, proximidade com o produtor e evolução contínua."
+    }
   },
   "legal": {
     "updatedAt": "Rascunho — sujeito a revisão jurídica.",
     "draftNotice": "Este texto é um rascunho e deve ser substituído pelo conteúdo jurídico oficial fornecido pelo advogado responsável. Não constitui aconselhamento legal.",
     "terms": {
       "title": "Termos de Uso",
-      "s1": { "title": "1. Aceitação", "body": "Ao utilizar o AGROBUSINESS, você declara ter lido e concordado com estes Termos de Uso. Se não concordar, não utilize a plataforma." },
-      "s2": { "title": "2. Cadastro e conta", "body": "O usuário é responsável pelas informações fornecidas no cadastro e por manter a confidencialidade das credenciais de acesso." },
-      "s3": { "title": "3. Uso da plataforma", "body": "É proibido utilizar o serviço para fins ilícitos, fraudulentos, ofensivos ou que violem direitos de terceiros." },
-      "s4": { "title": "4. Anúncios e negociações", "body": "As negociações realizadas entre usuários são de responsabilidade das partes envolvidas. O AGROBUSINESS atua como intermediador da conexão." },
-      "s5": { "title": "5. Propriedade intelectual", "body": "Todo o conteúdo, marca e software do AGROBUSINESS é protegido por direitos autorais e demais leis aplicáveis." },
-      "s6": { "title": "6. Alterações", "body": "Estes Termos podem ser atualizados a qualquer momento. Consulte esta página periodicamente. (Rascunho — substituir pelo texto jurídico oficial.)" }
+      "s1": {
+        "title": "1. Aceitação",
+        "body": "Ao utilizar o AGROBUSINESS, você declara ter lido e concordado com estes Termos de Uso. Se não concordar, não utilize a plataforma."
+      },
+      "s2": {
+        "title": "2. Cadastro e conta",
+        "body": "O usuário é responsável pelas informações fornecidas no cadastro e por manter a confidencialidade das credenciais de acesso."
+      },
+      "s3": {
+        "title": "3. Uso da plataforma",
+        "body": "É proibido utilizar o serviço para fins ilícitos, fraudulentos, ofensivos ou que violem direitos de terceiros."
+      },
+      "s4": {
+        "title": "4. Anúncios e negociações",
+        "body": "As negociações realizadas entre usuários são de responsabilidade das partes envolvidas. O AGROBUSINESS atua como intermediador da conexão."
+      },
+      "s5": {
+        "title": "5. Propriedade intelectual",
+        "body": "Todo o conteúdo, marca e software do AGROBUSINESS é protegido por direitos autorais e demais leis aplicáveis."
+      },
+      "s6": {
+        "title": "6. Alterações",
+        "body": "Estes Termos podem ser atualizados a qualquer momento. Consulte esta página periodicamente. (Rascunho — substituir pelo texto jurídico oficial.)"
+      }
     },
     "privacy": {
       "title": "Política de Privacidade",
-      "s1": { "title": "1. Quais dados coletamos", "body": "Coletamos dados fornecidos no cadastro (nome, e-mail, telefone, localização, categorias de interesse) e dados de uso da plataforma, conforme a LGPD." },
-      "s2": { "title": "2. Como usamos os dados", "body": "Utilizamos os dados para viabilizar o serviço, personalizar a experiência, garantir segurança e cumprir obrigações legais." },
-      "s3": { "title": "3. Compartilhamento", "body": "Não vendemos dados pessoais. Compartilhamos apenas com prestadores essenciais ao funcionamento da plataforma e mediante obrigação legal." },
-      "s4": { "title": "4. Direitos do titular", "body": "Você pode solicitar acesso, correção, portabilidade ou exclusão dos seus dados a qualquer momento, nos termos da LGPD." },
-      "s5": { "title": "5. Segurança", "body": "Adotamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado, perda ou alteração indevida." },
-      "s6": { "title": "6. Contato", "body": "Em caso de dúvidas sobre esta política, entre em contato pelo canal oficial de atendimento. (Rascunho — substituir pelo texto jurídico oficial.)" }
+      "s1": {
+        "title": "1. Quais dados coletamos",
+        "body": "Coletamos dados fornecidos no cadastro (nome, e-mail, telefone, localização, categorias de interesse) e dados de uso da plataforma, conforme a LGPD."
+      },
+      "s2": {
+        "title": "2. Como usamos os dados",
+        "body": "Utilizamos os dados para viabilizar o serviço, personalizar a experiência, garantir segurança e cumprir obrigações legais."
+      },
+      "s3": {
+        "title": "3. Compartilhamento",
+        "body": "Não vendemos dados pessoais. Compartilhamos apenas com prestadores essenciais ao funcionamento da plataforma e mediante obrigação legal."
+      },
+      "s4": {
+        "title": "4. Direitos do titular",
+        "body": "Você pode solicitar acesso, correção, portabilidade ou exclusão dos seus dados a qualquer momento, nos termos da LGPD."
+      },
+      "s5": {
+        "title": "5. Segurança",
+        "body": "Adotamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado, perda ou alteração indevida."
+      },
+      "s6": {
+        "title": "6. Contato",
+        "body": "Em caso de dúvidas sobre esta política, entre em contato pelo canal oficial de atendimento. (Rascunho — substituir pelo texto jurídico oficial.)"
+      }
     }
   },
   "clube": {
@@ -1355,5 +1475,30 @@
       "desconto": "Informe o desconto",
       "link": "URL inválida (use http:// ou https://)"
     }
+  },
+  "tempAccess": {
+    "title": "Acessos temporários (contagem no 1º acesso)",
+    "subtitle": "Envie um convite Pro para um e-mail específico. Os dias só começam a contar quando a pessoa acessa pela primeira vez.",
+    "daysLabel": "Dias de acesso Pro",
+    "daysShort": "dias",
+    "send": "Enviar acesso",
+    "listTitle": "Acessos temporários emitidos",
+    "listEmpty": "Nenhum acesso temporário emitido ainda.",
+    "state_pendente": "Convite enviado — ainda não acessou",
+    "state_ativo": "Ativo",
+    "state_expirado": "Expirado",
+    "firstAccess": "Primeiro acesso",
+    "notYet": "—",
+    "inviteExpiresAt": "Convite expira em",
+    "accessExpiresAt": "Acesso expira em",
+    "remaining": "Tempo restante",
+    "expiredLabel": "expirado",
+    "revokeNow": "Revogar agora",
+    "appliedNow": "E-mail já cadastrado — acesso aplicado imediatamente.",
+    "sentEmail": "Convite temporário enviado por e-mail.",
+    "createdManual": "Convite criado. E-mail não configurado — envie o link manualmente.",
+    "updated": "Tempo ajustado.",
+    "revoked": "Acesso temporário revogado.",
+    "invalidDays": "Informe um número de dias válido."
   }
 }

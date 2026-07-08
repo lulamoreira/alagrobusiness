@@ -1165,10 +1165,22 @@
     "how": {
       "title": "How it works",
       "subtitle": "From sign-up to your first deal in minutes.",
-      "step1": { "title": "Sign up", "desc": "Create your free account and pick your profile." },
-      "step2": { "title": "List or buy", "desc": "Publish your products or browse the marketplace." },
-      "step3": { "title": "Chat & negotiate", "desc": "Talk directly with the other party, safely." },
-      "step4": { "title": "Manage in your dashboard", "desc": "Track sales, alerts and agenda in one place." }
+      "step1": {
+        "title": "Sign up",
+        "desc": "Create your free account and pick your profile."
+      },
+      "step2": {
+        "title": "List or buy",
+        "desc": "Publish your products or browse the marketplace."
+      },
+      "step3": {
+        "title": "Chat & negotiate",
+        "desc": "Talk directly with the other party, safely."
+      },
+      "step4": {
+        "title": "Manage in your dashboard",
+        "desc": "Track sales, alerts and agenda in one place."
+      }
     },
     "finalCta": {
       "title": "Ready to start?",
@@ -1231,14 +1243,35 @@
       "cta": "Create account as Producer",
       "benefitsTitle": "Why AGROBUSINESS for you",
       "benefitsSubtitle": "Tools designed for those who produce.",
-      "b1": { "title": "Wider reach", "desc": "Your listings reach buyers across Brazil, with filters by region and category." },
-      "b2": { "title": "Direct negotiation", "desc": "Chat with the buyer, no middleman, and close the deal your way." },
-      "b3": { "title": "Sales dashboard", "desc": "Track revenue, open offers and sales history in real time." },
-      "b4": { "title": "Prices & weather", "desc": "Commodity prices, USD rate and weather forecast to decide the right time to sell." },
+      "b1": {
+        "title": "Wider reach",
+        "desc": "Your listings reach buyers across Brazil, with filters by region and category."
+      },
+      "b2": {
+        "title": "Direct negotiation",
+        "desc": "Chat with the buyer, no middleman, and close the deal your way."
+      },
+      "b3": {
+        "title": "Sales dashboard",
+        "desc": "Track revenue, open offers and sales history in real time."
+      },
+      "b4": {
+        "title": "Prices & weather",
+        "desc": "Commodity prices, USD rate and weather forecast to decide the right time to sell."
+      },
       "howTitle": "How it works for you",
-      "s1": { "title": "Sign up as Producer", "desc": "Free account, with the categories you produce." },
-      "s2": { "title": "Publish your lots", "desc": "Upload photos, set price and quantity — your ad goes live on search." },
-      "s3": { "title": "Negotiate & manage", "desc": "Reply to offers in chat and log sales in your dashboard." },
+      "s1": {
+        "title": "Sign up as Producer",
+        "desc": "Free account, with the categories you produce."
+      },
+      "s2": {
+        "title": "Publish your lots",
+        "desc": "Upload photos, set price and quantity — your ad goes live on search."
+      },
+      "s3": {
+        "title": "Negotiate & manage",
+        "desc": "Reply to offers in chat and log sales in your dashboard."
+      },
       "finalTitle": "Ready to sell better?",
       "finalSubtitle": "Get started — signup takes less than 2 minutes."
     },
@@ -1249,14 +1282,35 @@
       "cta": "Create account as Brand",
       "benefitsTitle": "Why AGROBUSINESS for your brand",
       "benefitsSubtitle": "A premium showcase for the agribusiness world.",
-      "b1": { "title": "Qualified presence", "desc": "Your brand alongside the content, prices and news producers consume every day." },
-      "b2": { "title": "Channel to the producer", "desc": "Publish launches, campaigns and materials straight to the right audience." },
-      "b3": { "title": "Agri insights", "desc": "Follow search trends, hot categories and market behavior." },
-      "b4": { "title": "Dedicated support", "desc": "Our team helps you set up your presence and get the most from the platform." },
+      "b1": {
+        "title": "Qualified presence",
+        "desc": "Your brand alongside the content, prices and news producers consume every day."
+      },
+      "b2": {
+        "title": "Channel to the producer",
+        "desc": "Publish launches, campaigns and materials straight to the right audience."
+      },
+      "b3": {
+        "title": "Agri insights",
+        "desc": "Follow search trends, hot categories and market behavior."
+      },
+      "b4": {
+        "title": "Dedicated support",
+        "desc": "Our team helps you set up your presence and get the most from the platform."
+      },
       "howTitle": "How it works for your brand",
-      "s1": { "title": "Register the brand", "desc": "Request access — brand accounts go through team approval." },
-      "s2": { "title": "Activate your showcase", "desc": "Once approved, publish content, campaigns and materials." },
-      "s3": { "title": "Measure results", "desc": "Track reach and engagement with the agri audience." },
+      "s1": {
+        "title": "Register the brand",
+        "desc": "Request access — brand accounts go through team approval."
+      },
+      "s2": {
+        "title": "Activate your showcase",
+        "desc": "Once approved, publish content, campaigns and materials."
+      },
+      "s3": {
+        "title": "Measure results",
+        "desc": "Track reach and engagement with the agri audience."
+      },
       "finalTitle": "Let's grow your brand in agri?",
       "finalSubtitle": "Request access and our team will get in touch."
     },
@@ -1267,14 +1321,35 @@
       "cta": "Create account as Store",
       "benefitsTitle": "Why AGROBUSINESS for your store",
       "benefitsSubtitle": "Showcase, negotiation and management in one place.",
-      "b1": { "title": "Nationwide showcase", "desc": "Your products shown to producers and buyers across the country." },
-      "b2": { "title": "Simple management", "desc": "Control stock, prices and status of every item from the dashboard." },
-      "b3": { "title": "Chat negotiation", "desc": "Handle offers in real time and close the sale without leaving the platform." },
-      "b4": { "title": "Clear reports", "desc": "See what sells, what doesn't, and where to focus." },
+      "b1": {
+        "title": "Nationwide showcase",
+        "desc": "Your products shown to producers and buyers across the country."
+      },
+      "b2": {
+        "title": "Simple management",
+        "desc": "Control stock, prices and status of every item from the dashboard."
+      },
+      "b3": {
+        "title": "Chat negotiation",
+        "desc": "Handle offers in real time and close the sale without leaving the platform."
+      },
+      "b4": {
+        "title": "Clear reports",
+        "desc": "See what sells, what doesn't, and where to focus."
+      },
       "howTitle": "How it works for your store",
-      "s1": { "title": "Register the store", "desc": "Request access — store accounts go through team approval." },
-      "s2": { "title": "Publish the catalog", "desc": "Once approved, list products with photos, price and stock." },
-      "s3": { "title": "Sell and manage", "desc": "Reply to offers, mark sales and track everything in the dashboard." },
+      "s1": {
+        "title": "Register the store",
+        "desc": "Request access — store accounts go through team approval."
+      },
+      "s2": {
+        "title": "Publish the catalog",
+        "desc": "Once approved, list products with photos, price and stock."
+      },
+      "s3": {
+        "title": "Sell and manage",
+        "desc": "Reply to offers, mark sales and track everything in the dashboard."
+      },
       "finalTitle": "Let's grow your store in agri?",
       "finalSubtitle": "Request access and start selling across Brazil."
     }
@@ -1285,30 +1360,75 @@
     "p1": "AGROBUSINESS was born to give rural producers, buyers, stores and agri brands a single place to meet, negotiate and grow together.",
     "p2": "We bring together marketplace, prices, weather, news, courses and a benefits club in a simple, mobile-first experience made for those who live the field.",
     "p3": "We are committed to transparency, information security and respect for privacy law — so every user has control over their data and negotiations.",
-    "mission": { "title": "Mission", "desc": "Connect Brazilian agribusiness with technology, transparency and simplicity." },
-    "vision": { "title": "Vision", "desc": "Be the leading Brazilian agri platform, from field to industry." },
-    "values": { "title": "Values", "desc": "Trust, closeness to the producer and continuous evolution." }
+    "mission": {
+      "title": "Mission",
+      "desc": "Connect Brazilian agribusiness with technology, transparency and simplicity."
+    },
+    "vision": {
+      "title": "Vision",
+      "desc": "Be the leading Brazilian agri platform, from field to industry."
+    },
+    "values": {
+      "title": "Values",
+      "desc": "Trust, closeness to the producer and continuous evolution."
+    }
   },
   "legal": {
     "updatedAt": "Draft — subject to legal review.",
     "draftNotice": "This text is a draft and must be replaced by the official legal content provided by the responsible attorney. It does not constitute legal advice.",
     "terms": {
       "title": "Terms of Use",
-      "s1": { "title": "1. Acceptance", "body": "By using AGROBUSINESS you declare that you have read and agreed to these Terms of Use. If you do not agree, do not use the platform." },
-      "s2": { "title": "2. Account & sign-up", "body": "The user is responsible for the information provided at sign-up and for keeping access credentials confidential." },
-      "s3": { "title": "3. Use of the platform", "body": "Using the service for unlawful, fraudulent, offensive purposes or in violation of third-party rights is prohibited." },
-      "s4": { "title": "4. Listings & negotiations", "body": "Negotiations between users are the responsibility of the parties involved. AGROBUSINESS acts as a connection intermediary." },
-      "s5": { "title": "5. Intellectual property", "body": "All content, brand and software of AGROBUSINESS is protected by copyright and other applicable laws." },
-      "s6": { "title": "6. Changes", "body": "These Terms may be updated at any time. Please review this page periodically. (Draft — replace with the official legal text.)" }
+      "s1": {
+        "title": "1. Acceptance",
+        "body": "By using AGROBUSINESS you declare that you have read and agreed to these Terms of Use. If you do not agree, do not use the platform."
+      },
+      "s2": {
+        "title": "2. Account & sign-up",
+        "body": "The user is responsible for the information provided at sign-up and for keeping access credentials confidential."
+      },
+      "s3": {
+        "title": "3. Use of the platform",
+        "body": "Using the service for unlawful, fraudulent, offensive purposes or in violation of third-party rights is prohibited."
+      },
+      "s4": {
+        "title": "4. Listings & negotiations",
+        "body": "Negotiations between users are the responsibility of the parties involved. AGROBUSINESS acts as a connection intermediary."
+      },
+      "s5": {
+        "title": "5. Intellectual property",
+        "body": "All content, brand and software of AGROBUSINESS is protected by copyright and other applicable laws."
+      },
+      "s6": {
+        "title": "6. Changes",
+        "body": "These Terms may be updated at any time. Please review this page periodically. (Draft — replace with the official legal text.)"
+      }
     },
     "privacy": {
       "title": "Privacy Policy",
-      "s1": { "title": "1. What data we collect", "body": "We collect data provided at sign-up (name, email, phone, location, categories of interest) and usage data, in compliance with privacy law." },
-      "s2": { "title": "2. How we use the data", "body": "We use data to provide the service, personalize the experience, ensure security and comply with legal obligations." },
-      "s3": { "title": "3. Sharing", "body": "We do not sell personal data. We share only with providers essential to platform operation and where legally required." },
-      "s4": { "title": "4. User rights", "body": "You can request access, correction, portability or deletion of your data at any time, as per privacy law." },
-      "s5": { "title": "5. Security", "body": "We adopt technical and organizational measures to protect data against unauthorized access, loss or improper alteration." },
-      "s6": { "title": "6. Contact", "body": "For questions about this policy, contact us via the official support channel. (Draft — replace with the official legal text.)" }
+      "s1": {
+        "title": "1. What data we collect",
+        "body": "We collect data provided at sign-up (name, email, phone, location, categories of interest) and usage data, in compliance with privacy law."
+      },
+      "s2": {
+        "title": "2. How we use the data",
+        "body": "We use data to provide the service, personalize the experience, ensure security and comply with legal obligations."
+      },
+      "s3": {
+        "title": "3. Sharing",
+        "body": "We do not sell personal data. We share only with providers essential to platform operation and where legally required."
+      },
+      "s4": {
+        "title": "4. User rights",
+        "body": "You can request access, correction, portability or deletion of your data at any time, as per privacy law."
+      },
+      "s5": {
+        "title": "5. Security",
+        "body": "We adopt technical and organizational measures to protect data against unauthorized access, loss or improper alteration."
+      },
+      "s6": {
+        "title": "6. Contact",
+        "body": "For questions about this policy, contact us via the official support channel. (Draft — replace with the official legal text.)"
+      }
     }
   },
   "clube": {
@@ -1355,5 +1475,30 @@
       "desconto": "Enter the discount",
       "link": "Invalid URL (use http:// or https://)"
     }
+  },
+  "tempAccess": {
+    "title": "Temporary access (starts on first login)",
+    "subtitle": "Send a Pro invite to a specific email. Days only start counting when the user signs in for the first time.",
+    "daysLabel": "Pro access days",
+    "daysShort": "days",
+    "send": "Send access",
+    "listTitle": "Issued temporary accesses",
+    "listEmpty": "No temporary accesses issued yet.",
+    "state_pendente": "Invite sent — not signed in yet",
+    "state_ativo": "Active",
+    "state_expirado": "Expired",
+    "firstAccess": "First access",
+    "notYet": "—",
+    "inviteExpiresAt": "Invite expires at",
+    "accessExpiresAt": "Access expires at",
+    "remaining": "Time remaining",
+    "expiredLabel": "expired",
+    "revokeNow": "Revoke now",
+    "appliedNow": "Email already registered — access applied immediately.",
+    "sentEmail": "Temporary invite sent by email.",
+    "createdManual": "Invite created. Email not configured — send the link manually.",
+    "updated": "Time adjusted.",
+    "revoked": "Temporary access revoked.",
+    "invalidDays": "Enter a valid number of days."
   }
 }
