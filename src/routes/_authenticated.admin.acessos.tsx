@@ -102,6 +102,18 @@ function AdminAcessosPage() {
   const [results, setResults] = useState<UserRow[]>([]);
   const [cortesias, setCortesias] = useState<CortesiaRow[]>([]);
   const [planos, setPlanos] = useState<PlanoOpt[]>([]);
+  const [openSecs, setOpenSecs] = useState<string[]>([]);
+
+  const goToSection = (id: string) => {
+    setOpenSecs((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document
+          .getElementById(`sec-${id}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+    });
+  };
 
   const [grantOpen, setGrantOpen] = useState(false);
   const [revokeOpen, setRevokeOpen] = useState(false);
