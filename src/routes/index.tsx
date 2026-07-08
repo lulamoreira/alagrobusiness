@@ -93,9 +93,6 @@ function PublicHome() {
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <LanguageSelector />
-            <Link to="/login">
-              <PillButton variant="secondary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signin")}</PillButton>
-            </Link>
             <Link to="/cadastro">
               <PillButton variant="primary" className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm">{t("public.nav.signup")}</PillButton>
             </Link>
@@ -116,18 +113,26 @@ function PublicHome() {
           <p className="mx-auto mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
             {t("public.hero.subtitle")}
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to="/cadastro">
-              <PillButton variant="primary" className="px-8 py-4 text-base">
-                {t("public.hero.ctaPrimary")}
+          <div className="mt-8 flex flex-col items-center justify-center gap-3">
+            <Link to="/login" className="w-full sm:w-auto">
+              <PillButton variant="secondary" fullWidth className="px-8 py-4 text-base sm:w-auto ring-1 ring-primary/40 hover:ring-primary">
+                {t("public.nav.signin")}
                 <ArrowRight className="h-4 w-4" />
               </PillButton>
             </Link>
-            <a href="#how">
-              <PillButton variant="secondary" className="px-8 py-4 text-base">
-                {t("public.hero.ctaSecondary")}
-              </PillButton>
-            </a>
+            <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+              <Link to="/cadastro" className="w-full sm:w-auto">
+                <PillButton variant="primary" fullWidth className="px-8 py-4 text-base sm:w-auto">
+                  {t("public.hero.ctaPrimary")}
+                  <ArrowRight className="h-4 w-4" />
+                </PillButton>
+              </Link>
+              <a href="#how" className="w-full sm:w-auto">
+                <PillButton variant="secondary" fullWidth className="px-8 py-4 text-base sm:w-auto">
+                  {t("public.hero.ctaSecondary")}
+                </PillButton>
+              </a>
+            </div>
           </div>
         </div>
       </section>
