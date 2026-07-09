@@ -172,6 +172,7 @@
   "validation": {
     "required": "Campo obligatorio",
     "emailInvalid": "Correo inválido",
+    "emailOrLoginInvalid": "Ingrese un correo válido o un login (letras, números, . _ -)",
     "passwordMin": "La contraseña debe tener al menos 6 caracteres",
     "passwordsMatch": "Las contraseñas no coinciden",
     "lgpdRequired": "Debes aceptar los términos",
