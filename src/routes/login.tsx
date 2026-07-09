@@ -52,8 +52,10 @@ function LoginPage() {
   const onSubmit = async (data: LoginInput) => {
     setSubmitting(true);
     setServerError(null);
+    const raw = data.email.trim().toLowerCase();
+    const email = raw.includes("@") ? raw : `${raw}@demo.agro`;
     const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
+      email,
       password: data.password,
     });
     setSubmitting(false);
