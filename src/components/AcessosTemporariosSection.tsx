@@ -724,7 +724,7 @@ export function AcessosTemporariosSection() {
           {criado && (
             <div className="space-y-3">
               <div className="space-y-2">
-                <Label className="text-xs">{t("demoAccess.login")}</Label>
+                <Label className="text-xs">{t("demoAccess.loginLabel")}</Label>
                 <div className="flex items-center gap-2">
                   <Input readOnly value={criado.login} className="font-mono" />
                   <Button
@@ -732,6 +732,20 @@ export function AcessosTemporariosSection() {
                     variant="secondary"
                     aria-label={t("demoAccess.copyLogin")}
                     onClick={() => copy(criado.login)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs">{t("demoAccess.emailLabel")}</Label>
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={criado.email} className="font-mono text-xs" />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    aria-label={t("demoAccess.copyEmail")}
+                    onClick={() => copy(criado.email)}
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
