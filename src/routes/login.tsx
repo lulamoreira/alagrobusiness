@@ -79,9 +79,12 @@ function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DarkInput
             id="email"
-            type="email"
-            label={t("auth.email")}
-            autoComplete="email"
+            type="text"
+            label={t("auth.emailOrLogin")}
+            autoComplete="username"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
             error={errors.email?.message ? t(errors.email.message) : undefined}
             {...register("email")}
           />
