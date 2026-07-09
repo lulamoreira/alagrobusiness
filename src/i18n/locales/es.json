@@ -35,6 +35,7 @@
   "auth": {
     "login": "Entrar",
     "email": "Correo",
+    "emailOrLogin": "Correo o login",
     "password": "Contraseña",
     "forgot": "Olvidé mi contraseña",
     "noAccount": "¿No tienes cuenta?",
