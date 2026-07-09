@@ -1,7 +1,14 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().email({ message: "validation.emailInvalid" }),
+  email: z
+    .string()
+    .trim()
+    .min(2, { message: "validation.required" })
+    .refine(
+      (v) => v.includes("@") ? /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) : /^[a-zA-Z0-9._-]+$/.test(v),
+      { message: "validation.emailOrLoginInvalid" },
+    ),
   password: z.string().min(6, { message: "validation.passwordMin" }),
 });
 export type LoginInput = z.infer<typeof loginSchema>;

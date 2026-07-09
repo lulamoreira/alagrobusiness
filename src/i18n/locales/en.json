@@ -35,6 +35,7 @@
   "auth": {
     "login": "Sign in",
     "email": "Email",
+    "emailOrLogin": "Email or login",
     "password": "Password",
     "forgot": "Forgot password",
     "noAccount": "Don't have an account?",
@@ -171,6 +172,7 @@
   "validation": {
     "required": "Required field",
     "emailInvalid": "Invalid email",
+    "emailOrLoginInvalid": "Enter a valid email or a login (letters, numbers, . _ -)",
     "passwordMin": "Password must be at least 6 characters",
     "passwordsMatch": "Passwords do not match",
     "lgpdRequired": "You must accept the terms",
