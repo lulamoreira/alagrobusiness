@@ -501,21 +501,51 @@ export function AcessosTemporariosSection() {
                       <p className="text-[10px] font-semibold uppercase tracking-wide text-primary/80">
                         {t("demoAccess.credentialsTitle")}
                       </p>
-                      <div className="flex items-center gap-2">
-                        <code className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
-                          {r.login}
-                        </code>
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          className="shrink-0"
-                          aria-label={t("demoAccess.copyLogin")}
-                          title={t("demoAccess.copyLogin")}
-                          onClick={() => copy(r.login!)}
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                          {t("demoAccess.loginLabel")}
+                        </Label>
+                        <div className="flex items-center gap-2">
+                          <code className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
+                            {r.login}
+                          </code>
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="shrink-0"
+                            aria-label={t("demoAccess.copyLogin")}
+                            title={t("demoAccess.copyLogin")}
+                            onClick={() => copy(r.login!)}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
+                      {r.email && (
+                        <div className="space-y-1.5">
+                          <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                            {t("demoAccess.emailLabel")}
+                          </Label>
+                          <div className="flex items-center gap-2">
+                            <code
+                              className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-xs"
+                              title={r.email}
+                            >
+                              {r.email}
+                            </code>
+                            <Button
+                              size="icon"
+                              variant="secondary"
+                              className="shrink-0"
+                              aria-label={t("demoAccess.copyEmail")}
+                              title={t("demoAccess.copyEmail")}
+                              onClick={() => copy(r.email)}
+                            >
+                              <Copy className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                       <div className="space-y-1.5">
                         <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground" htmlFor={`pwd-${r.convite_id}`}>
                           {t("demoAccess.password")}
@@ -529,12 +559,12 @@ export function AcessosTemporariosSection() {
                           onChange={(e) => savePwd(r.login!, e.target.value)}
                         />
                       </div>
-                      <div className="flex flex-col gap-2 sm:flex-row">
+                      <div className="flex flex-col gap-2">
                         <Button
                           type="button"
                           size="sm"
                           variant="outline"
-                          className="flex-1"
+                          className="w-full"
                           disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
                             copy(buildCredMessage(r.login!, pwdByLogin[r.login!]!.trim()))
@@ -546,7 +576,7 @@ export function AcessosTemporariosSection() {
                         <Button
                           type="button"
                           size="sm"
-                          className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
+                          className="w-full bg-[#25D366] text-white hover:bg-[#1EBE5B]"
                           disabled={!(pwdByLogin[r.login!] ?? "").trim()}
                           onClick={() =>
                             shareWhatsapp(r.login!, pwdByLogin[r.login!]!.trim())
@@ -561,6 +591,7 @@ export function AcessosTemporariosSection() {
                       </p>
                     </div>
                   )}
+
 
                   {/* 3) DADOS */}
                   <dl className="grid grid-cols-2 gap-x-3 gap-y-3 text-xs">
