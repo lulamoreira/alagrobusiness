@@ -14,6 +14,7 @@ import {
   UserPlus,
   LayoutDashboard,
   ArrowRight,
+  Rocket,
 } from "lucide-react";
 import { AmbientGlow } from "@/components/AmbientGlow";
 import { Logo } from "@/components/Logo";
