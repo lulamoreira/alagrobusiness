@@ -293,7 +293,9 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
       p_ativo: ativo,
       p_icone: icone.trim() || (null as unknown as string),
       p_tipo: tipo,
+      p_segmento: showSegmento ? segmento : (null as unknown as string),
     } as never);
+
 
     setSaving(false);
     if (error) {
