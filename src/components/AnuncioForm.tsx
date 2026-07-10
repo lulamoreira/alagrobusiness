@@ -91,7 +91,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
-  const [categoria, setCategoria] = useState<Category>(initial?.categoria ?? "grao");
+  // Legacy `categoria` (enum) preserved as-is on edit; new anuncios leave it null.
+  const legacyCategoria = initial?.categoria ?? null;
   const [catalogoItemId, setCatalogoItemId] = useState<string | null>(initial?.catalogo_item_id ?? null);
 
   const [produto, setProduto] = useState(initial?.produto ?? "");
