@@ -1531,7 +1531,11 @@
     "parentRoot": "— Sin padre (raíz) —",
     "order": "Orden",
     "icon": "Ícono (opcional)",
-    "active": "Activa"
+    "active": "Activa",
+    "tipo": "Tipo (solo para categorías raíz)",
+    "tipo_produto": "Producto",
+    "tipo_servico": "Servicio",
+    "tipo_ambos": "Ambos"
   },
   "tempAccess": {
     "title": "Accesos temporales (cuenta desde el 1.º acceso)",

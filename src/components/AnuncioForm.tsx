@@ -266,7 +266,16 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("offer.type")}</label>
         <div className="flex flex-wrap gap-2">
           {OFFER_TYPES.map((o) => (
-            <Pill key={o} active={tipoOferta === o} onClick={() => setTipoOferta(o)}>
+            <Pill
+              key={o}
+              active={tipoOferta === o}
+              onClick={() => {
+                if (tipoOferta !== o) {
+                  setTipoOferta(o);
+                  setCatalogoItemId(null);
+                }
+              }}
+            >
               {t(`offer.${o}`)}
             </Pill>
           ))}
@@ -306,6 +315,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
           label={t("form.category")}
           value={catalogoItemId}
           onChange={setCatalogoItemId}
+          tipoFilter={tipoOferta}
         />
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>

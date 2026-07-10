@@ -18,6 +18,8 @@ interface CatalogoCascadeProps {
   label?: string;
   /** When true, shows an "All" chip on the first level (for filters). */
   allowClear?: boolean;
+  /** Filter root categories by type. When set, roots must match tipoFilter or 'ambos'. */
+  tipoFilter?: "produto" | "servico";
   className?: string;
 }
 
@@ -31,6 +33,7 @@ export function CatalogoCascade({
   onChange,
   label,
   allowClear = false,
+  tipoFilter,
   className,
 }: CatalogoCascadeProps) {
   const { t, i18n } = useTranslation();
@@ -51,7 +54,10 @@ export function CatalogoCascade({
     const out: { parentId: string | null; children: CatalogoNode[]; selectedId: string | null }[] = [];
     let parentId: string | null = null;
     for (let depth = 0; depth < 8; depth++) {
-      const children = catalogoChildren(nodes, parentId);
+      let children = catalogoChildren(nodes, parentId);
+      if (depth === 0 && tipoFilter) {
+        children = children.filter((c) => c.tipo === tipoFilter || c.tipo === "ambos");
+      }
       if (children.length === 0) break;
       const selected = path[depth]?.id ?? null;
       out.push({ parentId, children, selectedId: selected });
@@ -59,7 +65,7 @@ export function CatalogoCascade({
       parentId = selected;
     }
     return out;
-  }, [nodes, path]);
+  }, [nodes, path, tipoFilter]);
 
   const handleChange = (depth: number, id: string) => {
     if (!id) {

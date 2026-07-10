@@ -245,7 +245,11 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
   const [parentId, setParentId] = useState<string | null>(
     initial ? initial.parent_id : state.parentId,
   );
+  const [tipo, setTipo] = useState<"produto" | "servico" | "ambos">(
+    (initial?.tipo as "produto" | "servico" | "ambos" | undefined) ?? "produto",
+  );
   const [saving, setSaving] = useState(false);
+  const isRoot = parentId === null;
 
   const parentOptions = useMemo(() => {
     // Prevent selecting itself or its descendants as parent
@@ -281,7 +285,8 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
       p_ordem: Number(ordem) || 0,
       p_ativo: ativo,
       p_icone: icone.trim() || (null as unknown as string),
-    });
+      p_tipo: tipo,
+    } as never);
 
     setSaving(false);
     if (error) {
@@ -339,6 +344,32 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
               ))}
             </select>
           </div>
+
+          {isRoot && (
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                {t("adminCatalogo.tipo")}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {(["produto", "servico", "ambos"] as const).map((tp) => (
+                  <button
+                    key={tp}
+                    type="button"
+                    onClick={() => setTipo(tp)}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                      tipo === tp
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {t(`adminCatalogo.tipo_${tp}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
 
           <div className="grid gap-3 md:grid-cols-3">
             <DarkInput

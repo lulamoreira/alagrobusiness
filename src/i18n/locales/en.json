@@ -1531,7 +1531,11 @@
     "parentRoot": "— No parent (top level) —",
     "order": "Order",
     "icon": "Icon (optional)",
-    "active": "Active"
+    "active": "Active",
+    "tipo": "Type (top-level categories only)",
+    "tipo_produto": "Product",
+    "tipo_servico": "Service",
+    "tipo_ambos": "Both"
   },
   "tempAccess": {
     "title": "Temporary access (starts on first login)",

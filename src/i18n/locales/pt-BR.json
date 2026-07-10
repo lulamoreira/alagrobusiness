@@ -1534,7 +1534,11 @@
     "parentRoot": "— Sem pai (topo) —",
     "order": "Ordem",
     "icon": "Ícone (opcional)",
-    "active": "Ativa"
+    "active": "Ativa",
+    "tipo": "Tipo (apenas para categorias de topo)",
+    "tipo_produto": "Produto",
+    "tipo_servico": "Serviço",
+    "tipo_ambos": "Ambos"
   },
   "tempAccess": {
     "title": "Acessos temporários (contagem no 1º acesso)",

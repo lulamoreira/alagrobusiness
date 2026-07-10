@@ -210,6 +210,7 @@ function BuyPage() {
             label={t("buy.filterCategory")}
             value={catalogoFilter}
             onChange={setCatalogoFilter}
+            tipoFilter="produto"
             allowClear
           />
 

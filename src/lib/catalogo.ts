@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
+export type CatalogoTipo = "produto" | "servico" | "ambos";
+
 export interface CatalogoNode {
   id: string;
   parent_id: string | null;
@@ -7,6 +9,7 @@ export interface CatalogoNode {
   ordem: number;
   ativo: boolean;
   icone: string | null;
+  tipo: CatalogoTipo;
 }
 
 export type CatalogoLocale = "pt" | "en" | "es";
@@ -46,7 +49,7 @@ export async function fetchCatalogoAll(includeInactive = false): Promise<Catalog
   while (offset < total) {
     let query = supabase
       .from("categorias_catalogo")
-      .select("id, parent_id, nome, ordem, ativo, icone", { count: "exact" })
+      .select("id, parent_id, nome, ordem, ativo, icone, tipo", { count: "exact" })
       .is("deleted_at", null)
       .order("parent_id", { ascending: true, nullsFirst: true })
       .order("ordem", { ascending: true })
