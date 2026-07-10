@@ -1641,5 +1641,33 @@
     "audienceTitle": "Startups & PMEs",
     "audienceDesc": "Ofereça serviços, software e soluções para o agronegócio.",
     "audienceCta": "Cadastrar minha empresa"
+  },
+  "account": {
+    "title": "Minha conta",
+    "subtitle": "Sua assinatura e benefícios",
+    "currentPlan": "Plano atual",
+    "statusFree": "Gratuito",
+    "statusTrial": "Em teste",
+    "statusActive": "Pro ativo",
+    "statusExpired": "Expirado",
+    "planFree": "Plano Gratuito",
+    "memberSince": "Assinante desde {{date}}",
+    "memberSinceRelative": "há {{value}}",
+    "renewal": "Renovação",
+    "validity": "Validade",
+    "trialUntil": "Teste até {{date}}",
+    "daysLeft": "faltam {{n}} dias",
+    "expiresOn": "Expira em {{date}}",
+    "autoRenew": "Renovação automática",
+    "manage": "Gerenciar assinatura",
+    "manageDesc": "Abre o portal seguro para trocar cartão, baixar faturas ou cancelar.",
+    "upgrade": "Assinar",
+    "clubCardTitle": "Clube de Vantagens",
+    "clubCardActive": "Descontos e benefícios exclusivos com parceiros.",
+    "clubCardLocked": "Exclusivo para assinantes. Assine e comece a economizar.",
+    "clubOpen": "Ver vantagens",
+    "months": "{{n}} meses",
+    "years": "{{n}} anos",
+    "days": "{{n}} dias"
   }
 }
