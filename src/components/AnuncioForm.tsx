@@ -146,6 +146,19 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
       setQuantidadeUnidadeId(unidades.find((u) => u.nome_chave === preferQty)?.id ?? unidades[0].id);
   }, [unidades, precoUnidadeId, quantidadeUnidadeId, isIndustrial]);
 
+  // When switching to industrial, swap agro-only units to "caixa" automatically.
+  // Leaves custom user choices (e.g. "quilo") untouched.
+  useEffect(() => {
+    if (!isIndustrial || !unidades || unidades.length === 0) return;
+    const agroKeys = new Set(["saca_60", "saca_50", "tonelada", "arroba"]);
+    const caixa = unidades.find((u) => u.nome_chave === "caixa");
+    if (!caixa) return;
+    const currentPrice = unidades.find((u) => u.id === precoUnidadeId);
+    const currentQty = unidades.find((u) => u.id === quantidadeUnidadeId);
+    if (currentPrice && agroKeys.has(currentPrice.nome_chave)) setPrecoUnidadeId(caixa.id);
+    if (currentQty && agroKeys.has(currentQty.nome_chave)) setQuantidadeUnidadeId(caixa.id);
+  }, [isIndustrial, unidades, precoUnidadeId, quantidadeUnidadeId]);
+
 
   // Hydrate existing photos as signed URLs once
   useEffect(() => {
