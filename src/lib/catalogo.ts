@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export type CatalogoTipo = "produto" | "servico" | "ambos";
+export type CatalogoSegmento = "agro" | "industrial";
 
 export interface CatalogoNode {
   id: string;
@@ -10,7 +11,9 @@ export interface CatalogoNode {
   ativo: boolean;
   icone: string | null;
   tipo: CatalogoTipo;
+  segmento: CatalogoSegmento | null;
 }
+
 
 export type CatalogoLocale = "pt" | "en" | "es";
 
