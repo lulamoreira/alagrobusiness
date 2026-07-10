@@ -21,7 +21,6 @@ const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest
 const OFFER_TYPES = ["produto", "servico"] as const;
 const SERVICE_BILLING = ["hora", "projeto", "mensal"] as const;
 
-type Category = (typeof CATEGORIES)[number];
 type DeliveryMode = (typeof DELIVERY_MODES)[number];
 type Currency = (typeof CURRENCIES)[number];
 type OfferType = (typeof OFFER_TYPES)[number];
