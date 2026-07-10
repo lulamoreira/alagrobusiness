@@ -1536,6 +1536,10 @@
     "tipo_produto": "Product",
     "tipo_servico": "Service",
     "tipo_ambos": "Both",
+    "segmento": "Segment (top-level products only)",
+    "segmento_agro": "Agro",
+    "segmento_industrial": "Industrial",
+
     "tab": "Pending",
     "suggestedBy": "Suggested by",
     "approve": "Approve",
