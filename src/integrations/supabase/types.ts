@@ -1531,64 +1531,35 @@ export type Database = {
       }
       admin_cancelar_convite: { Args: { p_id: string }; Returns: undefined }
       admin_catalogo_delete: { Args: { p_id: string }; Returns: undefined }
-      admin_catalogo_upsert:
-        | {
-            Args: {
-              p_ativo: boolean
-              p_icone: string
-              p_id: string
-              p_nome: Json
-              p_ordem: number
-              p_parent_id: string
-            }
-            Returns: {
-              ativo: boolean
-              created_at: string
-              deleted_at: string | null
-              icone: string | null
-              id: string
-              nome: Json
-              ordem: number
-              parent_id: string | null
-              tipo: string
-              updated_at: string
-            }
-            SetofOptions: {
-              from: "*"
-              to: "categorias_catalogo"
-              isOneToOne: true
-              isSetofReturn: false
-            }
-          }
-        | {
-            Args: {
-              p_ativo: boolean
-              p_icone: string
-              p_id: string
-              p_nome: Json
-              p_ordem: number
-              p_parent_id: string
-              p_tipo?: string
-            }
-            Returns: {
-              ativo: boolean
-              created_at: string
-              deleted_at: string | null
-              icone: string | null
-              id: string
-              nome: Json
-              ordem: number
-              parent_id: string | null
-              tipo: string
-              updated_at: string
-            }
-            SetofOptions: {
-              from: "*"
-              to: "categorias_catalogo"
-              isOneToOne: true
-              isSetofReturn: false
-            }
-          }
+      admin_catalogo_upsert: {
+        Args: {
+          p_ativo: boolean
+          p_icone: string
+          p_id: string
+          p_nome: Json
+          p_ordem: number
+          p_parent_id: string
+          p_tipo?: string
+        }
+        Returns: {
+          ativo: boolean
+          created_at: string
+          deleted_at: string | null
+          icone: string | null
+          id: string
+          nome: Json
+          ordem: number
+          parent_id: string | null
+          tipo: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "categorias_catalogo"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       admin_criar_convite:
         | {
             Args: { p_dias?: number; p_email: string; p_plano?: string }
