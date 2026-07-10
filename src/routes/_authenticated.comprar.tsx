@@ -116,7 +116,7 @@ function BuyPage() {
           a.produto.toLowerCase().includes(q),
       );
     }
-    if (category) list = list.filter((a) => (a as unknown as { categoria: string }).categoria === category);
+    
     if (catalogoFilter && catalogoNodes) {
       const allowed = new Set(catalogoSubtreeIds(catalogoNodes, catalogoFilter));
       list = list.filter((a) => {
