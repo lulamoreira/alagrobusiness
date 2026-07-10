@@ -299,17 +299,46 @@ function BuyPage() {
           <p className="text-sm text-muted-foreground">{t("buy.noResults")}</p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((a) => (
-            <AnuncioCard
-              key={a.id}
-              item={a}
-              units={unidades ?? []}
-              cotacoes={cotacoes ?? []}
-              sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
-            />
-          ))}
-        </div>
+        <>
+          {(() => {
+            const now = Date.now();
+            const featured = (anuncios ?? []).filter(
+              (a) => a.destaque_ate && new Date(a.destaque_ate).getTime() > now,
+            ) as AnuncioCardData[];
+            if (featured.length === 0) return null;
+            return (
+              <section className="space-y-3">
+                <h2 className="font-display text-lg font-semibold md:text-xl">
+                  {t("buy.featuredTitle")}
+                </h2>
+                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+                  {featured.map((a) => (
+                    <div key={a.id} className="w-72 shrink-0 snap-start md:w-80">
+                      <AnuncioCard
+                        item={a}
+                        units={unidades ?? []}
+                        cotacoes={cotacoes ?? []}
+                        sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filtered.map((a) => (
+              <AnuncioCard
+                key={a.id}
+                item={a}
+                units={unidades ?? []}
+                cotacoes={cotacoes ?? []}
+                sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
