@@ -302,9 +302,9 @@ function BuyPage() {
         <>
           {(() => {
             const now = Date.now();
-            const featured = (anuncios ?? []).filter(
+            const featured = ((anuncios ?? []) as AnuncioCardData[]).filter(
               (a) => a.destaque_ate && new Date(a.destaque_ate).getTime() > now,
-            ) as AnuncioCardData[];
+            );
             if (featured.length === 0) return null;
             return (
               <section className="space-y-3">
