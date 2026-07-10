@@ -262,6 +262,17 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         <p className="mt-1 text-sm text-muted-foreground">{t("form.subtitle")}</p>
       </div>
 
+      <div>
+        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("offer.type")}</label>
+        <div className="flex flex-wrap gap-2">
+          {OFFER_TYPES.map((o) => (
+            <Pill key={o} active={tipoOferta === o} onClick={() => setTipoOferta(o)}>
+              {t(`offer.${o}`)}
+            </Pill>
+          ))}
+        </div>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
         <DarkInput
           label={t("form.title")}
