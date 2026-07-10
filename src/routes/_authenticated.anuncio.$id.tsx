@@ -25,6 +25,7 @@ function DetailPage() {
   const [interestStatus, setInterestStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [chatError, setChatError] = useState<string | null>(null);
   const [openingChat, setOpeningChat] = useState(false);
+  const [destaqueOpen, setDestaqueOpen] = useState(false);
 
   const { data: anuncio, isLoading } = useQuery({
     queryKey: ["anuncio_detail", id],
