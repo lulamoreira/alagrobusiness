@@ -913,6 +913,80 @@ export type Database = {
         }
         Relationships: []
       }
+      destaque_compras: {
+        Row: {
+          anuncio_id: string
+          created_at: string
+          criado_em: string
+          dias: number
+          id: string
+          stripe_session_id: string | null
+          updated_at: string
+          usuario_id: string
+          valor_centavos: number
+        }
+        Insert: {
+          anuncio_id: string
+          created_at?: string
+          criado_em?: string
+          dias: number
+          id?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          usuario_id: string
+          valor_centavos: number
+        }
+        Update: {
+          anuncio_id?: string
+          created_at?: string
+          criado_em?: string
+          dias?: number
+          id?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          usuario_id?: string
+          valor_centavos?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "destaque_compras_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      destaque_pacotes: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          dias: number
+          id: string
+          ordem: number
+          preco_centavos: number
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          dias: number
+          id?: string
+          ordem?: number
+          preco_centavos: number
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          dias?: number
+          id?: string
+          ordem?: number
+          preco_centavos?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       mensagens: {
         Row: {
           conteudo: string
