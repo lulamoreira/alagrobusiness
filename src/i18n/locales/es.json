@@ -1603,5 +1603,35 @@
     "sharePwdPlaceholder": "Escribe la contraseña para enviar",
     "sharePwdNote": "La contraseña no se guarda. Escríbela aquí para incluirla en el envío, o usa \"Editar\" para restablecerla.",
     "waMessageLoginOnly": "AGROBUSINESS — Acceso de demostración\n\n🔑 Login: {{login}}\n🌐 Ingresa: {{url}}\n\nLa contraseña se enviará a continuación."
+  },
+  "offer": {
+    "type": "Tipo de oferta",
+    "produto": "Producto",
+    "servico": "Servicio"
+  },
+  "service": {
+    "billingModel": "Modelo de cobro",
+    "billing": {
+      "hora": "Por hora",
+      "projeto": "Por proyecto",
+      "mensal": "Mensual"
+    },
+    "area": "Área de actuación",
+    "areaPh": "Ej.: Sudeste de Brasil, LATAM…",
+    "lead": "Plazo",
+    "leadPh": "Ej.: 15 días hábiles, entrega en 1 mes…",
+    "serviceBadge": "Servicio"
+  },
+  "startups": {
+    "title": "Startups y PyMEs",
+    "subtitle": "Servicios, tecnología y soluciones para el agro.",
+    "empty": "Aún no hay servicios.",
+    "results": "{{count}} resultados",
+    "showingPage": "Página {{page}} de {{pages}}",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "audienceTitle": "Startups y PyMEs",
+    "audienceDesc": "Ofrece servicios, software y soluciones para el agronegocio.",
+    "audienceCta": "Registrar mi empresa"
   }
 }
