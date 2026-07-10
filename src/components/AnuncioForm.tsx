@@ -472,16 +472,19 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
             )}
           </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
-            <div className="flex flex-wrap gap-2">
-              {CERTIFICATIONS.map((c) => (
-                <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
-                  {t(`cert.${c}`)}
-                </Pill>
-              ))}
+          {!isIndustrial && (
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
+              <div className="flex flex-wrap gap-2">
+                {CERTIFICATIONS.map((c) => (
+                  <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
+                    {t(`cert.${c}`)}
+                  </Pill>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
         </>
       )}
 
