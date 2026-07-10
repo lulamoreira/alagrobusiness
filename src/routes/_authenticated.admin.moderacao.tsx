@@ -82,6 +82,8 @@ function AdminModeracaoPage() {
   const [pending, setPending] = useState<{ ad: AdRow; action: AdAction } | null>(null);
   const [motivo, setMotivo] = useState("");
   const [busy, setBusy] = useState(false);
+  const [featureDays, setFeatureDays] = useState<Record<string, string>>({});
+  const [featureBusy, setFeatureBusy] = useState<string | null>(null);
 
   const isAdmin = profile?.tipo_perfil === "admin";
 
