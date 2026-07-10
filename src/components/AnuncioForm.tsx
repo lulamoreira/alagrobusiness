@@ -122,7 +122,13 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? defaultTipoOferta ?? "produto");
+  const forcarServico = canalStartups === true || profile?.tipo_perfil === "startup_pme";
+  const [tipoOferta, setTipoOferta] = useState<OfferType>(
+    forcarServico ? "servico" : (initial?.tipo_oferta ?? defaultTipoOferta ?? "produto"),
+  );
+  useEffect(() => {
+    if (forcarServico && tipoOferta !== "servico") setTipoOferta("servico");
+  }, [forcarServico, tipoOferta]);
   const [servicoModelo, setServicoModelo] = useState<ServiceBilling>(
     (initial?.servico_modelo_cobranca as ServiceBilling) ?? "projeto",
   );
