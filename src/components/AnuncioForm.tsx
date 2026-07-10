@@ -228,7 +228,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
         produto: produto.trim(),
         qualidade: isServico ? null : (qualidade.trim() || null),
-        data_colheita: isServico ? null : (dataColheita || null),
+        data_colheita: isServico || isIndustrial ? null : (dataColheita || null),
+
         preco: Number(preco),
         moeda,
         preco_unidade_id: precoUnidadeId,
