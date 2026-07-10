@@ -800,7 +800,7 @@ export function AcessosTemporariosSection() {
                   type="button"
                   variant="outline"
                   className="flex-1"
-                  onClick={() => copy(buildCredMessage(criado.login, criado.senha))}
+                  onClick={() => copy(buildCredMessage(criado.login, criado.senha, criado.dias))}
                 >
                   <ClipboardCopy className="mr-2 h-4 w-4" />
                   {t("demoAccess.copyAll")}
