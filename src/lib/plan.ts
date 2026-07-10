@@ -25,6 +25,8 @@ const FREE_FALLBACK: CurrentPlan = {
   codigo: "free",
   status: "none",
   trial_ate: null,
+  inicio: null,
+  fim: null,
   dias_restantes: 0,
   limites: { max_anuncios: 2, max_alertas: 1, painel_completo: false, clube: false, cursos: "preview" },
 };
