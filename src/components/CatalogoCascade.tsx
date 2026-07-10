@@ -33,6 +33,7 @@ export function CatalogoCascade({
   onChange,
   label,
   allowClear = false,
+  tipoFilter,
   className,
 }: CatalogoCascadeProps) {
   const { t, i18n } = useTranslation();
