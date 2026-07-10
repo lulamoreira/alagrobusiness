@@ -36,6 +36,7 @@ import {
   Mail,
   Sparkles,
   FolderTree,
+  Rocket,
 
 } from "lucide-react";
 
