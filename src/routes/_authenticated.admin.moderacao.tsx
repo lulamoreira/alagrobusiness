@@ -64,6 +64,8 @@ interface AdRow {
   fotos: string[] | null;
   created_at: string;
   vendedor_id: string;
+  destaque_ate: string | null;
+  destaque_origem: string | null;
   vendedor?: { nome_completo: string | null; email: string | null } | null;
 }
 
