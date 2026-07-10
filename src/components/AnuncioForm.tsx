@@ -165,9 +165,11 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
     if (!titulo.trim()) e.titulo = "validation.required";
     if (!produto.trim()) e.produto = "validation.required";
     if (!Number(preco) || Number(preco) <= 0) e.preco = "validation.positiveNumber";
-    if (!Number(quantidade) || Number(quantidade) <= 0) e.quantidade = "validation.positiveNumber";
     if (!precoUnidadeId) e.precoUnidadeId = "validation.required";
-    if (!quantidadeUnidadeId) e.quantidadeUnidadeId = "validation.required";
+    if (!isServico) {
+      if (!Number(quantidade) || Number(quantidade) <= 0) e.quantidade = "validation.positiveNumber";
+      if (!quantidadeUnidadeId) e.quantidadeUnidadeId = "validation.required";
+    }
     if (photos.length === 0) e.photos = "validation.minOnePhoto";
     setErrors(e);
     return Object.keys(e).length === 0;
