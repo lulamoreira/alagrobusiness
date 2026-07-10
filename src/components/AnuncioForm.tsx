@@ -344,14 +344,17 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
             onChange={(e) => setQualidade(e.target.value)}
             placeholder={t("form.qualityPh")}
           />
-          <DarkInput
-            type="date"
-            label={t("form.harvestDate")}
-            value={dataColheita}
-            onChange={(e) => setDataColheita(e.target.value)}
-          />
+          {!isIndustrial && (
+            <DarkInput
+              type="date"
+              label={t("form.harvestDate")}
+              value={dataColheita}
+              onChange={(e) => setDataColheita(e.target.value)}
+            />
+          )}
         </div>
       )}
+
 
 
 
