@@ -362,7 +362,12 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "backToList": "Back to conversations",
-    "newMessage": "New message"
+    "newMessage": "New message",
+    "translate": "Translate to my language",
+    "translated": "translated",
+    "showOriginal": "show original",
+    "hideOriginal": "hide original",
+    "translateError": "Could not translate right now."
   },
   "nego": {
     "title": "Negotiations",

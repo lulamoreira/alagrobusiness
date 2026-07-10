@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Languages, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,7 @@ interface MensagemRow {
   conteudo: string;
   lida: boolean;
   created_at: string;
+  idioma: string | null;
 }
 
 function ConversationThreadPage() {
@@ -43,6 +44,27 @@ function ConversationThreadPage() {
 
   const userId = user?.id;
   const isBlocked = profile?.status === "bloqueado";
+  const idiomaDestino = (profile?.idioma_preferido as string | undefined) ?? i18n.language ?? "pt-BR";
+
+  const storageKey = `traduzir:${conversaId}`;
+  const [translate, setTranslate] = useState<boolean>(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setTranslate(window.localStorage.getItem(storageKey) === "1");
+  }, [storageKey]);
+  const toggleTranslate = () => {
+    setTranslate((prev) => {
+      const next = !prev;
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(storageKey, next ? "1" : "0");
+      }
+      return next;
+    });
+  };
+
+  const [translations, setTranslations] = useState<Record<string, string>>({});
+  const [showOriginal, setShowOriginal] = useState<Record<string, boolean>>({});
+  const [translateError, setTranslateError] = useState<string | null>(null);
 
   const conversaQuery = useQuery({
     queryKey: ["conversa", conversaId],
@@ -72,7 +94,7 @@ function ConversationThreadPage() {
     queryFn: async (): Promise<MensagemRow[]> => {
       const { data, error } = await supabase
         .from("mensagens")
-        .select("id, conversa_id, remetente_id, conteudo, lida, created_at")
+        .select("id, conversa_id, remetente_id, conteudo, lida, created_at, idioma")
         .eq("conversa_id", conversaId)
         .is("deleted_at", null)
         .order("created_at", { ascending: true });
@@ -81,7 +103,7 @@ function ConversationThreadPage() {
     },
   });
 
-  // Realtime: nova mensagem nesta conversa.
+  // Realtime
   useEffect(() => {
     if (!conversaId) return;
     const channel = supabase
@@ -105,10 +127,7 @@ function ConversationThreadPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversaId]);
 
-  // Marca como lidas ao abrir / ao chegar nova mensagem do outro.
-  // Usa RPC SECURITY DEFINER: a policy de UPDATE em mensagens só permite
-  // o próprio remetente editar a linha, então o "lida=true" do destinatário
-  // passa exclusivamente pelo definer abaixo.
+  // Marca lidas
   useEffect(() => {
     if (!userId || !messagesQuery.data) return;
     const hasUnread = messagesQuery.data.some(
@@ -122,10 +141,28 @@ function ConversationThreadPage() {
       });
   }, [messagesQuery.data, userId, conversaId, queryClient]);
 
-  // Auto-scroll para a última mensagem.
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesQuery.data?.length]);
+
+  // Tradução: dispara ao ativar toggle ou ao chegar mensagem nova
+  const fetchTranslations = useCallback(async () => {
+    if (!translate || !conversaId) return;
+    setTranslateError(null);
+    const { data, error } = await supabase.functions.invoke("traduzir-conversa", {
+      body: { conversa_id: conversaId, idioma_destino: idiomaDestino },
+    });
+    if (error) {
+      setTranslateError(t("messages.translateError"));
+      return;
+    }
+    const map = (data as { translations?: Record<string, string> } | null)?.translations ?? {};
+    setTranslations((prev) => ({ ...prev, ...map }));
+  }, [translate, conversaId, idiomaDestino, t]);
+
+  useEffect(() => {
+    void fetchTranslations();
+  }, [fetchTranslations, messagesQuery.data?.length]);
 
   const conv = conversaQuery.data;
   const other = useMemo(() => {
@@ -189,6 +226,21 @@ function ConversationThreadPage() {
             </Link>
           )}
         </div>
+        <button
+          type="button"
+          onClick={toggleTranslate}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-medium transition-colors",
+            translate
+              ? "border-primary/40 bg-primary/15 text-primary"
+              : "border-border bg-accent text-muted-foreground hover:text-foreground",
+          )}
+          aria-pressed={translate}
+          title={t("messages.translate")}
+        >
+          <Languages className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">{t("messages.translate")}</span>
+        </button>
       </header>
 
       {/* Messages */}
@@ -201,6 +253,11 @@ function ConversationThreadPage() {
           <ul className="space-y-2">
             {(messagesQuery.data ?? []).map((m) => {
               const mine = m.remetente_id === userId;
+              const traducao = translations[m.id];
+              const isTranslated =
+                translate && !!traducao && m.idioma !== idiomaDestino;
+              const showOrig = showOriginal[m.id] === true;
+              const textoExibido = isTranslated && !showOrig ? traducao : m.conteudo;
               return (
                 <li
                   key={m.id}
@@ -214,7 +271,29 @@ function ConversationThreadPage() {
                         : "rounded-bl-sm bg-accent text-foreground",
                     )}
                   >
-                    <p className="whitespace-pre-wrap break-words">{m.conteudo}</p>
+                    <p className="whitespace-pre-wrap break-words">{textoExibido}</p>
+                    {isTranslated && (
+                      <div
+                        className={cn(
+                          "mt-1 flex items-center justify-end gap-2 text-[10px]",
+                          mine ? "text-primary-foreground/80" : "text-muted-foreground",
+                        )}
+                      >
+                        <span className="inline-flex items-center gap-1 rounded-full bg-background/20 px-1.5 py-0.5">
+                          <Languages className="h-2.5 w-2.5" />
+                          {t("messages.translated")}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setShowOriginal((prev) => ({ ...prev, [m.id]: !prev[m.id] }))
+                          }
+                          className="underline underline-offset-2 hover:opacity-80"
+                        >
+                          {showOrig ? t("messages.hideOriginal") : t("messages.showOriginal")}
+                        </button>
+                      </div>
+                    )}
                     <p
                       className={cn(
                         "mt-1 text-right text-[10px]",
@@ -234,6 +313,10 @@ function ConversationThreadPage() {
         )}
         <div ref={bottomRef} />
       </div>
+
+      {translateError && (
+        <p className="mt-2 text-center text-[11px] text-destructive">{translateError}</p>
+      )}
 
       {/* Composer */}
       {isBlocked ? (
