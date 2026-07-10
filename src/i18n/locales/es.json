@@ -103,6 +103,7 @@
     "agenda": "Agenda",
     "reports": "Reportes",
     "plans": "Planes",
+    "account": "Mi cuenta",
     "courses": "Cursos",
     "certificates": "Certificados",
     "groups": {
@@ -1637,5 +1638,33 @@
     "audienceTitle": "Startups y PyMEs",
     "audienceDesc": "Ofrece servicios, software y soluciones para el agronegocio.",
     "audienceCta": "Registrar mi empresa"
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "subtitle": "Tu suscripción y beneficios",
+    "currentPlan": "Plan actual",
+    "statusFree": "Gratis",
+    "statusTrial": "En prueba",
+    "statusActive": "Pro activo",
+    "statusExpired": "Expirado",
+    "planFree": "Plan Gratis",
+    "memberSince": "Suscrito desde {{date}}",
+    "memberSinceRelative": "hace {{value}}",
+    "renewal": "Renovación",
+    "validity": "Validez",
+    "trialUntil": "Prueba hasta {{date}}",
+    "daysLeft": "faltan {{n}} días",
+    "expiresOn": "Expira el {{date}}",
+    "autoRenew": "Renovación automática",
+    "manage": "Gestionar suscripción",
+    "manageDesc": "Abre el portal seguro para cambiar tarjeta, descargar facturas o cancelar.",
+    "upgrade": "Suscribirme",
+    "clubCardTitle": "Club de Beneficios",
+    "clubCardActive": "Descuentos y beneficios exclusivos con socios.",
+    "clubCardLocked": "Exclusivo para suscriptores. Suscríbete y empieza a ahorrar.",
+    "clubOpen": "Ver beneficios",
+    "months": "{{n}} meses",
+    "years": "{{n}} años",
+    "days": "{{n}} días"
   }
 }

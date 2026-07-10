@@ -15,6 +15,8 @@ export interface CurrentPlan {
   codigo: string;
   status: "trial" | "ativa" | "expirada" | "cancelada" | "none" | string;
   trial_ate: string | null;
+  inicio: string | null;
+  fim: string | null;
   dias_restantes: number;
   limites: PlanLimites;
 }
@@ -23,6 +25,8 @@ const FREE_FALLBACK: CurrentPlan = {
   codigo: "free",
   status: "none",
   trial_ate: null,
+  inicio: null,
+  fim: null,
   dias_restantes: 0,
   limites: { max_anuncios: 2, max_alertas: 1, painel_completo: false, clube: false, cursos: "preview" },
 };
@@ -31,6 +35,8 @@ const ADMIN_PLAN: CurrentPlan = {
   codigo: "pro",
   status: "ativa",
   trial_ate: null,
+  inicio: null,
+  fim: null,
   dias_restantes: 0,
   limites: {
     max_anuncios: null,
@@ -66,6 +72,9 @@ export function usePlan() {
     plan,
     limites: plan.limites,
     codigo: plan.codigo,
+    inicio: plan.inicio,
+    fim: plan.fim,
+    trialAte: plan.trial_ate,
     isPro,
     emTrial,
     isProAtivo: ativo,

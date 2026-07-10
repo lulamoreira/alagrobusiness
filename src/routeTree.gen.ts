@@ -33,6 +33,7 @@ import { Route as AuthenticatedNegociacoesRouteImport } from './routes/_authenti
 import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated.mensagens'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated.financeiro'
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated.conta'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
 import { Route as AuthenticatedComprarRouteImport } from './routes/_authenticated.comprar'
 import { Route as AuthenticatedClubeRouteImport } from './routes/_authenticated.clube'
@@ -178,6 +179,11 @@ const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
 const AuthenticatedCotacaoRoute = AuthenticatedCotacaoRouteImport.update({
   id: '/cotacao',
   path: '/cotacao',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedConfiguracoesRoute =
@@ -350,6 +356,7 @@ export interface FileRoutesByFullPath {
   '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
@@ -401,6 +408,7 @@ export interface FileRoutesByTo {
   '/clube': typeof AuthenticatedClubeRoute
   '/comprar': typeof AuthenticatedComprarRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
@@ -452,6 +460,7 @@ export interface FileRoutesById {
   '/_authenticated/clube': typeof AuthenticatedClubeRoute
   '/_authenticated/comprar': typeof AuthenticatedComprarRoute
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
@@ -505,6 +514,7 @@ export interface FileRouteTypes {
     | '/clube'
     | '/comprar'
     | '/configuracoes'
+    | '/conta'
     | '/cotacao'
     | '/financeiro'
     | '/mensagens'
@@ -556,6 +566,7 @@ export interface FileRouteTypes {
     | '/clube'
     | '/comprar'
     | '/configuracoes'
+    | '/conta'
     | '/cotacao'
     | '/financeiro'
     | '/negociacoes'
@@ -606,6 +617,7 @@ export interface FileRouteTypes {
     | '/_authenticated/clube'
     | '/_authenticated/comprar'
     | '/_authenticated/configuracoes'
+    | '/_authenticated/conta'
     | '/_authenticated/cotacao'
     | '/_authenticated/financeiro'
     | '/_authenticated/mensagens'
@@ -826,6 +838,13 @@ declare module '@tanstack/react-router' {
       path: '/cotacao'
       fullPath: '/cotacao'
       preLoaderRoute: typeof AuthenticatedCotacaoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/configuracoes': {
@@ -1051,6 +1070,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedClubeRoute: typeof AuthenticatedClubeRoute
   AuthenticatedComprarRoute: typeof AuthenticatedComprarRoute
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
+  AuthenticatedContaRoute: typeof AuthenticatedContaRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
@@ -1082,6 +1102,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedClubeRoute: AuthenticatedClubeRoute,
   AuthenticatedComprarRoute: AuthenticatedComprarRoute,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
+  AuthenticatedContaRoute: AuthenticatedContaRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
