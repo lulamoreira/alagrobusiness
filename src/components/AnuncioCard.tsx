@@ -28,6 +28,10 @@ export interface AnuncioCardData {
   certificacoes: string[];
   vendedor_id: string;
   catalogo_item_id?: string | null;
+  tipo_oferta?: "produto" | "servico" | null;
+  servico_modelo_cobranca?: "hora" | "projeto" | "mensal" | null;
+  servico_area_atuacao?: string | null;
+  servico_prazo?: string | null;
 }
 
 
