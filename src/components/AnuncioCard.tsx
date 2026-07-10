@@ -40,7 +40,9 @@ interface AnuncioCardProps {
   units: { id: string; nome_chave: string }[];
   cotacoes: { tipo: "comercial" | "turismo" | "paralelo"; valor_brl: number }[];
   sellerName?: string;
+  sellerTipoPerfil?: string | null;
 }
+
 
 /**
  * Renders a signed-URL photo for an anúncio. Always re-fetches a fresh signed URL
