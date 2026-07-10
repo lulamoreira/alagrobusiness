@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { MapPin, Repeat2, BadgeCheck, Sprout } from "lucide-react";
+import { MapPin, Repeat2, BadgeCheck, Sprout, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
