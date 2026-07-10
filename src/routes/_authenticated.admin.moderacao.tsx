@@ -443,6 +443,7 @@ function AdminModeracaoPage() {
                             {t("adminModeracao.action.remover")}
                           </Button>
                         </div>
+                        <div className="mt-2">{renderFeatureControls(ad)}</div>
                       </td>
                     </tr>
                   ))}
