@@ -150,6 +150,7 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
 
   const location = [item.cidade, item.estado].filter(Boolean).join(" — ");
   const hasCert = item.certificacoes && item.certificacoes.length > 0;
+  const isFeatured = !!item.destaque_ate && new Date(item.destaque_ate).getTime() > Date.now();
 
   return (
     <Link
