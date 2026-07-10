@@ -272,7 +272,6 @@
     "category": "Categoria",
     "catalogoCategory": "Categoria (catálogo)",
     "catalogoHint": "Escolha a categoria mais específica possível.",
-
     "product": "Produto",
     "productPh": "Ex.: Soja, Café, Tomate...",
     "quality": "Qualidade",
@@ -312,7 +311,6 @@
     "sortPriceDesc": "Maior preço",
     "filterCategory": "Categoria",
     "filterCatalogo": "Categoria (catálogo)",
-
     "filterState": "Estado (UF)",
     "filterQuality": "Qualidade",
     "filterCertifications": "Certificações",
@@ -1130,7 +1128,6 @@
   "public": {
     "learnMore": "Conheça a plataforma",
     "nav": {
-
       "signin": "Entrar",
       "signup": "Criar conta",
       "contact": "Contato",
@@ -1512,11 +1509,11 @@
   },
   "adminCatalogo": {
     "navLabel": "Catálogo",
-    "title": "Catálogo de categorias",
+    "title": "Catálogo de Categorias",
     "subtitle": "Gerencie a árvore de categorias, subcategorias e itens usados nos anúncios.",
     "newRoot": "Nova categoria (topo)",
     "addChild": "Adicionar subcategoria",
-    "empty": "Nenhuma categoria cadastrada.",
+    "empty": "Nenhuma sugestão pendente.",
     "inactive": "inativa",
     "confirmDelete": "Remover \"{{name}}\" e todos os itens abaixo?",
     "deleted": "Categoria removida.",
@@ -1538,7 +1535,17 @@
     "tipo": "Tipo (apenas para categorias de topo)",
     "tipo_produto": "Produto",
     "tipo_servico": "Serviço",
-    "tipo_ambos": "Ambos"
+    "tipo_ambos": "Ambos",
+    "tab": "Pendentes",
+    "suggestedBy": "Sugerido por",
+    "approve": "Aprovar",
+    "reject": "Rejeitar",
+    "approved": "Categoria aprovada.",
+    "rejected": "Sugestão rejeitada.",
+    "errorAction": "Não foi possível concluir a ação.",
+    "underRoot": "em",
+    "topLevel": "Categoria de topo",
+    "pendingTitle": "Sugestões pendentes"
   },
   "tempAccess": {
     "title": "Acessos temporários (contagem no 1º acesso)",
@@ -1673,5 +1680,25 @@
     "months": "{{n}} meses",
     "years": "{{n}} anos",
     "days": "{{n}} dias"
+  },
+  "catalogoSuggest": {
+    "button": "Não encontrou? Sugerir nova categoria",
+    "title": "Sugerir nova categoria",
+    "hint": "A sugestão será avaliada por um administrador. Enquanto isso, publique usando a categoria \"Outros\".",
+    "namePt": "Nome (português) *",
+    "nameEn": "Nome (inglês)",
+    "nameEs": "Nome (espanhol)",
+    "parent": "Categoria pai (opcional — deixe vazio para sugerir uma categoria de topo)",
+    "parentRoot": "— Categoria de topo —",
+    "submit": "Enviar sugestão",
+    "sent": "Enviada para aprovação. Enquanto isso, publique usando a categoria \"Outros\".",
+    "errorNamePt": "Informe o nome em português.",
+    "errorSubmit": "Não foi possível enviar a sugestão."
+  },
+  "catApproved": {
+    "title": "Categoria aprovada 🎉",
+    "body": "A categoria \"{{name}}\" que você sugeriu foi aprovada. Você já pode editar seu anúncio para usá-la.",
+    "close": "Fechar",
+    "goToSell": "Ir para meus anúncios"
   }
 }

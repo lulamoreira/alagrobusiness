@@ -1509,11 +1509,11 @@
   },
   "adminCatalogo": {
     "navLabel": "Catalog",
-    "title": "Category catalog",
+    "title": "Category Catalog",
     "subtitle": "Manage the tree of categories, subcategories and items used in listings.",
     "newRoot": "New top category",
     "addChild": "Add subcategory",
-    "empty": "No categories yet.",
+    "empty": "No pending suggestions.",
     "inactive": "inactive",
     "confirmDelete": "Remove \"{{name}}\" and everything under it?",
     "deleted": "Category removed.",
@@ -1535,7 +1535,17 @@
     "tipo": "Type (top-level categories only)",
     "tipo_produto": "Product",
     "tipo_servico": "Service",
-    "tipo_ambos": "Both"
+    "tipo_ambos": "Both",
+    "tab": "Pending",
+    "suggestedBy": "Suggested by",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "Category approved.",
+    "rejected": "Suggestion rejected.",
+    "errorAction": "Could not complete the action.",
+    "underRoot": "under",
+    "topLevel": "Top-level category",
+    "pendingTitle": "Pending suggestions"
   },
   "tempAccess": {
     "title": "Temporary access (starts on first login)",
@@ -1670,5 +1680,25 @@
     "months": "{{n}} months",
     "years": "{{n}} years",
     "days": "{{n}} days"
+  },
+  "catalogoSuggest": {
+    "button": "Can't find it? Suggest a new category",
+    "title": "Suggest a new category",
+    "hint": "Your suggestion will be reviewed by an admin. Meanwhile, publish using the \"Others\" category.",
+    "namePt": "Name (Portuguese) *",
+    "nameEn": "Name (English)",
+    "nameEs": "Name (Spanish)",
+    "parent": "Parent category (optional — leave empty to suggest a top-level category)",
+    "parentRoot": "— Top-level category —",
+    "submit": "Send suggestion",
+    "sent": "Sent for review. Meanwhile, publish using the \"Others\" category.",
+    "errorNamePt": "Please provide the Portuguese name.",
+    "errorSubmit": "Could not send the suggestion."
+  },
+  "catApproved": {
+    "title": "Category approved 🎉",
+    "body": "Your suggested category \"{{name}}\" was approved. You can now edit your listing to use it.",
+    "close": "Close",
+    "goToSell": "Go to my listings"
   }
 }

@@ -416,6 +416,9 @@ export type Database = {
           nome: Json
           ordem: number
           parent_id: string | null
+          status: string
+          sugerido_em: string | null
+          sugerido_por: string | null
           tipo: string
           updated_at: string
         }
@@ -428,6 +431,9 @@ export type Database = {
           nome: Json
           ordem?: number
           parent_id?: string | null
+          status?: string
+          sugerido_em?: string | null
+          sugerido_por?: string | null
           tipo?: string
           updated_at?: string
         }
@@ -440,6 +446,9 @@ export type Database = {
           nome?: Json
           ordem?: number
           parent_id?: string | null
+          status?: string
+          sugerido_em?: string | null
+          sugerido_por?: string | null
           tipo?: string
           updated_at?: string
         }
@@ -1550,6 +1559,9 @@ export type Database = {
           nome: Json
           ordem: number
           parent_id: string | null
+          status: string
+          sugerido_em: string | null
+          sugerido_por: string | null
           tipo: string
           updated_at: string
         }
@@ -1560,6 +1572,8 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      admin_categoria_aprovar: { Args: { p_id: string }; Returns: undefined }
+      admin_categoria_rejeitar: { Args: { p_id: string }; Returns: undefined }
       admin_criar_convite:
         | {
             Args: { p_dias?: number; p_email: string; p_plano?: string }
@@ -1671,6 +1685,20 @@ export type Database = {
           id: string
           is_super_admin: boolean
           nome_completo: string
+        }[]
+      }
+      admin_list_categorias_pendentes: {
+        Args: never
+        Returns: {
+          id: string
+          nome: Json
+          parent_id: string
+          parent_nome: Json
+          sugerido_em: string
+          sugerido_por: string
+          sugerido_por_email: string
+          sugerido_por_nome: string
+          tipo: string
         }[]
       }
       admin_list_cortesias: {
@@ -1817,6 +1845,10 @@ export type Database = {
       set_stripe_webhook_secret: {
         Args: { p_secret: string }
         Returns: undefined
+      }
+      sugerir_categoria: {
+        Args: { p_nome: Json; p_parent_id: string; p_tipo: string }
+        Returns: string
       }
     }
     Enums: {

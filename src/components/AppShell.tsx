@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "./Logo";
+import { CategoryApprovedModal } from "./CategoryApprovedModal";
 import { LanguageSelector } from "./LanguageSelector";
 import { AmbientGlow } from "./AmbientGlow";
 import { PlanBadge, PlanBanner } from "./PlanStatus";
@@ -441,6 +442,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           </SheetContent>
         </Sheet>
       </nav>
+      <CategoryApprovedModal />
     </div>
   );
 }
+
