@@ -35,6 +35,8 @@ const ADMIN_PLAN: CurrentPlan = {
   codigo: "pro",
   status: "ativa",
   trial_ate: null,
+  inicio: null,
+  fim: null,
   dias_restantes: 0,
   limites: {
     max_anuncios: null,
