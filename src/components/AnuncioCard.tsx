@@ -32,6 +32,7 @@ export interface AnuncioCardData {
   servico_modelo_cobranca?: "hora" | "projeto" | "mensal" | null;
   servico_area_atuacao?: string | null;
   servico_prazo?: string | null;
+  destaque_ate?: string | null;
 }
 
 
