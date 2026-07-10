@@ -106,7 +106,6 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
       { to: "/certificados", labelKey: "nav.certificates", icon: Award },
-      { to: "/clube", labelKey: "clube.navLabel", icon: Sparkles, pro: true },
     ],
   },
   {
@@ -114,6 +113,7 @@ const GROUPS: NavGroup[] = [
     labelKey: "nav.groups.account",
     icon: UserCircle,
     items: [
+      { to: "/conta", labelKey: "nav.account", icon: UserCircle },
       { to: "/planos", labelKey: "nav.plans", icon: Crown },
       { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
     ],
