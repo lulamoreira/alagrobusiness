@@ -15,7 +15,7 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 export const signupSchema = z
   .object({
-    tipo_perfil: z.enum(["comprador", "vendedor", "lojista", "marca"]),
+    tipo_perfil: z.enum(["comprador", "vendedor", "lojista", "marca", "startup_pme"]),
     nome_completo: z.string().min(2, { message: "validation.required" }),
     telefone: z.string().optional(),
     pais: z.string().min(2, { message: "validation.required" }),

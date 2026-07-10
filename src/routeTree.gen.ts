@@ -24,6 +24,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ParaPerfilRouteImport } from './routes/para.$perfil'
 import { Route as AuthenticatedVenderRouteImport } from './routes/_authenticated.vender'
+import { Route as AuthenticatedStartupsRouteImport } from './routes/_authenticated.startups'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated.relatorios'
 import { Route as AuthenticatedPlanosRouteImport } from './routes/_authenticated.planos'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated.painel'
@@ -131,6 +132,11 @@ const ParaPerfilRoute = ParaPerfilRouteImport.update({
 const AuthenticatedVenderRoute = AuthenticatedVenderRouteImport.update({
   id: '/vender',
   path: '/vender',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedStartupsRoute = AuthenticatedStartupsRouteImport.update({
+  id: '/startups',
+  path: '/startups',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
@@ -352,6 +358,7 @@ export interface FileRoutesByFullPath {
   '/painel': typeof AuthenticatedPainelRoute
   '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/startups': typeof AuthenticatedStartupsRoute
   '/vender': typeof AuthenticatedVenderRouteWithChildren
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -401,6 +408,7 @@ export interface FileRoutesByTo {
   '/painel': typeof AuthenticatedPainelRoute
   '/planos': typeof AuthenticatedPlanosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/startups': typeof AuthenticatedStartupsRoute
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
@@ -452,6 +460,7 @@ export interface FileRoutesById {
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/planos': typeof AuthenticatedPlanosRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/_authenticated/startups': typeof AuthenticatedStartupsRoute
   '/_authenticated/vender': typeof AuthenticatedVenderRouteWithChildren
   '/para/$perfil': typeof ParaPerfilRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -504,6 +513,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/planos'
     | '/relatorios'
+    | '/startups'
     | '/vender'
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
@@ -553,6 +563,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/planos'
     | '/relatorios'
+    | '/startups'
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
@@ -603,6 +614,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel'
     | '/_authenticated/planos'
     | '/_authenticated/relatorios'
+    | '/_authenticated/startups'
     | '/_authenticated/vender'
     | '/para/$perfil'
     | '/.mcp/invoke-tool/$tool'
@@ -751,6 +763,13 @@ declare module '@tanstack/react-router' {
       path: '/vender'
       fullPath: '/vender'
       preLoaderRoute: typeof AuthenticatedVenderRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/startups': {
+      id: '/_authenticated/startups'
+      path: '/startups'
+      fullPath: '/startups'
+      preLoaderRoute: typeof AuthenticatedStartupsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/relatorios': {
@@ -1040,6 +1059,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedPlanosRoute: typeof AuthenticatedPlanosRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedStartupsRoute: typeof AuthenticatedStartupsRoute
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
   AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
@@ -1070,6 +1090,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedPlanosRoute: AuthenticatedPlanosRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedStartupsRoute: AuthenticatedStartupsRoute,
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
   AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,

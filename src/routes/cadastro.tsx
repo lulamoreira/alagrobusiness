@@ -26,6 +26,9 @@ const PERFIL_MAP: Record<string, SignupInput["tipo_perfil"]> = {
   produtor: "vendedor",
   lojista: "lojista",
   marca: "marca",
+  startup: "startup_pme",
+  startup_pme: "startup_pme",
+  pme: "startup_pme",
 };
 
 const searchSchema = z.object({
@@ -105,6 +108,7 @@ function SignupPage() {
     { value: "vendedor" as const, label: t("signup.seller") },
     { value: "lojista" as const, label: t("signup.shop") },
     { value: "marca" as const, label: t("signup.brand") },
+    { value: "startup_pme" as const, label: t("signup.startup") },
   ];
 
   return (
@@ -146,7 +150,7 @@ function SignupPage() {
                 />
               )}
             />
-            {(initialTipo === "lojista" || initialTipo === "marca") && (
+            {(initialTipo === "lojista" || initialTipo === "marca" || initialTipo === "startup_pme") && (
               <p className="mt-2 text-xs text-muted-foreground">{t("signup.approvalNotice")}</p>
             )}
           </div>

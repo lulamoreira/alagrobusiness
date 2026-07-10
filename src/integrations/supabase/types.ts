@@ -152,7 +152,11 @@ export type Database = {
           quantidade_disponivel: number
           quantidade_unidade_id: string
           raio_entrega_km: number | null
+          servico_area_atuacao: string | null
+          servico_modelo_cobranca: string | null
+          servico_prazo: string | null
           status: Database["public"]["Enums"]["status_anuncio"]
+          tipo_oferta: Database["public"]["Enums"]["tipo_oferta"]
           titulo: string
           updated_at: string
           vendedor_id: string
@@ -183,7 +187,11 @@ export type Database = {
           quantidade_disponivel: number
           quantidade_unidade_id: string
           raio_entrega_km?: number | null
+          servico_area_atuacao?: string | null
+          servico_modelo_cobranca?: string | null
+          servico_prazo?: string | null
           status?: Database["public"]["Enums"]["status_anuncio"]
+          tipo_oferta?: Database["public"]["Enums"]["tipo_oferta"]
           titulo: string
           updated_at?: string
           vendedor_id: string
@@ -214,7 +222,11 @@ export type Database = {
           quantidade_disponivel?: number
           quantidade_unidade_id?: string
           raio_entrega_km?: number | null
+          servico_area_atuacao?: string | null
+          servico_modelo_cobranca?: string | null
+          servico_prazo?: string | null
           status?: Database["public"]["Enums"]["status_anuncio"]
+          tipo_oferta?: Database["public"]["Enums"]["tipo_oferta"]
           titulo?: string
           updated_at?: string
           vendedor_id?: string
@@ -1823,7 +1835,14 @@ export type Database = {
         | "pagamento"
         | "reuniao"
         | "outro"
-      tipo_perfil: "comprador" | "vendedor" | "lojista" | "marca" | "admin"
+      tipo_oferta: "produto" | "servico"
+      tipo_perfil:
+        | "comprador"
+        | "vendedor"
+        | "lojista"
+        | "marca"
+        | "admin"
+        | "startup_pme"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1972,7 +1991,15 @@ export const Constants = {
         "reuniao",
         "outro",
       ],
-      tipo_perfil: ["comprador", "vendedor", "lojista", "marca", "admin"],
+      tipo_oferta: ["produto", "servico"],
+      tipo_perfil: [
+        "comprador",
+        "vendedor",
+        "lojista",
+        "marca",
+        "admin",
+        "startup_pme",
+      ],
     },
   },
 } as const

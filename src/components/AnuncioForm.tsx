@@ -18,10 +18,14 @@ const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CURRENCIES = ["BRL", "USD", "EUR"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
+const OFFER_TYPES = ["produto", "servico"] as const;
+const SERVICE_BILLING = ["hora", "projeto", "mensal"] as const;
 
 type Category = (typeof CATEGORIES)[number];
 type DeliveryMode = (typeof DELIVERY_MODES)[number];
 type Currency = (typeof CURRENCIES)[number];
+type OfferType = (typeof OFFER_TYPES)[number];
+type ServiceBilling = (typeof SERVICE_BILLING)[number];
 
 export interface AnuncioFormInitial {
   id: string;
@@ -46,6 +50,10 @@ export interface AnuncioFormInitial {
   cidade: string | null;
   cep: string | null;
   fotos: string[];
+  tipo_oferta?: OfferType | null;
+  servico_modelo_cobranca?: ServiceBilling | null;
+  servico_area_atuacao?: string | null;
+  servico_prazo?: string | null;
 }
 
 
@@ -109,6 +117,13 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? "produto");
+  const [servicoModelo, setServicoModelo] = useState<ServiceBilling>(
+    (initial?.servico_modelo_cobranca as ServiceBilling) ?? "projeto",
+  );
+  const [servicoArea, setServicoArea] = useState(initial?.servico_area_atuacao ?? "");
+  const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
+  const isServico = tipoOferta === "servico";
 
   // Defaults for units once loaded
   useEffect(() => {
@@ -150,9 +165,11 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
     if (!titulo.trim()) e.titulo = "validation.required";
     if (!produto.trim()) e.produto = "validation.required";
     if (!Number(preco) || Number(preco) <= 0) e.preco = "validation.positiveNumber";
-    if (!Number(quantidade) || Number(quantidade) <= 0) e.quantidade = "validation.positiveNumber";
     if (!precoUnidadeId) e.precoUnidadeId = "validation.required";
-    if (!quantidadeUnidadeId) e.quantidadeUnidadeId = "validation.required";
+    if (!isServico) {
+      if (!Number(quantidade) || Number(quantidade) <= 0) e.quantidade = "validation.positiveNumber";
+      if (!quantidadeUnidadeId) e.quantidadeUnidadeId = "validation.required";
+    }
     if (photos.length === 0) e.photos = "validation.minOnePhoto";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -192,24 +209,28 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         descricao: descricao.trim() || null,
         categoria,
         catalogo_item_id: catalogoItemId,
+        tipo_oferta: tipoOferta,
 
         produto: produto.trim(),
-        qualidade: qualidade.trim() || null,
-        data_colheita: dataColheita || null,
+        qualidade: isServico ? null : (qualidade.trim() || null),
+        data_colheita: isServico ? null : (dataColheita || null),
         preco: Number(preco),
         moeda,
         preco_unidade_id: precoUnidadeId,
-        quantidade_disponivel: Number(quantidade),
-        quantidade_unidade_id: quantidadeUnidadeId,
-        aceita_permuta: aceitaPermuta,
-        permuta_descricao: aceitaPermuta ? permutaDescricao.trim() || null : null,
-        modalidade_entrega: modalidade,
-        raio_entrega_km: modalidade === "retirada" ? null : raioKm ? Number(raioKm) : null,
-        certificacoes: certs,
+        quantidade_disponivel: isServico ? 1 : Number(quantidade),
+        quantidade_unidade_id: isServico ? precoUnidadeId : quantidadeUnidadeId,
+        aceita_permuta: isServico ? false : aceitaPermuta,
+        permuta_descricao: isServico ? null : (aceitaPermuta ? permutaDescricao.trim() || null : null),
+        modalidade_entrega: isServico ? "retirada" : modalidade,
+        raio_entrega_km: isServico ? null : (modalidade === "retirada" ? null : raioKm ? Number(raioKm) : null),
+        certificacoes: isServico ? [] : certs,
         estado: estado.trim() || null,
         cidade: cidade.trim() || null,
         cep: cep.trim() || null,
         fotos: finalPaths,
+        servico_modelo_cobranca: isServico ? servicoModelo : null,
+        servico_area_atuacao: isServico ? (servicoArea.trim() || null) : null,
+        servico_prazo: isServico ? (servicoPrazo.trim() || null) : null,
       };
 
       if (mode === "create") {
@@ -239,6 +260,17 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
           {mode === "create" ? t("form.createTitle") : t("form.editTitle")}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">{t("form.subtitle")}</p>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("offer.type")}</label>
+        <div className="flex flex-wrap gap-2">
+          {OFFER_TYPES.map((o) => (
+            <Pill key={o} active={tipoOferta === o} onClick={() => setTipoOferta(o)}>
+              {t(`offer.${o}`)}
+            </Pill>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -289,18 +321,22 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
             ))}
           </div>
         </div>
-        <DarkInput
-          label={t("form.quality")}
-          value={qualidade}
-          onChange={(e) => setQualidade(e.target.value)}
-          placeholder={t("form.qualityPh")}
-        />
-        <DarkInput
-          type="date"
-          label={t("form.harvestDate")}
-          value={dataColheita}
-          onChange={(e) => setDataColheita(e.target.value)}
-        />
+        {!isServico && (
+          <>
+            <DarkInput
+              label={t("form.quality")}
+              value={qualidade}
+              onChange={(e) => setQualidade(e.target.value)}
+              placeholder={t("form.qualityPh")}
+            />
+            <DarkInput
+              type="date"
+              label={t("form.harvestDate")}
+              value={dataColheita}
+              onChange={(e) => setDataColheita(e.target.value)}
+            />
+          </>
+        )}
       </div>
 
 
@@ -350,83 +386,114 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <DarkInput
-          label={t("form.quantity")}
-          type="number"
-          step="0.01"
-          min="0"
-          value={quantidade}
-          onChange={(e) => setQuantidade(e.target.value)}
-          error={errors.quantidade ? t(errors.quantidade) : undefined}
-        />
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.quantityUnit")}</label>
-          <div className="flex flex-wrap gap-2">
-            {(unidades ?? []).map((u) => (
-              <Pill
-                key={u.id}
-                active={quantidadeUnidadeId === u.id}
-                onClick={() => setQuantidadeUnidadeId(u.id)}
-              >
-                {t(`units.${u.nome_chave}`)}
-              </Pill>
-            ))}
+      {!isServico && (
+        <>
+          <div className="grid gap-4 md:grid-cols-2">
+            <DarkInput
+              label={t("form.quantity")}
+              type="number"
+              step="0.01"
+              min="0"
+              value={quantidade}
+              onChange={(e) => setQuantidade(e.target.value)}
+              error={errors.quantidade ? t(errors.quantidade) : undefined}
+            />
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.quantityUnit")}</label>
+              <div className="flex flex-wrap gap-2">
+                {(unidades ?? []).map((u) => (
+                  <Pill
+                    key={u.id}
+                    active={quantidadeUnidadeId === u.id}
+                    onClick={() => setQuantidadeUnidadeId(u.id)}
+                  >
+                    {t(`units.${u.nome_chave}`)}
+                  </Pill>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="space-y-3 rounded-2xl border border-border bg-card/40 p-4">
-        <label className="flex items-center gap-3 text-sm font-medium text-foreground">
-          <input
-            type="checkbox"
-            checked={aceitaPermuta}
-            onChange={(e) => setAceitaPermuta(e.target.checked)}
-            className="h-4 w-4 rounded border-border accent-primary"
-          />
-          {t("form.acceptBarter")}
-        </label>
-        {aceitaPermuta && (
-          <DarkInput
-            value={permutaDescricao}
-            onChange={(e) => setPermutaDescricao(e.target.value)}
-            placeholder={t("form.barterDescription")}
-          />
-        )}
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.deliveryMode")}</label>
-          <div className="flex flex-wrap gap-2">
-            {DELIVERY_MODES.map((m) => (
-              <Pill key={m} active={modalidade === m} onClick={() => setModalidade(m)}>
-                {t(`delivery.${m}`)}
-              </Pill>
-            ))}
+          <div className="space-y-3 rounded-2xl border border-border bg-card/40 p-4">
+            <label className="flex items-center gap-3 text-sm font-medium text-foreground">
+              <input
+                type="checkbox"
+                checked={aceitaPermuta}
+                onChange={(e) => setAceitaPermuta(e.target.checked)}
+                className="h-4 w-4 rounded border-border accent-primary"
+              />
+              {t("form.acceptBarter")}
+            </label>
+            {aceitaPermuta && (
+              <DarkInput
+                value={permutaDescricao}
+                onChange={(e) => setPermutaDescricao(e.target.value)}
+                placeholder={t("form.barterDescription")}
+              />
+            )}
           </div>
-        </div>
-        {(modalidade === "entrega" || modalidade === "ambos") && (
-          <DarkInput
-            label={t("form.deliveryRadius")}
-            type="number"
-            min="0"
-            value={raioKm}
-            onChange={(e) => setRaioKm(e.target.value)}
-          />
-        )}
-      </div>
 
-      <div>
-        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
-        <div className="flex flex-wrap gap-2">
-          {CERTIFICATIONS.map((c) => (
-            <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
-              {t(`cert.${c}`)}
-            </Pill>
-          ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.deliveryMode")}</label>
+              <div className="flex flex-wrap gap-2">
+                {DELIVERY_MODES.map((m) => (
+                  <Pill key={m} active={modalidade === m} onClick={() => setModalidade(m)}>
+                    {t(`delivery.${m}`)}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+            {(modalidade === "entrega" || modalidade === "ambos") && (
+              <DarkInput
+                label={t("form.deliveryRadius")}
+                type="number"
+                min="0"
+                value={raioKm}
+                onChange={(e) => setRaioKm(e.target.value)}
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
+            <div className="flex flex-wrap gap-2">
+              {CERTIFICATIONS.map((c) => (
+                <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
+                  {t(`cert.${c}`)}
+                </Pill>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {isServico && (
+        <div className="space-y-4 rounded-2xl border border-border bg-card/40 p-4">
+          <div>
+            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("service.billingModel")}</label>
+            <div className="flex flex-wrap gap-2">
+              {SERVICE_BILLING.map((b) => (
+                <Pill key={b} active={servicoModelo === b} onClick={() => setServicoModelo(b)}>
+                  {t(`service.billing.${b}`)}
+                </Pill>
+              ))}
+            </div>
+          </div>
+          <DarkInput
+            label={t("service.area")}
+            value={servicoArea}
+            onChange={(e) => setServicoArea(e.target.value)}
+            placeholder={t("service.areaPh")}
+          />
+          <DarkInput
+            label={t("service.lead")}
+            value={servicoPrazo}
+            onChange={(e) => setServicoPrazo(e.target.value)}
+            placeholder={t("service.leadPh")}
+          />
         </div>
-      </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-3">
         <DarkInput label={t("form.state")} value={estado} onChange={(e) => setEstado(e.target.value)} />

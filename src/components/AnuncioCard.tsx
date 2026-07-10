@@ -28,6 +28,10 @@ export interface AnuncioCardData {
   certificacoes: string[];
   vendedor_id: string;
   catalogo_item_id?: string | null;
+  tipo_oferta?: "produto" | "servico" | null;
+  servico_modelo_cobranca?: "hora" | "projeto" | "mensal" | null;
+  servico_area_atuacao?: string | null;
+  servico_prazo?: string | null;
 }
 
 
@@ -151,14 +155,19 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
         <AnuncioPhoto path={item.fotos?.[0]} productLabel={item.produto} />
 
         {/* Badges: top-left, stacked, with breathing room. Dark text on light pill = contrast. */}
-        {(item.aceita_permuta || hasCert) && (
+        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico") && (
           <div className="absolute left-3 top-3 flex max-w-[70%] flex-col items-start gap-1.5">
-            {item.aceita_permuta && (
+            {item.tipo_oferta === "servico" && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm backdrop-blur">
+                {t("service.serviceBadge")}
+              </span>
+            )}
+            {item.aceita_permuta && item.tipo_oferta !== "servico" && (
               <span className="inline-flex items-center gap-1 rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
                 <Repeat2 className="h-3 w-3" /> {t("buy.acceptsBarterBadge")}
               </span>
             )}
-            {hasCert && (
+            {hasCert && item.tipo_oferta !== "servico" && (
               <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm backdrop-blur">
                 <BadgeCheck className="h-3 w-3" /> {t("buy.certifiedBadge")}
               </span>
@@ -185,14 +194,26 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
               <span className="truncate">{location}</span>
             </span>
           )}
-          {item.qualidade && <span>· {item.qualidade}</span>}
-          {harvest && <span>· {harvest}</span>}
+          {item.tipo_oferta !== "servico" && item.qualidade && <span>· {item.qualidade}</span>}
+          {item.tipo_oferta !== "servico" && harvest && <span>· {harvest}</span>}
+          {item.tipo_oferta === "servico" && item.servico_area_atuacao && (
+            <span className="truncate">· {item.servico_area_atuacao}</span>
+          )}
         </div>
 
-        <div className="text-xs text-muted-foreground">
-          {Number(item.quantidade_disponivel).toLocaleString(i18n.language)}{" "}
-          {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
-        </div>
+        {item.tipo_oferta === "servico" ? (
+          <div className="text-xs text-muted-foreground">
+            {item.servico_modelo_cobranca && (
+              <span>{t(`service.billing.${item.servico_modelo_cobranca}`)}</span>
+            )}
+            {item.servico_prazo && <span> · {item.servico_prazo}</span>}
+          </div>
+        ) : (
+          <div className="text-xs text-muted-foreground">
+            {Number(item.quantidade_disponivel).toLocaleString(i18n.language)}{" "}
+            {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
+          </div>
+        )}
 
         <div className="mt-auto grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 pt-2">
           <div className="min-w-0">
