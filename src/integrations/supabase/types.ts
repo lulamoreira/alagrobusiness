@@ -139,6 +139,7 @@ export type Database = {
           descricao: string | null
           destaque_ate: string | null
           destaque_origem: string | null
+          em_startups: boolean
           estado: string | null
           fotos: string[]
           id: string
@@ -176,6 +177,7 @@ export type Database = {
           descricao?: string | null
           destaque_ate?: string | null
           destaque_origem?: string | null
+          em_startups?: boolean
           estado?: string | null
           fotos?: string[]
           id?: string
@@ -213,6 +215,7 @@ export type Database = {
           descricao?: string | null
           destaque_ate?: string | null
           destaque_origem?: string | null
+          em_startups?: boolean
           estado?: string | null
           fotos?: string[]
           id?: string
