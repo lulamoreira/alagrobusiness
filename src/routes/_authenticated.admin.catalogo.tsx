@@ -379,6 +379,33 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
             </div>
           )}
 
+          {showSegmento && (
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                {t("adminCatalogo.segmento")}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {(["agro", "industrial"] as const).map((sg) => (
+                  <button
+                    key={sg}
+                    type="button"
+                    onClick={() => setSegmento(sg)}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                      segmento === sg
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {t(`adminCatalogo.segmento_${sg}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+
+
 
           <div className="grid gap-3 md:grid-cols-3">
             <DarkInput
