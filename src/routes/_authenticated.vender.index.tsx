@@ -55,6 +55,7 @@ function SellPage() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [soldDialog, setSoldDialog] = useState<AnuncioRow | null>(null);
   const [soldToast, setSoldToast] = useState<string | null>(null);
+  const [destaqueDialog, setDestaqueDialog] = useState<AnuncioRow | null>(null);
 
   const { data: anuncios, isLoading } = useQuery({
     queryKey: ["my_anuncios", user?.id],
