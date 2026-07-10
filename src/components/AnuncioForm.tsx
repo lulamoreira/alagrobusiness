@@ -61,6 +61,7 @@ export interface AnuncioFormInitial {
 interface AnuncioFormProps {
   mode: "create" | "edit";
   initial?: AnuncioFormInitial;
+  defaultTipoOferta?: OfferType;
 }
 
 function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -80,7 +81,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
+export function AnuncioForm({ mode, initial, defaultTipoOferta }: AnuncioFormProps) {
   const { t } = useTranslation();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? "produto");
+  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? defaultTipoOferta ?? "produto");
   const [servicoModelo, setServicoModelo] = useState<ServiceBilling>(
     (initial?.servico_modelo_cobranca as ServiceBilling) ?? "projeto",
   );

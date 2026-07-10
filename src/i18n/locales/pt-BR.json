@@ -1649,13 +1649,23 @@
     "title": "Startups & PMEs",
     "subtitle": "Serviços, tecnologia e soluções para o agro.",
     "empty": "Nenhum serviço encontrado ainda.",
+    "emptyInvite": "Ainda não há serviços publicados. Seja o primeiro — publique o seu!",
+    "publishMine": "Publicar meu serviço",
     "results": "{{count}} resultados",
     "showingPage": "Página {{page}} de {{pages}}",
     "prev": "Anterior",
     "next": "Próximo",
     "audienceTitle": "Startups & PMEs",
     "audienceDesc": "Ofereça serviços, software e soluções para o agronegócio.",
-    "audienceCta": "Cadastrar minha empresa"
+    "audienceCta": "Cadastrar minha empresa",
+    "mine": {
+      "title": "Meus serviços",
+      "manage": "Gerenciar em Vender",
+      "emptyInvite": "Você ainda não publicou serviços. Divulgue o que sua empresa oferece."
+    },
+    "discover": {
+      "title": "Descobrir serviços"
+    }
   },
   "account": {
     "title": "Minha conta",
