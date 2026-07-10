@@ -1161,6 +1161,10 @@
         "title": "Marca",
         "desc": "Conecte-se com o produtor final, publique conteúdo e fortaleça sua presença no agro."
       },
+      "startup": {
+        "title": "Startup/PME",
+        "desc": "Ofereça serviços, software e soluções tecnológicas para todo o agronegócio."
+      },
       "cta": "Cadastrar"
     },
     "features": {
