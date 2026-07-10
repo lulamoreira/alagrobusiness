@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.admin_catalogo_upsert(uuid, uuid, jsonb, integer, boolean, text);
