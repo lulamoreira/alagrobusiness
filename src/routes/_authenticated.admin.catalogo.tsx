@@ -345,6 +345,32 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
             </select>
           </div>
 
+          {isRoot && (
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                {t("adminCatalogo.tipo")}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {(["produto", "servico", "ambos"] as const).map((tp) => (
+                  <button
+                    key={tp}
+                    type="button"
+                    onClick={() => setTipo(tp)}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                      tipo === tp
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {t(`adminCatalogo.tipo_${tp}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+
           <div className="grid gap-3 md:grid-cols-3">
             <DarkInput
               label={t("adminCatalogo.order")}
