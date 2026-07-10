@@ -108,6 +108,7 @@ function SignupPage() {
     { value: "vendedor" as const, label: t("signup.seller") },
     { value: "lojista" as const, label: t("signup.shop") },
     { value: "marca" as const, label: t("signup.brand") },
+    { value: "startup_pme" as const, label: t("signup.startup") },
   ];
 
   return (
