@@ -18,6 +18,8 @@ interface CatalogoCascadeProps {
   label?: string;
   /** When true, shows an "All" chip on the first level (for filters). */
   allowClear?: boolean;
+  /** Filter root categories by type. When set, roots must match tipoFilter or 'ambos'. */
+  tipoFilter?: "produto" | "servico";
   className?: string;
 }
 
