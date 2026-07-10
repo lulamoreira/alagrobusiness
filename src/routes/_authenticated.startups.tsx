@@ -106,6 +106,7 @@ function StartupsPage() {
           label={t("buy.filterCatalogo")}
           value={catalogoFilter}
           onChange={setCatalogoFilter}
+          tipoFilter="servico"
           allowClear
         />
       </div>
