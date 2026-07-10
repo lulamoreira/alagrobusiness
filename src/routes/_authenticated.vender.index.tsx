@@ -150,10 +150,16 @@ function SellPage() {
               >
                 <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
                       {statusLabel}
                     </span>
+                    {a.destaque_ate && new Date(a.destaque_ate) > new Date() && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                        <Sparkles className="h-2.5 w-2.5" />
+                        {t("detail.destaque.ate", { data: new Date(a.destaque_ate).toLocaleDateString(i18n.language) })}
+                      </span>
+                    )}
                     <span className="text-[10px] text-muted-foreground">
                       {t("sell.updatedAt")} {new Date(a.updated_at).toLocaleDateString(i18n.language)}
                     </span>
