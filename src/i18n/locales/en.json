@@ -321,6 +321,8 @@
     "noResults": "No listings found.",
     "acceptsBarterBadge": "Barter",
     "certifiedBadge": "Certified",
+    "featuredBadge": "Featured",
+    "featuredTitle": "Featured",
     "results_one": "{{count}} result",
     "noPhoto": "No photo",
     "results_other": "{{count}} results"
@@ -1110,6 +1112,18 @@
       "fotos": "Photos",
       "sem_fotos": "No photos.",
       "close": "Close"
+    },
+    "destaque": {
+      "label": "Featured",
+      "daysLabel": "Days",
+      "destacar": "Feature",
+      "remover": "Remove featured",
+      "ate": "Featured until {{data}}",
+      "sem": "Not featured",
+      "success": "Featured updated.",
+      "removed": "Featured removed.",
+      "invalidDays": "Enter a valid number of days.",
+      "error": "Failed to update featured: {{detail}}"
     }
   },
   "notifications": {

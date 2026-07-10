@@ -137,6 +137,8 @@ export type Database = {
           data_colheita: string | null
           deleted_at: string | null
           descricao: string | null
+          destaque_ate: string | null
+          destaque_origem: string | null
           estado: string | null
           fotos: string[]
           id: string
@@ -172,6 +174,8 @@ export type Database = {
           data_colheita?: string | null
           deleted_at?: string | null
           descricao?: string | null
+          destaque_ate?: string | null
+          destaque_origem?: string | null
           estado?: string | null
           fotos?: string[]
           id?: string
@@ -207,6 +211,8 @@ export type Database = {
           data_colheita?: string | null
           deleted_at?: string | null
           descricao?: string | null
+          destaque_ate?: string | null
+          destaque_origem?: string | null
           estado?: string | null
           fotos?: string[]
           id?: string
@@ -1688,6 +1694,10 @@ export type Database = {
         Returns: undefined
       }
       admin_demo_revogar: { Args: { p_convite_id: string }; Returns: undefined }
+      admin_destacar_anuncio: {
+        Args: { p_anuncio_id: string; p_dias: number }
+        Returns: undefined
+      }
       admin_grant_admin: {
         Args: { p_permissoes: Json; p_usuario: string }
         Returns: undefined
@@ -1783,6 +1793,10 @@ export type Database = {
       }
       admin_moderar_anuncio: {
         Args: { p_acao: string; p_anuncio_id: string; p_motivo: string }
+        Returns: undefined
+      }
+      admin_remover_destaque: {
+        Args: { p_anuncio_id: string }
         Returns: undefined
       }
       admin_revoke_admin: { Args: { p_usuario: string }; Returns: undefined }

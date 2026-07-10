@@ -11,6 +11,7 @@ import {
   PlayCircle,
   Trash2,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -63,6 +64,8 @@ interface AdRow {
   fotos: string[] | null;
   created_at: string;
   vendedor_id: string;
+  destaque_ate: string | null;
+  destaque_origem: string | null;
   vendedor?: { nome_completo: string | null; email: string | null } | null;
 }
 
@@ -79,6 +82,8 @@ function AdminModeracaoPage() {
   const [pending, setPending] = useState<{ ad: AdRow; action: AdAction } | null>(null);
   const [motivo, setMotivo] = useState("");
   const [busy, setBusy] = useState(false);
+  const [featureDays, setFeatureDays] = useState<Record<string, string>>({});
+  const [featureBusy, setFeatureBusy] = useState<string | null>(null);
 
   const isAdmin = profile?.tipo_perfil === "admin";
 
@@ -93,7 +98,7 @@ function AdminModeracaoPage() {
       let q = supabase
         .from("anuncios")
         .select(
-          "id, titulo, produto, categoria, status, preco, moeda, descricao, fotos, created_at, vendedor_id, vendedor:profiles!anuncios_vendedor_id_fkey(nome_completo, email)",
+          "id, titulo, produto, categoria, status, preco, moeda, descricao, fotos, created_at, vendedor_id, destaque_ate, destaque_origem, vendedor:profiles!anuncios_vendedor_id_fkey(nome_completo, email)",
         )
         .is("deleted_at", null)
         .order("created_at", { ascending: false })
@@ -152,6 +157,85 @@ function AdminModeracaoPage() {
     } finally {
       setBusy(false);
     }
+  };
+
+  const featureAd = async (ad: AdRow) => {
+    const raw = featureDays[ad.id] ?? "7";
+    const dias = Number.parseInt(raw, 10);
+    if (!Number.isFinite(dias) || dias < 1) {
+      toast.error(t("adminModeracao.destaque.invalidDays"));
+      return;
+    }
+    setFeatureBusy(ad.id);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).rpc("admin_destacar_anuncio", {
+        p_anuncio_id: ad.id,
+        p_dias: dias,
+      });
+      if (error) throw error;
+      toast.success(t("adminModeracao.destaque.success"));
+      await qc.invalidateQueries({ queryKey: ["admin_ads"] });
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? String(e);
+      toast.error(t("adminModeracao.destaque.error", { detail: msg }));
+    } finally {
+      setFeatureBusy(null);
+    }
+  };
+
+  const unfeatureAd = async (ad: AdRow) => {
+    setFeatureBusy(ad.id);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).rpc("admin_remover_destaque", {
+        p_anuncio_id: ad.id,
+      });
+      if (error) throw error;
+      toast.success(t("adminModeracao.destaque.removed"));
+      await qc.invalidateQueries({ queryKey: ["admin_ads"] });
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? String(e);
+      toast.error(t("adminModeracao.destaque.error", { detail: msg }));
+    } finally {
+      setFeatureBusy(null);
+    }
+  };
+
+  const renderFeatureControls = (ad: AdRow) => {
+    const isFeatured = !!ad.destaque_ate && new Date(ad.destaque_ate).getTime() > Date.now();
+    const busyThis = featureBusy === ad.id;
+    return (
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 bg-muted/30 p-2 text-xs">
+        <span className="inline-flex items-center gap-1 font-medium text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          {isFeatured
+            ? t("adminModeracao.destaque.ate", { data: dateFmt.format(new Date(ad.destaque_ate!)) })
+            : t("adminModeracao.destaque.sem")}
+        </span>
+        <div className="ml-auto flex items-center gap-2">
+          <Input
+            type="number"
+            min={1}
+            className="h-8 w-16"
+            aria-label={t("adminModeracao.destaque.daysLabel")}
+            placeholder={t("adminModeracao.destaque.daysLabel")}
+            value={featureDays[ad.id] ?? ""}
+            onChange={(e) => setFeatureDays((m) => ({ ...m, [ad.id]: e.target.value }))}
+            disabled={busyThis}
+          />
+          <Button size="sm" variant="outline" onClick={() => featureAd(ad)} disabled={busyThis}>
+            {busyThis && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
+            {t("adminModeracao.destaque.destacar")}
+          </Button>
+          {isFeatured && (
+            <Button size="sm" variant="ghost" onClick={() => unfeatureAd(ad)} disabled={busyThis}>
+              {t("adminModeracao.destaque.remover")}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
   };
 
   if (profile && !isAdmin) {
@@ -288,6 +372,7 @@ function AdminModeracaoPage() {
                       {t("adminModeracao.action.remover")}
                     </Button>
                   </div>
+                  <div className="mt-2">{renderFeatureControls(ad)}</div>
                 </li>
               ))}
             </ul>
@@ -358,6 +443,7 @@ function AdminModeracaoPage() {
                             {t("adminModeracao.action.remover")}
                           </Button>
                         </div>
+                        <div className="mt-2">{renderFeatureControls(ad)}</div>
                       </td>
                     </tr>
                   ))}

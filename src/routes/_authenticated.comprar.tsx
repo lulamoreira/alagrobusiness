@@ -77,6 +77,7 @@ function BuyPage() {
     queryKey: ["buy_anuncios", (startupIds ?? []).join(",")],
     enabled: startupIds !== undefined,
     queryFn: async () => {
+      const nowIso = new Date().toISOString();
       let q = supabase
         .from("anuncios")
         .select("*")
@@ -84,9 +85,14 @@ function BuyPage() {
         .is("deleted_at", null);
       const ids = startupIds ?? [];
       if (ids.length > 0) {
-        q = q.not("vendedor_id", "in", `(${ids.join(",")})`);
+        // Exclude startups EXCEPT those currently featured
+        q = q.or(`vendedor_id.not.in.(${ids.join(",")}),destaque_ate.gt.${nowIso}`);
       }
-      return (await q.order("created_at", { ascending: false }).limit(120)).data ?? [];
+      const { data } = await q
+        .order("destaque_ate", { ascending: false, nullsFirst: false })
+        .order("created_at", { ascending: false })
+        .limit(120);
+      return data ?? [];
     },
   });
 
@@ -293,17 +299,46 @@ function BuyPage() {
           <p className="text-sm text-muted-foreground">{t("buy.noResults")}</p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((a) => (
-            <AnuncioCard
-              key={a.id}
-              item={a}
-              units={unidades ?? []}
-              cotacoes={cotacoes ?? []}
-              sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
-            />
-          ))}
-        </div>
+        <>
+          {(() => {
+            const now = Date.now();
+            const featured = ((anuncios ?? []) as AnuncioCardData[]).filter(
+              (a) => a.destaque_ate && new Date(a.destaque_ate).getTime() > now,
+            );
+            if (featured.length === 0) return null;
+            return (
+              <section className="space-y-3">
+                <h2 className="font-display text-lg font-semibold md:text-xl">
+                  {t("buy.featuredTitle")}
+                </h2>
+                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+                  {featured.map((a) => (
+                    <div key={a.id} className="w-72 shrink-0 snap-start md:w-80">
+                      <AnuncioCard
+                        item={a}
+                        units={unidades ?? []}
+                        cotacoes={cotacoes ?? []}
+                        sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filtered.map((a) => (
+              <AnuncioCard
+                key={a.id}
+                item={a}
+                units={unidades ?? []}
+                cotacoes={cotacoes ?? []}
+                sellerName={vendedores?.find((v) => v.id === a.vendedor_id)?.nome_completo}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

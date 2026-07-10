@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { MapPin, Repeat2, BadgeCheck, Sprout } from "lucide-react";
+import { MapPin, Repeat2, BadgeCheck, Sprout, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
 import { formatMoney } from "@/lib/format";
@@ -32,6 +32,7 @@ export interface AnuncioCardData {
   servico_modelo_cobranca?: "hora" | "projeto" | "mensal" | null;
   servico_area_atuacao?: string | null;
   servico_prazo?: string | null;
+  destaque_ate?: string | null;
 }
 
 
@@ -149,6 +150,7 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
 
   const location = [item.cidade, item.estado].filter(Boolean).join(" — ");
   const hasCert = item.certificacoes && item.certificacoes.length > 0;
+  const isFeatured = !!item.destaque_ate && new Date(item.destaque_ate).getTime() > Date.now();
 
   return (
     <Link
@@ -161,8 +163,13 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
         <AnuncioPhoto path={item.fotos?.[0]} productLabel={item.produto} />
 
         {/* Badges: top-left, stacked, with breathing room. Dark text on light pill = contrast. */}
-        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico" || isStartup) && (
+        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico" || isStartup || isFeatured) && (
           <div className="absolute left-3 top-3 flex max-w-[70%] flex-col items-start gap-1.5">
+            {isFeatured && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm ring-1 ring-primary/40 backdrop-blur">
+                <Sparkles className="h-3 w-3" /> {t("buy.featuredBadge")}
+              </span>
+            )}
             {isStartup && (
               <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
                 {t("startups.badge")}

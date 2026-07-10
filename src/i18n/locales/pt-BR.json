@@ -321,6 +321,8 @@
     "noResults": "Nenhum anúncio encontrado.",
     "acceptsBarterBadge": "Permuta",
     "certifiedBadge": "Certificado",
+    "featuredBadge": "Destaque",
+    "featuredTitle": "Destaques",
     "results_one": "{{count}} resultado",
     "noPhoto": "Sem foto",
     "results_other": "{{count}} resultados"
@@ -1110,6 +1112,18 @@
       "fotos": "Fotos",
       "sem_fotos": "Sem fotos.",
       "close": "Fechar"
+    },
+    "destaque": {
+      "label": "Destaque",
+      "daysLabel": "Dias",
+      "destacar": "Destacar",
+      "remover": "Remover destaque",
+      "ate": "Em destaque até {{data}}",
+      "sem": "Sem destaque",
+      "success": "Destaque atualizado.",
+      "removed": "Destaque removido.",
+      "invalidDays": "Informe um número de dias válido.",
+      "error": "Falha ao atualizar destaque: {{detail}}"
     }
   },
   "notifications": {
