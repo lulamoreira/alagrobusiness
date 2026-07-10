@@ -416,6 +416,7 @@ export type Database = {
           nome: Json
           ordem: number
           parent_id: string | null
+          segmento: string | null
           status: string
           sugerido_em: string | null
           sugerido_por: string | null
@@ -431,6 +432,7 @@ export type Database = {
           nome: Json
           ordem?: number
           parent_id?: string | null
+          segmento?: string | null
           status?: string
           sugerido_em?: string | null
           sugerido_por?: string | null
@@ -446,6 +448,7 @@ export type Database = {
           nome?: Json
           ordem?: number
           parent_id?: string | null
+          segmento?: string | null
           status?: string
           sugerido_em?: string | null
           sugerido_por?: string | null
@@ -1548,6 +1551,7 @@ export type Database = {
           p_nome: Json
           p_ordem: number
           p_parent_id: string
+          p_segmento?: string
           p_tipo?: string
         }
         Returns: {
@@ -1559,6 +1563,7 @@ export type Database = {
           nome: Json
           ordem: number
           parent_id: string | null
+          segmento: string | null
           status: string
           sugerido_em: string | null
           sugerido_por: string | null
