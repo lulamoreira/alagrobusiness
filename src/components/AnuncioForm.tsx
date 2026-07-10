@@ -117,6 +117,13 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? "produto");
+  const [servicoModelo, setServicoModelo] = useState<ServiceBilling>(
+    (initial?.servico_modelo_cobranca as ServiceBilling) ?? "projeto",
+  );
+  const [servicoArea, setServicoArea] = useState(initial?.servico_area_atuacao ?? "");
+  const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
+  const isServico = tipoOferta === "servico";
 
   // Defaults for units once loaded
   useEffect(() => {
