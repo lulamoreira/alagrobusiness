@@ -26,6 +26,9 @@ const PERFIL_MAP: Record<string, SignupInput["tipo_perfil"]> = {
   produtor: "vendedor",
   lojista: "lojista",
   marca: "marca",
+  startup: "startup_pme",
+  startup_pme: "startup_pme",
+  pme: "startup_pme",
 };
 
 const searchSchema = z.object({
