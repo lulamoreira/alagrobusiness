@@ -1158,6 +1158,10 @@
         "title": "Marca",
         "desc": "Conéctate con el productor final, publica contenido y fortalece tu presencia."
       },
+      "startup": {
+        "title": "Startup/PyME",
+        "desc": "Ofrece servicios, software y soluciones tecnológicas al agronegocio."
+      },
       "cta": "Registrarse"
     },
     "features": {
