@@ -223,7 +223,7 @@ export function AcessosTemporariosSection() {
     const loginCriado = demoLogin.trim().toLowerCase();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const emailCriado = ((data as any)?.email as string | undefined) ?? `${loginCriado}@demo.agro`;
-    setCriado({ login: loginCriado, senha: demoSenha, email: emailCriado });
+    setCriado({ login: loginCriado, senha: demoSenha, email: emailCriado, dias: Math.round(n) });
     savePwd(loginCriado, demoSenha);
     setDemoLogin(""); setDemoSenha(""); setDemoLabel("");
     toast.success(t("demoAccess.created"));
