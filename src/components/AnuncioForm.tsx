@@ -18,10 +18,14 @@ const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CURRENCIES = ["BRL", "USD", "EUR"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
+const OFFER_TYPES = ["produto", "servico"] as const;
+const SERVICE_BILLING = ["hora", "projeto", "mensal"] as const;
 
 type Category = (typeof CATEGORIES)[number];
 type DeliveryMode = (typeof DELIVERY_MODES)[number];
 type Currency = (typeof CURRENCIES)[number];
+type OfferType = (typeof OFFER_TYPES)[number];
+type ServiceBilling = (typeof SERVICE_BILLING)[number];
 
 export interface AnuncioFormInitial {
   id: string;
@@ -46,6 +50,10 @@ export interface AnuncioFormInitial {
   cidade: string | null;
   cep: string | null;
   fotos: string[];
+  tipo_oferta?: OfferType | null;
+  servico_modelo_cobranca?: ServiceBilling | null;
+  servico_area_atuacao?: string | null;
+  servico_prazo?: string | null;
 }
 
 
