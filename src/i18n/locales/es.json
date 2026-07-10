@@ -345,7 +345,36 @@
     "location": "Ubicación",
     "notFound": "Anuncio no encontrado.",
     "interestNotification": "Nuevo interés en el anuncio: {{titulo}}",
-    "interestMessage": "Un comprador mostró interés en tu anuncio."
+    "interestMessage": "Un comprador mostró interés en tu anuncio.",
+    "destaque": {
+      "label": "Destacado",
+      "daysLabel": "Días",
+      "destacar": "Destacar",
+      "remover": "Quitar destacado",
+      "ate": "Destacado hasta {{data}}",
+      "sem": "Sin destacado",
+      "success": "Destacado actualizado.",
+      "removed": "Destacado quitado.",
+      "invalidDays": "Ingrese un número de días válido.",
+      "error": "Error al actualizar destacado: {{detail}}",
+      "buyTitle": "Destacar anuncio",
+      "buySubtitle": "Elige un paquete para dar más visibilidad a tu anuncio.",
+      "buyCta": "Destacar anuncio",
+      "buyChoose": "Pagar {{price}}",
+      "buyDays": "{{days}} días",
+      "buyStatusActive": "Destacado hasta {{data}}",
+      "buyLoading": "Cargando paquetes…",
+      "buyError": "No se pudo iniciar el pago.",
+      "buyRedirecting": "Redirigiendo al pago…",
+      "buyEmpty": "No hay paquetes disponibles.",
+      "buyClose": "Cancelar"
+    },
+    "title": "Detalles del anuncio",
+    "descricao": "Descripción",
+    "sem_descricao": "Sin descripción.",
+    "fotos": "Fotos",
+    "sem_fotos": "Sin fotos.",
+    "close": "Cerrar"
   },
   "messages": {
     "title": "Mensajes",
@@ -1104,37 +1133,6 @@
       "reativarSuccess": "Anuncio reactivado.",
       "removerSuccess": "Anuncio eliminado.",
       "error": "Error en la operación: {{detail}}"
-    },
-    "detail": {
-      "title": "Detalles del anuncio",
-      "descricao": "Descripción",
-      "sem_descricao": "Sin descripción.",
-      "fotos": "Fotos",
-      "sem_fotos": "Sin fotos.",
-      "close": "Cerrar"
-    },
-    "destaque": {
-      "label": "Destacado",
-      "daysLabel": "Días",
-      "destacar": "Destacar",
-      "remover": "Quitar destacado",
-      "ate": "Destacado hasta {{data}}",
-      "sem": "Sin destacado",
-      "success": "Destacado actualizado.",
-      "removed": "Destacado quitado.",
-      "invalidDays": "Ingrese un número de días válido.",
-      "error": "Error al actualizar destacado: {{detail}}",
-      "buyTitle": "Destacar anuncio",
-      "buySubtitle": "Elige un paquete para dar más visibilidad a tu anuncio.",
-      "buyCta": "Destacar anuncio",
-      "buyChoose": "Pagar {{price}}",
-      "buyDays": "{{days}} días",
-      "buyStatusActive": "Destacado hasta {{data}}",
-      "buyLoading": "Cargando paquetes…",
-      "buyError": "No se pudo iniciar el pago.",
-      "buyRedirecting": "Redirigiendo al pago…",
-      "buyEmpty": "No hay paquetes disponibles.",
-      "buyClose": "Cancelar"
     }
   },
   "notifications": {
@@ -1569,7 +1567,6 @@
     "segmento": "Segmento (solo productos de nivel superior)",
     "segmento_agro": "Agro",
     "segmento_industrial": "Industrial",
-
     "tab": "Pendientes",
     "suggestedBy": "Sugerido por",
     "approve": "Aprobar",
@@ -1701,7 +1698,6 @@
       "title": "Descubrir Startups"
     }
   },
-
   "account": {
     "title": "Mi cuenta",
     "subtitle": "Tu suscripción y beneficios",

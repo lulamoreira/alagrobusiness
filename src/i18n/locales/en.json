@@ -345,7 +345,36 @@
     "location": "Location",
     "notFound": "Listing not found.",
     "interestNotification": "New interest in listing: {{titulo}}",
-    "interestMessage": "A buyer has shown interest in your listing."
+    "interestMessage": "A buyer has shown interest in your listing.",
+    "destaque": {
+      "label": "Featured",
+      "daysLabel": "Days",
+      "destacar": "Feature",
+      "remover": "Remove featured",
+      "ate": "Featured until {{data}}",
+      "sem": "Not featured",
+      "success": "Featured updated.",
+      "removed": "Featured removed.",
+      "invalidDays": "Enter a valid number of days.",
+      "error": "Failed to update featured: {{detail}}",
+      "buyTitle": "Feature listing",
+      "buySubtitle": "Pick a package to boost your listing's visibility.",
+      "buyCta": "Feature listing",
+      "buyChoose": "Pay {{price}}",
+      "buyDays": "{{days}} days",
+      "buyStatusActive": "Featured until {{data}}",
+      "buyLoading": "Loading packages…",
+      "buyError": "Could not start payment.",
+      "buyRedirecting": "Redirecting to payment…",
+      "buyEmpty": "No packages available right now.",
+      "buyClose": "Cancel"
+    },
+    "title": "Ad details",
+    "descricao": "Description",
+    "sem_descricao": "No description.",
+    "fotos": "Photos",
+    "sem_fotos": "No photos.",
+    "close": "Close"
   },
   "messages": {
     "title": "Messages",
@@ -1104,37 +1133,6 @@
       "reativarSuccess": "Ad reactivated.",
       "removerSuccess": "Ad removed.",
       "error": "Operation failed: {{detail}}"
-    },
-    "detail": {
-      "title": "Ad details",
-      "descricao": "Description",
-      "sem_descricao": "No description.",
-      "fotos": "Photos",
-      "sem_fotos": "No photos.",
-      "close": "Close"
-    },
-    "destaque": {
-      "label": "Featured",
-      "daysLabel": "Days",
-      "destacar": "Feature",
-      "remover": "Remove featured",
-      "ate": "Featured until {{data}}",
-      "sem": "Not featured",
-      "success": "Featured updated.",
-      "removed": "Featured removed.",
-      "invalidDays": "Enter a valid number of days.",
-      "error": "Failed to update featured: {{detail}}",
-      "buyTitle": "Feature listing",
-      "buySubtitle": "Pick a package to boost your listing's visibility.",
-      "buyCta": "Feature listing",
-      "buyChoose": "Pay {{price}}",
-      "buyDays": "{{days}} days",
-      "buyStatusActive": "Featured until {{data}}",
-      "buyLoading": "Loading packages…",
-      "buyError": "Could not start payment.",
-      "buyRedirecting": "Redirecting to payment…",
-      "buyEmpty": "No packages available right now.",
-      "buyClose": "Cancel"
     }
   },
   "notifications": {
@@ -1569,7 +1567,6 @@
     "segmento": "Segment (top-level products only)",
     "segmento_agro": "Agro",
     "segmento_industrial": "Industrial",
-
     "tab": "Pending",
     "suggestedBy": "Suggested by",
     "approve": "Approve",
@@ -1701,7 +1698,6 @@
       "title": "Discover Startups"
     }
   },
-
   "account": {
     "title": "My account",
     "subtitle": "Your subscription and benefits",
