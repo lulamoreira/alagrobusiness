@@ -1133,6 +1133,26 @@
       "reativarSuccess": "Anuncio reactivado.",
       "removerSuccess": "Anuncio eliminado.",
       "error": "Error en la operación: {{detail}}"
+    },
+    "destaque": {
+      "label": "Destacado",
+      "daysLabel": "Días",
+      "destacar": "Destacar",
+      "remover": "Quitar destacado",
+      "ate": "Destacado hasta {{data}}",
+      "sem": "Sin destacado",
+      "success": "Destacado actualizado.",
+      "removed": "Destacado quitado.",
+      "invalidDays": "Ingrese un número de días válido.",
+      "error": "Error al actualizar destacado: {{detail}}"
+    },
+    "detail": {
+      "title": "Detalles del anuncio",
+      "descricao": "Descripción",
+      "sem_descricao": "Sin descripción.",
+      "fotos": "Fotos",
+      "sem_fotos": "Sin fotos.",
+      "close": "Cerrar"
     }
   },
   "notifications": {

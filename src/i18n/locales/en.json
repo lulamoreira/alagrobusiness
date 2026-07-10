@@ -1133,6 +1133,26 @@
       "reativarSuccess": "Ad reactivated.",
       "removerSuccess": "Ad removed.",
       "error": "Operation failed: {{detail}}"
+    },
+    "destaque": {
+      "label": "Featured",
+      "daysLabel": "Days",
+      "destacar": "Feature",
+      "remover": "Remove featured",
+      "ate": "Featured until {{data}}",
+      "sem": "Not featured",
+      "success": "Featured updated.",
+      "removed": "Featured removed.",
+      "invalidDays": "Enter a valid number of days.",
+      "error": "Failed to update featured: {{detail}}"
+    },
+    "detail": {
+      "title": "Ad details",
+      "descricao": "Description",
+      "sem_descricao": "No description.",
+      "fotos": "Photos",
+      "sem_fotos": "No photos.",
+      "close": "Close"
     }
   },
   "notifications": {
