@@ -123,7 +123,7 @@ function StartupsPage() {
   const totalPages = Math.max(1, Math.ceil((data?.count ?? 0) / PAGE_SIZE));
 
   const publishBtn = (
-    <Link to="/vender/novo">
+    <Link to="/vender/novo" search={{ tipo: "", canal: "startups" }}>
       <PillButton type="button">{t("startups.publishMine")}</PillButton>
     </Link>
   );
@@ -135,11 +135,12 @@ function StartupsPage() {
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("startups.title")}</h1>
           <p className="text-sm text-muted-foreground">{t("startups.subtitle")}</p>
         </div>
-        {isStartup && publishBtn}
+        {podePublicar && publishBtn}
       </div>
 
-      {/* Meus anúncios — só para Startup */}
-      {isStartup && (
+      {/* Meus anúncios — Startup ou Admin (admin: só os publicados pelo módulo Startups) */}
+      {podePublicar && (
+
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-lg font-semibold md:text-xl">{t("startups.mine.titleAll")}</h2>
