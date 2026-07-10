@@ -15,6 +15,8 @@ export interface CurrentPlan {
   codigo: string;
   status: "trial" | "ativa" | "expirada" | "cancelada" | "none" | string;
   trial_ate: string | null;
+  inicio: string | null;
+  fim: string | null;
   dias_restantes: number;
   limites: PlanLimites;
 }
