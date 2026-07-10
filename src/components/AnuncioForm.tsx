@@ -386,83 +386,114 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <DarkInput
-          label={t("form.quantity")}
-          type="number"
-          step="0.01"
-          min="0"
-          value={quantidade}
-          onChange={(e) => setQuantidade(e.target.value)}
-          error={errors.quantidade ? t(errors.quantidade) : undefined}
-        />
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.quantityUnit")}</label>
-          <div className="flex flex-wrap gap-2">
-            {(unidades ?? []).map((u) => (
-              <Pill
-                key={u.id}
-                active={quantidadeUnidadeId === u.id}
-                onClick={() => setQuantidadeUnidadeId(u.id)}
-              >
-                {t(`units.${u.nome_chave}`)}
-              </Pill>
-            ))}
+      {!isServico && (
+        <>
+          <div className="grid gap-4 md:grid-cols-2">
+            <DarkInput
+              label={t("form.quantity")}
+              type="number"
+              step="0.01"
+              min="0"
+              value={quantidade}
+              onChange={(e) => setQuantidade(e.target.value)}
+              error={errors.quantidade ? t(errors.quantidade) : undefined}
+            />
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.quantityUnit")}</label>
+              <div className="flex flex-wrap gap-2">
+                {(unidades ?? []).map((u) => (
+                  <Pill
+                    key={u.id}
+                    active={quantidadeUnidadeId === u.id}
+                    onClick={() => setQuantidadeUnidadeId(u.id)}
+                  >
+                    {t(`units.${u.nome_chave}`)}
+                  </Pill>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="space-y-3 rounded-2xl border border-border bg-card/40 p-4">
-        <label className="flex items-center gap-3 text-sm font-medium text-foreground">
-          <input
-            type="checkbox"
-            checked={aceitaPermuta}
-            onChange={(e) => setAceitaPermuta(e.target.checked)}
-            className="h-4 w-4 rounded border-border accent-primary"
-          />
-          {t("form.acceptBarter")}
-        </label>
-        {aceitaPermuta && (
-          <DarkInput
-            value={permutaDescricao}
-            onChange={(e) => setPermutaDescricao(e.target.value)}
-            placeholder={t("form.barterDescription")}
-          />
-        )}
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.deliveryMode")}</label>
-          <div className="flex flex-wrap gap-2">
-            {DELIVERY_MODES.map((m) => (
-              <Pill key={m} active={modalidade === m} onClick={() => setModalidade(m)}>
-                {t(`delivery.${m}`)}
-              </Pill>
-            ))}
+          <div className="space-y-3 rounded-2xl border border-border bg-card/40 p-4">
+            <label className="flex items-center gap-3 text-sm font-medium text-foreground">
+              <input
+                type="checkbox"
+                checked={aceitaPermuta}
+                onChange={(e) => setAceitaPermuta(e.target.checked)}
+                className="h-4 w-4 rounded border-border accent-primary"
+              />
+              {t("form.acceptBarter")}
+            </label>
+            {aceitaPermuta && (
+              <DarkInput
+                value={permutaDescricao}
+                onChange={(e) => setPermutaDescricao(e.target.value)}
+                placeholder={t("form.barterDescription")}
+              />
+            )}
           </div>
-        </div>
-        {(modalidade === "entrega" || modalidade === "ambos") && (
-          <DarkInput
-            label={t("form.deliveryRadius")}
-            type="number"
-            min="0"
-            value={raioKm}
-            onChange={(e) => setRaioKm(e.target.value)}
-          />
-        )}
-      </div>
 
-      <div>
-        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
-        <div className="flex flex-wrap gap-2">
-          {CERTIFICATIONS.map((c) => (
-            <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
-              {t(`cert.${c}`)}
-            </Pill>
-          ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.deliveryMode")}</label>
+              <div className="flex flex-wrap gap-2">
+                {DELIVERY_MODES.map((m) => (
+                  <Pill key={m} active={modalidade === m} onClick={() => setModalidade(m)}>
+                    {t(`delivery.${m}`)}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+            {(modalidade === "entrega" || modalidade === "ambos") && (
+              <DarkInput
+                label={t("form.deliveryRadius")}
+                type="number"
+                min="0"
+                value={raioKm}
+                onChange={(e) => setRaioKm(e.target.value)}
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
+            <div className="flex flex-wrap gap-2">
+              {CERTIFICATIONS.map((c) => (
+                <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
+                  {t(`cert.${c}`)}
+                </Pill>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {isServico && (
+        <div className="space-y-4 rounded-2xl border border-border bg-card/40 p-4">
+          <div>
+            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("service.billingModel")}</label>
+            <div className="flex flex-wrap gap-2">
+              {SERVICE_BILLING.map((b) => (
+                <Pill key={b} active={servicoModelo === b} onClick={() => setServicoModelo(b)}>
+                  {t(`service.billing.${b}`)}
+                </Pill>
+              ))}
+            </div>
+          </div>
+          <DarkInput
+            label={t("service.area")}
+            value={servicoArea}
+            onChange={(e) => setServicoArea(e.target.value)}
+            placeholder={t("service.areaPh")}
+          />
+          <DarkInput
+            label={t("service.lead")}
+            value={servicoPrazo}
+            onChange={(e) => setServicoPrazo(e.target.value)}
+            placeholder={t("service.leadPh")}
+          />
         </div>
-      </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-3">
         <DarkInput label={t("form.state")} value={estado} onChange={(e) => setEstado(e.target.value)} />
