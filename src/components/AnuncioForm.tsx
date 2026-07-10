@@ -315,6 +315,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
           label={t("form.category")}
           value={catalogoItemId}
           onChange={setCatalogoItemId}
+          tipoFilter={tipoOferta}
         />
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>
