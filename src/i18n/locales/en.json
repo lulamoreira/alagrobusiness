@@ -1594,10 +1594,12 @@
     "copyPassword": "Copy password",
     "copyAll": "Copy login and password",
     "sendWhatsapp": "Send via WhatsApp",
-    "waMessage": "Hi! 🌱\n\nYour access credentials for the AGROBUSINESS platform are ready:\n\n🔑 Login: {{login}}\n🔒 Password: {{senha}}\n🌐 Sign in: {{url}}\n\nFor security, please change your password on first sign-in. Enjoy!",
+    "waMessage": "AGROBUSINESS — Demo access\n\n🔑 Login: {{login}}\n🔒 Password: {{senha}}\n🌐 Sign in: {{url}}\n\nYour access is valid for {{dias}} days from first sign-in.",
     "copyLoginLink": "Copy login and link",
+    "sendLoginWhatsapp": "Send login via WhatsApp",
+    "loginOnlyNote": "Sending login only (no password). To send the password, reset it in \"Edit\" or copy it right after account creation.",
     "sharePwdPlaceholder": "Type the password to send",
     "sharePwdNote": "The password is not stored. Type it here to include it in the message, or use \"Edit\" to reset it.",
-    "waMessageLoginOnly": "Hi! 🌱\n\nYour AGROBUSINESS platform login:\n\n🔑 Login: {{login}}\n🌐 Sign in: {{url}}\n\nIf you need the password, let me know and I'll send it right after."
+    "waMessageLoginOnly": "AGROBUSINESS — Demo access\n\n🔑 Login: {{login}}\n🌐 Sign in: {{url}}\n\nThe password will be sent next."
   }
 }
