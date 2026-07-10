@@ -11,6 +11,7 @@ import {
   PlayCircle,
   Trash2,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
