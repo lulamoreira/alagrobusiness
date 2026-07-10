@@ -1158,6 +1158,10 @@
         "title": "Brand",
         "desc": "Connect with end producers, publish content and strengthen your presence in agri."
       },
+      "startup": {
+        "title": "Startup/SMB",
+        "desc": "Offer services, software and tech solutions to the entire agribusiness."
+      },
       "cta": "Sign up"
     },
     "features": {
