@@ -81,7 +81,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
+export function AnuncioForm({ mode, initial, defaultTipoOferta }: AnuncioFormProps) {
   const { t } = useTranslation();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
