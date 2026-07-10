@@ -30,7 +30,7 @@ export interface AnuncioFormInitial {
   id: string;
   titulo: string;
   descricao: string | null;
-  categoria: string | null;
+  categoria: "fruta" | "grao" | "legumes" | "vegetal" | null;
   catalogo_item_id: string | null;
   produto: string;
   qualidade: string | null;
