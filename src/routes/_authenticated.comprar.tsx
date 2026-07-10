@@ -84,17 +84,24 @@ function BuyPage() {
         .eq("status", "ativo")
         .is("deleted_at", null);
       const ids = startupIds ?? [];
+      // Exclude ads belonging to the Startups module UNLESS currently featured.
+      // Belongs to Startups module = seller is startup_pme OR em_startups=true.
       if (ids.length > 0) {
-        // Exclude startups EXCEPT those currently featured
-        q = q.or(`vendedor_id.not.in.(${ids.join(",")}),destaque_ate.gt.${nowIso}`);
+        q = q.or(
+          `and(vendedor_id.not.in.(${ids.join(",")}),em_startups.eq.false),destaque_ate.gt.${nowIso}`,
+        );
+      } else {
+        q = q.or(`em_startups.eq.false,destaque_ate.gt.${nowIso}`);
       }
       const { data } = await q
         .order("destaque_ate", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
         .limit(120);
       return data ?? [];
     },
   });
+
 
 
   const { data: cotacoes } = useQuery({
