@@ -10,6 +10,7 @@ import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
 import { PillButton } from "@/components/PillButton";
 
+
 export const Route = createFileRoute("/_authenticated/startups")({
   component: StartupsPage,
 });
