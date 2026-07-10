@@ -245,6 +245,14 @@ function SellPage() {
           }}
         />
       )}
+      {destaqueDialog && (
+        <DestaqueBuyDialog
+          open={!!destaqueDialog}
+          anuncioId={destaqueDialog.id}
+          destaqueAte={destaqueDialog.destaque_ate}
+          onClose={() => setDestaqueDialog(null)}
+        />
+      )}
     </div>
   );
 }
