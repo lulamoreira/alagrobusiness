@@ -12,6 +12,8 @@ import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
+import { fetchCatalogoAll, catalogoRootSegmento } from "@/lib/catalogo";
+
 
 
 
