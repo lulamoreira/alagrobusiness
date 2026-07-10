@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -11,6 +11,7 @@ import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
 
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
