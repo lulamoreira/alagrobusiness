@@ -207,24 +207,13 @@ function BuyPage() {
             </button>
           </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("buy.filterCategory")}</label>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={category === null} onClick={() => setCategory(null)}>{t("common.all")}</Chip>
-              {CATEGORIES.map((c) => (
-                <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
-                  {t(`categories.${c}`)}
-                </Chip>
-              ))}
-            </div>
-          </div>
-
           <CatalogoCascade
-            label={t("buy.filterCatalogo")}
+            label={t("buy.filterCategory")}
             value={catalogoFilter}
             onChange={setCatalogoFilter}
             allowClear
           />
+
 
 
           <div className="grid gap-3 md:grid-cols-3">
