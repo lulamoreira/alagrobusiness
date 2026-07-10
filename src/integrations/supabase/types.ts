@@ -911,6 +911,7 @@ export type Database = {
           created_at: string
           deleted_at: string | null
           id: string
+          idioma: string | null
           lida: boolean
           remetente_id: string
           updated_at: string
@@ -921,6 +922,7 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           id?: string
+          idioma?: string | null
           lida?: boolean
           remetente_id: string
           updated_at?: string
@@ -931,6 +933,7 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           id?: string
+          idioma?: string | null
           lida?: boolean
           remetente_id?: string
           updated_at?: string
@@ -948,6 +951,38 @@ export type Database = {
             columns: ["remetente_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mensagens_traducoes: {
+        Row: {
+          created_at: string
+          id: string
+          idioma: string
+          mensagem_id: string
+          texto: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          idioma: string
+          mensagem_id: string
+          texto: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          idioma?: string
+          mensagem_id?: string
+          texto?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mensagens_traducoes_mensagem_id_fkey"
+            columns: ["mensagem_id"]
+            isOneToOne: false
+            referencedRelation: "mensagens"
             referencedColumns: ["id"]
           },
         ]
