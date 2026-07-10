@@ -321,6 +321,8 @@
     "noResults": "No listings found.",
     "acceptsBarterBadge": "Barter",
     "certifiedBadge": "Certified",
+    "featuredBadge": "Featured",
+    "featuredTitle": "Featured",
     "results_one": "{{count}} result",
     "noPhoto": "No photo",
     "results_other": "{{count}} results"
