@@ -159,6 +159,85 @@ function AdminModeracaoPage() {
     }
   };
 
+  const featureAd = async (ad: AdRow) => {
+    const raw = featureDays[ad.id] ?? "7";
+    const dias = Number.parseInt(raw, 10);
+    if (!Number.isFinite(dias) || dias < 1) {
+      toast.error(t("adminModeracao.destaque.invalidDays"));
+      return;
+    }
+    setFeatureBusy(ad.id);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).rpc("admin_destacar_anuncio", {
+        p_anuncio_id: ad.id,
+        p_dias: dias,
+      });
+      if (error) throw error;
+      toast.success(t("adminModeracao.destaque.success"));
+      await qc.invalidateQueries({ queryKey: ["admin_ads"] });
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? String(e);
+      toast.error(t("adminModeracao.destaque.error", { detail: msg }));
+    } finally {
+      setFeatureBusy(null);
+    }
+  };
+
+  const unfeatureAd = async (ad: AdRow) => {
+    setFeatureBusy(ad.id);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).rpc("admin_remover_destaque", {
+        p_anuncio_id: ad.id,
+      });
+      if (error) throw error;
+      toast.success(t("adminModeracao.destaque.removed"));
+      await qc.invalidateQueries({ queryKey: ["admin_ads"] });
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? String(e);
+      toast.error(t("adminModeracao.destaque.error", { detail: msg }));
+    } finally {
+      setFeatureBusy(null);
+    }
+  };
+
+  const renderFeatureControls = (ad: AdRow) => {
+    const isFeatured = !!ad.destaque_ate && new Date(ad.destaque_ate).getTime() > Date.now();
+    const busyThis = featureBusy === ad.id;
+    return (
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 bg-muted/30 p-2 text-xs">
+        <span className="inline-flex items-center gap-1 font-medium text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          {isFeatured
+            ? t("adminModeracao.destaque.ate", { data: dateFmt.format(new Date(ad.destaque_ate!)) })
+            : t("adminModeracao.destaque.sem")}
+        </span>
+        <div className="ml-auto flex items-center gap-2">
+          <Input
+            type="number"
+            min={1}
+            className="h-8 w-16"
+            aria-label={t("adminModeracao.destaque.daysLabel")}
+            placeholder={t("adminModeracao.destaque.daysLabel")}
+            value={featureDays[ad.id] ?? ""}
+            onChange={(e) => setFeatureDays((m) => ({ ...m, [ad.id]: e.target.value }))}
+            disabled={busyThis}
+          />
+          <Button size="sm" variant="outline" onClick={() => featureAd(ad)} disabled={busyThis}>
+            {busyThis && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
+            {t("adminModeracao.destaque.destacar")}
+          </Button>
+          {isFeatured && (
+            <Button size="sm" variant="ghost" onClick={() => unfeatureAd(ad)} disabled={busyThis}>
+              {t("adminModeracao.destaque.remover")}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   if (profile && !isAdmin) {
     return (
       <div className="rounded-2xl border border-border bg-card/60 p-6 text-sm text-muted-foreground">
