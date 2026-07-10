@@ -150,7 +150,7 @@ function SignupPage() {
                 />
               )}
             />
-            {(initialTipo === "lojista" || initialTipo === "marca") && (
+            {(initialTipo === "lojista" || initialTipo === "marca" || initialTipo === "startup_pme") && (
               <p className="mt-2 text-xs text-muted-foreground">{t("signup.approvalNotice")}</p>
             )}
           </div>
