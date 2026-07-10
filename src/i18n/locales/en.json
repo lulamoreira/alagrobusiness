@@ -1653,9 +1653,11 @@
   "startups": {
     "title": "Startups & SMBs",
     "subtitle": "Services, tech and solutions for agribusiness.",
-    "empty": "No services found yet.",
-    "emptyInvite": "No services published yet. Be the first — publish yours!",
-    "publishMine": "Publish my service",
+    "badge": "Startup",
+    "empty": "No listings found yet.",
+    "emptyInvite": "No listings published yet. Be the first — publish yours!",
+    "emptyDiscover": "No Startup has published listings yet. Check back soon.",
+    "publishMine": "Publish my listing",
     "results": "{{count}} results",
     "showingPage": "Page {{page}} of {{pages}}",
     "prev": "Previous",
@@ -1665,13 +1667,16 @@
     "audienceCta": "Register my company",
     "mine": {
       "title": "My services",
+      "titleAll": "My listings",
       "manage": "Manage in Sell",
-      "emptyInvite": "You haven't published any services yet. Share what your company offers."
+      "emptyInvite": "You haven't published any services yet. Share what your company offers.",
+      "emptyInviteAll": "You haven't published any listings yet. Share your products or services."
     },
     "discover": {
-      "title": "Discover services"
+      "title": "Discover Startups"
     }
   },
+
   "account": {
     "title": "My account",
     "subtitle": "Your subscription and benefits",

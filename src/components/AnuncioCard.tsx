@@ -40,7 +40,9 @@ interface AnuncioCardProps {
   units: { id: string; nome_chave: string }[];
   cotacoes: { tipo: "comercial" | "turismo" | "paralelo"; valor_brl: number }[];
   sellerName?: string;
+  sellerTipoPerfil?: string | null;
 }
+
 
 /**
  * Renders a signed-URL photo for an anúncio. Always re-fetches a fresh signed URL
@@ -105,17 +107,21 @@ export function AnuncioPhoto({
   );
 }
 
-export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardProps) {
+export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil }: AnuncioCardProps) {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
 
   const { data: seller } = useQuery({
     queryKey: ["anuncio_seller", item.vendedor_id],
     queryFn: async () =>
-      (await supabase.from("profiles").select("nome_completo").eq("id", item.vendedor_id).maybeSingle()).data,
-    enabled: !sellerName,
+      (await supabase.from("profiles").select("nome_completo, tipo_perfil").eq("id", item.vendedor_id).maybeSingle()).data,
+    enabled: sellerTipoPerfil === undefined || !sellerName,
     staleTime: 1000 * 60 * 5,
   });
+
+  const isStartup =
+    (sellerTipoPerfil ?? (seller as { tipo_perfil?: string | null } | null | undefined)?.tipo_perfil) === "startup_pme";
+
 
   const { data: catalogo } = useQuery({
     queryKey: ["catalogo_all_active"],
@@ -155,8 +161,13 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
         <AnuncioPhoto path={item.fotos?.[0]} productLabel={item.produto} />
 
         {/* Badges: top-left, stacked, with breathing room. Dark text on light pill = contrast. */}
-        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico") && (
+        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico" || isStartup) && (
           <div className="absolute left-3 top-3 flex max-w-[70%] flex-col items-start gap-1.5">
+            {isStartup && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
+                {t("startups.badge")}
+              </span>
+            )}
             {item.tipo_oferta === "servico" && (
               <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm backdrop-blur">
                 {t("service.serviceBadge")}
@@ -174,6 +185,7 @@ export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardPr
             )}
           </div>
         )}
+
       </div>
 
       {/* Info block — single source of truth for title/product */}

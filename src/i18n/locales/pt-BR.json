@@ -1653,9 +1653,11 @@
   "startups": {
     "title": "Startups & PMEs",
     "subtitle": "Serviços, tecnologia e soluções para o agro.",
-    "empty": "Nenhum serviço encontrado ainda.",
-    "emptyInvite": "Ainda não há serviços publicados. Seja o primeiro — publique o seu!",
-    "publishMine": "Publicar meu serviço",
+    "badge": "Startup",
+    "empty": "Nenhum anúncio encontrado ainda.",
+    "emptyInvite": "Ainda não há anúncios publicados. Seja o primeiro — publique o seu!",
+    "emptyDiscover": "Nenhuma Startup publicou anúncios ainda. Volte em breve.",
+    "publishMine": "Publicar meu anúncio",
     "results": "{{count}} resultados",
     "showingPage": "Página {{page}} de {{pages}}",
     "prev": "Anterior",
@@ -1665,13 +1667,16 @@
     "audienceCta": "Cadastrar minha empresa",
     "mine": {
       "title": "Meus serviços",
+      "titleAll": "Meus anúncios",
       "manage": "Gerenciar em Vender",
-      "emptyInvite": "Você ainda não publicou serviços. Divulgue o que sua empresa oferece."
+      "emptyInvite": "Você ainda não publicou serviços. Divulgue o que sua empresa oferece.",
+      "emptyInviteAll": "Você ainda não publicou anúncios. Divulgue seus produtos ou serviços."
     },
     "discover": {
-      "title": "Descobrir serviços"
+      "title": "Descobrir Startups"
     }
   },
+
   "account": {
     "title": "Minha conta",
     "subtitle": "Sua assinatura e benefícios",

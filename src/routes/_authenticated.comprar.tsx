@@ -59,19 +59,37 @@ function BuyPage() {
   const [sort, setSort] = useState<SortKey>("recent");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const { data: anuncios, isLoading } = useQuery({
-    queryKey: ["buy_anuncios"],
-    queryFn: async () =>
-      (
-        await supabase
-          .from("anuncios")
-          .select("*")
-          .eq("status", "ativo")
-          .is("deleted_at", null)
-          .order("created_at", { ascending: false })
-          .limit(120)
-      ).data ?? [],
+  const { data: startupIds } = useQuery({
+    queryKey: ["startup_pme_seller_ids"],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryFn: async (): Promise<string[]> => {
+      const { data } = await (supabase as any)
+        .from("profiles")
+        .select("id")
+        .eq("tipo_perfil", "startup_pme")
+        .is("deleted_at", null);
+      return (data ?? []).map((r: { id: string }) => r.id);
+    },
+    staleTime: 1000 * 60 * 5,
   });
+
+  const { data: anuncios, isLoading } = useQuery({
+    queryKey: ["buy_anuncios", (startupIds ?? []).join(",")],
+    enabled: startupIds !== undefined,
+    queryFn: async () => {
+      let q = supabase
+        .from("anuncios")
+        .select("*")
+        .eq("status", "ativo")
+        .is("deleted_at", null);
+      const ids = startupIds ?? [];
+      if (ids.length > 0) {
+        q = q.not("vendedor_id", "in", `(${ids.join(",")})`);
+      }
+      return (await q.order("created_at", { ascending: false }).limit(120)).data ?? [];
+    },
+  });
+
 
   const { data: cotacoes } = useQuery({
     queryKey: ["cotacoes_dolar"],
