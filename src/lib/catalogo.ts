@@ -115,3 +115,14 @@ export function catalogoSubtreeIds(nodes: CatalogoNode[], id: string): string[] 
   }
   return acc;
 }
+
+/** Returns the `segmento` of the ROOT ancestor of `itemId` ('agro' | 'industrial' | null). */
+export function catalogoRootSegmento(
+  nodes: CatalogoNode[],
+  itemId: string | null | undefined,
+): CatalogoSegmento | null {
+  const path = catalogoAncestors(nodes, itemId);
+  const root = path[0];
+  return root?.segmento ?? null;
+}
+
