@@ -53,6 +53,7 @@ function PublicHome() {
     { icon: ShoppingCart, key: "buyer", to: "/cadastro" as const, params: undefined, search: { perfil: "comprador" } },
     { icon: Store, key: "shop", to: "/para/$perfil" as const, params: { perfil: "lojista" }, search: undefined },
     { icon: Building2, key: "brand", to: "/para/$perfil" as const, params: { perfil: "marca" }, search: undefined },
+    { icon: Rocket, key: "startup", to: "/cadastro" as const, params: undefined, search: { perfil: "startup" } },
   ] as const;
 
   const features = [
