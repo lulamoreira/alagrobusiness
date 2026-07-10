@@ -1123,7 +1123,18 @@
       "success": "Destacado actualizado.",
       "removed": "Destacado quitado.",
       "invalidDays": "Ingrese un número de días válido.",
-      "error": "Error al actualizar destacado: {{detail}}"
+      "error": "Error al actualizar destacado: {{detail}}",
+      "buyTitle": "Destacar anuncio",
+      "buySubtitle": "Elige un paquete para dar más visibilidad a tu anuncio.",
+      "buyCta": "Destacar anuncio",
+      "buyChoose": "Pagar {{price}}",
+      "buyDays": "{{days}} días",
+      "buyStatusActive": "Destacado hasta {{data}}",
+      "buyLoading": "Cargando paquetes…",
+      "buyError": "No se pudo iniciar el pago.",
+      "buyRedirecting": "Redirigiendo al pago…",
+      "buyEmpty": "No hay paquetes disponibles.",
+      "buyClose": "Cancelar"
     }
   },
   "notifications": {

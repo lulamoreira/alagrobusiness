@@ -161,6 +161,48 @@ Deno.serve(async (req) => {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
+
+        // Highlight purchase (one-time payment) — handle first and short-circuit.
+        if (session.metadata?.tipo === "destaque") {
+          const anuncio_id = session.metadata?.anuncio_id as string | undefined;
+          const usuario_id_d =
+            (session.metadata?.usuario_id as string | undefined) ??
+            (session.client_reference_id as string | undefined);
+          const diasNum = Number(session.metadata?.dias ?? "0");
+          const valor = Number(session.metadata?.valor_centavos ?? "0");
+          if (!anuncio_id || !usuario_id_d || !diasNum) {
+            throw new Error("destaque: metadata incompleto");
+          }
+          const { data: current } = await admin
+            .from("anuncios")
+            .select("destaque_ate")
+            .eq("id", anuncio_id)
+            .maybeSingle();
+          const base =
+            current?.destaque_ate && new Date(current.destaque_ate) > new Date()
+              ? new Date(current.destaque_ate)
+              : new Date();
+          const novoFim = new Date(base.getTime() + diasNum * 24 * 60 * 60 * 1000);
+          const { error: updErr } = await admin
+            .from("anuncios")
+            .update({
+              destaque_ate: novoFim.toISOString(),
+              destaque_origem: "pago",
+              updated_at: new Date().toISOString(),
+            })
+            .eq("id", anuncio_id);
+          if (updErr) throw updErr;
+          await admin.from("destaque_compras").insert({
+            anuncio_id,
+            usuario_id: usuario_id_d,
+            dias: diasNum,
+            valor_centavos: valor,
+            stripe_session_id: session.id,
+          });
+          log("destaque aplicado", anuncio_id, "até", novoFim.toISOString());
+          break;
+        }
+
         const usuario_id =
           (session.metadata?.usuario_id as string | undefined) ??
           (session.client_reference_id as string | undefined);

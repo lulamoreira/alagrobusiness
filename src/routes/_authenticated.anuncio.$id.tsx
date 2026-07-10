@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -11,6 +11,7 @@ import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
 
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
@@ -24,6 +25,7 @@ function DetailPage() {
   const [interestStatus, setInterestStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [chatError, setChatError] = useState<string | null>(null);
   const [openingChat, setOpeningChat] = useState(false);
+  const [destaqueOpen, setDestaqueOpen] = useState(false);
 
   const { data: anuncio, isLoading } = useQuery({
     queryKey: ["anuncio_detail", id],
@@ -338,8 +340,40 @@ function DetailPage() {
               )}
             </div>
           )}
+
+          {isOwner && (
+            <div className="space-y-2 rounded-2xl border border-primary/30 bg-primary/5 p-4">
+              {anuncio.destaque_ate && new Date(anuncio.destaque_ate) > new Date() ? (
+                <p className="inline-flex items-center gap-2 text-xs font-semibold text-primary">
+                  <Sparkles className="h-4 w-4" />
+                  {t("detail.destaque.buyStatusActive", {
+                    data: new Date(anuncio.destaque_ate).toLocaleDateString(i18n.language, {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }),
+                  })}
+                </p>
+              ) : (
+                <p className="text-xs text-muted-foreground">{t("detail.destaque.sem")}</p>
+              )}
+              <PillButton type="button" fullWidth onClick={() => setDestaqueOpen(true)}>
+                <Sparkles className="h-4 w-4" />
+                {t("detail.destaque.buyCta")}
+              </PillButton>
+            </div>
+          )}
         </div>
       </div>
+
+      {isOwner && (
+        <DestaqueBuyDialog
+          open={destaqueOpen}
+          anuncioId={anuncio.id}
+          destaqueAte={anuncio.destaque_ate ?? null}
+          onClose={() => setDestaqueOpen(false)}
+        />
+      )}
 
       {anuncio.descricao && (
         <div className="rounded-2xl border border-border bg-card p-5">

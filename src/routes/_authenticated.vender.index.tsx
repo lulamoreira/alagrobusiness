@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2 } from "lucide-react";
+import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -11,6 +11,7 @@ import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
+import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
@@ -28,6 +29,7 @@ type AnuncioRow = {
   updated_at: string;
   estado: string | null;
   cidade: string | null;
+  destaque_ate: string | null;
 };
 
 function PhotoThumb({ path, productLabel }: { path: string | null | undefined; productLabel: string }) {
@@ -53,6 +55,7 @@ function SellPage() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [soldDialog, setSoldDialog] = useState<AnuncioRow | null>(null);
   const [soldToast, setSoldToast] = useState<string | null>(null);
+  const [destaqueDialog, setDestaqueDialog] = useState<AnuncioRow | null>(null);
 
   const { data: anuncios, isLoading } = useQuery({
     queryKey: ["my_anuncios", user?.id],
@@ -147,10 +150,16 @@ function SellPage() {
               >
                 <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
                       {statusLabel}
                     </span>
+                    {a.destaque_ate && new Date(a.destaque_ate) > new Date() && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                        <Sparkles className="h-2.5 w-2.5" />
+                        {t("detail.destaque.ate", { data: new Date(a.destaque_ate).toLocaleDateString(i18n.language) })}
+                      </span>
+                    )}
                     <span className="text-[10px] text-muted-foreground">
                       {t("sell.updatedAt")} {new Date(a.updated_at).toLocaleDateString(i18n.language)}
                     </span>
@@ -199,6 +208,16 @@ function SellPage() {
                       {t("sell.markSold")}
                     </button>
                   )}
+                  {a.status === "ativo" && (
+                    <button
+                      type="button"
+                      onClick={() => setDestaqueDialog(a)}
+                      className="inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/20"
+                    >
+                      <Sparkles className="h-3 w-3" />
+                      {t("detail.destaque.buyCta")}
+                    </button>
+                  )}
                   <button
                     type="button"
                     disabled={busyId === a.id}
@@ -230,6 +249,14 @@ function SellPage() {
             setSoldToast(t("sell.markSoldDialog.success"));
             window.setTimeout(() => setSoldToast(null), 3000);
           }}
+        />
+      )}
+      {destaqueDialog && (
+        <DestaqueBuyDialog
+          open={!!destaqueDialog}
+          anuncioId={destaqueDialog.id}
+          destaqueAte={destaqueDialog.destaque_ate}
+          onClose={() => setDestaqueDialog(null)}
         />
       )}
     </div>
