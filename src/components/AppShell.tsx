@@ -75,6 +75,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
       { to: "/vender", labelKey: "nav.sell", icon: Store },
+      { to: "/startups", labelKey: "nav.startups", icon: Rocket },
       { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
     ],
   },
