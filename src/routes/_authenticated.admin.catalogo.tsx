@@ -245,7 +245,11 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
   const [parentId, setParentId] = useState<string | null>(
     initial ? initial.parent_id : state.parentId,
   );
+  const [tipo, setTipo] = useState<"produto" | "servico" | "ambos">(
+    (initial?.tipo as "produto" | "servico" | "ambos" | undefined) ?? "produto",
+  );
   const [saving, setSaving] = useState(false);
+  const isRoot = parentId === null;
 
   const parentOptions = useMemo(() => {
     // Prevent selecting itself or its descendants as parent
