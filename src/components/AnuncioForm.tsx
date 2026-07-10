@@ -61,6 +61,7 @@ export interface AnuncioFormInitial {
 interface AnuncioFormProps {
   mode: "create" | "edit";
   initial?: AnuncioFormInitial;
+  defaultTipoOferta?: OfferType;
 }
 
 function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
