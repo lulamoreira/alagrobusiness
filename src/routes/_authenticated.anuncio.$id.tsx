@@ -181,48 +181,82 @@ function DetailPage() {
           </div>
 
           <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <Package className="mt-0.5 h-4 w-4 text-muted-foreground" />
-              <span>
-                <span className="text-muted-foreground">{t("detail.quantity")}: </span>
-                {Number(anuncio.quantidade_disponivel).toLocaleString(i18n.language)}{" "}
-                {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
-              </span>
-            </li>
-            {anuncio.qualidade && (
-              <li className="flex items-start gap-2">
-                <BadgeCheck className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                <span>
-                  <span className="text-muted-foreground">{t("detail.quality")}: </span>
-                  {anuncio.qualidade}
-                </span>
-              </li>
-            )}
-            {harvest && (
-              <li className="flex items-start gap-2">
-                <Calendar className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                <span>
-                  <span className="text-muted-foreground">{t("detail.harvest")}: </span>
-                  {harvest}
-                </span>
-              </li>
-            )}
-            <li className="flex items-start gap-2">
-              <Truck className="mt-0.5 h-4 w-4 text-muted-foreground" />
-              <span>
-                <span className="text-muted-foreground">{t("detail.delivery")}: </span>
-                {t(`delivery.${anuncio.modalidade_entrega}`)}
-                {anuncio.raio_entrega_km ? ` · ${anuncio.raio_entrega_km} km` : ""}
-              </span>
-            </li>
-            {anuncio.aceita_permuta && (
-              <li className="flex items-start gap-2">
-                <Repeat2 className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                <span>
-                  <span className="text-muted-foreground">{t("detail.barter")}: </span>
-                  {anuncio.permuta_descricao ?? t("common.yes")}
-                </span>
-              </li>
+            {anuncio.tipo_oferta === "servico" ? (
+              <>
+                {anuncio.servico_modelo_cobranca && (
+                  <li className="flex items-start gap-2">
+                    <Package className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("service.billingModel")}: </span>
+                      {t(`service.billing.${anuncio.servico_modelo_cobranca}`)}
+                    </span>
+                  </li>
+                )}
+                {anuncio.servico_area_atuacao && (
+                  <li className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("service.area")}: </span>
+                      {anuncio.servico_area_atuacao}
+                    </span>
+                  </li>
+                )}
+                {anuncio.servico_prazo && (
+                  <li className="flex items-start gap-2">
+                    <Calendar className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("service.lead")}: </span>
+                      {anuncio.servico_prazo}
+                    </span>
+                  </li>
+                )}
+              </>
+            ) : (
+              <>
+                <li className="flex items-start gap-2">
+                  <Package className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <span>
+                    <span className="text-muted-foreground">{t("detail.quantity")}: </span>
+                    {Number(anuncio.quantidade_disponivel).toLocaleString(i18n.language)}{" "}
+                    {qtyUnit ? t(`units.${qtyUnit.nome_chave}`) : ""}
+                  </span>
+                </li>
+                {anuncio.qualidade && (
+                  <li className="flex items-start gap-2">
+                    <BadgeCheck className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("detail.quality")}: </span>
+                      {anuncio.qualidade}
+                    </span>
+                  </li>
+                )}
+                {harvest && (
+                  <li className="flex items-start gap-2">
+                    <Calendar className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("detail.harvest")}: </span>
+                      {harvest}
+                    </span>
+                  </li>
+                )}
+                <li className="flex items-start gap-2">
+                  <Truck className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <span>
+                    <span className="text-muted-foreground">{t("detail.delivery")}: </span>
+                    {t(`delivery.${anuncio.modalidade_entrega}`)}
+                    {anuncio.raio_entrega_km ? ` · ${anuncio.raio_entrega_km} km` : ""}
+                  </span>
+                </li>
+                {anuncio.aceita_permuta && (
+                  <li className="flex items-start gap-2">
+                    <Repeat2 className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      <span className="text-muted-foreground">{t("detail.barter")}: </span>
+                      {anuncio.permuta_descricao ?? t("common.yes")}
+                    </span>
+                  </li>
+                )}
+              </>
             )}
             {(anuncio.cidade || anuncio.estado) && (
               <li className="flex items-start gap-2">
