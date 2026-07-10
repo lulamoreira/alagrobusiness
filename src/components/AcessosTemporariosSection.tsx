@@ -331,17 +331,21 @@ export function AcessosTemporariosSection() {
     }
   };
 
-  const buildCredMessage = (login: string, senha: string) =>
+  const loginUrl = () =>
+    typeof window !== "undefined" ? `${window.location.origin}/login` : "/login";
+
+  const buildCredMessage = (login: string, senha: string, dias?: number) =>
     t("demoAccess.waMessage", {
       login,
       senha,
-      url: typeof window !== "undefined" ? window.location.origin : "",
+      url: loginUrl(),
+      dias: dias ?? 0,
     });
 
   const buildLoginOnlyMessage = (login: string) =>
     t("demoAccess.waMessageLoginOnly", {
       login,
-      url: typeof window !== "undefined" ? window.location.origin : "",
+      url: loginUrl(),
     });
 
   const openWhatsapp = (msg: string) => {
@@ -349,8 +353,8 @@ export function AcessosTemporariosSection() {
     if (typeof window !== "undefined") window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const shareWhatsapp = (login: string, senha: string) =>
-    openWhatsapp(buildCredMessage(login, senha));
+  const shareWhatsapp = (login: string, senha: string, dias?: number) =>
+    openWhatsapp(buildCredMessage(login, senha, dias));
 
   const shareWhatsappLoginOnly = (login: string) =>
     openWhatsapp(buildLoginOnlyMessage(login));
