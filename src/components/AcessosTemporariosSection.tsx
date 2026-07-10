@@ -808,7 +808,7 @@ export function AcessosTemporariosSection() {
                 <Button
                   type="button"
                   className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
-                  onClick={() => shareWhatsapp(criado.login, criado.senha)}
+                  onClick={() => shareWhatsapp(criado.login, criado.senha, criado.dias)}
                 >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   {t("demoAccess.sendWhatsapp")}
