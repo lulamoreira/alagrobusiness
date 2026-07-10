@@ -285,7 +285,8 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
       p_ordem: Number(ordem) || 0,
       p_ativo: ativo,
       p_icone: icone.trim() || (null as unknown as string),
-    });
+      p_tipo: tipo,
+    } as never);
 
     setSaving(false);
     if (error) {
