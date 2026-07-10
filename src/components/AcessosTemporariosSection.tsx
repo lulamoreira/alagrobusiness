@@ -99,7 +99,7 @@ export function AcessosTemporariosSection() {
   const [demoPlano, setDemoPlano] = useState("pro");
   const [demoDias, setDemoDias] = useState("2");
   const [busyDemo, setBusyDemo] = useState(false);
-  const [criado, setCriado] = useState<{ login: string; senha: string; email: string } | null>(null);
+  const [criado, setCriado] = useState<{ login: string; senha: string; email: string; dias: number } | null>(null);
 
   // Edit dialog
   const [editing, setEditing] = useState<Row | null>(null);
