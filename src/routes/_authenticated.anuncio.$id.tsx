@@ -340,8 +340,40 @@ function DetailPage() {
               )}
             </div>
           )}
+
+          {isOwner && (
+            <div className="space-y-2 rounded-2xl border border-primary/30 bg-primary/5 p-4">
+              {anuncio.destaque_ate && new Date(anuncio.destaque_ate) > new Date() ? (
+                <p className="inline-flex items-center gap-2 text-xs font-semibold text-primary">
+                  <Sparkles className="h-4 w-4" />
+                  {t("detail.destaque.buyStatusActive", {
+                    data: new Date(anuncio.destaque_ate).toLocaleDateString(i18n.language, {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }),
+                  })}
+                </p>
+              ) : (
+                <p className="text-xs text-muted-foreground">{t("detail.destaque.sem")}</p>
+              )}
+              <PillButton type="button" fullWidth onClick={() => setDestaqueOpen(true)}>
+                <Sparkles className="h-4 w-4" />
+                {t("detail.destaque.buyCta")}
+              </PillButton>
+            </div>
+          )}
         </div>
       </div>
+
+      {isOwner && (
+        <DestaqueBuyDialog
+          open={destaqueOpen}
+          anuncioId={anuncio.id}
+          destaqueAte={anuncio.destaque_ate ?? null}
+          onClose={() => setDestaqueOpen(false)}
+        />
+      )}
 
       {anuncio.descricao && (
         <div className="rounded-2xl border border-border bg-card p-5">
