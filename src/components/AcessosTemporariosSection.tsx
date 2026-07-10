@@ -511,8 +511,8 @@ export function AcessosTemporariosSection() {
                         <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                           {t("demoAccess.loginLabel")}
                         </Label>
-                        <div className="flex items-center gap-2">
-                          <code className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
+                        <div className="flex items-start gap-2">
+                          <code className="min-w-0 flex-1 break-all rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
                             {r.login}
                           </code>
                           <Button
@@ -532,9 +532,9 @@ export function AcessosTemporariosSection() {
                           <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                             {t("demoAccess.emailLabel")}
                           </Label>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-start gap-2">
                             <code
-                              className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-xs"
+                              className="min-w-0 flex-1 break-all rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-xs"
                               title={r.email}
                             >
                               {r.email}
@@ -552,6 +552,32 @@ export function AcessosTemporariosSection() {
                           </div>
                         </div>
                       )}
+                      {/* Login-only share — sempre disponível */}
+                      <div className="flex flex-col gap-2 border-t border-border/30 pt-2">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => copy(buildLoginOnlyMessage(r.login!))}
+                        >
+                          <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.copyLoginLink")}
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="w-full border-[#25D366]/50 text-[#25D366] hover:bg-[#25D366]/10 hover:text-[#25D366]"
+                          onClick={() => shareWhatsappLoginOnly(r.login!)}
+                        >
+                          <MessageCircle className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.sendLoginWhatsapp")}
+                        </Button>
+                        <p className="text-[11px] leading-snug text-muted-foreground">
+                          {t("demoAccess.loginOnlyNote")}
+                        </p>
+                      </div>
                       <div className="space-y-1.5">
                         <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground" htmlFor={`pwd-${r.convite_id}`}>
                           {t("demoAccess.password")}
