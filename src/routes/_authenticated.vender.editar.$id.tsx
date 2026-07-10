@@ -44,6 +44,10 @@ function EditPage() {
     cidade: data.cidade,
     cep: data.cep,
     fotos: data.fotos ?? [],
+    tipo_oferta: (data.tipo_oferta ?? "produto") as "produto" | "servico",
+    servico_modelo_cobranca: (data.servico_modelo_cobranca ?? null) as "hora" | "projeto" | "mensal" | null,
+    servico_area_atuacao: data.servico_area_atuacao ?? null,
+    servico_prazo: data.servico_prazo ?? null,
   };
   return <AnuncioForm mode="edit" initial={initial} />;
 }
