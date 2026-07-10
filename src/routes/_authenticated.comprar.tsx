@@ -47,7 +47,6 @@ function Chip({
 function BuyPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string | null>(null);
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
 
