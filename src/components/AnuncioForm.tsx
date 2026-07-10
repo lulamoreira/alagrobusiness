@@ -120,7 +120,7 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta }: AnuncioFormPro
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? "produto");
+  const [tipoOferta, setTipoOferta] = useState<OfferType>(initial?.tipo_oferta ?? defaultTipoOferta ?? "produto");
   const [servicoModelo, setServicoModelo] = useState<ServiceBilling>(
     (initial?.servico_modelo_cobranca as ServiceBilling) ?? "projeto",
   );
