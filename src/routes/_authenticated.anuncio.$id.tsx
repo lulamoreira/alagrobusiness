@@ -166,7 +166,9 @@ function DetailPage() {
             <p className="text-xs font-semibold uppercase tracking-wide text-primary">
               {anuncio.catalogo_item_id && catalogo
                 ? catalogoPathLabel(catalogo, anuncio.catalogo_item_id, i18n.language)
-                : t(`categories.${anuncio.categoria}`)}
+                : anuncio.categoria
+                  ? t(`categories.${anuncio.categoria}`)
+                  : ""}
             </p>
             <h1 className="font-display text-2xl font-bold md:text-3xl">{anuncio.produto}</h1>
             <p className="text-sm text-muted-foreground">{anuncio.titulo}</p>

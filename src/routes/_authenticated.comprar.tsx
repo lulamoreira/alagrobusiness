@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
 
-const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
+
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
 
@@ -47,7 +47,6 @@ function Chip({
 function BuyPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string | null>(null);
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
 
@@ -117,7 +116,7 @@ function BuyPage() {
           a.produto.toLowerCase().includes(q),
       );
     }
-    if (category) list = list.filter((a) => (a as unknown as { categoria: string }).categoria === category);
+    
     if (catalogoFilter && catalogoNodes) {
       const allowed = new Set(catalogoSubtreeIds(catalogoNodes, catalogoFilter));
       list = list.filter((a) => {
@@ -137,10 +136,9 @@ function BuyPage() {
     if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
     else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
     return list;
-  }, [anuncios, search, category, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
+  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
 
   const clearFilters = () => {
-    setCategory(null);
     setCatalogoFilter(null);
 
     setState("");
@@ -208,24 +206,13 @@ function BuyPage() {
             </button>
           </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("buy.filterCategory")}</label>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={category === null} onClick={() => setCategory(null)}>{t("common.all")}</Chip>
-              {CATEGORIES.map((c) => (
-                <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
-                  {t(`categories.${c}`)}
-                </Chip>
-              ))}
-            </div>
-          </div>
-
           <CatalogoCascade
-            label={t("buy.filterCatalogo")}
+            label={t("buy.filterCategory")}
             value={catalogoFilter}
             onChange={setCatalogoFilter}
             allowClear
           />
+
 
 
           <div className="grid gap-3 md:grid-cols-3">

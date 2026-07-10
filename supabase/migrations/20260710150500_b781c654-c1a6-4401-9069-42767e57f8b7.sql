@@ -1,0 +1,1 @@
+ALTER TABLE public.anuncios ALTER COLUMN categoria DROP NOT NULL;

@@ -129,7 +129,7 @@ export type Database = {
         Row: {
           aceita_permuta: boolean
           catalogo_item_id: string | null
-          categoria: Database["public"]["Enums"]["categoria_agro"]
+          categoria: Database["public"]["Enums"]["categoria_agro"] | null
           cep: string | null
           certificacoes: string[]
           cidade: string | null
@@ -164,7 +164,7 @@ export type Database = {
         Insert: {
           aceita_permuta?: boolean
           catalogo_item_id?: string | null
-          categoria: Database["public"]["Enums"]["categoria_agro"]
+          categoria?: Database["public"]["Enums"]["categoria_agro"] | null
           cep?: string | null
           certificacoes?: string[]
           cidade?: string | null
@@ -199,7 +199,7 @@ export type Database = {
         Update: {
           aceita_permuta?: boolean
           catalogo_item_id?: string | null
-          categoria?: Database["public"]["Enums"]["categoria_agro"]
+          categoria?: Database["public"]["Enums"]["categoria_agro"] | null
           cep?: string | null
           certificacoes?: string[]
           cidade?: string | null

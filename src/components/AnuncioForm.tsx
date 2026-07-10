@@ -14,14 +14,13 @@ import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 
 
-const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
+
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CURRENCIES = ["BRL", "USD", "EUR"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
 const OFFER_TYPES = ["produto", "servico"] as const;
 const SERVICE_BILLING = ["hora", "projeto", "mensal"] as const;
 
-type Category = (typeof CATEGORIES)[number];
 type DeliveryMode = (typeof DELIVERY_MODES)[number];
 type Currency = (typeof CURRENCIES)[number];
 type OfferType = (typeof OFFER_TYPES)[number];
@@ -31,7 +30,7 @@ export interface AnuncioFormInitial {
   id: string;
   titulo: string;
   descricao: string | null;
-  categoria: Category;
+  categoria: "fruta" | "grao" | "legumes" | "vegetal" | null;
   catalogo_item_id: string | null;
   produto: string;
   qualidade: string | null;
@@ -92,7 +91,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
-  const [categoria, setCategoria] = useState<Category>(initial?.categoria ?? "grao");
+  // Legacy `categoria` (enum) preserved as-is on edit; new anuncios leave it null.
+  const legacyCategoria = initial?.categoria ?? null;
   const [catalogoItemId, setCatalogoItemId] = useState<string | null>(initial?.catalogo_item_id ?? null);
 
   const [produto, setProduto] = useState(initial?.produto ?? "");
@@ -207,7 +207,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         vendedor_id: user.id,
         titulo: titulo.trim(),
         descricao: descricao.trim() || null,
-        categoria,
+        categoria: legacyCategoria,
         catalogo_item_id: catalogoItemId,
         tipo_oferta: tipoOferta,
 
@@ -303,41 +303,29 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
       <div className="rounded-2xl border border-border bg-card/40 p-4">
         <CatalogoCascade
-          label={t("form.catalogoCategory")}
+          label={t("form.category")}
           value={catalogoItemId}
           onChange={setCatalogoItemId}
         />
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.category")}</label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((c) => (
-              <Pill key={c} active={categoria === c} onClick={() => setCategoria(c)}>
-                {t(`categories.${c}`)}
-              </Pill>
-            ))}
-          </div>
+      {!isServico && (
+        <div className="grid gap-4 md:grid-cols-2">
+          <DarkInput
+            label={t("form.quality")}
+            value={qualidade}
+            onChange={(e) => setQualidade(e.target.value)}
+            placeholder={t("form.qualityPh")}
+          />
+          <DarkInput
+            type="date"
+            label={t("form.harvestDate")}
+            value={dataColheita}
+            onChange={(e) => setDataColheita(e.target.value)}
+          />
         </div>
-        {!isServico && (
-          <>
-            <DarkInput
-              label={t("form.quality")}
-              value={qualidade}
-              onChange={(e) => setQualidade(e.target.value)}
-              placeholder={t("form.qualityPh")}
-            />
-            <DarkInput
-              type="date"
-              label={t("form.harvestDate")}
-              value={dataColheita}
-              onChange={(e) => setDataColheita(e.target.value)}
-            />
-          </>
-        )}
-      </div>
+      )}
 
 
 
