@@ -1649,13 +1649,23 @@
     "title": "Startups y PyMEs",
     "subtitle": "Servicios, tecnología y soluciones para el agro.",
     "empty": "Aún no hay servicios.",
+    "emptyInvite": "Aún no hay servicios publicados. Sé el primero — ¡publica el tuyo!",
+    "publishMine": "Publicar mi servicio",
     "results": "{{count}} resultados",
     "showingPage": "Página {{page}} de {{pages}}",
     "prev": "Anterior",
     "next": "Siguiente",
     "audienceTitle": "Startups y PyMEs",
     "audienceDesc": "Ofrece servicios, software y soluciones para el agronegocio.",
-    "audienceCta": "Registrar mi empresa"
+    "audienceCta": "Registrar mi empresa",
+    "mine": {
+      "title": "Mis servicios",
+      "manage": "Gestionar en Vender",
+      "emptyInvite": "Aún no publicaste servicios. Comparte lo que ofrece tu empresa."
+    },
+    "discover": {
+      "title": "Descubrir servicios"
+    }
   },
   "account": {
     "title": "Mi cuenta",
