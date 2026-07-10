@@ -250,8 +250,13 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
   const [tipo, setTipo] = useState<"produto" | "servico" | "ambos">(
     (initial?.tipo as "produto" | "servico" | "ambos" | undefined) ?? "produto",
   );
+  const [segmento, setSegmento] = useState<"agro" | "industrial">(
+    (initial?.segmento as "agro" | "industrial" | null | undefined) ?? "agro",
+  );
   const [saving, setSaving] = useState(false);
   const isRoot = parentId === null;
+  const showSegmento = isRoot && tipo === "produto";
+
 
   const parentOptions = useMemo(() => {
     // Prevent selecting itself or its descendants as parent
