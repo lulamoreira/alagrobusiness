@@ -321,6 +321,8 @@
     "noResults": "No se encontraron anuncios.",
     "acceptsBarterBadge": "Permuta",
     "certifiedBadge": "Certificado",
+    "featuredBadge": "Destacado",
+    "featuredTitle": "Destacados",
     "results_one": "{{count}} resultado",
     "noPhoto": "Sin foto",
     "results_other": "{{count}} resultados"
