@@ -1509,11 +1509,11 @@
   },
   "adminCatalogo": {
     "navLabel": "Catálogo",
-    "title": "Catálogo de categorías",
+    "title": "Catálogo de Categorías",
     "subtitle": "Administra el árbol de categorías, subcategorías e ítems usados en los anuncios.",
     "newRoot": "Nueva categoría (raíz)",
     "addChild": "Agregar subcategoría",
-    "empty": "Aún no hay categorías.",
+    "empty": "No hay sugerencias pendientes.",
     "inactive": "inactiva",
     "confirmDelete": "¿Eliminar \"{{name}}\" y todo lo que contiene?",
     "deleted": "Categoría eliminada.",
@@ -1535,7 +1535,17 @@
     "tipo": "Tipo (solo para categorías raíz)",
     "tipo_produto": "Producto",
     "tipo_servico": "Servicio",
-    "tipo_ambos": "Ambos"
+    "tipo_ambos": "Ambos",
+    "tab": "Pendientes",
+    "suggestedBy": "Sugerido por",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "approved": "Categoría aprobada.",
+    "rejected": "Sugerencia rechazada.",
+    "errorAction": "No se pudo completar la acción.",
+    "underRoot": "en",
+    "topLevel": "Categoría raíz",
+    "pendingTitle": "Sugerencias pendientes"
   },
   "tempAccess": {
     "title": "Accesos temporales (cuenta desde el 1.º acceso)",
@@ -1670,5 +1680,25 @@
     "months": "{{n}} meses",
     "years": "{{n}} años",
     "days": "{{n}} días"
+  },
+  "catalogoSuggest": {
+    "button": "¿No lo encuentras? Sugerir nueva categoría",
+    "title": "Sugerir nueva categoría",
+    "hint": "La sugerencia será evaluada por un administrador. Mientras tanto, publica usando la categoría \"Otros\".",
+    "namePt": "Nombre (portugués) *",
+    "nameEn": "Nombre (inglés)",
+    "nameEs": "Nombre (español)",
+    "parent": "Categoría padre (opcional — dejar vacío para sugerir una categoría raíz)",
+    "parentRoot": "— Categoría raíz —",
+    "submit": "Enviar sugerencia",
+    "sent": "Enviada para revisión. Mientras tanto, publica usando la categoría \"Otros\".",
+    "errorNamePt": "Ingresa el nombre en portugués.",
+    "errorSubmit": "No se pudo enviar la sugerencia."
+  },
+  "catApproved": {
+    "title": "Categoría aprobada 🎉",
+    "body": "La categoría \"{{name}}\" que sugeriste fue aprobada. Ya puedes editar tu anuncio para usarla.",
+    "close": "Cerrar",
+    "goToSell": "Ir a mis anuncios"
   }
 }

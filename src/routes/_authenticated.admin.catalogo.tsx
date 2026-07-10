@@ -116,6 +116,8 @@ function AdminCatalogoPage() {
         </div>
       )}
 
+      <PendingSuggestions onChanged={onSaved} />
+
       {editor.open && (
         <EditorModal
           state={editor}
@@ -408,3 +410,101 @@ function EditorModal({ state, nodes, onClose, onSaved }: EditorModalProps) {
     </div>
   );
 }
+
+interface PendingRow {
+  id: string;
+  nome: Record<string, string>;
+  tipo: string;
+  parent_id: string | null;
+  parent_nome: Record<string, string> | null;
+  sugerido_por: string | null;
+  sugerido_por_nome: string | null;
+  sugerido_por_email: string | null;
+  sugerido_em: string | null;
+}
+
+function PendingSuggestions({ onChanged }: { onChanged: () => void | Promise<void> }) {
+  const { t, i18n } = useTranslation();
+  const qc = useQueryClient();
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["catalogo_pendentes"],
+    queryFn: async (): Promise<PendingRow[]> => {
+      const { data, error } = await supabase.rpc("admin_list_categorias_pendentes" as never);
+      if (error) throw error;
+      return (data ?? []) as PendingRow[];
+    },
+  });
+
+  const act = async (id: string, action: "aprovar" | "rejeitar") => {
+    const rpc = action === "aprovar" ? "admin_categoria_aprovar" : "admin_categoria_rejeitar";
+    const { error } = await supabase.rpc(rpc as never, { p_id: id } as never);
+    if (error) {
+      toast.error(t("adminCatalogo.errorAction"));
+      return;
+    }
+    toast.success(
+      action === "aprovar" ? t("adminCatalogo.approved") : t("adminCatalogo.rejected"),
+    );
+    await refetch();
+    await qc.invalidateQueries({ queryKey: ["catalogo_admin_all"] });
+    await qc.invalidateQueries({ queryKey: ["catalogo_all_active"] });
+    await onChanged();
+  };
+
+  return (
+    <section className="space-y-3">
+      <div className="rounded-2xl border border-border bg-card/40 p-3">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-semibold text-foreground">{t("adminCatalogo.pendingTitle")}</p>
+          <span className="rounded-full border border-border bg-card px-2 py-0.5 text-xs text-muted-foreground">
+            {t("adminCatalogo.tab")}
+          </span>
+        </div>
+
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
+        ) : !data || data.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{t("adminCatalogo.empty")}</p>
+        ) : (
+          <ul className="divide-y divide-border">
+            {data.map((row) => (
+              <li key={row.id} className="flex flex-wrap items-center gap-3 py-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-foreground">
+                    {catalogoName(row.nome, i18n.language)}
+                  </p>
+                  <p className="truncate text-[11px] text-muted-foreground">
+                    {row.parent_nome
+                      ? `${t("adminCatalogo.underRoot")} ${catalogoName(row.parent_nome, i18n.language)}`
+                      : t("adminCatalogo.topLevel")}
+                    {" · "}
+                    {row.tipo}
+                    {" · "}
+                    {t("adminCatalogo.suggestedBy")}: {row.sugerido_por_nome || row.sugerido_por_email || "—"}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => act(row.id, "aprovar")}
+                    className="rounded-full border border-primary bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
+                  >
+                    {t("adminCatalogo.approve")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => act(row.id, "rejeitar")}
+                    className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-destructive"
+                  >
+                    {t("adminCatalogo.reject")}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+}
+
