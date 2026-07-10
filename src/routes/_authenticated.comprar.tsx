@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
 
-const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
+
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
 
