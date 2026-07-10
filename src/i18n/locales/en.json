@@ -1638,5 +1638,33 @@
     "audienceTitle": "Startups & SMBs",
     "audienceDesc": "Offer services, software and solutions for agribusiness.",
     "audienceCta": "Register my company"
+  },
+  "account": {
+    "title": "My account",
+    "subtitle": "Your subscription and benefits",
+    "currentPlan": "Current plan",
+    "statusFree": "Free",
+    "statusTrial": "Trial",
+    "statusActive": "Pro active",
+    "statusExpired": "Expired",
+    "planFree": "Free plan",
+    "memberSince": "Member since {{date}}",
+    "memberSinceRelative": "{{value}} ago",
+    "renewal": "Renewal",
+    "validity": "Validity",
+    "trialUntil": "Trial until {{date}}",
+    "daysLeft": "{{n}} days left",
+    "expiresOn": "Expires on {{date}}",
+    "autoRenew": "Auto-renew",
+    "manage": "Manage subscription",
+    "manageDesc": "Opens the secure portal to update card, download invoices or cancel.",
+    "upgrade": "Subscribe",
+    "clubCardTitle": "Perks Club",
+    "clubCardActive": "Exclusive partner discounts and benefits.",
+    "clubCardLocked": "Exclusive for subscribers. Subscribe and start saving.",
+    "clubOpen": "See perks",
+    "months": "{{n}} months",
+    "years": "{{n}} years",
+    "days": "{{n}} days"
   }
 }
