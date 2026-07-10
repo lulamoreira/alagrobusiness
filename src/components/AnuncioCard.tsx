@@ -107,17 +107,21 @@ export function AnuncioPhoto({
   );
 }
 
-export function AnuncioCard({ item, units, cotacoes, sellerName }: AnuncioCardProps) {
+export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil }: AnuncioCardProps) {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
 
   const { data: seller } = useQuery({
     queryKey: ["anuncio_seller", item.vendedor_id],
     queryFn: async () =>
-      (await supabase.from("profiles").select("nome_completo").eq("id", item.vendedor_id).maybeSingle()).data,
-    enabled: !sellerName,
+      (await supabase.from("profiles").select("nome_completo, tipo_perfil").eq("id", item.vendedor_id).maybeSingle()).data,
+    enabled: sellerTipoPerfil === undefined || !sellerName,
     staleTime: 1000 * 60 * 5,
   });
+
+  const isStartup =
+    (sellerTipoPerfil ?? (seller as { tipo_perfil?: string | null } | null | undefined)?.tipo_perfil) === "startup_pme";
+
 
   const { data: catalogo } = useQuery({
     queryKey: ["catalogo_all_active"],
