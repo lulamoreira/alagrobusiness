@@ -14,7 +14,7 @@ import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 
 
-const CATEGORIES = ["fruta", "grao", "legumes", "vegetal"] as const;
+
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
 const CURRENCIES = ["BRL", "USD", "EUR"] as const;
 const CERTIFICATIONS = ["organico", "globalgap", "livre_agrotoxico", "rainforest"] as const;
