@@ -24,6 +24,8 @@ function StartupsPage() {
   const [page, setPage] = useState(0);
 
   const isStartup = profile?.tipo_perfil === "startup_pme";
+  const isAdmin = profile?.tipo_perfil === "admin";
+  const podePublicar = isStartup || isAdmin;
 
   // Startup/PME seller ids
   const { data: startupIds } = useQuery({
@@ -45,39 +47,49 @@ function StartupsPage() {
     enabled: startupIds !== undefined,
     queryFn: async () => {
       const ids = startupIds ?? [];
-      if (ids.length === 0) return { rows: [] as AnuncioCardData[], count: 0 };
       const from = page * PAGE_SIZE;
       const to = from + PAGE_SIZE - 1;
+      // Belongs to Startups module: seller is startup_pme OR em_startups=true
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const q = (supabase as any)
+      let q = (supabase as any)
         .from("anuncios")
         .select("*", { count: "exact" })
         .eq("status", "ativo")
-        .is("deleted_at", null)
-        .in("vendedor_id", ids)
+        .is("deleted_at", null);
+      if (ids.length > 0) {
+        q = q.or(`vendedor_id.in.(${ids.join(",")}),em_startups.eq.true`);
+      } else {
+        q = q.eq("em_startups", true);
+      }
+      const { data: rows, count } = await q
         .order("created_at", { ascending: false })
         .order("id", { ascending: false })
         .range(from, to);
-      const { data: rows, count } = await q;
       return { rows: (rows ?? []) as AnuncioCardData[], count: count ?? 0 };
     },
   });
 
   const { data: myAds } = useQuery({
     queryKey: ["startups_my_ads", user?.id],
-    enabled: !!user?.id && isStartup,
+    enabled: !!user?.id && podePublicar,
     queryFn: async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: rows } = await (supabase as any)
+      let q = (supabase as any)
         .from("anuncios")
         .select("*")
         .eq("vendedor_id", user!.id)
-        .is("deleted_at", null)
+        .is("deleted_at", null);
+      // For admins, only surface ads they published through the Startups channel.
+      if (isAdmin && !isStartup) {
+        q = q.eq("em_startups", true);
+      }
+      const { data: rows } = await q
         .order("created_at", { ascending: false })
         .order("id", { ascending: false });
       return (rows ?? []) as AnuncioCardData[];
     },
   });
+
 
   const { data: catalogoNodes } = useQuery({
     queryKey: ["catalogo_all_active"],
