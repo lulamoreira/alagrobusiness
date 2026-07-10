@@ -99,7 +99,7 @@ export function AcessosTemporariosSection() {
   const [demoPlano, setDemoPlano] = useState("pro");
   const [demoDias, setDemoDias] = useState("2");
   const [busyDemo, setBusyDemo] = useState(false);
-  const [criado, setCriado] = useState<{ login: string; senha: string; email: string } | null>(null);
+  const [criado, setCriado] = useState<{ login: string; senha: string; email: string; dias: number } | null>(null);
 
   // Edit dialog
   const [editing, setEditing] = useState<Row | null>(null);
@@ -223,7 +223,7 @@ export function AcessosTemporariosSection() {
     const loginCriado = demoLogin.trim().toLowerCase();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const emailCriado = ((data as any)?.email as string | undefined) ?? `${loginCriado}@demo.agro`;
-    setCriado({ login: loginCriado, senha: demoSenha, email: emailCriado });
+    setCriado({ login: loginCriado, senha: demoSenha, email: emailCriado, dias: Math.round(n) });
     savePwd(loginCriado, demoSenha);
     setDemoLogin(""); setDemoSenha(""); setDemoLabel("");
     toast.success(t("demoAccess.created"));
@@ -331,17 +331,21 @@ export function AcessosTemporariosSection() {
     }
   };
 
-  const buildCredMessage = (login: string, senha: string) =>
+  const loginUrl = () =>
+    typeof window !== "undefined" ? `${window.location.origin}/login` : "/login";
+
+  const buildCredMessage = (login: string, senha: string, dias?: number) =>
     t("demoAccess.waMessage", {
       login,
       senha,
-      url: typeof window !== "undefined" ? window.location.origin : "",
+      url: loginUrl(),
+      dias: dias ?? 0,
     });
 
   const buildLoginOnlyMessage = (login: string) =>
     t("demoAccess.waMessageLoginOnly", {
       login,
-      url: typeof window !== "undefined" ? window.location.origin : "",
+      url: loginUrl(),
     });
 
   const openWhatsapp = (msg: string) => {
@@ -349,8 +353,8 @@ export function AcessosTemporariosSection() {
     if (typeof window !== "undefined") window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const shareWhatsapp = (login: string, senha: string) =>
-    openWhatsapp(buildCredMessage(login, senha));
+  const shareWhatsapp = (login: string, senha: string, dias?: number) =>
+    openWhatsapp(buildCredMessage(login, senha, dias));
 
   const shareWhatsappLoginOnly = (login: string) =>
     openWhatsapp(buildLoginOnlyMessage(login));
@@ -507,8 +511,8 @@ export function AcessosTemporariosSection() {
                         <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                           {t("demoAccess.loginLabel")}
                         </Label>
-                        <div className="flex items-center gap-2">
-                          <code className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
+                        <div className="flex items-start gap-2">
+                          <code className="min-w-0 flex-1 break-all rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-sm">
                             {r.login}
                           </code>
                           <Button
@@ -528,9 +532,9 @@ export function AcessosTemporariosSection() {
                           <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                             {t("demoAccess.emailLabel")}
                           </Label>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-start gap-2">
                             <code
-                              className="min-w-0 flex-1 truncate rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-xs"
+                              className="min-w-0 flex-1 break-all rounded-md border border-border/40 bg-background/60 px-2 py-1.5 font-mono text-xs"
                               title={r.email}
                             >
                               {r.email}
@@ -548,6 +552,32 @@ export function AcessosTemporariosSection() {
                           </div>
                         </div>
                       )}
+                      {/* Login-only share — sempre disponível */}
+                      <div className="flex flex-col gap-2 border-t border-border/30 pt-2">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => copy(buildLoginOnlyMessage(r.login!))}
+                        >
+                          <ClipboardCopy className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.copyLoginLink")}
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="w-full border-[#25D366]/50 text-[#25D366] hover:bg-[#25D366]/10 hover:text-[#25D366]"
+                          onClick={() => shareWhatsappLoginOnly(r.login!)}
+                        >
+                          <MessageCircle className="mr-2 h-3.5 w-3.5" />
+                          {t("demoAccess.sendLoginWhatsapp")}
+                        </Button>
+                        <p className="text-[11px] leading-snug text-muted-foreground">
+                          {t("demoAccess.loginOnlyNote")}
+                        </p>
+                      </div>
                       <div className="space-y-1.5">
                         <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground" htmlFor={`pwd-${r.convite_id}`}>
                           {t("demoAccess.password")}
@@ -770,7 +800,7 @@ export function AcessosTemporariosSection() {
                   type="button"
                   variant="outline"
                   className="flex-1"
-                  onClick={() => copy(buildCredMessage(criado.login, criado.senha))}
+                  onClick={() => copy(buildCredMessage(criado.login, criado.senha, criado.dias))}
                 >
                   <ClipboardCopy className="mr-2 h-4 w-4" />
                   {t("demoAccess.copyAll")}
@@ -778,7 +808,7 @@ export function AcessosTemporariosSection() {
                 <Button
                   type="button"
                   className="flex-1 bg-[#25D366] text-white hover:bg-[#1EBE5B]"
-                  onClick={() => shareWhatsapp(criado.login, criado.senha)}
+                  onClick={() => shareWhatsapp(criado.login, criado.senha, criado.dias)}
                 >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   {t("demoAccess.sendWhatsapp")}

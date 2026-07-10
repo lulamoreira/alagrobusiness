@@ -1597,10 +1597,12 @@
     "copyPassword": "Copiar senha",
     "copyAll": "Copiar login e senha",
     "sendWhatsapp": "Enviar por WhatsApp",
-    "waMessage": "Olá! 🌱\n\nSeus dados de acesso à plataforma AGROBUSINESS estão prontos:\n\n🔑 Login: {{login}}\n🔒 Senha: {{senha}}\n🌐 Acesse: {{url}}\n\nPor segurança, altere sua senha no primeiro acesso. Bom uso!",
+    "waMessage": "AGROBUSINESS — Acesso de demonstração\n\n🔑 Login: {{login}}\n🔒 Senha: {{senha}}\n🌐 Acesse: {{url}}\n\nSeu acesso é válido por {{dias}} dias a partir do primeiro login.",
     "copyLoginLink": "Copiar login e link",
+    "sendLoginWhatsapp": "Enviar login pelo WhatsApp",
+    "loginOnlyNote": "Envio só com o login (sem senha). Para enviar a senha, redefina em \"Editar\" ou copie no momento da criação da conta.",
     "sharePwdPlaceholder": "Digite a senha para enviar",
     "sharePwdNote": "A senha não fica guardada. Digite-a aqui para incluir no envio, ou use \"Editar\" para redefinir.",
-    "waMessageLoginOnly": "Olá! 🌱\n\nSeu login de acesso à plataforma AGROBUSINESS:\n\n🔑 Login: {{login}}\n🌐 Acesse: {{url}}\n\nSe precisar da senha, avise que envio em seguida."
+    "waMessageLoginOnly": "AGROBUSINESS — Acesso de demonstração\n\n🔑 Login: {{login}}\n🌐 Acesse: {{url}}\n\nA senha será enviada em seguida."
   }
 }
