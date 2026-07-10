@@ -96,7 +96,7 @@ function AdminModeracaoPage() {
       let q = supabase
         .from("anuncios")
         .select(
-          "id, titulo, produto, categoria, status, preco, moeda, descricao, fotos, created_at, vendedor_id, vendedor:profiles!anuncios_vendedor_id_fkey(nome_completo, email)",
+          "id, titulo, produto, categoria, status, preco, moeda, descricao, fotos, created_at, vendedor_id, destaque_ate, destaque_origem, vendedor:profiles!anuncios_vendedor_id_fkey(nome_completo, email)",
         )
         .is("deleted_at", null)
         .order("created_at", { ascending: false })
