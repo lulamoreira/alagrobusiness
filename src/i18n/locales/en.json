@@ -1603,5 +1603,35 @@
     "sharePwdPlaceholder": "Type the password to send",
     "sharePwdNote": "The password is not stored. Type it here to include it in the message, or use \"Edit\" to reset it.",
     "waMessageLoginOnly": "AGROBUSINESS — Demo access\n\n🔑 Login: {{login}}\n🌐 Sign in: {{url}}\n\nThe password will be sent next."
+  },
+  "offer": {
+    "type": "Offer type",
+    "produto": "Product",
+    "servico": "Service"
+  },
+  "service": {
+    "billingModel": "Billing model",
+    "billing": {
+      "hora": "Hourly",
+      "projeto": "Per project",
+      "mensal": "Monthly"
+    },
+    "area": "Service area",
+    "areaPh": "e.g. Southeast Brazil, LATAM…",
+    "lead": "Lead time",
+    "leadPh": "e.g. 15 business days, delivery in 1 month…",
+    "serviceBadge": "Service"
+  },
+  "startups": {
+    "title": "Startups & SMBs",
+    "subtitle": "Services, tech and solutions for agribusiness.",
+    "empty": "No services found yet.",
+    "results": "{{count}} results",
+    "showingPage": "Page {{page}} of {{pages}}",
+    "prev": "Previous",
+    "next": "Next",
+    "audienceTitle": "Startups & SMBs",
+    "audienceDesc": "Offer services, software and solutions for agribusiness.",
+    "audienceCta": "Register my company"
   }
 }
