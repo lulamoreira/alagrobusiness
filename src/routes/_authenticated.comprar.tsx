@@ -136,10 +136,9 @@ function BuyPage() {
     if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
     else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
     return list;
-  }, [anuncios, search, category, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
+  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
 
   const clearFilters = () => {
-    setCategory(null);
     setCatalogoFilter(null);
 
     setState("");
