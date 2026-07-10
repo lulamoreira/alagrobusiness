@@ -1536,6 +1536,10 @@
     "tipo_produto": "Produto",
     "tipo_servico": "Serviço",
     "tipo_ambos": "Ambos",
+    "segmento": "Segmento (apenas produtos de topo)",
+    "segmento_agro": "Agro",
+    "segmento_industrial": "Industrial",
+
     "tab": "Pendentes",
     "suggestedBy": "Sugerido por",
     "approve": "Aprovar",

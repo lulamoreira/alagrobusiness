@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export type CatalogoTipo = "produto" | "servico" | "ambos";
+export type CatalogoSegmento = "agro" | "industrial";
 
 export interface CatalogoNode {
   id: string;
@@ -10,7 +11,9 @@ export interface CatalogoNode {
   ativo: boolean;
   icone: string | null;
   tipo: CatalogoTipo;
+  segmento: CatalogoSegmento | null;
 }
+
 
 export type CatalogoLocale = "pt" | "en" | "es";
 
@@ -49,7 +52,8 @@ export async function fetchCatalogoAll(includeInactive = false): Promise<Catalog
   while (offset < total) {
     let query = supabase
       .from("categorias_catalogo")
-      .select("id, parent_id, nome, ordem, ativo, icone, tipo", { count: "exact" })
+      .select("id, parent_id, nome, ordem, ativo, icone, tipo, segmento", { count: "exact" })
+
       .is("deleted_at", null)
       .order("parent_id", { ascending: true, nullsFirst: true })
       .order("ordem", { ascending: true })
@@ -111,3 +115,14 @@ export function catalogoSubtreeIds(nodes: CatalogoNode[], id: string): string[] 
   }
   return acc;
 }
+
+/** Returns the `segmento` of the ROOT ancestor of `itemId` ('agro' | 'industrial' | null). */
+export function catalogoRootSegmento(
+  nodes: CatalogoNode[],
+  itemId: string | null | undefined,
+): CatalogoSegmento | null {
+  const path = catalogoAncestors(nodes, itemId);
+  const root = path[0];
+  return root?.segmento ?? null;
+}
+

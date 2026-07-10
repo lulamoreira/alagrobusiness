@@ -12,6 +12,8 @@ import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
+import { fetchCatalogoAll, catalogoRootSegmento } from "@/lib/catalogo";
+
 
 
 
@@ -125,12 +127,25 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
   const isServico = tipoOferta === "servico";
 
+  const { data: catalogoNodes } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+  });
+  const isIndustrial =
+    !isServico && catalogoRootSegmento(catalogoNodes ?? [], catalogoItemId) === "industrial";
+
   // Defaults for units once loaded
   useEffect(() => {
     if (!unidades || unidades.length === 0) return;
-    if (!precoUnidadeId) setPrecoUnidadeId(unidades.find((u) => u.nome_chave === "saca_60")?.id ?? unidades[0].id);
-    if (!quantidadeUnidadeId) setQuantidadeUnidadeId(unidades.find((u) => u.nome_chave === "tonelada")?.id ?? unidades[0].id);
-  }, [unidades, precoUnidadeId, quantidadeUnidadeId]);
+    const preferPrice = isIndustrial ? "caixa" : "saca_60";
+    const preferQty = isIndustrial ? "caixa" : "tonelada";
+    if (!precoUnidadeId)
+      setPrecoUnidadeId(unidades.find((u) => u.nome_chave === preferPrice)?.id ?? unidades[0].id);
+    if (!quantidadeUnidadeId)
+      setQuantidadeUnidadeId(unidades.find((u) => u.nome_chave === preferQty)?.id ?? unidades[0].id);
+  }, [unidades, precoUnidadeId, quantidadeUnidadeId, isIndustrial]);
+
 
   // Hydrate existing photos as signed URLs once
   useEffect(() => {
@@ -213,7 +228,8 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
         produto: produto.trim(),
         qualidade: isServico ? null : (qualidade.trim() || null),
-        data_colheita: isServico ? null : (dataColheita || null),
+        data_colheita: isServico || isIndustrial ? null : (dataColheita || null),
+
         preco: Number(preco),
         moeda,
         preco_unidade_id: precoUnidadeId,
@@ -223,7 +239,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         permuta_descricao: isServico ? null : (aceitaPermuta ? permutaDescricao.trim() || null : null),
         modalidade_entrega: isServico ? "retirada" : modalidade,
         raio_entrega_km: isServico ? null : (modalidade === "retirada" ? null : raioKm ? Number(raioKm) : null),
-        certificacoes: isServico ? [] : certs,
+        certificacoes: isServico || isIndustrial ? [] : certs,
         estado: estado.trim() || null,
         cidade: cidade.trim() || null,
         cep: cep.trim() || null,
@@ -328,14 +344,17 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
             onChange={(e) => setQualidade(e.target.value)}
             placeholder={t("form.qualityPh")}
           />
-          <DarkInput
-            type="date"
-            label={t("form.harvestDate")}
-            value={dataColheita}
-            onChange={(e) => setDataColheita(e.target.value)}
-          />
+          {!isIndustrial && (
+            <DarkInput
+              type="date"
+              label={t("form.harvestDate")}
+              value={dataColheita}
+              onChange={(e) => setDataColheita(e.target.value)}
+            />
+          )}
         </div>
       )}
+
 
 
 
@@ -453,16 +472,19 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
             )}
           </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
-            <div className="flex flex-wrap gap-2">
-              {CERTIFICATIONS.map((c) => (
-                <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
-                  {t(`cert.${c}`)}
-                </Pill>
-              ))}
+          {!isIndustrial && (
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.certifications")}</label>
+              <div className="flex flex-wrap gap-2">
+                {CERTIFICATIONS.map((c) => (
+                  <Pill key={c} active={certs.includes(c)} onClick={() => setCerts((s) => toggle(s, c))}>
+                    {t(`cert.${c}`)}
+                  </Pill>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
         </>
       )}
 
