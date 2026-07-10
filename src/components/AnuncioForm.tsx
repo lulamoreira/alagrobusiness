@@ -127,12 +127,25 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
   const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
   const isServico = tipoOferta === "servico";
 
+  const { data: catalogoNodes } = useQuery({
+    queryKey: ["catalogo_all_active"],
+    queryFn: () => fetchCatalogoAll(false),
+    staleTime: 1000 * 60 * 10,
+  });
+  const isIndustrial =
+    !isServico && catalogoRootSegmento(catalogoNodes ?? [], catalogoItemId) === "industrial";
+
   // Defaults for units once loaded
   useEffect(() => {
     if (!unidades || unidades.length === 0) return;
-    if (!precoUnidadeId) setPrecoUnidadeId(unidades.find((u) => u.nome_chave === "saca_60")?.id ?? unidades[0].id);
-    if (!quantidadeUnidadeId) setQuantidadeUnidadeId(unidades.find((u) => u.nome_chave === "tonelada")?.id ?? unidades[0].id);
-  }, [unidades, precoUnidadeId, quantidadeUnidadeId]);
+    const preferPrice = isIndustrial ? "caixa" : "saca_60";
+    const preferQty = isIndustrial ? "caixa" : "tonelada";
+    if (!precoUnidadeId)
+      setPrecoUnidadeId(unidades.find((u) => u.nome_chave === preferPrice)?.id ?? unidades[0].id);
+    if (!quantidadeUnidadeId)
+      setQuantidadeUnidadeId(unidades.find((u) => u.nome_chave === preferQty)?.id ?? unidades[0].id);
+  }, [unidades, precoUnidadeId, quantidadeUnidadeId, isIndustrial]);
+
 
   // Hydrate existing photos as signed URLs once
   useEffect(() => {
