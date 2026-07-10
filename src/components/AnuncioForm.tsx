@@ -207,7 +207,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         vendedor_id: user.id,
         titulo: titulo.trim(),
         descricao: descricao.trim() || null,
-        categoria,
+        categoria: legacyCategoria,
         catalogo_item_id: catalogoItemId,
         tipo_oferta: tipoOferta,
 
