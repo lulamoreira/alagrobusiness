@@ -239,7 +239,7 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
         permuta_descricao: isServico ? null : (aceitaPermuta ? permutaDescricao.trim() || null : null),
         modalidade_entrega: isServico ? "retirada" : modalidade,
         raio_entrega_km: isServico ? null : (modalidade === "retirada" ? null : raioKm ? Number(raioKm) : null),
-        certificacoes: isServico ? [] : certs,
+        certificacoes: isServico || isIndustrial ? [] : certs,
         estado: estado.trim() || null,
         cidade: cidade.trim() || null,
         cep: cep.trim() || null,
