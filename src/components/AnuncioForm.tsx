@@ -303,41 +303,29 @@ export function AnuncioForm({ mode, initial }: AnuncioFormProps) {
 
       <div className="rounded-2xl border border-border bg-card/40 p-4">
         <CatalogoCascade
-          label={t("form.catalogoCategory")}
+          label={t("form.category")}
           value={catalogoItemId}
           onChange={setCatalogoItemId}
         />
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div>
-          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("form.category")}</label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((c) => (
-              <Pill key={c} active={categoria === c} onClick={() => setCategoria(c)}>
-                {t(`categories.${c}`)}
-              </Pill>
-            ))}
-          </div>
+      {!isServico && (
+        <div className="grid gap-4 md:grid-cols-2">
+          <DarkInput
+            label={t("form.quality")}
+            value={qualidade}
+            onChange={(e) => setQualidade(e.target.value)}
+            placeholder={t("form.qualityPh")}
+          />
+          <DarkInput
+            type="date"
+            label={t("form.harvestDate")}
+            value={dataColheita}
+            onChange={(e) => setDataColheita(e.target.value)}
+          />
         </div>
-        {!isServico && (
-          <>
-            <DarkInput
-              label={t("form.quality")}
-              value={qualidade}
-              onChange={(e) => setQualidade(e.target.value)}
-              placeholder={t("form.qualityPh")}
-            />
-            <DarkInput
-              type="date"
-              label={t("form.harvestDate")}
-              value={dataColheita}
-              onChange={(e) => setDataColheita(e.target.value)}
-            />
-          </>
-        )}
-      </div>
+      )}
 
 
 
