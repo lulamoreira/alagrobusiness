@@ -302,25 +302,27 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         <p className="mt-1 text-sm text-muted-foreground">{t("form.subtitle")}</p>
       </div>
 
-      <div>
-        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("offer.type")}</label>
-        <div className="flex flex-wrap gap-2">
-          {OFFER_TYPES.map((o) => (
-            <Pill
-              key={o}
-              active={tipoOferta === o}
-              onClick={() => {
-                if (tipoOferta !== o) {
-                  setTipoOferta(o);
-                  setCatalogoItemId(null);
-                }
-              }}
-            >
-              {t(`offer.${o}`)}
-            </Pill>
-          ))}
+      {!forcarServico && (
+        <div>
+          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("offer.type")}</label>
+          <div className="flex flex-wrap gap-2">
+            {OFFER_TYPES.map((o) => (
+              <Pill
+                key={o}
+                active={tipoOferta === o}
+                onClick={() => {
+                  if (tipoOferta !== o) {
+                    setTipoOferta(o);
+                    setCatalogoItemId(null);
+                  }
+                }}
+              >
+                {t(`offer.${o}`)}
+              </Pill>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-2">
         <DarkInput
