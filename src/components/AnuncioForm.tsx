@@ -62,7 +62,9 @@ interface AnuncioFormProps {
   mode: "create" | "edit";
   initial?: AnuncioFormInitial;
   defaultTipoOferta?: OfferType;
+  canalStartups?: boolean;
 }
+
 
 function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
@@ -81,7 +83,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-export function AnuncioForm({ mode, initial, defaultTipoOferta }: AnuncioFormProps) {
+export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }: AnuncioFormProps) {
   const { t } = useTranslation();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
@@ -264,12 +266,14 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta }: AnuncioFormPro
       };
 
       if (mode === "create") {
-        const { error } = await supabase.from("anuncios").insert(payload);
+        const insertPayload = { ...payload, em_startups: canalStartups === true };
+        const { error } = await supabase.from("anuncios").insert(insertPayload);
         if (error) throw error;
       } else if (initial) {
         const { error } = await supabase.from("anuncios").update(payload).eq("id", initial.id);
         if (error) throw error;
       }
+
       navigate({ to: "/vender" });
     } catch (err) {
       console.error(err);

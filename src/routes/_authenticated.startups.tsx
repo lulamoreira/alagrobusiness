@@ -24,6 +24,8 @@ function StartupsPage() {
   const [page, setPage] = useState(0);
 
   const isStartup = profile?.tipo_perfil === "startup_pme";
+  const isAdmin = profile?.tipo_perfil === "admin";
+  const podePublicar = isStartup || isAdmin;
 
   // Startup/PME seller ids
   const { data: startupIds } = useQuery({
@@ -45,39 +47,49 @@ function StartupsPage() {
     enabled: startupIds !== undefined,
     queryFn: async () => {
       const ids = startupIds ?? [];
-      if (ids.length === 0) return { rows: [] as AnuncioCardData[], count: 0 };
       const from = page * PAGE_SIZE;
       const to = from + PAGE_SIZE - 1;
+      // Belongs to Startups module: seller is startup_pme OR em_startups=true
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const q = (supabase as any)
+      let q = (supabase as any)
         .from("anuncios")
         .select("*", { count: "exact" })
         .eq("status", "ativo")
-        .is("deleted_at", null)
-        .in("vendedor_id", ids)
+        .is("deleted_at", null);
+      if (ids.length > 0) {
+        q = q.or(`vendedor_id.in.(${ids.join(",")}),em_startups.eq.true`);
+      } else {
+        q = q.eq("em_startups", true);
+      }
+      const { data: rows, count } = await q
         .order("created_at", { ascending: false })
         .order("id", { ascending: false })
         .range(from, to);
-      const { data: rows, count } = await q;
       return { rows: (rows ?? []) as AnuncioCardData[], count: count ?? 0 };
     },
   });
 
   const { data: myAds } = useQuery({
     queryKey: ["startups_my_ads", user?.id],
-    enabled: !!user?.id && isStartup,
+    enabled: !!user?.id && podePublicar,
     queryFn: async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: rows } = await (supabase as any)
+      let q = (supabase as any)
         .from("anuncios")
         .select("*")
         .eq("vendedor_id", user!.id)
-        .is("deleted_at", null)
+        .is("deleted_at", null);
+      // For admins, only surface ads they published through the Startups channel.
+      if (isAdmin && !isStartup) {
+        q = q.eq("em_startups", true);
+      }
+      const { data: rows } = await q
         .order("created_at", { ascending: false })
         .order("id", { ascending: false });
       return (rows ?? []) as AnuncioCardData[];
     },
   });
+
 
   const { data: catalogoNodes } = useQuery({
     queryKey: ["catalogo_all_active"],
@@ -111,7 +123,7 @@ function StartupsPage() {
   const totalPages = Math.max(1, Math.ceil((data?.count ?? 0) / PAGE_SIZE));
 
   const publishBtn = (
-    <Link to="/vender/novo">
+    <Link to="/vender/novo" search={{ tipo: "", canal: "startups" }}>
       <PillButton type="button">{t("startups.publishMine")}</PillButton>
     </Link>
   );
@@ -123,11 +135,12 @@ function StartupsPage() {
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("startups.title")}</h1>
           <p className="text-sm text-muted-foreground">{t("startups.subtitle")}</p>
         </div>
-        {isStartup && publishBtn}
+        {podePublicar && publishBtn}
       </div>
 
-      {/* Meus anúncios — só para Startup */}
-      {isStartup && (
+      {/* Meus anúncios — Startup ou Admin (admin: só os publicados pelo módulo Startups) */}
+      {podePublicar && (
+
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-lg font-semibold md:text-xl">{t("startups.mine.titleAll")}</h2>
@@ -183,9 +196,10 @@ function StartupsPage() {
         ) : filtered.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-card/40 p-10 text-center">
             <p className="text-sm text-muted-foreground">
-              {isStartup ? t("startups.emptyInvite") : t("startups.emptyDiscover")}
+              {podePublicar ? t("startups.emptyInvite") : t("startups.emptyDiscover")}
             </p>
-            {isStartup && <div className="mt-4 flex justify-center">{publishBtn}</div>}
+            {podePublicar && <div className="mt-4 flex justify-center">{publishBtn}</div>}
+
           </div>
         ) : (
           <>

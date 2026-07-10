@@ -5,6 +5,7 @@ import { AnuncioForm } from "@/components/AnuncioForm";
 
 const searchSchema = z.object({
   tipo: fallback(z.string(), "").default(""),
+  canal: fallback(z.string(), "").default(""),
 });
 
 export const Route = createFileRoute("/_authenticated/vender/novo")({
@@ -13,7 +14,13 @@ export const Route = createFileRoute("/_authenticated/vender/novo")({
 });
 
 function NovoAnuncioPage() {
-  const { tipo } = Route.useSearch();
+  const { tipo, canal } = Route.useSearch();
   const defaultTipoOferta = tipo === "servico" ? "servico" : tipo === "produto" ? "produto" : undefined;
-  return <AnuncioForm mode="create" defaultTipoOferta={defaultTipoOferta} />;
+  return (
+    <AnuncioForm
+      mode="create"
+      defaultTipoOferta={defaultTipoOferta}
+      canalStartups={canal === "startups"}
+    />
+  );
 }
