@@ -91,11 +91,12 @@ export function DestaqueBuyDialog({ open, onClose, anuncioId, destaqueAte }: Des
       if (!url) throw new Error("no_url");
       window.location.href = url;
     } catch (e) {
-      console.error(e);
-      setError(await getCheckoutErrorMessage(e));
+      console.error(e, await getCheckoutErrorMessage(e));
+      setError(t("detail.destaque.buyError"));
       setBusyId(null);
     }
   };
+
 
   if (!open) return null;
 
