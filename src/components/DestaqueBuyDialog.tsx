@@ -19,6 +19,35 @@ interface DestaqueBuyDialogProps {
   destaqueAte?: string | null;
 }
 
+interface FunctionErrorWithContext extends Error {
+  context?: {
+    json?: () => Promise<unknown>;
+    text?: () => Promise<string>;
+  };
+}
+
+const getCheckoutErrorMessage = async (error: unknown) => {
+  const fnError = error as FunctionErrorWithContext;
+  try {
+    const payload = await fnError.context?.json?.();
+    if (payload && typeof payload === "object" && "error" in payload) {
+      return String(payload.error);
+    }
+    if (payload && typeof payload === "object" && "message" in payload) {
+      return "code" in payload ? `${String(payload.code)}: ${String(payload.message)}` : String(payload.message);
+    }
+    if (payload) return JSON.stringify(payload);
+  } catch {
+    try {
+      const body = await fnError.context?.text?.();
+      if (body) return body;
+    } catch {
+      // Keep the original error message below when the response body is not readable.
+    }
+  }
+  return fnError.message || String(error);
+};
+
 export function DestaqueBuyDialog({ open, onClose, anuncioId, destaqueAte }: DestaqueBuyDialogProps) {
   const { t, i18n } = useTranslation();
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -63,7 +92,7 @@ export function DestaqueBuyDialog({ open, onClose, anuncioId, destaqueAte }: Des
       window.location.href = url;
     } catch (e) {
       console.error(e);
-      setError(t("detail.destaque.buyError"));
+      setError(await getCheckoutErrorMessage(e));
       setBusyId(null);
     }
   };
