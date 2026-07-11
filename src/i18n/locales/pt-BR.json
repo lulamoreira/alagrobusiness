@@ -1551,6 +1551,42 @@
       "link": "URL inválida (use http:// ou https://)"
     }
   },
+  "adminCds": {
+    "navLabel": "Centros de Distribuição",
+    "title": "Centros de Distribuição",
+    "subtitle": "Cadastre e gerencie os CDs parceiros da plataforma.",
+    "new": "Novo CD",
+    "editing": "Editando CD",
+    "creating": "Novo CD",
+    "empty": "Nenhum CD cadastrado.",
+    "inactive": "Inativo",
+    "activate": "Ativar",
+    "deactivate": "Desativar",
+    "semLocal": "Sem localização",
+    "confirmDelete": "Remover este CD?",
+    "fields": {
+      "nome": "Nome",
+      "descricao": "Descrição",
+      "responsavel": "Responsável",
+      "telefone": "Telefone",
+      "endereco": "Endereço",
+      "cidade": "Cidade",
+      "estado": "Estado",
+      "cep": "CEP",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "capacidade": "Capacidade",
+      "ativo": "Ativo"
+    },
+    "placeholders": {
+      "capacidade": "Ex.: 500 toneladas / 200 pallets"
+    },
+    "errors": {
+      "nome": "Informe o nome do CD",
+      "coord": "Coordenada inválida"
+    }
+  },
+
   "catalogo": {
     "selectRoot": "Selecione uma categoria…",
     "selectSub": "Selecione…"
