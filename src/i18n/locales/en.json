@@ -409,7 +409,7 @@
     "noMessageYet": "No messages yet",
     "openChat": "Open chat",
     "registerSale": "Register sale",
-    "moveTo": "Move to",
+    "moveTo": "Move to","drag": "Drag",
     "moveError": "Could not move the negotiation.",
     "buyer": "Buyer",
     "details": "Details",

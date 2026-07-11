@@ -1,13 +1,25 @@
 import { ProGate } from "@/components/ProGate";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Handshake, MessageSquare, CheckCircle2, ChevronDown, Info } from "lucide-react";
+import { Handshake, MessageSquare, CheckCircle2, Info, GripVertical } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { cn } from "@/lib/utils";
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  TouchSensor,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+  type DragStartEvent,
+} from "@dnd-kit/core";
 import {
   Dialog,
   DialogContent,
@@ -53,18 +65,167 @@ function statusDot(s: Status) {
   return "bg-muted-foreground";
 }
 
+function CardBody({
+  row,
+  t,
+  lang,
+  onDetails,
+  onSold,
+  dragHandleProps,
+  dragging,
+}: {
+  row: Row;
+  t: (k: string) => string;
+  lang: string;
+  onDetails: (r: Row) => void;
+  onSold: (r: Row) => void;
+  dragHandleProps?: Record<string, unknown>;
+  dragging?: boolean;
+}) {
+  const buyerName = row.comprador?.nome_completo?.trim() || "—";
+  const initial = (buyerName[0] ?? "?").toUpperCase();
+  const time = row.ultima?.created_at ?? row.last_message_at;
+
+  return (
+    <div
+      className={cn(
+        "group min-w-0 rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/40",
+        dragging && "opacity-50",
+      )}
+    >
+      <div className="flex items-start gap-2">
+        <button
+          type="button"
+          {...(dragHandleProps ?? {})}
+          className="mt-1 cursor-grab touch-none rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground active:cursor-grabbing"
+          aria-label={t("nego.drag")}
+        >
+          <GripVertical className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => onDetails(row)}
+          className="flex flex-1 items-start gap-3 text-left"
+          aria-label={t("nego.viewDetails")}
+        >
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
+            {initial}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="break-words text-sm font-semibold leading-snug">{buyerName}</p>
+            <p className="break-words text-[11px] text-muted-foreground leading-snug">
+              {row.anuncio?.titulo ?? "—"}
+            </p>
+          </div>
+          <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">
+            {new Date(time).toLocaleTimeString(lang, {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
+        </button>
+      </div>
+
+      <p className="mt-2 line-clamp-2 rounded-lg bg-background/40 px-2 py-1.5 text-[11px] text-muted-foreground break-words">
+        {row.ultima?.conteudo ?? t("nego.noMessageYet")}
+      </p>
+
+      <div className="mt-3 flex flex-wrap items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => onDetails(row)}
+          className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent"
+        >
+          <Info className="h-3 w-3" />
+          {t("nego.viewDetails")}
+        </button>
+        <Link
+          to="/mensagens/$conversaId"
+          params={{ conversaId: row.id }}
+          className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent"
+        >
+          <MessageSquare className="h-3 w-3" />
+          {t("nego.openChat")}
+        </Link>
+        {row.status_negociacao !== "fechado" && row.anuncio && (
+          <button
+            type="button"
+            onClick={() => onSold(row)}
+            className="inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary hover:bg-primary/20"
+          >
+            <CheckCircle2 className="h-3 w-3" />
+            {t("nego.registerSale")}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DraggableCard(props: {
+  row: Row;
+  t: (k: string) => string;
+  lang: string;
+  onDetails: (r: Row) => void;
+  onSold: (r: Row) => void;
+}) {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: props.row.id,
+    data: { status: props.row.status_negociacao },
+  });
+  return (
+    <li ref={setNodeRef}>
+      <CardBody
+        {...props}
+        dragHandleProps={{ ...attributes, ...listeners }}
+        dragging={isDragging}
+      />
+    </li>
+  );
+}
+
+function DroppableColumn({
+  status,
+  children,
+  isOver,
+}: {
+  status: Status;
+  children: React.ReactNode;
+  isOver: boolean;
+}) {
+  const { setNodeRef } = useDroppable({ id: status });
+  return (
+    <div
+      ref={setNodeRef}
+      className={cn(
+        "flex min-h-[120px] flex-1 flex-col rounded-xl transition-colors",
+        isOver && "bg-primary/5 ring-2 ring-primary/40",
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
 function NegociacoesPage() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const qc = useQueryClient();
-  const [busyId, setBusyId] = useState<string | null>(null);
   const [moveError, setMoveError] = useState<string | null>(null);
-  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const [soldFor, setSoldFor] = useState<Row | null>(null);
   const [detailsFor, setDetailsFor] = useState<Row | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [overCol, setOverCol] = useState<Status | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }),
+  );
+
+  const queryKey = ["negociacoes", user?.id] as const;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["negociacoes", user?.id],
+    queryKey,
     enabled: !!user,
     queryFn: async (): Promise<Row[]> => {
       const { data: convs, error } = await supabase
@@ -80,7 +241,6 @@ function NegociacoesPage() {
       if (error) throw error;
       const list = (convs ?? []) as unknown as Row[];
 
-      // Fetch last message preview per conversa (best-effort, one round trip)
       const ids = list.map((c) => c.id);
       const previews = new Map<string, { conteudo: string; created_at: string }>();
       if (ids.length > 0) {
@@ -101,6 +261,36 @@ function NegociacoesPage() {
     },
   });
 
+  // Realtime: subscribe to conversas where I'm the seller
+  useEffect(() => {
+    if (!user) return;
+    const channel = supabase
+      .channel(`negociacoes:${user.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "conversas",
+          filter: `vendedor_id=eq.${user.id}`,
+        },
+        () => {
+          qc.invalidateQueries({ queryKey });
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "mensagens" },
+        () => {
+          qc.invalidateQueries({ queryKey });
+        },
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, qc]);
+
   const grouped = useMemo(() => {
     const g: Record<Status, Row[]> = {
       iniciado: [],
@@ -112,20 +302,39 @@ function NegociacoesPage() {
     return g;
   }, [data]);
 
-  const moveTo = async (row: Row, next: Status) => {
-    setBusyId(row.id);
+  const activeRow = useMemo(
+    () => (data ?? []).find((r) => r.id === activeId) ?? null,
+    [data, activeId],
+  );
+
+  const onDragStart = (e: DragStartEvent) => {
+    setActiveId(String(e.active.id));
     setMoveError(null);
-    setMenuOpenId(null);
+  };
+
+  const onDragEnd = async (e: DragEndEvent) => {
+    const id = String(e.active.id);
+    const from = e.active.data.current?.status as Status | undefined;
+    const to = e.over?.id as Status | undefined;
+    setActiveId(null);
+    setOverCol(null);
+    if (!to || !from || from === to || !STATUS_ORDER.includes(to)) return;
+
+    // Optimistic update
+    qc.setQueryData<Row[]>(queryKey, (prev) =>
+      (prev ?? []).map((r) => (r.id === id ? { ...r, status_negociacao: to } : r)),
+    );
+
     const { error } = await supabase.rpc("set_status_negociacao", {
-      p_conversa_id: row.id,
-      p_status: next,
+      p_conversa_id: id,
+      p_status: to,
     });
-    setBusyId(null);
+
     if (error) {
       setMoveError(t("nego.moveError"));
+      qc.invalidateQueries({ queryKey });
       return;
     }
-    qc.invalidateQueries({ queryKey: ["negociacoes", user?.id] });
     qc.invalidateQueries({ queryKey: ["business_kpis", user?.id] });
   };
 
@@ -152,130 +361,69 @@ function NegociacoesPage() {
           <p className="text-sm text-muted-foreground">{t("nego.empty")}</p>
         </div>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-4">
-          {STATUS_ORDER.map((s) => (
-            <section
-              key={s}
-              className="flex min-w-0 flex-col rounded-2xl border border-border bg-card/40 p-3"
-            >
-              <header className="mb-3 flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <span className={cn("h-2 w-2 rounded-full", statusDot(s))} />
-                  <h2 className="text-sm font-semibold">{t(`nego.status.${s}`)}</h2>
-                </div>
-                <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground tabular-nums">
-                  {grouped[s].length}
-                </span>
-              </header>
+        <DndContext
+          sensors={sensors}
+          onDragStart={onDragStart}
+          onDragOver={(e) => setOverCol((e.over?.id as Status) ?? null)}
+          onDragEnd={onDragEnd}
+          onDragCancel={() => {
+            setActiveId(null);
+            setOverCol(null);
+          }}
+        >
+          <div className="grid gap-4 lg:grid-cols-4">
+            {STATUS_ORDER.map((s) => (
+              <section
+                key={s}
+                className="flex min-w-0 flex-col rounded-2xl border border-border bg-card/40 p-3"
+              >
+                <header className="mb-3 flex items-center justify-between px-1">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("h-2 w-2 rounded-full", statusDot(s))} />
+                    <h2 className="text-sm font-semibold">{t(`nego.status.${s}`)}</h2>
+                  </div>
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground tabular-nums">
+                    {grouped[s].length}
+                  </span>
+                </header>
 
-              <ul className="space-y-2">
-                {grouped[s].length === 0 && (
-                  <li className="rounded-xl border border-dashed border-border/60 bg-background/30 p-4 text-center text-[11px] text-muted-foreground">
-                    {t("nego.emptyColumn")}
-                  </li>
-                )}
-                {grouped[s].map((row) => {
-                  const buyerName = row.comprador?.nome_completo?.trim() || "—";
-                  const initial = (buyerName[0] ?? "?").toUpperCase();
-                  const time = row.ultima?.created_at ?? row.last_message_at;
-                  const otherStatuses = STATUS_ORDER.filter((x) => x !== s);
-                  return (
-                    <li
-                      key={row.id}
-                      className="group min-w-0 rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/40"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setDetailsFor(row)}
-                        className="flex w-full items-start gap-3 text-left"
-                        aria-label={t("nego.viewDetails")}
-                      >
-                        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
-                          {initial}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="break-words text-sm font-semibold leading-snug">{buyerName}</p>
-                          <p className="break-words text-[11px] text-muted-foreground leading-snug">
-                            {row.anuncio?.titulo ?? "—"}
-                          </p>
-                        </div>
-                        <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">
-                          {new Date(time).toLocaleTimeString(i18n.language, {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                      </button>
+                <DroppableColumn status={s} isOver={overCol === s && activeRow?.status_negociacao !== s}>
+                  <ul className="space-y-2">
+                    {grouped[s].length === 0 && (
+                      <li className="rounded-xl border border-dashed border-border/60 bg-background/30 p-4 text-center text-[11px] text-muted-foreground">
+                        {t("nego.emptyColumn")}
+                      </li>
+                    )}
+                    {grouped[s].map((row) => (
+                      <DraggableCard
+                        key={row.id}
+                        row={row}
+                        t={t}
+                        lang={i18n.language}
+                        onDetails={setDetailsFor}
+                        onSold={setSoldFor}
+                      />
+                    ))}
+                  </ul>
+                </DroppableColumn>
+              </section>
+            ))}
+          </div>
 
-                      <p className="mt-2 line-clamp-2 rounded-lg bg-background/40 px-2 py-1.5 text-[11px] text-muted-foreground break-words">
-                        {row.ultima?.conteudo ?? t("nego.noMessageYet")}
-                      </p>
-
-                      <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => setDetailsFor(row)}
-                          className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent"
-                        >
-                          <Info className="h-3 w-3" />
-                          {t("nego.viewDetails")}
-                        </button>
-                        <Link
-                          to="/mensagens/$conversaId"
-                          params={{ conversaId: row.id }}
-                          className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent"
-                        >
-                          <MessageSquare className="h-3 w-3" />
-                          {t("nego.openChat")}
-                        </Link>
-
-                        {s !== "fechado" && row.anuncio && (
-                          <button
-                            type="button"
-                            onClick={() => setSoldFor(row)}
-                            className="inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary hover:bg-primary/20"
-                          >
-                            <CheckCircle2 className="h-3 w-3" />
-                            {t("nego.registerSale")}
-                          </button>
-                        )}
-
-                        <div className="relative ml-auto">
-                          <button
-                            type="button"
-                            disabled={busyId === row.id}
-                            onClick={() =>
-                              setMenuOpenId((cur) => (cur === row.id ? null : row.id))
-                            }
-                            className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium hover:bg-accent disabled:opacity-50"
-                          >
-                            {t("nego.moveTo")}
-                            <ChevronDown className="h-3 w-3" />
-                          </button>
-                          {menuOpenId === row.id && (
-                            <div className="absolute right-0 z-10 mt-1 w-40 overflow-hidden rounded-xl border border-border bg-card shadow-xl">
-                              {otherStatuses.map((next) => (
-                                <button
-                                  key={next}
-                                  type="button"
-                                  onClick={() => void moveTo(row, next)}
-                                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-medium hover:bg-accent"
-                                >
-                                  <span className={cn("h-2 w-2 rounded-full", statusDot(next))} />
-                                  {t(`nego.status.${next}`)}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          ))}
-        </div>
+          <DragOverlay dropAnimation={null}>
+            {activeRow ? (
+              <div className="w-[280px] rotate-2 cursor-grabbing shadow-2xl">
+                <CardBody
+                  row={activeRow}
+                  t={t}
+                  lang={i18n.language}
+                  onDetails={() => {}}
+                  onSold={() => {}}
+                />
+              </div>
+            ) : null}
+          </DragOverlay>
+        </DndContext>
       )}
 
       <Dialog open={!!detailsFor} onOpenChange={(o) => !o && setDetailsFor(null)}>
