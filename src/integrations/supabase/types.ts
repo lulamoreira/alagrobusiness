@@ -474,6 +474,63 @@ export type Database = {
           },
         ]
       }
+      centros_distribuicao: {
+        Row: {
+          ativo: boolean
+          capacidade: string | null
+          cep: string | null
+          cidade: string | null
+          created_at: string
+          deleted_at: string | null
+          descricao: string | null
+          endereco: string | null
+          estado: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          nome: string
+          responsavel: string | null
+          telefone: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          capacidade?: string | null
+          cep?: string | null
+          cidade?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          endereco?: string | null
+          estado?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          nome: string
+          responsavel?: string | null
+          telefone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          capacidade?: string | null
+          cep?: string | null
+          cidade?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          descricao?: string | null
+          endereco?: string | null
+          estado?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          nome?: string
+          responsavel?: string | null
+          telefone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       certificados: {
         Row: {
           codigo: string
