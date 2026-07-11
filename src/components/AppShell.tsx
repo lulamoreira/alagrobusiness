@@ -38,6 +38,8 @@ import {
   Sparkles,
   FolderTree,
   Rocket,
+  Warehouse,
+
 
 } from "lucide-react";
 
