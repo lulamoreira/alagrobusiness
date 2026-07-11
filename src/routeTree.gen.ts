@@ -56,6 +56,7 @@ import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminCursosRouteImport } from './routes/_authenticated.admin.cursos'
 import { Route as AuthenticatedAdminCotacoesRouteImport } from './routes/_authenticated.admin.cotacoes'
 import { Route as AuthenticatedAdminContatosRouteImport } from './routes/_authenticated.admin.contatos'
+import { Route as AuthenticatedAdminCdsRouteImport } from './routes/_authenticated.admin.cds'
 import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated.admin.catalogo'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated.admin.acessos'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -311,6 +312,11 @@ const AuthenticatedAdminContatosRoute =
     path: '/admin/contatos',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedAdminCdsRoute = AuthenticatedAdminCdsRouteImport.update({
+  id: '/admin/cds',
+  path: '/admin/cds',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedAdminCatalogoRoute =
   AuthenticatedAdminCatalogoRouteImport.update({
     id: '/admin/catalogo',
@@ -371,6 +377,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/cds': typeof AuthenticatedAdminCdsRoute
   '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -421,6 +428,7 @@ export interface FileRoutesByTo {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/cds': typeof AuthenticatedAdminCdsRoute
   '/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -475,6 +483,7 @@ export interface FileRoutesById {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/_authenticated/admin/cds': typeof AuthenticatedAdminCdsRoute
   '/_authenticated/admin/contatos': typeof AuthenticatedAdminContatosRoute
   '/_authenticated/admin/cotacoes': typeof AuthenticatedAdminCotacoesRoute
   '/_authenticated/admin/cursos': typeof AuthenticatedAdminCursosRoute
@@ -529,6 +538,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
     | '/admin/catalogo'
+    | '/admin/cds'
     | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -579,6 +589,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/acessos'
     | '/admin/catalogo'
+    | '/admin/cds'
     | '/admin/contatos'
     | '/admin/cotacoes'
     | '/admin/cursos'
@@ -632,6 +643,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/catalogo'
+    | '/_authenticated/admin/cds'
     | '/_authenticated/admin/contatos'
     | '/_authenticated/admin/cotacoes'
     | '/_authenticated/admin/cursos'
@@ -1001,6 +1013,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminContatosRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin/cds': {
+      id: '/_authenticated/admin/cds'
+      path: '/admin/cds'
+      fullPath: '/admin/cds'
+      preLoaderRoute: typeof AuthenticatedAdminCdsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/admin/catalogo': {
       id: '/_authenticated/admin/catalogo'
       path: '/admin/catalogo'
@@ -1083,6 +1102,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedVenderRoute: typeof AuthenticatedVenderRouteWithChildren
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
   AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
+  AuthenticatedAdminCdsRoute: typeof AuthenticatedAdminCdsRoute
   AuthenticatedAdminContatosRoute: typeof AuthenticatedAdminContatosRoute
   AuthenticatedAdminCotacoesRoute: typeof AuthenticatedAdminCotacoesRoute
   AuthenticatedAdminCursosRoute: typeof AuthenticatedAdminCursosRoute
@@ -1115,6 +1135,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedVenderRoute: AuthenticatedVenderRouteWithChildren,
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
   AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
+  AuthenticatedAdminCdsRoute: AuthenticatedAdminCdsRoute,
   AuthenticatedAdminContatosRoute: AuthenticatedAdminContatosRoute,
   AuthenticatedAdminCotacoesRoute: AuthenticatedAdminCotacoesRoute,
   AuthenticatedAdminCursosRoute: AuthenticatedAdminCursosRoute,

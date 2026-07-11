@@ -38,6 +38,8 @@ import {
   Sparkles,
   FolderTree,
   Rocket,
+  Warehouse,
+
 
 } from "lucide-react";
 
@@ -133,6 +135,8 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/contatos", labelKey: "adminContatos.navLabel", icon: Mail },
       { to: "/admin/vantagens", labelKey: "adminVantagens.navLabel", icon: Sparkles },
       { to: "/admin/catalogo", labelKey: "adminCatalogo.navLabel", icon: FolderTree },
+      { to: "/admin/cds", labelKey: "adminCds.navLabel", icon: Warehouse },
+
 
     ],
 
