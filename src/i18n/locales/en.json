@@ -1551,6 +1551,42 @@
       "link": "Invalid URL (use http:// or https://)"
     }
   },
+  "adminCds": {
+    "navLabel": "Distribution Centers",
+    "title": "Distribution Centers",
+    "subtitle": "Register and manage the platform's partner DCs.",
+    "new": "New DC",
+    "editing": "Editing DC",
+    "creating": "New DC",
+    "empty": "No distribution centers registered.",
+    "inactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "semLocal": "No location",
+    "confirmDelete": "Remove this DC?",
+    "fields": {
+      "nome": "Name",
+      "descricao": "Description",
+      "responsavel": "Contact person",
+      "telefone": "Phone",
+      "endereco": "Address",
+      "cidade": "City",
+      "estado": "State",
+      "cep": "ZIP code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "capacidade": "Capacity",
+      "ativo": "Active"
+    },
+    "placeholders": {
+      "capacidade": "e.g., 500 tons / 200 pallets"
+    },
+    "errors": {
+      "nome": "Enter the DC name",
+      "coord": "Invalid coordinate"
+    }
+  },
+
   "catalogo": {
     "selectRoot": "Select a category…",
     "selectSub": "Select…"
