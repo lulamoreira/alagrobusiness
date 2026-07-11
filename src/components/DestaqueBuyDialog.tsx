@@ -33,6 +33,10 @@ const getCheckoutErrorMessage = async (error: unknown) => {
     if (payload && typeof payload === "object" && "error" in payload) {
       return String(payload.error);
     }
+    if (payload && typeof payload === "object" && "message" in payload) {
+      return "code" in payload ? `${String(payload.code)}: ${String(payload.message)}` : String(payload.message);
+    }
+    if (payload) return JSON.stringify(payload);
   } catch {
     try {
       const body = await fnError.context?.text?.();
