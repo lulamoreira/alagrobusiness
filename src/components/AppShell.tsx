@@ -57,6 +57,7 @@ interface NavItem {
   badgeKey?: BadgeKey;
   pro?: boolean;
   permKey?: import("@/lib/adminPerms").AdminResource;
+  operatorOnly?: boolean;
 }
 
 interface NavGroup {
