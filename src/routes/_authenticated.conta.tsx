@@ -352,6 +352,58 @@ function ContaPage() {
           </div>
         </div>
       </section>
+
+      {/* My location */}
+      <section id="minha-localizacao" className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+        <div className="mb-4 flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
+            <MapPin className="h-5 w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-lg font-bold">{t("geo.myLocationTitle")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("geo.myLocationDesc")}</p>
+          </div>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          <DarkInput
+            label={t("onboarding.cep")}
+            value={locCep}
+            onChange={(e) => setLocCep(e.target.value)}
+            onBlur={handleLocCepBlur}
+            placeholder="00000-000"
+          />
+          <DarkInput
+            label={t("signup.city")}
+            value={locCidade}
+            onChange={(e) => setLocCidade(e.target.value)}
+          />
+          <DarkInput
+            label={t("signup.state")}
+            value={locEstado}
+            onChange={(e) => setLocEstado(e.target.value)}
+          />
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-muted-foreground">
+            {locGeocoding
+              ? t("geo.detecting")
+              : locLat != null && locLng != null
+                ? t("geo.hasCoords")
+                : locInfo ?? t("geo.autoFromCep")}
+          </p>
+          <button
+            type="button"
+            onClick={saveLocation}
+            disabled={locSaving}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+          >
+            {locSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {t("common.save")}
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
