@@ -387,6 +387,66 @@ function BuyPage() {
               onChange={(e) => setPriceMax(e.target.value)}
             />
           </div>
+
+          <div className="grid gap-3 md:grid-cols-[2fr_auto_1fr]">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("buy.cdFilter")}
+              </label>
+              <select
+                value={cdFilter ?? ""}
+                onChange={(e) => setCdFilter(e.target.value || null)}
+                className="w-full rounded-xl border border-border bg-card px-3 py-2 text-xs text-foreground outline-none focus:border-primary"
+              >
+                <option value="">{t("buy.cdAll")}</option>
+                {cdOptions.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.km != null
+                      ? t("buy.cdOptionWithKm", {
+                          nome: c.nome,
+                          cidade: c.cidade ?? "—",
+                          estado: c.estado ?? "—",
+                          km: c.km.toFixed(0),
+                        })
+                      : t("buy.cdOption", {
+                          nome: c.nome,
+                          cidade: c.cidade ?? "—",
+                          estado: c.estado ?? "—",
+                        })}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("buy.nearMe")}
+              </label>
+              <button
+                type="button"
+                disabled={!hasLocation}
+                onClick={() => setNearMe((v) => !v)}
+                className={cn(
+                  "rounded-full border px-3 py-2 text-xs font-medium transition-all",
+                  nearMe
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-muted-foreground hover:text-foreground",
+                  !hasLocation && "cursor-not-allowed opacity-50",
+                )}
+              >
+                {t("buy.nearMe")}
+              </button>
+            </div>
+            <DarkInput
+              label={t("buy.radiusKm")}
+              type="number"
+              value={radiusKm}
+              onChange={(e) => setRadiusKm(e.target.value)}
+              disabled={!hasLocation || !nearMe}
+            />
+          </div>
+          {!hasLocation && (
+            <p className="text-xs text-muted-foreground">{t("buy.needLocationHint")}</p>
+          )}
         </div>
       )}
 
