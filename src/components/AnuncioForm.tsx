@@ -120,6 +120,7 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   const [cidade, setCidade] = useState(initial?.cidade ?? profile?.cidade ?? "");
   const [cep, setCep] = useState(initial?.cep ?? profile?.cep ?? "");
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [centroIds, setCentroIds] = useState<string[]>(initial?.centro_ids ?? []);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
