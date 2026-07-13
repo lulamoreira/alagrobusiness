@@ -127,6 +127,12 @@ function CompleteProfilePage() {
       return;
     }
     await refreshProfile();
+    if (coords.lat != null && coords.lng != null && user) {
+      await supabase
+        .from("profiles")
+        .update({ latitude: coords.lat, longitude: coords.lng })
+        .eq("id", user.id);
+    }
     const status = data as string;
     if (status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao" });
     else navigate({ to: "/painel" });
