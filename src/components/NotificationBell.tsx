@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Bell, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { formatNotifText, formatNotifType } from "@/lib/notifFormat";
 import {
   Popover,
   PopoverContent,
@@ -23,34 +25,29 @@ interface Notif {
 
 const NEGO_STATUS = new Set(["iniciado", "em_negociacao", "fechado", "descartado"]);
 
-function timeAgo(iso: string, t: (k: string, opts?: Record<string, unknown>) => string): string {
+function timeAgo(iso: string, t: TFunction): string {
   const diff = Math.max(0, Date.now() - new Date(iso).getTime());
   const s = Math.floor(diff / 1000);
-  if (s < 60) return t("notifications.time.now");
+  if (s < 60) return t("notifications.time.now") as string;
   const m = Math.floor(s / 60);
-  if (m < 60) return t("notifications.time.minutes", { count: m });
+  if (m < 60) return t("notifications.time.minutes", { count: m }) as string;
   const h = Math.floor(m / 60);
-  if (h < 24) return t("notifications.time.hours", { count: h });
+  if (h < 24) return t("notifications.time.hours", { count: h }) as string;
   const d = Math.floor(h / 24);
-  return t("notifications.time.days", { count: d });
+  return t("notifications.time.days", { count: d }) as string;
 }
 
-function renderMessage(n: Notif, t: (k: string, opts?: Record<string, unknown>) => string): string {
+function renderMessage(n: Notif, t: TFunction): string {
   if (n.tipo === "negociacao_status" && n.mensagem && NEGO_STATUS.has(n.mensagem)) {
     return t("notifications.negociacaoMovedTo", {
       status: t(`nego.status.${n.mensagem}`),
-    });
+    }) as string;
   }
-  // Try localized fallback if mensagem is an i18n key
-  if (n.mensagem && n.mensagem.startsWith("notifications.")) {
-    return t(n.mensagem);
-  }
-  return n.mensagem ?? "";
+  return formatNotifText(n.mensagem, t);
 }
 
-function renderTitle(n: Notif, t: (k: string) => string): string {
-  if (n.titulo && n.titulo.startsWith("notifications.")) return t(n.titulo);
-  return n.titulo ?? "";
+function renderTitle(n: Notif, t: TFunction): string {
+  return formatNotifText(n.titulo, t);
 }
 
 export function NotificationBell() {
@@ -164,6 +161,7 @@ export function NotificationBell() {
               {items.map((n) => {
                 const msg = renderMessage(n, t);
                 const title = renderTitle(n, t);
+                const typeLabel = formatNotifType(n.tipo, t);
                 return (
                   <li key={n.id}>
                     <button
@@ -181,8 +179,11 @@ export function NotificationBell() {
                         )}
                       />
                       <div className="min-w-0 flex-1">
+                        <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/40 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                          {typeLabel}
+                        </span>
                         {title && (
-                          <p className="truncate text-xs font-semibold">{title}</p>
+                          <p className="mt-1 truncate text-xs font-semibold">{title}</p>
                         )}
                         <p className="line-clamp-2 text-[11px] text-muted-foreground">
                           {msg}

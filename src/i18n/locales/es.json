@@ -1182,6 +1182,17 @@
       "minutes": "{{count}} min",
       "hours": "{{count}} h",
       "days": "{{count}} d"
+    },
+    "type": {
+      "default": "Notificación",
+      "alerta": "Alerta de precio",
+      "preco": "Alerta de precio",
+      "mensagem": "Mensaje",
+      "negociacao_status": "Negociación",
+      "categoria_aprovada": "Categoría",
+      "categoria_rejeitada": "Categoría",
+      "noticia": "Noticia",
+      "sistema": "Aviso"
     }
   },
   "public": {
