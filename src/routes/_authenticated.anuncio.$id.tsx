@@ -64,6 +64,27 @@ function DetailPage() {
     enabled: !!anuncio?.catalogo_item_id,
   });
 
+  const { data: cdsVinculados } = useQuery({
+    queryKey: ["anuncio_cds", id],
+    queryFn: async () => {
+      const { data: links } = await supabase
+        .from("anuncio_centros")
+        .select("centro_id")
+        .eq("anuncio_id", id);
+      const ids = (links ?? []).map((r) => r.centro_id);
+      if (ids.length === 0) return [];
+      const { data: centros } = await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .in("id", ids)
+        .eq("ativo", true)
+        .is("deleted_at", null)
+        .order("nome");
+      return centros ?? [];
+    },
+    enabled: !!anuncio?.id,
+  });
+
 
   if (isLoading) {
     return <p className="text-sm text-muted-foreground">{t("common.loading")}</p>;
