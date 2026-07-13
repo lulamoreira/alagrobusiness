@@ -1646,6 +1646,13 @@
     "deactivate": "Desactivar",
     "semLocal": "Sin ubicación",
     "confirmDelete": "¿Eliminar este CD?",
+    "confirmReject": "¿Rechazar este registro?",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "approved": "CD aprobado.",
+    "rejected": "Registro rechazado.",
+    "pendingSection": "Pendientes de aprobación ({{n}})",
+    "approvedSection": "Aprobados ({{n}})",
     "fields": {
       "nome": "Nombre",
       "descricao": "Descripción",
