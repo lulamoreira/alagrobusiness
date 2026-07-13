@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
 import { distanceKm } from "@/lib/geo";
 import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
+import { EstoquePanel } from "@/components/EstoquePanel";
 
 
 export const Route = createFileRoute("/_authenticated/anuncio/$id")({ component: DetailPage });
