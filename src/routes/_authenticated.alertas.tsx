@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { handlePaywallError } from "@/components/PlanStatus";
+import { formatNotifText } from "@/lib/notifFormat";
 
 export const Route = createFileRoute("/_authenticated/alertas")({
   component: AlertsPage,
