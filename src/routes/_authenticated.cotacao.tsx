@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { ExternalLink, Star, Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,7 +37,6 @@ function CotacaoPage() {
 
   const [commodityRange, setCommodityRange] = useState<Range>(7);
   const [dolarRange, setDolarRange] = useState<Range>(7);
-  const [selectedDolar, setSelectedDolar] = useState<DolarTipo>(userDolarPref);
   const [savingPrefs, setSavingPrefs] = useState(false);
 
   const { data: catalog = [] } = useCommoditiesCatalog();
@@ -45,12 +44,14 @@ function CotacaoPage() {
 
   const [draftCommodities, setDraftCommodities] = useState<string[]>([]);
   const [draftDolar, setDraftDolar] = useState<string[]>([]);
+  const seededRef = useRef(false);
 
-  // Sincroniza drafts quando carregar preferências
-  useMemo(() => {
-    if (prefs) {
+  // Seed drafts once when preferences first load; do NOT clobber user edits on refetch.
+  useEffect(() => {
+    if (prefs && !seededRef.current) {
       setDraftCommodities(prefs.cotacoes_selecionadas);
       setDraftDolar(prefs.tipos_dolar_visiveis);
+      seededRef.current = true;
     }
   }, [prefs]);
 
@@ -127,15 +128,21 @@ function CotacaoPage() {
       .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)));
   }, [catalog, commodityGroups, prefs]);
 
-  /** Tipos de dólar disponíveis (com dado) filtrados por preferências. */
-  const dolarTiposAvailable: DolarTipo[] = useMemo(() => {
+  /** Tipos de dólar que possuem cotação atual (independente de visibilidade). */
+  const dolarTiposWithData: DolarTipo[] = useMemo(() => {
     const set = new Set<DolarTipo>();
     (dolarCurrent ?? []).forEach((r) => set.add(r.tipo as DolarTipo));
+    return ALL_DOLAR.filter((tipo) => set.has(tipo));
+  }, [dolarCurrent]);
+
+  /** Tipos de dólar visíveis (com dado) — filtrados pela seleção salva. Fallback: preferido. */
+  const dolarTiposAvailable: DolarTipo[] = useMemo(() => {
     const vis = prefs?.tipos_dolar_visiveis ?? [];
-    return ALL_DOLAR.filter((tipo) => set.has(tipo)).filter((tipo) =>
-      vis.length === 0 ? true : vis.includes(tipo),
-    );
-  }, [dolarCurrent, prefs]);
+    if (vis.length === 0) {
+      return dolarTiposWithData.filter((t) => t === userDolarPref);
+    }
+    return dolarTiposWithData.filter((tipo) => vis.includes(tipo));
+  }, [dolarTiposWithData, prefs, userDolarPref]);
 
   const formatValueInUserCurrency = (valorBRL: number) =>
     formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
@@ -166,6 +173,28 @@ function CotacaoPage() {
   const clearPrefs = () => {
     setDraftCommodities([]);
     setDraftDolar([]);
+  };
+
+  /** Toggle direto (chips do topo) — persiste na hora em preferencias.tipos_dolar_visiveis. */
+  const toggleDolarVisibility = async (tipo: DolarTipo) => {
+    if (!profile?.id) return;
+    const currentList = prefs?.tipos_dolar_visiveis ?? [];
+    // Se lista vazia (fallback = preferido), tratar como se o preferido estivesse ativo.
+    const effective = currentList.length === 0 ? [userDolarPref] : currentList;
+    const next = effective.includes(tipo)
+      ? effective.filter((t) => t !== tipo)
+      : [...effective, tipo];
+    // Reflete otimisticamente no draft para sincronizar checkboxes da Personalização.
+    setDraftDolar(next);
+    const { error } = await supabase
+      .from("preferencias")
+      .update({ tipos_dolar_visiveis: next })
+      .eq("usuario_id", profile.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    qc.invalidateQueries({ queryKey: ["preferencias_cotacoes"] });
   };
 
   return (
@@ -258,7 +287,7 @@ function CotacaoPage() {
       </section>
 
       {/* Dollar */}
-      {dolarTiposAvailable.length > 0 && (
+      {dolarTiposWithData.length > 0 && (
         <section className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="font-display text-lg font-bold">{t("quote.dollarTitle")}</h2>
@@ -266,23 +295,28 @@ function CotacaoPage() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {dolarTiposAvailable.map((tipo) => (
-              <button
-                key={tipo}
-                type="button"
-                onClick={() => setSelectedDolar(tipo)}
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                  selectedDolar === tipo
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border bg-card text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {tipo === userDolarPref && <Star className="h-3 w-3 fill-primary text-primary" />}
-                {t(`quote.${tipo}`)}
-              </button>
-            ))}
+            {dolarTiposWithData.map((tipo) => {
+              const isVisible = dolarTiposAvailable.includes(tipo);
+              return (
+                <button
+                  key={tipo}
+                  type="button"
+                  onClick={() => toggleDolarVisibility(tipo)}
+                  aria-pressed={isVisible}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                    isVisible
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border bg-card text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {tipo === userDolarPref && <Star className="h-3 w-3 fill-primary text-primary" />}
+                  {t(`quote.${tipo}`)}
+                </button>
+              );
+            })}
           </div>
+
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {dolarTiposAvailable.map((tipo) => {
@@ -291,7 +325,7 @@ function CotacaoPage() {
               const ranged = filterRange(history, dolarRange);
               const variation = computeVariation(history.map((h) => h.valor_brl));
               const isPreferred = tipo === userDolarPref;
-              const isSelected = tipo === selectedDolar;
+
 
               return (
                 <article
@@ -324,12 +358,11 @@ function CotacaoPage() {
                         />
                       </div>
 
-                      {isSelected && (
-                        <Sparkline
-                          points={ranged.map((r) => ({ data: r.data, value: r.valor_brl }))}
-                          formatValue={(v) => formatDolarValue(v, i18n.language)}
-                        />
-                      )}
+                      <Sparkline
+                        points={ranged.map((r) => ({ data: r.data, value: r.valor_brl }))}
+                        formatValue={(v) => formatDolarValue(v, i18n.language)}
+                      />
+
 
                       {current.atualizado_em && (
                         <p className="text-[10px] text-muted-foreground">
