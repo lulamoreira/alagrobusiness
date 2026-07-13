@@ -339,6 +339,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { isPro } = usePlan();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { has: adminHas, hasAny: adminHasAny } = useAdminPerms();
+  const myCdsCount = useMyCdsCount();
+  const isOperator = myCdsCount > 0;
 
 
   return (
