@@ -1646,6 +1646,13 @@
     "deactivate": "Deactivate",
     "semLocal": "No location",
     "confirmDelete": "Remove this DC?",
+    "confirmReject": "Reject this submission?",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "DC approved.",
+    "rejected": "Submission rejected.",
+    "pendingSection": "Pending approval ({{n}})",
+    "approvedSection": "Approved ({{n}})",
     "fields": {
       "nome": "Name",
       "descricao": "Description",
