@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { Sparkles, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -48,6 +50,7 @@ export function DestaquesCarousel({ variant }: Props) {
   });
 
   const items = anuncios ?? [];
+  const showCta = items.length < 3;
   const visibleCount = mode === "mobile" ? 1 : 3;
   const shouldAutoScroll = items.length > visibleCount;
 
@@ -91,7 +94,7 @@ export function DestaquesCarousel({ variant }: Props) {
     [unidades],
   );
 
-  if (items.length === 0) return null;
+  if (items.length === 0 && !showCta) return null;
 
   const itemBasis =
     mode === "mobile"
@@ -118,6 +121,28 @@ export function DestaquesCarousel({ variant }: Props) {
             <AnuncioCard item={item} units={unitsTyped} cotacoes={cotacoesTyped} />
           </div>
         ))}
+        {showCta && (
+          <div className={`${itemBasis} shrink-0 snap-start min-w-0`}>
+            <Link
+              to="/destaque"
+              className="group relative flex h-full min-h-[220px] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 border-dashed border-primary/50 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-6 text-center transition hover:border-primary hover:from-primary/20"
+            >
+              <div className="rounded-full bg-primary/15 p-3">
+                <Sparkles className="h-6 w-6 text-primary" />
+              </div>
+              <p className="font-display text-base font-bold text-foreground">
+                {t("destaquePage.ctaCardTitle")}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t("destaquePage.ctaCardSubtitle")}
+              </p>
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition group-hover:brightness-110">
+                {t("destaquePage.ctaCardAction")}
+                <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
