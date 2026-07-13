@@ -92,6 +92,7 @@
     "buy": "Comprar",
     "sell": "Vender",
     "startups": "Startups y PyMEs",
+    "destaqueAnuncio": "Destacar anuncio",
     "messages": "Mensajes",
     "negotiations": "Negociaciones",
     "quote": "Cotización",
@@ -1880,5 +1881,21 @@
     "body": "La categoría \"{{name}}\" que sugeriste fue aprobada. Ya puedes editar tu anuncio para usarla.",
     "close": "Cerrar",
     "goToSell": "Ir a mis anuncios"
+  },
+  "destaquePage": {
+    "badge": "Destacado",
+    "title": "Destaca tu anuncio en la página de inicio",
+    "intro": "Los anuncios destacados aparecen en el carrusel del Panel y en la parte superior de la pantalla de Comprar, ganando mucha más visibilidad.",
+    "pricesTitle": "Paquetes disponibles",
+    "pricesSubtitle": "Elige por cuántos días se destacará tu anuncio.",
+    "priceHint": "Pago único, sin renovación automática.",
+    "myAdsTitle": "Mis anuncios",
+    "myAdsSubtitle": "Elige un anuncio activo para destacar.",
+    "noAds": "Aún no tienes anuncios activos para destacar.",
+    "bigButton": "Destaca este anuncio en la página de inicio",
+    "bigButtonRenew": "Renovar / extender destaque",
+    "ctaCardTitle": "Tu anuncio podría estar destacado aquí",
+    "ctaCardSubtitle": "Gana visibilidad en el Panel y en Comprar.",
+    "ctaCardAction": "Destacar ahora"
   }
 }

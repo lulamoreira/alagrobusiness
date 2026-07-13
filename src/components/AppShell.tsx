@@ -83,6 +83,7 @@ const GROUPS: NavGroup[] = [
       { to: "/vender", labelKey: "nav.sell", icon: Store },
       { to: "/startups", labelKey: "nav.startups", icon: Rocket },
       { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
+      { to: "/destaque", labelKey: "nav.destaqueAnuncio", icon: Sparkles },
     ],
   },
   {

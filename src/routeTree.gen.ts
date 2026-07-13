@@ -33,6 +33,7 @@ import { Route as AuthenticatedNegociacoesRouteImport } from './routes/_authenti
 import { Route as AuthenticatedMeusCdsRouteImport } from './routes/_authenticated.meus-cds'
 import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated.mensagens'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated.financeiro'
+import { Route as AuthenticatedDestaqueRouteImport } from './routes/_authenticated.destaque'
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
 import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated.conta'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated.configuracoes'
@@ -181,6 +182,11 @@ const AuthenticatedMensagensRoute = AuthenticatedMensagensRouteImport.update({
 const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
   id: '/financeiro',
   path: '/financeiro',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedDestaqueRoute = AuthenticatedDestaqueRouteImport.update({
+  id: '/destaque',
+  path: '/destaque',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedCotacaoRoute = AuthenticatedCotacaoRouteImport.update({
@@ -370,6 +376,7 @@ export interface FileRoutesByFullPath {
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/conta': typeof AuthenticatedContaRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/destaque': typeof AuthenticatedDestaqueRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/meus-cds': typeof AuthenticatedMeusCdsRoute
@@ -424,6 +431,7 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/conta': typeof AuthenticatedContaRoute
   '/cotacao': typeof AuthenticatedCotacaoRoute
+  '/destaque': typeof AuthenticatedDestaqueRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/meus-cds': typeof AuthenticatedMeusCdsRoute
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
@@ -478,6 +486,7 @@ export interface FileRoutesById {
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
+  '/_authenticated/destaque': typeof AuthenticatedDestaqueRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/_authenticated/meus-cds': typeof AuthenticatedMeusCdsRoute
@@ -534,6 +543,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/conta'
     | '/cotacao'
+    | '/destaque'
     | '/financeiro'
     | '/mensagens'
     | '/meus-cds'
@@ -588,6 +598,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/conta'
     | '/cotacao'
+    | '/destaque'
     | '/financeiro'
     | '/meus-cds'
     | '/negociacoes'
@@ -641,6 +652,7 @@ export interface FileRouteTypes {
     | '/_authenticated/configuracoes'
     | '/_authenticated/conta'
     | '/_authenticated/cotacao'
+    | '/_authenticated/destaque'
     | '/_authenticated/financeiro'
     | '/_authenticated/mensagens'
     | '/_authenticated/meus-cds'
@@ -862,6 +874,13 @@ declare module '@tanstack/react-router' {
       path: '/financeiro'
       fullPath: '/financeiro'
       preLoaderRoute: typeof AuthenticatedFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/destaque': {
+      id: '/_authenticated/destaque'
+      path: '/destaque'
+      fullPath: '/destaque'
+      preLoaderRoute: typeof AuthenticatedDestaqueRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/cotacao': {
@@ -1110,6 +1129,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedContaRoute: typeof AuthenticatedContaRoute
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
+  AuthenticatedDestaqueRoute: typeof AuthenticatedDestaqueRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
   AuthenticatedMeusCdsRoute: typeof AuthenticatedMeusCdsRoute
@@ -1144,6 +1164,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedContaRoute: AuthenticatedContaRoute,
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
+  AuthenticatedDestaqueRoute: AuthenticatedDestaqueRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
   AuthenticatedMeusCdsRoute: AuthenticatedMeusCdsRoute,
