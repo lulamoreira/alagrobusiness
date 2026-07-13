@@ -6,6 +6,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/lib/auth";
 
 type DolarTipo = "comercial" | "turismo" | "paralelo";
 
@@ -15,6 +16,7 @@ interface Props {
 
 export function DestaquesCarousel({ variant }: Props) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const isMobile = useIsMobile();
   const mode = variant ?? (isMobile ? "mobile" : "desktop");
 
@@ -49,10 +51,27 @@ export function DestaquesCarousel({ variant }: Props) {
     staleTime: 1000 * 60 * 30,
   });
 
+  const { data: prefs } = useQuery({
+    queryKey: ["preferencias_destaque_scroll", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("preferencias")
+        .select("destaque_scroll_segundos")
+        .eq("usuario_id", user!.id)
+        .maybeSingle();
+      return data;
+    },
+    staleTime: 1000 * 60,
+  });
+
+  const intervalMs = Math.max(2, Math.min(15, prefs?.destaque_scroll_segundos ?? 3)) * 1000;
+
   const items = anuncios ?? [];
   const showCta = items.length < 3;
-  const visibleCount = mode === "mobile" ? 1 : 3;
-  const shouldAutoScroll = items.length > visibleCount;
+  const totalSlides = items.length + (showCta ? 1 : 0);
+  const visibleCount = mode === "mobile" ? 1 : mode === "desktop" ? 3 : 2;
+  const shouldAutoScroll = totalSlides > visibleCount;
 
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -60,15 +79,15 @@ export function DestaquesCarousel({ variant }: Props) {
 
   useEffect(() => {
     setIndex(0);
-  }, [items.length, visibleCount]);
+  }, [totalSlides, visibleCount]);
 
   useEffect(() => {
-    if (!shouldAutoScroll || paused) return;
+    if (!shouldAutoScroll || paused || totalSlides === 0) return;
     const id = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % items.length);
-    }, 3000);
+      setIndex((prev) => (prev + 1) % totalSlides);
+    }, intervalMs);
     return () => window.clearInterval(id);
-  }, [shouldAutoScroll, paused, items.length]);
+  }, [shouldAutoScroll, paused, totalSlides, intervalMs]);
 
   useEffect(() => {
     const el = trackRef.current;
@@ -94,16 +113,10 @@ export function DestaquesCarousel({ variant }: Props) {
     [unidades],
   );
 
-  if (items.length === 0 && !showCta) return null;
+  if (totalSlides === 0) return null;
 
-  const itemBasis =
-    mode === "mobile"
-      ? "basis-[85%]"
-      : items.length >= 3
-        ? "basis-full sm:basis-1/2 lg:basis-1/3"
-        : items.length === 2
-          ? "basis-full sm:basis-1/2"
-          : "basis-full";
+  // Fixed responsive breakpoints: 1 mobile / 2 tablet / 3 desktop — independent of item count.
+  const itemBasis = "basis-full md:basis-1/2 lg:basis-1/3";
 
   return (
     <section
@@ -114,11 +127,11 @@ export function DestaquesCarousel({ variant }: Props) {
       <h2 className="mb-3 font-display text-lg font-bold">{t("buy.featuredTitle")}</h2>
       <div
         ref={trackRef}
-        className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-1 flex snap-x snap-mandatory items-stretch gap-3 overflow-x-auto px-1 pb-1 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item) => (
-          <div key={item.id} className={`${itemBasis} shrink-0 snap-start min-w-0`}>
-            <AnuncioCard item={item} units={unitsTyped} cotacoes={cotacoesTyped} />
+          <div key={item.id} className={`${itemBasis} h-auto shrink-0 snap-start min-w-0`}>
+            <AnuncioCard item={item} units={unitsTyped} cotacoes={cotacoesTyped} compact />
           </div>
         ))}
         {showCta && (

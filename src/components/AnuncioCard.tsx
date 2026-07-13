@@ -9,6 +9,7 @@ import { formatMoney } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+import { toUF } from "@/lib/brStates";
 
 export interface AnuncioCardData {
   id: string;
@@ -43,6 +44,8 @@ interface AnuncioCardProps {
   sellerName?: string;
   sellerTipoPerfil?: string | null;
   hasCd?: boolean;
+  /** Compact layout used by carousels: numeric date, UF only, no seller name, fills height. */
+  compact?: boolean;
 }
 
 
@@ -109,7 +112,7 @@ export function AnuncioPhoto({
   );
 }
 
-export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil, hasCd = false }: AnuncioCardProps) {
+export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil, hasCd = false, compact = false }: AnuncioCardProps) {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
 
@@ -146,10 +149,14 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
   const unitLabel = priceUnit ? t(`units.${priceUnit.nome_chave}`) : "";
 
   const harvest = item.data_colheita
-    ? new Date(item.data_colheita).toLocaleDateString(i18n.language, { month: "short", year: "numeric" })
+    ? new Date(item.data_colheita).toLocaleDateString(
+        i18n.language,
+        compact ? { month: "2-digit", year: "numeric" } : { month: "short", year: "numeric" },
+      )
     : null;
 
-  const location = [item.cidade, item.estado].filter(Boolean).join(" — ");
+  const estadoLabel = compact ? toUF(item.estado) : item.estado;
+  const location = [item.cidade, estadoLabel].filter(Boolean).join(" — ");
   const hasCert = item.certificacoes && item.certificacoes.length > 0;
   const isFeatured = !!item.destaque_ate && new Date(item.destaque_ate).getTime() > Date.now();
 
@@ -157,7 +164,10 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
     <Link
       to="/anuncio/$id"
       params={{ id: item.id }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
+      className={cn(
+        "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/50",
+        compact && "h-full",
+      )}
     >
       {/* Image area — fixed 16:9 with rounded top via parent overflow */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
@@ -247,9 +257,11 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
               <p className="mt-1 text-[10px] uppercase tracking-wide text-muted-foreground">/ {unitLabel}</p>
             )}
           </div>
-          <p className="max-w-[55%] truncate text-right text-[10px] text-muted-foreground">
-            {t("common.by")} {sellerName ?? seller?.nome_completo ?? "—"}
-          </p>
+          {!compact && (
+            <p className="max-w-[55%] truncate text-right text-[10px] text-muted-foreground">
+              {t("common.by")} {sellerName ?? seller?.nome_completo ?? "—"}
+            </p>
+          )}
         </div>
       </div>
     </Link>

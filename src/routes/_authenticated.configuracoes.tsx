@@ -39,17 +39,21 @@ function ConfigPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [tema, setTemaState] = useState<ThemeName>(loadStoredTheme());
+  const [destaqueSec, setDestaqueSec] = useState<number>(3);
 
   useEffect(() => {
     if (!profile) return;
     (async () => {
       const { data } = await supabase
         .from("preferencias")
-        .select("tema")
+        .select("tema, destaque_scroll_segundos")
         .eq("usuario_id", profile.id)
         .maybeSingle();
       if (data?.tema && (SUPPORTED_THEMES as readonly string[]).includes(data.tema)) {
         setTemaState(data.tema as ThemeName);
+      }
+      if (typeof data?.destaque_scroll_segundos === "number") {
+        setDestaqueSec(data.destaque_scroll_segundos);
       }
     })();
   }, [profile]);
@@ -59,9 +63,12 @@ function ConfigPage() {
     setTheme(next);
   };
 
+  const qcRoot = useQueryClient();
+
   const save = async () => {
     if (!profile) return;
     setSaving(true);
+    const clampedSec = Math.max(2, Math.min(15, Math.round(destaqueSec) || 3));
     await supabase
       .from("profiles")
       .update({
@@ -78,9 +85,17 @@ function ConfigPage() {
           tipo_dolar: tipoDolar,
           idioma: i18n.language as SupportedLang,
           tema,
+          destaque_scroll_segundos: clampedSec,
         })
         .eq("usuario_id", profile.id);
+    } else {
+      await supabase
+        .from("preferencias")
+        .update({ destaque_scroll_segundos: clampedSec })
+        .eq("usuario_id", profile.id);
     }
+    setDestaqueSec(clampedSec);
+    qcRoot.invalidateQueries({ queryKey: ["preferencias_destaque_scroll", profile.id] });
     setSaving(false);
     setSaved(true);
     await refreshProfile();
@@ -168,6 +183,27 @@ function ConfigPage() {
             })}
           </div>
         </div>
+
+        <div>
+          <div className="mb-2 flex items-center justify-between text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <span>{t("settings.destaqueScroll")}</span>
+            <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
+              {t("settings.destaqueScrollValue", { seconds: destaqueSec })}
+            </span>
+          </div>
+          <input
+            type="range"
+            min={2}
+            max={15}
+            step={1}
+            value={destaqueSec}
+            onChange={(e) => setDestaqueSec(Number(e.target.value))}
+            className="w-full accent-primary"
+            aria-label={t("settings.destaqueScroll")}
+          />
+          <p className="mt-1 text-[11px] text-muted-foreground">{t("settings.destaqueScrollHint")}</p>
+        </div>
+
 
         <div className="flex items-center gap-3 pt-2">
           <PillButton onClick={save} disabled={saving}>
