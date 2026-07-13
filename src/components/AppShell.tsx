@@ -263,6 +263,7 @@ function NavTree({
   adminHas,
   adminHasAny,
   isPro,
+  isOperator,
   unreadMessages,
   onNavigate,
 }: {
@@ -270,6 +271,7 @@ function NavTree({
   adminHas: (r: import("@/lib/adminPerms").AdminResource) => boolean;
   adminHasAny: boolean;
   isPro: boolean;
+  isOperator: boolean;
   unreadMessages: number;
   onNavigate?: () => void;
 }) {
@@ -278,7 +280,7 @@ function NavTree({
     .map((g) =>
       g.id === "admin"
         ? { ...g, items: g.items.filter((i) => !i.permKey || adminHas(i.permKey)) }
-        : g,
+        : { ...g, items: g.items.filter((i) => !i.operatorOnly || isOperator) },
     )
     .filter((g) => g.items.length > 0);
   return (
