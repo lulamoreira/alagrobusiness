@@ -110,7 +110,7 @@ function MeusCdsPage() {
       if (anuncioIds.length === 0) return { byCd: new Map<string, AdRow[]>(), total: 0 };
       const { data: ads } = await supabase
         .from("anuncios")
-        .select("id, titulo, produto, status, vendedor_id")
+        .select("id, titulo, produto, status, vendedor_id, quantidade_unidade_id")
         .in("id", anuncioIds)
         .is("deleted_at", null)
         .order("created_at", { ascending: false })
@@ -145,6 +145,25 @@ function MeusCdsPage() {
       return { byCd, total: adMap.size };
     },
   });
+
+  const { data: unidades } = useQuery({
+    queryKey: ["unidades_all"],
+    queryFn: async () =>
+      (await supabase.from("unidades").select("id, nome_chave").is("deleted_at", null)).data ?? [],
+    staleTime: 1000 * 60 * 30,
+  });
+  const unitMap = useMemo(
+    () => new Map((unidades ?? []).map((u) => [u.id, u.nome_chave])),
+    [unidades],
+  );
+  const [expandedEstoque, setExpandedEstoque] = useState<Set<string>>(new Set());
+  const toggleEstoque = (key: string) =>
+    setExpandedEstoque((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
 
   const startEdit = (cd: CdRow) => {
     setEditingId(cd.id);
