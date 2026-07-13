@@ -10,6 +10,7 @@ import { PillButton } from "@/components/PillButton";
 import { CategoryChip } from "@/components/CategoryChip";
 import { LGPDCheckbox } from "@/components/LGPDCheckbox";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { geocodeCep } from "@/lib/geocode";
 
 export const Route = createFileRoute("/completar-cadastro")({
   ssr: false,
