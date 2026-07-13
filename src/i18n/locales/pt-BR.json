@@ -1689,6 +1689,19 @@
       "close": "Fechar"
     }
   },
+  "cdSelf": {
+    "title": "Cadastrar Centro de Distribuição",
+    "subtitle": "Preencha os dados do seu CD. A aprovação é feita pelo admin antes da liberação pública.",
+    "contaTitle": "Torne-se um Centro de Distribuição",
+    "contaDesc": "Se você opera armazenagem, logística ou beneficiamento, cadastre seu CD para receber e distribuir produtos da plataforma.",
+    "ctaBtn": "Cadastrar meu CD",
+    "ctaFormTitle": "Você oferece este serviço?",
+    "ctaFormDesc": "Cadastre seu Centro de Distribuição para aparecer aos vendedores da plataforma.",
+    "gotoMine": "Ir para Meus CDs",
+    "submit": "Enviar para aprovação",
+    "createdPending": "CD criado — aguardando aprovação.",
+    "pendingBadge": "Pendente"
+  },
   "meusCds": {
     "title": "Meus Centros de Distribuição",
     "subtitle": "Edite os dados dos CDs que você opera e acompanhe os anúncios vinculados.",
