@@ -251,8 +251,15 @@
     "rainforest": "Rainforest"
   },
   "sell": {
-    "title": "Mis anuncios",
+    "title": "Mis Anuncios",
     "newListing": "Nuevo anuncio",
+    "estoqueBtn": "Stock",
+    "estoqueDialog": {
+      "title": "Stock — {{produto}}",
+      "close": "Cerrar",
+      "noCd": "Este anuncio aún no está vinculado a ningún Centro de Distribución.",
+      "linkCta": "Vincular Centro de Distribución"
+    },
     "noListings": "Aún no tienes anuncios. ¡Crea el primero!",
     "edit": "Editar",
     "pause": "Pausar",
