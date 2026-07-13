@@ -1881,5 +1881,21 @@
     "body": "Your suggested category \"{{name}}\" was approved. You can now edit your listing to use it.",
     "close": "Close",
     "goToSell": "Go to my listings"
+  },
+  "destaquePage": {
+    "badge": "Featured",
+    "title": "Feature your listing on the home page",
+    "intro": "Featured listings appear on the Dashboard carousel and at the top of the Buy screen, gaining much more visibility.",
+    "pricesTitle": "Available packages",
+    "pricesSubtitle": "Choose how many days your listing will be featured.",
+    "priceHint": "One-time payment, no auto-renewal.",
+    "myAdsTitle": "My listings",
+    "myAdsSubtitle": "Pick an active listing to feature.",
+    "noAds": "You have no active listings to feature yet.",
+    "bigButton": "Feature this listing on the home page",
+    "bigButtonRenew": "Renew / extend feature",
+    "ctaCardTitle": "Your listing could be featured here",
+    "ctaCardSubtitle": "Get visibility on the Dashboard and Buy screen.",
+    "ctaCardAction": "Feature now"
   }
 }
