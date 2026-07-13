@@ -11,6 +11,7 @@ import { formatMoney } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+import { distanceKm } from "@/lib/geo";
 import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
 
 
