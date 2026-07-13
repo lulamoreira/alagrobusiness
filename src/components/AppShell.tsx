@@ -248,6 +248,7 @@ function GroupBlock({ group, pathname, unreadMessages, isPro, onNavigate }: Grou
                 active={isPathActive(pathname, item.to)}
                 badge={badge}
                 isPro={isPro}
+            isOperator={isOperator}
                 onNavigate={onNavigate}
               />
             );
@@ -290,6 +291,7 @@ function NavTree({
         active={isPathActive(pathname, SOLO_TOP.to)}
         badge={0}
         isPro={isPro}
+            isOperator={isOperator}
         onNavigate={onNavigate}
       />
       {/* First: Negócios */}
@@ -302,6 +304,7 @@ function NavTree({
             pathname={pathname}
             unreadMessages={unreadMessages}
             isPro={isPro}
+            isOperator={isOperator}
             onNavigate={onNavigate}
           />
         ))}
@@ -311,6 +314,7 @@ function NavTree({
         active={isPathActive(pathname, SOLO_MESSAGES.to)}
         badge={unreadMessages}
         isPro={isPro}
+            isOperator={isOperator}
         onNavigate={onNavigate}
       />
       {/* Rest */}
@@ -323,6 +327,7 @@ function NavTree({
             pathname={pathname}
             unreadMessages={unreadMessages}
             isPro={isPro}
+            isOperator={isOperator}
             onNavigate={onNavigate}
           />
         ))}
@@ -358,6 +363,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             adminHas={adminHas}
             adminHasAny={adminHasAny}
             isPro={isPro}
+            isOperator={isOperator}
             unreadMessages={unreadMessages}
           />
         </nav>
@@ -438,6 +444,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 adminHas={adminHas}
             adminHasAny={adminHasAny}
                 isPro={isPro}
+            isOperator={isOperator}
                 unreadMessages={unreadMessages}
                 onNavigate={() => setMobileOpen(false)}
               />
