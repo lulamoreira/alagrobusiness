@@ -231,7 +231,37 @@ function AdminCdsPage() {
     qc.invalidateQueries({ queryKey: ["admin", "cds"] });
   };
 
+  const aprovar = async (id: string) => {
+    const { error } = await supabase
+      .from("centros_distribuicao")
+      .update({ aprovado: true })
+      .eq("id", id);
+    if (error) {
+      toast.error(t("common.error"));
+      return;
+    }
+    toast.success(t("adminCds.approved"));
+    qc.invalidateQueries({ queryKey: ["admin", "cds"] });
+  };
+
+  const recusar = async (id: string) => {
+    if (!confirm(t("adminCds.confirmReject"))) return;
+    const { error } = await supabase
+      .from("centros_distribuicao")
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) {
+      toast.error(t("common.error"));
+      return;
+    }
+    toast.success(t("adminCds.rejected"));
+    qc.invalidateQueries({ queryKey: ["admin", "cds"] });
+  };
+
   const rows = data ?? [];
+  const pendingRows = rows.filter((r) => !r.aprovado);
+  const approvedRows = rows.filter((r) => r.aprovado);
+
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:px-6">
