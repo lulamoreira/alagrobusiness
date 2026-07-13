@@ -329,7 +329,14 @@
     "results_one": "{{count}} result",
     "noPhoto": "No photo",
     "results_other": "{{count}} results",
-    "cdBadge": "DC"
+    "cdBadge": "DC",
+    "cdFilter": "Distribution Center",
+    "cdAll": "All DCs",
+    "cdOptionWithKm": "{{nome}} — {{cidade}}/{{estado}} · {{km}} km",
+    "cdOption": "{{nome}} — {{cidade}}/{{estado}}",
+    "nearMe": "Near me",
+    "radiusKm": "Radius (km)",
+    "needLocationHint": "Set your location in profile to enable proximity."
   },
   "detail": {
     "interested": "I'm interested",
