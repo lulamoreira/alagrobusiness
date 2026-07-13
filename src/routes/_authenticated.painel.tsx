@@ -107,9 +107,6 @@ function PainelPage() {
   const formatValueInUserCurrency = (valorBRL: number) =>
     formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
 
-  const preferredDolarRow = dolar?.find((d) => d.tipo === userDolarPref);
-  const preferredDolarHistory = dolarGroups.get(userDolarPref) ?? [];
-  const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
 
   return (
     <div className="space-y-4 md:space-y-8">
