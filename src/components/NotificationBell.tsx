@@ -161,6 +161,7 @@ export function NotificationBell() {
               {items.map((n) => {
                 const msg = renderMessage(n, t);
                 const title = renderTitle(n, t);
+                const typeLabel = formatNotifType(n.tipo, t);
                 return (
                   <li key={n.id}>
                     <button
@@ -178,8 +179,11 @@ export function NotificationBell() {
                         )}
                       />
                       <div className="min-w-0 flex-1">
+                        <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/40 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                          {typeLabel}
+                        </span>
                         {title && (
-                          <p className="truncate text-xs font-semibold">{title}</p>
+                          <p className="mt-1 truncate text-xs font-semibold">{title}</p>
                         )}
                         <p className="line-clamp-2 text-[11px] text-muted-foreground">
                           {msg}
