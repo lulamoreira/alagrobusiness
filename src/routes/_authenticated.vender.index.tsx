@@ -274,6 +274,89 @@ function SellPage() {
           onClose={() => setDestaqueDialog(null)}
         />
       )}
+      {estoqueDialog && (
+        <EstoqueDialog
+          anuncio={estoqueDialog}
+          unidades={unidades ?? []}
+          onClose={() => setEstoqueDialog(null)}
+        />
+      )}
     </div>
+  );
+}
+
+function EstoqueDialog({
+  anuncio,
+  unidades,
+  onClose,
+}: {
+  anuncio: AnuncioRow;
+  unidades: Array<{ id: string; nome_chave: string }>;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const unidadeChave =
+    unidades.find((u) => u.id === anuncio.quantidade_unidade_id)?.nome_chave ?? null;
+
+  const { data: centros, isLoading } = useQuery({
+    queryKey: ["anuncio_centros_full", anuncio.id],
+    queryFn: async () => {
+      const { data: links } = await supabase
+        .from("anuncio_centros")
+        .select("centro_id")
+        .eq("anuncio_id", anuncio.id);
+      const ids = (links ?? []).map((l) => l.centro_id);
+      if (ids.length === 0) return [];
+      const { data: cds } = await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .in("id", ids)
+        .is("deleted_at", null);
+      return cds ?? [];
+    },
+  });
+
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{t("sell.estoqueDialog.title", { produto: anuncio.produto })}</DialogTitle>
+        </DialogHeader>
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
+        ) : !centros || centros.length === 0 ? (
+          <div className="space-y-3 rounded-2xl border border-dashed border-border bg-card/40 p-6 text-center">
+            <p className="text-sm text-muted-foreground">{t("sell.estoqueDialog.noCd")}</p>
+            <PillButton
+              onClick={() => {
+                onClose();
+                navigate({ to: "/vender/editar/$id", params: { id: anuncio.id } });
+              }}
+            >
+              {t("sell.estoqueDialog.linkCta")}
+            </PillButton>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {centros.map((c) => (
+              <div key={c.id} className="rounded-2xl border border-border bg-card/60 p-4">
+                <p className="mb-3 font-display text-sm font-semibold text-foreground">
+                  {c.nome}
+                  <span className="ml-1 text-xs font-normal text-muted-foreground">
+                    · {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
+                  </span>
+                </p>
+                <EstoquePanel
+                  anuncioId={anuncio.id}
+                  centroId={c.id}
+                  unidadeChave={unidadeChave}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
