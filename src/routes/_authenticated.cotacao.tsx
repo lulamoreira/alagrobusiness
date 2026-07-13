@@ -37,7 +37,6 @@ function CotacaoPage() {
 
   const [commodityRange, setCommodityRange] = useState<Range>(7);
   const [dolarRange, setDolarRange] = useState<Range>(7);
-  const [selectedDolar, setSelectedDolar] = useState<DolarTipo>(userDolarPref);
   const [savingPrefs, setSavingPrefs] = useState(false);
 
   const { data: catalog = [] } = useCommoditiesCatalog();
@@ -45,12 +44,14 @@ function CotacaoPage() {
 
   const [draftCommodities, setDraftCommodities] = useState<string[]>([]);
   const [draftDolar, setDraftDolar] = useState<string[]>([]);
+  const seededRef = useRef(false);
 
-  // Sincroniza drafts quando carregar preferências
-  useMemo(() => {
-    if (prefs) {
+  // Seed drafts once when preferences first load; do NOT clobber user edits on refetch.
+  useEffect(() => {
+    if (prefs && !seededRef.current) {
       setDraftCommodities(prefs.cotacoes_selecionadas);
       setDraftDolar(prefs.tipos_dolar_visiveis);
+      seededRef.current = true;
     }
   }, [prefs]);
 
