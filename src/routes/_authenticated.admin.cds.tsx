@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power, Users } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminPerms } from "@/lib/adminPerms";
@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { CdOperadoresDialog } from "@/components/CdOperadoresDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/cds")({
   component: AdminCdsPage,
@@ -72,6 +73,7 @@ function AdminCdsPage() {
   const qc = useQueryClient();
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
+  const [operadoresFor, setOperadoresFor] = useState<{ id: string; nome: string } | null>(null);
 
   const schema = useMemo(
     () =>
@@ -343,6 +345,14 @@ function AdminCdsPage() {
                   <Power className="h-3.5 w-3.5" />
                   {r.ativo ? t("adminCds.deactivate") : t("adminCds.activate")}
                 </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setOperadoresFor({ id: r.id, nome: r.nome })}
+                  className="gap-1"
+                >
+                  <Users className="h-3.5 w-3.5" /> {t("adminCds.operadores.manage")}
+                </Button>
                 <Button variant="outline" size="sm" onClick={() => openEdit(r)} className="gap-1">
                   <Pencil className="h-3.5 w-3.5" /> {t("common.edit")}
                 </Button>
@@ -353,6 +363,15 @@ function AdminCdsPage() {
             </li>
           ))}
         </ul>
+      )}
+
+      {operadoresFor && (
+        <CdOperadoresDialog
+          open={!!operadoresFor}
+          onOpenChange={(o) => !o && setOperadoresFor(null)}
+          centroId={operadoresFor.id}
+          centroNome={operadoresFor.nome}
+        />
       )}
     </div>
   );

@@ -47,6 +47,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
 import { useAdminPerms } from "@/lib/adminPerms";
+import { useMyCdsCount } from "@/hooks/useMyCdsCount";
 
 type BadgeKey = "messages";
 
@@ -57,6 +58,7 @@ interface NavItem {
   badgeKey?: BadgeKey;
   pro?: boolean;
   permKey?: import("@/lib/adminPerms").AdminResource;
+  operatorOnly?: boolean;
 }
 
 interface NavGroup {
@@ -91,6 +93,7 @@ const GROUPS: NavGroup[] = [
       { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
       { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
       { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
+      { to: "/meus-cds", labelKey: "nav.myCds", icon: Warehouse, operatorOnly: true },
     ],
   },
   {
@@ -260,6 +263,7 @@ function NavTree({
   adminHas,
   adminHasAny,
   isPro,
+  isOperator,
   unreadMessages,
   onNavigate,
 }: {
@@ -267,6 +271,7 @@ function NavTree({
   adminHas: (r: import("@/lib/adminPerms").AdminResource) => boolean;
   adminHasAny: boolean;
   isPro: boolean;
+  isOperator: boolean;
   unreadMessages: number;
   onNavigate?: () => void;
 }) {
@@ -275,7 +280,7 @@ function NavTree({
     .map((g) =>
       g.id === "admin"
         ? { ...g, items: g.items.filter((i) => !i.permKey || adminHas(i.permKey)) }
-        : g,
+        : { ...g, items: g.items.filter((i) => !i.operatorOnly || isOperator) },
     )
     .filter((g) => g.items.length > 0);
   return (
@@ -334,6 +339,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { isPro } = usePlan();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { has: adminHas, hasAny: adminHasAny } = useAdminPerms();
+  const myCdsCount = useMyCdsCount();
+  const isOperator = myCdsCount > 0;
 
 
   return (
@@ -351,6 +358,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             adminHas={adminHas}
             adminHasAny={adminHasAny}
             isPro={isPro}
+            isOperator={isOperator}
             unreadMessages={unreadMessages}
           />
         </nav>
@@ -431,6 +439,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 adminHas={adminHas}
             adminHasAny={adminHasAny}
                 isPro={isPro}
+            isOperator={isOperator}
                 unreadMessages={unreadMessages}
                 onNavigate={() => setMobileOpen(false)}
               />
