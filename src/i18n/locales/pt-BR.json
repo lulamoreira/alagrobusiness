@@ -329,7 +329,14 @@
     "results_one": "{{count}} resultado",
     "noPhoto": "Sem foto",
     "results_other": "{{count}} resultados",
-    "cdBadge": "CD"
+    "cdBadge": "CD",
+    "cdFilter": "Centro de Distribuição",
+    "cdAll": "Todos os CDs",
+    "cdOptionWithKm": "{{nome}} — {{cidade}}/{{estado}} · {{km}} km",
+    "cdOption": "{{nome}} — {{cidade}}/{{estado}}",
+    "nearMe": "Perto de mim",
+    "radiusKm": "Raio (km)",
+    "needLocationHint": "Defina sua localização no perfil para ativar proximidade."
   },
   "detail": {
     "interested": "Tenho interesse",
