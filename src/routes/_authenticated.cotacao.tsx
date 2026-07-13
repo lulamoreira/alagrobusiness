@@ -313,7 +313,7 @@ function CotacaoPage() {
 
                   {current && (
                     <>
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex flex-wrap items-baseline gap-2">
                         <span className="font-display text-2xl font-bold text-foreground tabular-nums">
                           {formatDolarValue(Number(current.valor_brl), i18n.language)}
                         </span>
@@ -387,7 +387,7 @@ function CotacaoPage() {
                     )}
                   </header>
 
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex flex-wrap items-baseline gap-2">
                     <span className="font-display text-2xl font-bold text-primary tabular-nums">
                       {formatValueInUserCurrency(latest.valor)}
                     </span>
