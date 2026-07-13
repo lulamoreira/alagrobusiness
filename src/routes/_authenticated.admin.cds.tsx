@@ -34,6 +34,7 @@ interface CdRow {
   longitude: number | null;
   capacidade: string | null;
   ativo: boolean;
+  aprovado: boolean;
   created_at: string;
 }
 
