@@ -253,6 +253,8 @@
   "sell": {
     "title": "Meus Anúncios",
     "newListing": "Novo anúncio",
+    "moreActions": "Mais ações",
+    "destaqueAteShort": "★ Destaque até {{data}}",
     "estoqueBtn": "Estoque",
     "estoqueDialog": {
       "title": "Estoque — {{produto}}",
