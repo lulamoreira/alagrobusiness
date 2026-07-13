@@ -48,6 +48,7 @@ function Chip({
 
 function BuyPage() {
   const { t } = useTranslation();
+  const { profile } = useAuth();
   const [search, setSearch] = useState("");
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
@@ -60,6 +61,13 @@ function BuyPage() {
   const [priceMax, setPriceMax] = useState("");
   const [sort, setSort] = useState<SortKey>("recent");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [cdFilter, setCdFilter] = useState<string | null>(null);
+  const [nearMe, setNearMe] = useState(false);
+  const [radiusKm, setRadiusKm] = useState("150");
+
+  const buyerLat = profile?.latitude ?? null;
+  const buyerLng = profile?.longitude ?? null;
+  const hasLocation = buyerLat != null && buyerLng != null;
 
   const { data: startupIds } = useQuery({
     queryKey: ["startup_pme_seller_ids"],
