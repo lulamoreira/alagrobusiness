@@ -345,6 +345,14 @@ function AdminCdsPage() {
                   <Power className="h-3.5 w-3.5" />
                   {r.ativo ? t("adminCds.deactivate") : t("adminCds.activate")}
                 </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setOperadoresFor({ id: r.id, nome: r.nome })}
+                  className="gap-1"
+                >
+                  <Users className="h-3.5 w-3.5" /> {t("adminCds.operadores.manage")}
+                </Button>
                 <Button variant="outline" size="sm" onClick={() => openEdit(r)} className="gap-1">
                   <Pencil className="h-3.5 w-3.5" /> {t("common.edit")}
                 </Button>
@@ -355,6 +363,15 @@ function AdminCdsPage() {
             </li>
           ))}
         </ul>
+      )}
+
+      {operadoresFor && (
+        <CdOperadoresDialog
+          open={!!operadoresFor}
+          onOpenChange={(o) => !o && setOperadoresFor(null)}
+          centroId={operadoresFor.id}
+          centroNome={operadoresFor.nome}
+        />
       )}
     </div>
   );
