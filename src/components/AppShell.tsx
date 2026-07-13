@@ -9,6 +9,7 @@ import { AmbientGlow } from "./AmbientGlow";
 import { PlanBadge, PlanBanner } from "./PlanStatus";
 import { usePlan } from "@/lib/plan";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
+import { NotificationBell } from "./NotificationBell";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -369,6 +370,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="ml-auto flex items-center gap-3">
           <PlanBadge />
+          <NotificationBell />
           <LanguageSelector />
           <div className="hidden items-center gap-2 md:flex">
             <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">

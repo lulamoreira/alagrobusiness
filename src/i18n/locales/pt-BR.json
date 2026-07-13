@@ -1171,7 +1171,18 @@
     "adminGrantedTitle": "Você agora é administrador",
     "adminGrantedMsg": "Um novo perfil de administrador foi concedido a você. Faça login novamente para ver as áreas liberadas.",
     "adminRevokedTitle": "Acesso de administrador removido",
-    "adminRevokedMsg": "Seu acesso de administrador foi removido."
+    "adminRevokedMsg": "Seu acesso de administrador foi removido.",
+    "title": "Notificações",
+    "bellAria": "Notificações",
+    "empty": "Sem notificações.",
+    "markAllRead": "Marcar todas como lidas",
+    "negociacaoMovedTo": "Negociação movida para \"{{status}}\"",
+    "time": {
+      "now": "agora",
+      "minutes": "{{count}} min",
+      "hours": "{{count}} h",
+      "days": "{{count}} d"
+    }
   },
   "public": {
     "learnMore": "Conheça a plataforma",
