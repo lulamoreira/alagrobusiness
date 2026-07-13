@@ -31,6 +31,7 @@ interface CdRow {
   longitude: number | null;
   capacidade: string | null;
   ativo: boolean;
+  aprovado: boolean;
 }
 
 type FormState = {
