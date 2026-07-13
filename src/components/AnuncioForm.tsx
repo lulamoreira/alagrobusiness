@@ -408,6 +408,34 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>
 
+      {catalogoHabilitaCd(catalogoNodes ?? [], catalogoItemId) && (
+        <div className="rounded-2xl border border-primary/40 bg-primary/5 p-4">
+          <div className="flex flex-wrap items-start gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-primary/15 text-primary">
+              <Warehouse className="h-5 w-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-display text-sm font-bold text-foreground">
+                {t("cdSelf.ctaFormTitle")}
+              </h3>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {t("cdSelf.ctaFormDesc")}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCdDialogOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+            >
+              {t("cdSelf.ctaBtn")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <CdSelfRegisterDialog open={cdDialogOpen} onOpenChange={setCdDialogOpen} />
+
+
       {!isServico && (
         <div className="grid gap-4 md:grid-cols-2">
           <DarkInput
