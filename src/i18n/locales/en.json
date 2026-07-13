@@ -1670,6 +1670,21 @@
     "product": "Product",
     "openAd": "Open listing"
   },
+  "estoque": {
+    "title": "Stock",
+    "saldo": "Current balance",
+    "entrada": "Inbound",
+    "saida": "Outbound",
+    "quantidade": "Quantity",
+    "observacao": "Note (optional)",
+    "adicionar": "Add",
+    "adicionado": "Movement recorded.",
+    "historico": "History",
+    "historicoVazio": "No movements recorded yet.",
+    "saldoInsuficiente": "Insufficient balance for this outbound.",
+    "quantidadeInvalida": "Enter a valid quantity.",
+    "semCd": "Link a Distribution Center to this listing to track stock."
+  },
   "catalogo": {
     "selectRoot": "Select a category…",
     "selectSub": "Select…"
