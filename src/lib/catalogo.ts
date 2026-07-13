@@ -12,6 +12,7 @@ export interface CatalogoNode {
   icone: string | null;
   tipo: CatalogoTipo;
   segmento: CatalogoSegmento | null;
+  habilita_cd?: boolean;
 }
 
 
