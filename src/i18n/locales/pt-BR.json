@@ -1881,5 +1881,21 @@
     "body": "A categoria \"{{name}}\" que você sugeriu foi aprovada. Você já pode editar seu anúncio para usá-la.",
     "close": "Fechar",
     "goToSell": "Ir para meus anúncios"
+  },
+  "destaquePage": {
+    "badge": "Destaque",
+    "title": "Destaque seu anúncio na página inicial",
+    "intro": "Anúncios em destaque aparecem no carrossel do Painel e no topo da tela de Comprar, ganhando muito mais visibilidade.",
+    "pricesTitle": "Pacotes disponíveis",
+    "pricesSubtitle": "Escolha por quantos dias seu anúncio ficará em destaque.",
+    "priceHint": "Pagamento único, sem renovação automática.",
+    "myAdsTitle": "Meus anúncios",
+    "myAdsSubtitle": "Selecione um anúncio ativo para destacar.",
+    "noAds": "Você ainda não tem anúncios ativos para destacar.",
+    "bigButton": "Destaque seu anúncio na página inicial aqui",
+    "bigButtonRenew": "Renovar / estender destaque",
+    "ctaCardTitle": "Seu anúncio pode estar destacado aqui",
+    "ctaCardSubtitle": "Ganhe visibilidade no Painel e no Comprar.",
+    "ctaCardAction": "Destacar agora"
   }
 }
