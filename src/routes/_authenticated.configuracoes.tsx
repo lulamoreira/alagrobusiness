@@ -242,6 +242,9 @@ function WeatherLocationsSection() {
     try {
       await removeLocal(id);
       qc.invalidateQueries({ queryKey: ["clima_locais", user?.id] });
+    } catch (err) {
+      console.error("removeLocal failed:", err);
+      toast.error(t("weatherLocations.removeError"));
     } finally {
       setBusy(false);
     }
