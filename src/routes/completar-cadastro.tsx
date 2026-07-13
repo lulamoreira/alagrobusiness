@@ -213,11 +213,15 @@ function CompleteProfilePage() {
               onChange={(e) => setCidade(e.target.value)}
               error={errors.cidade ? t(errors.cidade) : undefined}
             />
-            <DarkInput
-              label={t("onboarding.cep")}
-              value={cep}
-              onChange={(e) => setCep(e.target.value)}
-            />
+            <div>
+              <DarkInput
+                label={t("onboarding.cep")}
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+                onBlur={handleCepBlur}
+              />
+              {geoInfo && <p className="mt-1 text-xs text-primary">{geoInfo}</p>}
+            </div>
           </div>
 
           <div>
