@@ -329,7 +329,14 @@
     "results_one": "{{count}} resultado",
     "noPhoto": "Sin foto",
     "results_other": "{{count}} resultados",
-    "cdBadge": "CD"
+    "cdBadge": "CD",
+    "cdFilter": "Centro de Distribución",
+    "cdAll": "Todos los CDs",
+    "cdOptionWithKm": "{{nome}} — {{cidade}}/{{estado}} · {{km}} km",
+    "cdOption": "{{nome}} — {{cidade}}/{{estado}}",
+    "nearMe": "Cerca de mí",
+    "radiusKm": "Radio (km)",
+    "needLocationHint": "Configura tu ubicación en el perfil para activar la proximidad."
   },
   "detail": {
     "interested": "Me interesa",
@@ -380,7 +387,8 @@
     "sem_fotos": "Sin fotos.",
     "close": "Cerrar",
     "cdsAvailable": "Disponible vía Centro de Distribución",
-    "cdsItem": "{{nome}} — {{cidade}}/{{estado}}"
+    "cdsItem": "{{nome}} — {{cidade}}/{{estado}}",
+    "cdDistance": "· {{km}} km de ti",
   },
   "messages": {
     "title": "Mensajes",

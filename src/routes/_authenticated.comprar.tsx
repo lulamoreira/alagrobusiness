@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
+import { distanceKm } from "@/lib/geo";
 import { cn } from "@/lib/utils";
 
 
@@ -46,6 +48,7 @@ function Chip({
 
 function BuyPage() {
   const { t } = useTranslation();
+  const { profile } = useAuth();
   const [search, setSearch] = useState("");
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
@@ -58,6 +61,13 @@ function BuyPage() {
   const [priceMax, setPriceMax] = useState("");
   const [sort, setSort] = useState<SortKey>("recent");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [cdFilter, setCdFilter] = useState<string | null>(null);
+  const [nearMe, setNearMe] = useState(false);
+  const [radiusKm, setRadiusKm] = useState("150");
+
+  const buyerLat = profile?.latitude ?? null;
+  const buyerLng = profile?.longitude ?? null;
+  const hasLocation = buyerLat != null && buyerLng != null;
 
   const { data: startupIds } = useQuery({
     queryKey: ["startup_pme_seller_ids"],
@@ -123,6 +133,75 @@ function BuyPage() {
     staleTime: 1000 * 60 * 30,
   });
 
+  const { data: cds } = useQuery({
+    queryKey: ["cds_ativos_comprar"],
+    queryFn: async () =>
+      (
+        await supabase
+          .from("centros_distribuicao")
+          .select("id, nome, cidade, estado, latitude, longitude")
+          .eq("ativo", true)
+          .is("deleted_at", null)
+          .order("nome", { ascending: true })
+      ).data ?? [],
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const anuncioIds = useMemo(
+    () => (anuncios ?? []).map((a) => a.id),
+    [anuncios],
+  );
+
+  const { data: anuncioCentrosLinks } = useQuery({
+    queryKey: ["anuncio_centros_map", anuncioIds.join(",")],
+    enabled: anuncioIds.length > 0,
+    queryFn: async () =>
+      (
+        await supabase
+          .from("anuncio_centros")
+          .select("anuncio_id, centro_id")
+          .in("anuncio_id", anuncioIds)
+      ).data ?? [],
+  });
+
+  const anuncioToCds = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const link of anuncioCentrosLinks ?? []) {
+      const cur = map.get(link.anuncio_id) ?? [];
+      cur.push(link.centro_id);
+      map.set(link.anuncio_id, cur);
+    }
+    return map;
+  }, [anuncioCentrosLinks]);
+
+  const cdsWithDistance = useMemo(() => {
+    const list = (cds ?? []).map((c) => ({
+      ...c,
+      km: hasLocation ? distanceKm(buyerLat, buyerLng, c.latitude, c.longitude) : null,
+    }));
+    if (hasLocation) {
+      list.sort((a, b) => {
+        const ax = a.km ?? Number.POSITIVE_INFINITY;
+        const bx = b.km ?? Number.POSITIVE_INFINITY;
+        return ax - bx;
+      });
+    }
+    return list;
+  }, [cds, hasLocation, buyerLat, buyerLng]);
+
+  const radiusNum = Number(radiusKm) || 0;
+  const nearbyCdIds = useMemo(() => {
+    if (!nearMe || !hasLocation) return null;
+    return new Set(
+      cdsWithDistance.filter((c) => c.km != null && c.km <= radiusNum).map((c) => c.id),
+    );
+  }, [nearMe, hasLocation, cdsWithDistance, radiusNum]);
+
+  const cdOptions = useMemo(
+    () => (nearbyCdIds ? cdsWithDistance.filter((c) => nearbyCdIds.has(c.id)) : cdsWithDistance),
+    [cdsWithDistance, nearbyCdIds],
+  );
+
   const vendedorIds = useMemo(
     () => Array.from(new Set((anuncios ?? []).map((a) => a.vendedor_id))),
     [anuncios],
@@ -164,10 +243,20 @@ function BuyPage() {
     if (priceMin) list = list.filter((a) => Number(a.preco) >= Number(priceMin));
     if (priceMax) list = list.filter((a) => Number(a.preco) <= Number(priceMax));
 
+    if (cdFilter) {
+      list = list.filter((a) => (anuncioToCds.get(a.id) ?? []).includes(cdFilter));
+    }
+    if (nearbyCdIds) {
+      list = list.filter((a) => {
+        const linked = anuncioToCds.get(a.id) ?? [];
+        return linked.some((cid) => nearbyCdIds.has(cid));
+      });
+    }
+
     if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
     else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
     return list;
-  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
+  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort, cdFilter, nearbyCdIds, anuncioToCds]);
 
   const clearFilters = () => {
     setCatalogoFilter(null);
@@ -179,6 +268,8 @@ function BuyPage() {
     setDelivery(null);
     setPriceMin("");
     setPriceMax("");
+    setCdFilter(null);
+    setNearMe(false);
   };
 
   const toggleCert = (c: string) =>
@@ -296,6 +387,66 @@ function BuyPage() {
               onChange={(e) => setPriceMax(e.target.value)}
             />
           </div>
+
+          <div className="grid gap-3 md:grid-cols-[2fr_auto_1fr]">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("buy.cdFilter")}
+              </label>
+              <select
+                value={cdFilter ?? ""}
+                onChange={(e) => setCdFilter(e.target.value || null)}
+                className="w-full rounded-xl border border-border bg-card px-3 py-2 text-xs text-foreground outline-none focus:border-primary"
+              >
+                <option value="">{t("buy.cdAll")}</option>
+                {cdOptions.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.km != null
+                      ? t("buy.cdOptionWithKm", {
+                          nome: c.nome,
+                          cidade: c.cidade ?? "—",
+                          estado: c.estado ?? "—",
+                          km: c.km.toFixed(0),
+                        })
+                      : t("buy.cdOption", {
+                          nome: c.nome,
+                          cidade: c.cidade ?? "—",
+                          estado: c.estado ?? "—",
+                        })}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("buy.nearMe")}
+              </label>
+              <button
+                type="button"
+                disabled={!hasLocation}
+                onClick={() => setNearMe((v) => !v)}
+                className={cn(
+                  "rounded-full border px-3 py-2 text-xs font-medium transition-all",
+                  nearMe
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-muted-foreground hover:text-foreground",
+                  !hasLocation && "cursor-not-allowed opacity-50",
+                )}
+              >
+                {t("buy.nearMe")}
+              </button>
+            </div>
+            <DarkInput
+              label={t("buy.radiusKm")}
+              type="number"
+              value={radiusKm}
+              onChange={(e) => setRadiusKm(e.target.value)}
+              disabled={!hasLocation || !nearMe}
+            />
+          </div>
+          {!hasLocation && (
+            <p className="text-xs text-muted-foreground">{t("buy.needLocationHint")}</p>
+          )}
         </div>
       )}
 
