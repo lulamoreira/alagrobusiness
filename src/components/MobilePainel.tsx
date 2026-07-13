@@ -304,27 +304,28 @@ function QuotesMobile() {
 
   return (
     <div className="-mx-1 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-1">
-      {showDolar && preferredDolarRow && (
+      {dolarCards.map((card) => (
         <Link
+          key={card.tipo}
           to="/cotacao"
           className="min-w-[9rem] shrink-0 snap-start rounded-xl border border-primary/40 bg-card p-3"
         >
           <div className="truncate text-[10px] uppercase tracking-wide text-primary/90">
-            {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
+            {t("quote.dollarTitle")} · {t(`quote.${card.tipo}`)}
           </div>
           <div className="mt-1 font-display text-base font-bold text-foreground tabular-nums truncate">
-            {formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)}
+            {formatDolarValue(card.valor, i18n.language)}
           </div>
           <div className="mt-1">
             <VariationBadge
-              variation={preferredDolarVariation}
+              variation={card.variation}
               locale={i18n.language}
               formatDelta={(v) => formatDolarValue(v, i18n.language)}
               size="sm"
             />
           </div>
         </Link>
-      )}
+      ))}
       {featured.map((c) => {
         const history = commodityGroups.get(c.codigo) ?? [];
         const latest = history[history.length - 1];
