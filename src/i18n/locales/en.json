@@ -1171,7 +1171,18 @@
     "adminGrantedTitle": "You are now an administrator",
     "adminGrantedMsg": "A new administrator profile has been granted to you. Sign in again to see the unlocked areas.",
     "adminRevokedTitle": "Administrator access removed",
-    "adminRevokedMsg": "Your administrator access has been removed."
+    "adminRevokedMsg": "Your administrator access has been removed.",
+    "title": "Notifications",
+    "bellAria": "Notifications",
+    "empty": "No notifications.",
+    "markAllRead": "Mark all as read",
+    "negociacaoMovedTo": "Negotiation moved to \"{{status}}\"",
+    "time": {
+      "now": "just now",
+      "minutes": "{{count}} min",
+      "hours": "{{count}} h",
+      "days": "{{count}} d"
+    }
   },
   "public": {
     "learnMore": "Discover the platform",
