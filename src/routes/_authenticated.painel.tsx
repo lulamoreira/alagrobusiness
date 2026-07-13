@@ -20,6 +20,7 @@ import { VariationBadge } from "@/components/VariationBadge";
 import { WeatherCard } from "@/components/WeatherCard";
 import { BusinessDashboard } from "@/components/BusinessDashboard";
 import { MobilePainel } from "@/components/MobilePainel";
+import { DestaquesCarousel } from "@/components/DestaquesCarousel";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   component: PainelPage,
