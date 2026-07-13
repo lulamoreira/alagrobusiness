@@ -553,6 +553,29 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
             </div>
           )}
 
+          <div className="rounded-2xl border border-border bg-card/40 p-4">
+            <label className="mb-1 block text-sm font-medium text-foreground">{t("form.distributionCenters")}</label>
+            <p className="mb-3 text-[11px] text-muted-foreground">{t("form.distributionCentersHint")}</p>
+            {(cds ?? []).length === 0 ? (
+              <p className="text-xs text-muted-foreground">{t("form.distributionCentersEmpty")}</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {(cds ?? []).map((c) => (
+                  <Pill
+                    key={c.id}
+                    active={centroIds.includes(c.id)}
+                    onClick={() => setCentroIds((s) => toggle(s, c.id))}
+                  >
+                    {c.nome}
+                    {(c.cidade || c.estado) && (
+                      <span className="ml-1 opacity-70">· {[c.cidade, c.estado].filter(Boolean).join("/")}</span>
+                    )}
+                  </Pill>
+                ))}
+              </div>
+            )}
+          </div>
+
         </>
       )}
 
