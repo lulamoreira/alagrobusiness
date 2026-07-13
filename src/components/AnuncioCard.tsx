@@ -44,6 +44,8 @@ interface AnuncioCardProps {
   sellerName?: string;
   sellerTipoPerfil?: string | null;
   hasCd?: boolean;
+  /** Compact layout used by carousels: numeric date, UF only, no seller name, fills height. */
+  compact?: boolean;
 }
 
 
