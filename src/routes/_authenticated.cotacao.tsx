@@ -287,7 +287,7 @@ function CotacaoPage() {
       </section>
 
       {/* Dollar */}
-      {dolarTiposAvailable.length > 0 && (
+      {dolarTiposWithData.length > 0 && (
         <section className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="font-display text-lg font-bold">{t("quote.dollarTitle")}</h2>
@@ -295,23 +295,28 @@ function CotacaoPage() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {dolarTiposAvailable.map((tipo) => (
-              <button
-                key={tipo}
-                type="button"
-                onClick={() => setSelectedDolar(tipo)}
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                  selectedDolar === tipo
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border bg-card text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {tipo === userDolarPref && <Star className="h-3 w-3 fill-primary text-primary" />}
-                {t(`quote.${tipo}`)}
-              </button>
-            ))}
+            {dolarTiposWithData.map((tipo) => {
+              const isVisible = dolarTiposAvailable.includes(tipo);
+              return (
+                <button
+                  key={tipo}
+                  type="button"
+                  onClick={() => toggleDolarVisibility(tipo)}
+                  aria-pressed={isVisible}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                    isVisible
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border bg-card text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {tipo === userDolarPref && <Star className="h-3 w-3 fill-primary text-primary" />}
+                  {t(`quote.${tipo}`)}
+                </button>
+              );
+            })}
           </div>
+
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {dolarTiposAvailable.map((tipo) => {
