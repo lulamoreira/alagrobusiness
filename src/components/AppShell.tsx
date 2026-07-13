@@ -9,6 +9,7 @@ import { AmbientGlow } from "./AmbientGlow";
 import { PlanBadge, PlanBanner } from "./PlanStatus";
 import { usePlan } from "@/lib/plan";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
+import { NotificationBell } from "./NotificationBell";
 import {
   LayoutDashboard,
   ShoppingCart,
