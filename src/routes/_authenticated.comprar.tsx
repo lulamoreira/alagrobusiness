@@ -133,6 +133,75 @@ function BuyPage() {
     staleTime: 1000 * 60 * 30,
   });
 
+  const { data: cds } = useQuery({
+    queryKey: ["cds_ativos_comprar"],
+    queryFn: async () =>
+      (
+        await supabase
+          .from("centros_distribuicao")
+          .select("id, nome, cidade, estado, latitude, longitude")
+          .eq("ativo", true)
+          .is("deleted_at", null)
+          .order("nome", { ascending: true })
+      ).data ?? [],
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const anuncioIds = useMemo(
+    () => (anuncios ?? []).map((a) => a.id),
+    [anuncios],
+  );
+
+  const { data: anuncioCentrosLinks } = useQuery({
+    queryKey: ["anuncio_centros_map", anuncioIds.join(",")],
+    enabled: anuncioIds.length > 0,
+    queryFn: async () =>
+      (
+        await supabase
+          .from("anuncio_centros")
+          .select("anuncio_id, centro_id")
+          .in("anuncio_id", anuncioIds)
+      ).data ?? [],
+  });
+
+  const anuncioToCds = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const link of anuncioCentrosLinks ?? []) {
+      const cur = map.get(link.anuncio_id) ?? [];
+      cur.push(link.centro_id);
+      map.set(link.anuncio_id, cur);
+    }
+    return map;
+  }, [anuncioCentrosLinks]);
+
+  const cdsWithDistance = useMemo(() => {
+    const list = (cds ?? []).map((c) => ({
+      ...c,
+      km: hasLocation ? distanceKm(buyerLat, buyerLng, c.latitude, c.longitude) : null,
+    }));
+    if (hasLocation) {
+      list.sort((a, b) => {
+        const ax = a.km ?? Number.POSITIVE_INFINITY;
+        const bx = b.km ?? Number.POSITIVE_INFINITY;
+        return ax - bx;
+      });
+    }
+    return list;
+  }, [cds, hasLocation, buyerLat, buyerLng]);
+
+  const radiusNum = Number(radiusKm) || 0;
+  const nearbyCdIds = useMemo(() => {
+    if (!nearMe || !hasLocation) return null;
+    return new Set(
+      cdsWithDistance.filter((c) => c.km != null && c.km <= radiusNum).map((c) => c.id),
+    );
+  }, [nearMe, hasLocation, cdsWithDistance, radiusNum]);
+
+  const cdOptions = useMemo(
+    () => (nearbyCdIds ? cdsWithDistance.filter((c) => nearbyCdIds.has(c.id)) : cdsWithDistance),
+    [cdsWithDistance, nearbyCdIds],
+  );
+
   const vendedorIds = useMemo(
     () => Array.from(new Set((anuncios ?? []).map((a) => a.vendedor_id))),
     [anuncios],
