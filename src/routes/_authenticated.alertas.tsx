@@ -68,34 +68,7 @@ const ICON_BY_TYPE: Record<string, typeof Bell> = {
 // Renderiza um titulo/mensagem armazenado como "i18nKey::arg1::arg2..." OU texto livre.
 function useEncodedRenderer() {
   const { t } = useTranslation();
-  return (raw: string | null | undefined): string => {
-    if (!raw) return "";
-    if (!raw.includes("::")) return t(raw, { defaultValue: raw });
-    const [key, ...args] = raw.split("::");
-    if (key === "alerts.notif.commodityTitle") {
-      const [product, condition, value, currency] = args;
-      return t(key, {
-        product: t(`commodities.${product}`, { defaultValue: product }),
-        condition: t(`alerts.${condition === "acima" ? "above" : "below"}`),
-        value: Number(value),
-        currency,
-      });
-    }
-    if (key === "alerts.notif.dolarTitle") {
-      const [type, condition, value, currency] = args;
-      return t(key, {
-        type: t(`quote.${type}`, { defaultValue: type }),
-        condition: t(`alerts.${condition === "acima" ? "above" : "below"}`),
-        value: Number(value),
-        currency,
-      });
-    }
-    if (key === "alerts.notif.message") {
-      const [current, currency] = args;
-      return t(key, { current: Number(current), currency });
-    }
-    return raw;
-  };
+  return (raw: string | null | undefined): string => formatNotifText(raw, t);
 }
 
 function AlertsPage() {
