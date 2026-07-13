@@ -43,6 +43,8 @@ function CompleteProfilePage() {
   const [lgpd, setLgpd] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
+  const [geoInfo, setGeoInfo] = useState<string | null>(null);
+  const [coords, setCoords] = useState<{ lat: number | null; lng: number | null }>({ lat: null, lng: null });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
