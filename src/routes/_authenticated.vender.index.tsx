@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles } from "lucide-react";
+import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles, Warehouse } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
+import { EstoquePanel } from "@/components/EstoquePanel";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
@@ -30,6 +32,8 @@ type AnuncioRow = {
   estado: string | null;
   cidade: string | null;
   destaque_ate: string | null;
+  tipo_oferta: "produto" | "servico" | null;
+
 };
 
 function PhotoThumb({ path, productLabel }: { path: string | null | undefined; productLabel: string }) {
@@ -56,6 +60,7 @@ function SellPage() {
   const [soldDialog, setSoldDialog] = useState<AnuncioRow | null>(null);
   const [soldToast, setSoldToast] = useState<string | null>(null);
   const [destaqueDialog, setDestaqueDialog] = useState<AnuncioRow | null>(null);
+  const [estoqueDialog, setEstoqueDialog] = useState<AnuncioRow | null>(null);
 
   const { data: anuncios, isLoading } = useQuery({
     queryKey: ["my_anuncios", user?.id],
@@ -218,6 +223,16 @@ function SellPage() {
                       {t("detail.destaque.buyCta")}
                     </button>
                   )}
+                  {(a.tipo_oferta ?? "produto") === "produto" && (
+                    <button
+                      type="button"
+                      onClick={() => setEstoqueDialog(a)}
+                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                    >
+                      <Warehouse className="h-3 w-3" />
+                      {t("sell.estoqueBtn")}
+                    </button>
+                  )}
                   <button
                     type="button"
                     disabled={busyId === a.id}
@@ -259,6 +274,89 @@ function SellPage() {
           onClose={() => setDestaqueDialog(null)}
         />
       )}
+      {estoqueDialog && (
+        <EstoqueDialog
+          anuncio={estoqueDialog}
+          unidades={unidades ?? []}
+          onClose={() => setEstoqueDialog(null)}
+        />
+      )}
     </div>
+  );
+}
+
+function EstoqueDialog({
+  anuncio,
+  unidades,
+  onClose,
+}: {
+  anuncio: AnuncioRow;
+  unidades: Array<{ id: string; nome_chave: string }>;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const unidadeChave =
+    unidades.find((u) => u.id === anuncio.quantidade_unidade_id)?.nome_chave ?? null;
+
+  const { data: centros, isLoading } = useQuery({
+    queryKey: ["anuncio_centros_full", anuncio.id],
+    queryFn: async () => {
+      const { data: links } = await supabase
+        .from("anuncio_centros")
+        .select("centro_id")
+        .eq("anuncio_id", anuncio.id);
+      const ids = (links ?? []).map((l) => l.centro_id);
+      if (ids.length === 0) return [];
+      const { data: cds } = await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .in("id", ids)
+        .is("deleted_at", null);
+      return cds ?? [];
+    },
+  });
+
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{t("sell.estoqueDialog.title", { produto: anuncio.produto })}</DialogTitle>
+        </DialogHeader>
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
+        ) : !centros || centros.length === 0 ? (
+          <div className="space-y-3 rounded-2xl border border-dashed border-border bg-card/40 p-6 text-center">
+            <p className="text-sm text-muted-foreground">{t("sell.estoqueDialog.noCd")}</p>
+            <PillButton
+              onClick={() => {
+                onClose();
+                navigate({ to: "/vender/editar/$id", params: { id: anuncio.id } });
+              }}
+            >
+              {t("sell.estoqueDialog.linkCta")}
+            </PillButton>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {centros.map((c) => (
+              <div key={c.id} className="rounded-2xl border border-border bg-card/60 p-4">
+                <p className="mb-3 font-display text-sm font-semibold text-foreground">
+                  {c.nome}
+                  <span className="ml-1 text-xs font-normal text-muted-foreground">
+                    · {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
+                  </span>
+                </p>
+                <EstoquePanel
+                  anuncioId={anuncio.id}
+                  centroId={c.id}
+                  unidadeChave={unidadeChave}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
