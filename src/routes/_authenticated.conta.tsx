@@ -359,6 +359,41 @@ function ContaPage() {
       </section>
 
       {/* My location */}
+      {/* Become a Distribution Center */}
+      <section className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10 text-primary">
+            <Warehouse className="h-6 w-6" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-lg font-bold">{t("cdSelf.contaTitle")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("cdSelf.contaDesc")}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setCdDialogOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+              >
+                <Warehouse className="h-3.5 w-3.5" />
+                {t("cdSelf.ctaBtn")}
+              </button>
+              {myCdsCount > 0 && (
+                <Link
+                  to="/meus-cds"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-5 py-2 text-xs font-bold text-foreground transition hover:bg-background"
+                >
+                  {t("cdSelf.gotoMine")}
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <CdSelfRegisterDialog open={cdDialogOpen} onOpenChange={setCdDialogOpen} />
+
+      {/* My location */}
       <section id="minha-localizacao" className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
         <div className="mb-4 flex items-start gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
