@@ -243,10 +243,20 @@ function BuyPage() {
     if (priceMin) list = list.filter((a) => Number(a.preco) >= Number(priceMin));
     if (priceMax) list = list.filter((a) => Number(a.preco) <= Number(priceMax));
 
+    if (cdFilter) {
+      list = list.filter((a) => (anuncioToCds.get(a.id) ?? []).includes(cdFilter));
+    }
+    if (nearbyCdIds) {
+      list = list.filter((a) => {
+        const linked = anuncioToCds.get(a.id) ?? [];
+        return linked.some((cid) => nearbyCdIds.has(cid));
+      });
+    }
+
     if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
     else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
     return list;
-  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort]);
+  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort, cdFilter, nearbyCdIds, anuncioToCds]);
 
   const clearFilters = () => {
     setCatalogoFilter(null);
@@ -258,6 +268,8 @@ function BuyPage() {
     setDelivery(null);
     setPriceMin("");
     setPriceMax("");
+    setCdFilter(null);
+    setNearMe(false);
   };
 
   const toggleCert = (c: string) =>
