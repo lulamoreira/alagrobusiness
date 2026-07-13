@@ -92,6 +92,7 @@ const GROUPS: NavGroup[] = [
       { to: "/financeiro", labelKey: "nav.finance", icon: Wallet, pro: true },
       { to: "/agenda", labelKey: "nav.agenda", icon: CalendarDays, pro: true },
       { to: "/relatorios", labelKey: "nav.reports", icon: BarChart3, pro: true },
+      { to: "/meus-cds", labelKey: "nav.myCds", icon: Warehouse, operatorOnly: true },
     ],
   },
   {
