@@ -109,7 +109,7 @@ export function AnuncioPhoto({
   );
 }
 
-export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil }: AnuncioCardProps) {
+export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfil, hasCd = false }: AnuncioCardProps) {
   const { t, i18n } = useTranslation();
   const { profile } = useAuth();
 
