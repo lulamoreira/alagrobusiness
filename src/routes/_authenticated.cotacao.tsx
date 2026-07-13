@@ -175,6 +175,28 @@ function CotacaoPage() {
     setDraftDolar([]);
   };
 
+  /** Toggle direto (chips do topo) — persiste na hora em preferencias.tipos_dolar_visiveis. */
+  const toggleDolarVisibility = async (tipo: DolarTipo) => {
+    if (!profile?.id) return;
+    const currentList = prefs?.tipos_dolar_visiveis ?? [];
+    // Se lista vazia (fallback = preferido), tratar como se o preferido estivesse ativo.
+    const effective = currentList.length === 0 ? [userDolarPref] : currentList;
+    const next = effective.includes(tipo)
+      ? effective.filter((t) => t !== tipo)
+      : [...effective, tipo];
+    // Reflete otimisticamente no draft para sincronizar checkboxes da Personalização.
+    setDraftDolar(next);
+    const { error } = await supabase
+      .from("preferencias")
+      .update({ tipos_dolar_visiveis: next })
+      .eq("usuario_id", profile.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    qc.invalidateQueries({ queryKey: ["preferencias_cotacoes"] });
+  };
+
   return (
     <div className="space-y-8">
       <header>
