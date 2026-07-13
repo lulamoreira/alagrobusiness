@@ -50,6 +50,7 @@ function EditPage() {
     cidade: data.cidade,
     cep: data.cep,
     fotos: data.fotos ?? [],
+    centro_ids: (centrosVinc ?? []).map((r) => r.centro_id),
     tipo_oferta: (data.tipo_oferta ?? "produto") as "produto" | "servico",
     servico_modelo_cobranca: (data.servico_modelo_cobranca ?? null) as "hora" | "projeto" | "mensal" | null,
     servico_area_atuacao: data.servico_area_atuacao ?? null,
