@@ -63,9 +63,12 @@ function ConfigPage() {
     setTheme(next);
   };
 
+  const qcRoot = useQueryClient();
+
   const save = async () => {
     if (!profile) return;
     setSaving(true);
+    const clampedSec = Math.max(2, Math.min(15, Math.round(destaqueSec) || 3));
     await supabase
       .from("profiles")
       .update({
@@ -82,9 +85,17 @@ function ConfigPage() {
           tipo_dolar: tipoDolar,
           idioma: i18n.language as SupportedLang,
           tema,
+          destaque_scroll_segundos: clampedSec,
         })
         .eq("usuario_id", profile.id);
+    } else {
+      await supabase
+        .from("preferencias")
+        .update({ destaque_scroll_segundos: clampedSec })
+        .eq("usuario_id", profile.id);
     }
+    setDestaqueSec(clampedSec);
+    qcRoot.invalidateQueries({ queryKey: ["preferencias_destaque_scroll", profile.id] });
     setSaving(false);
     setSaved(true);
     await refreshProfile();
