@@ -9,6 +9,7 @@ import { formatMoney } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
+import { toUF } from "@/lib/brStates";
 
 export interface AnuncioCardData {
   id: string;
