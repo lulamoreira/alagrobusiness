@@ -131,7 +131,7 @@ function AdminCdsPage() {
       const { data, error } = await supabase
         .from("centros_distribuicao")
         .select(
-          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo, created_at",
+          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo, aprovado, created_at",
         )
         .is("deleted_at", null)
         .order("nome", { ascending: true });
