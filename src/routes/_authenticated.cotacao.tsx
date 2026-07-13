@@ -325,7 +325,7 @@ function CotacaoPage() {
               const ranged = filterRange(history, dolarRange);
               const variation = computeVariation(history.map((h) => h.valor_brl));
               const isPreferred = tipo === userDolarPref;
-              const isSelected = tipo === selectedDolar;
+
 
               return (
                 <article
