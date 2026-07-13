@@ -1646,6 +1646,13 @@
     "deactivate": "Desactivar",
     "semLocal": "Sin ubicación",
     "confirmDelete": "¿Eliminar este CD?",
+    "confirmReject": "¿Rechazar este registro?",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "approved": "CD aprobado.",
+    "rejected": "Registro rechazado.",
+    "pendingSection": "Pendientes de aprobación ({{n}})",
+    "approvedSection": "Aprobados ({{n}})",
     "fields": {
       "nome": "Nombre",
       "descricao": "Descripción",
@@ -1681,6 +1688,19 @@
       "manage": "Gestionar operadores",
       "close": "Cerrar"
     }
+  },
+  "cdSelf": {
+    "title": "Registrar Centro de Distribución",
+    "subtitle": "Completa los datos de tu CD. La aprobación del admin es necesaria antes de la publicación pública.",
+    "contaTitle": "Conviértete en un Centro de Distribución",
+    "contaDesc": "Si ofreces almacenamiento, logística o procesamiento, registra tu CD para recibir y distribuir productos de la plataforma.",
+    "ctaBtn": "Registrar mi CD",
+    "ctaFormTitle": "¿Ofreces este servicio?",
+    "ctaFormDesc": "Registra tu Centro de Distribución para aparecer ante los vendedores de la plataforma.",
+    "gotoMine": "Ir a Mis CDs",
+    "submit": "Enviar para aprobación",
+    "createdPending": "CD creado — esperando aprobación.",
+    "pendingBadge": "Pendiente"
   },
   "meusCds": {
     "title": "Mis Centros de Distribución",

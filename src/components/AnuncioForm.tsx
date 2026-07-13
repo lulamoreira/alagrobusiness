@@ -12,7 +12,9 @@ import { uploadAnuncioPhoto, getSignedUrls } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
-import { fetchCatalogoAll, catalogoRootSegmento } from "@/lib/catalogo";
+import { fetchCatalogoAll, catalogoRootSegmento, catalogoHabilitaCd } from "@/lib/catalogo";
+import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
+import { Warehouse } from "lucide-react";
 
 
 
@@ -96,13 +98,14 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   });
 
   const { data: cds } = useQuery({
-    queryKey: ["cds_ativos_form"],
+    queryKey: ["cds_ativos_form", user?.id],
     queryFn: async () =>
       (await supabase
         .from("centros_distribuicao")
-        .select("id, nome, cidade, estado")
+        .select("id, nome, cidade, estado, aprovado, created_by")
         .eq("ativo", true)
         .is("deleted_at", null)
+        .or(user ? `aprovado.eq.true,created_by.eq.${user.id}` : "aprovado.eq.true")
         .order("nome")).data ?? [],
     staleTime: 1000 * 60 * 5,
   });
@@ -133,6 +136,7 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   const [cep, setCep] = useState(initial?.cep ?? profile?.cep ?? "");
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [centroIds, setCentroIds] = useState<string[]>(initial?.centro_ids ?? []);
+  const [cdDialogOpen, setCdDialogOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -403,6 +407,34 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         />
         <p className="mt-2 text-[11px] text-muted-foreground">{t("form.catalogoHint")}</p>
       </div>
+
+      {catalogoHabilitaCd(catalogoNodes ?? [], catalogoItemId) && (
+        <div className="rounded-2xl border border-primary/40 bg-primary/5 p-4">
+          <div className="flex flex-wrap items-start gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-primary/15 text-primary">
+              <Warehouse className="h-5 w-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-display text-sm font-bold text-foreground">
+                {t("cdSelf.ctaFormTitle")}
+              </h3>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {t("cdSelf.ctaFormDesc")}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCdDialogOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+            >
+              {t("cdSelf.ctaBtn")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <CdSelfRegisterDialog open={cdDialogOpen} onOpenChange={setCdDialogOpen} />
+
 
       {!isServico && (
         <div className="grid gap-4 md:grid-cols-2">

@@ -456,6 +456,7 @@ export type Database = {
           ativo: boolean
           created_at: string
           deleted_at: string | null
+          habilita_cd: boolean
           icone: string | null
           id: string
           nome: Json
@@ -472,6 +473,7 @@ export type Database = {
           ativo?: boolean
           created_at?: string
           deleted_at?: string | null
+          habilita_cd?: boolean
           icone?: string | null
           id?: string
           nome: Json
@@ -488,6 +490,7 @@ export type Database = {
           ativo?: boolean
           created_at?: string
           deleted_at?: string | null
+          habilita_cd?: boolean
           icone?: string | null
           id?: string
           nome?: Json
@@ -541,11 +544,13 @@ export type Database = {
       }
       centros_distribuicao: {
         Row: {
+          aprovado: boolean
           ativo: boolean
           capacidade: string | null
           cep: string | null
           cidade: string | null
           created_at: string
+          created_by: string | null
           deleted_at: string | null
           descricao: string | null
           endereco: string | null
@@ -559,11 +564,13 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          aprovado?: boolean
           ativo?: boolean
           capacidade?: string | null
           cep?: string | null
           cidade?: string | null
           created_at?: string
+          created_by?: string | null
           deleted_at?: string | null
           descricao?: string | null
           endereco?: string | null
@@ -577,11 +584,13 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          aprovado?: boolean
           ativo?: boolean
           capacidade?: string | null
           cep?: string | null
           cidade?: string | null
           created_at?: string
+          created_by?: string | null
           deleted_at?: string | null
           descricao?: string | null
           endereco?: string | null
@@ -1871,6 +1880,7 @@ export type Database = {
           ativo: boolean
           created_at: string
           deleted_at: string | null
+          habilita_cd: boolean
           icone: string | null
           id: string
           nome: Json

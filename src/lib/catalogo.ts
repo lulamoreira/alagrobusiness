@@ -12,6 +12,7 @@ export interface CatalogoNode {
   icone: string | null;
   tipo: CatalogoTipo;
   segmento: CatalogoSegmento | null;
+  habilita_cd?: boolean;
 }
 
 
@@ -52,7 +53,7 @@ export async function fetchCatalogoAll(includeInactive = false): Promise<Catalog
   while (offset < total) {
     let query = supabase
       .from("categorias_catalogo")
-      .select("id, parent_id, nome, ordem, ativo, icone, tipo, segmento", { count: "exact" })
+      .select("id, parent_id, nome, ordem, ativo, icone, tipo, segmento, habilita_cd", { count: "exact" })
 
       .is("deleted_at", null)
       .order("parent_id", { ascending: true, nullsFirst: true })
@@ -125,4 +126,14 @@ export function catalogoRootSegmento(
   const root = path[0];
   return root?.segmento ?? null;
 }
+
+/** True when the node itself or any of its ancestors has habilita_cd = true. */
+export function catalogoHabilitaCd(
+  nodes: CatalogoNode[],
+  itemId: string | null | undefined,
+): boolean {
+  if (!itemId) return false;
+  return catalogoAncestors(nodes, itemId).some((n) => n.habilita_cd === true);
+}
+
 

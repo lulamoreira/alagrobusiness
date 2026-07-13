@@ -1646,6 +1646,13 @@
     "deactivate": "Deactivate",
     "semLocal": "No location",
     "confirmDelete": "Remove this DC?",
+    "confirmReject": "Reject this submission?",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "DC approved.",
+    "rejected": "Submission rejected.",
+    "pendingSection": "Pending approval ({{n}})",
+    "approvedSection": "Approved ({{n}})",
     "fields": {
       "nome": "Name",
       "descricao": "Description",
@@ -1681,6 +1688,19 @@
       "manage": "Manage operators",
       "close": "Close"
     }
+  },
+  "cdSelf": {
+    "title": "Register Distribution Center",
+    "subtitle": "Fill in your DC details. Admin approval is required before public listing.",
+    "contaTitle": "Become a Distribution Center",
+    "contaDesc": "If you provide storage, logistics or processing, register your DC to receive and distribute products from the platform.",
+    "ctaBtn": "Register my DC",
+    "ctaFormTitle": "Do you offer this service?",
+    "ctaFormDesc": "Register your Distribution Center to appear to sellers on the platform.",
+    "gotoMine": "Go to My DCs",
+    "submit": "Submit for approval",
+    "createdPending": "DC created — awaiting approval.",
+    "pendingBadge": "Pending"
   },
   "meusCds": {
     "title": "My Distribution Centers",

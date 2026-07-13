@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power, Users } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power, Users, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminPerms } from "@/lib/adminPerms";
@@ -34,6 +34,7 @@ interface CdRow {
   longitude: number | null;
   capacidade: string | null;
   ativo: boolean;
+  aprovado: boolean;
   created_at: string;
 }
 
@@ -130,7 +131,7 @@ function AdminCdsPage() {
       const { data, error } = await supabase
         .from("centros_distribuicao")
         .select(
-          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo, created_at",
+          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo, aprovado, created_at",
         )
         .is("deleted_at", null)
         .order("nome", { ascending: true });
@@ -230,7 +231,37 @@ function AdminCdsPage() {
     qc.invalidateQueries({ queryKey: ["admin", "cds"] });
   };
 
+  const aprovar = async (id: string) => {
+    const { error } = await supabase
+      .from("centros_distribuicao")
+      .update({ aprovado: true })
+      .eq("id", id);
+    if (error) {
+      toast.error(t("common.error"));
+      return;
+    }
+    toast.success(t("adminCds.approved"));
+    qc.invalidateQueries({ queryKey: ["admin", "cds"] });
+  };
+
+  const recusar = async (id: string) => {
+    if (!confirm(t("adminCds.confirmReject"))) return;
+    const { error } = await supabase
+      .from("centros_distribuicao")
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) {
+      toast.error(t("common.error"));
+      return;
+    }
+    toast.success(t("adminCds.rejected"));
+    qc.invalidateQueries({ queryKey: ["admin", "cds"] });
+  };
+
   const rows = data ?? [];
+  const pendingRows = rows.filter((r) => !r.aprovado);
+  const approvedRows = rows.filter((r) => r.aprovado);
+
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:px-6">
@@ -374,57 +405,111 @@ function AdminCdsPage() {
           {t("adminCds.empty")}
         </div>
       ) : (
-        <ul className="space-y-3">
-          {rows.map((r) => (
-            <li
-              key={r.id}
-              className={cn(
-                "flex flex-wrap items-start justify-between gap-4 rounded-2xl border p-4",
-                r.ativo ? "border-border bg-card/60" : "border-border bg-card/30 opacity-70",
-              )}
-            >
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-semibold text-foreground">{r.nome}</h3>
-                  {!r.ativo && (
-                    <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
-                      {t("adminCds.inactive")}
-                    </span>
+        <div className="space-y-6">
+          {pendingRows.length > 0 && (
+            <section>
+              <h2 className="mb-3 font-display text-sm font-bold uppercase tracking-wider text-amber-500">
+                {t("adminCds.pendingSection", { n: pendingRows.length })}
+              </h2>
+              <ul className="space-y-3">
+                {pendingRows.map((r) => (
+                  <li
+                    key={r.id}
+                    className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-amber-500/40 bg-amber-500/5 p-4"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-semibold text-foreground">{r.nome}</h3>
+                        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-500">
+                          {t("cdSelf.pendingBadge")}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {[r.cidade, r.estado].filter(Boolean).join(" / ") || t("adminCds.semLocal")}
+                        {r.responsavel ? ` · ${r.responsavel}` : ""}
+                        {r.telefone ? ` · ${r.telefone}` : ""}
+                      </p>
+                      {r.descricao && (
+                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{r.descricao}</p>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <Button size="sm" onClick={() => aprovar(r.id)} className="gap-1">
+                        <CheckCircle2 className="h-3.5 w-3.5" /> {t("adminCds.approve")}
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => recusar(r.id)} className="gap-1">
+                        <XCircle className="h-3.5 w-3.5" /> {t("adminCds.reject")}
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => openEdit(r)} className="gap-1">
+                        <Pencil className="h-3.5 w-3.5" /> {t("common.edit")}
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <section>
+            {pendingRows.length > 0 && (
+              <h2 className="mb-3 font-display text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                {t("adminCds.approvedSection", { n: approvedRows.length })}
+              </h2>
+            )}
+            <ul className="space-y-3">
+              {approvedRows.map((r) => (
+                <li
+                  key={r.id}
+                  className={cn(
+                    "flex flex-wrap items-start justify-between gap-4 rounded-2xl border p-4",
+                    r.ativo ? "border-border bg-card/60" : "border-border bg-card/30 opacity-70",
                   )}
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {[r.cidade, r.estado].filter(Boolean).join(" / ") || t("adminCds.semLocal")}
-                  {r.responsavel ? ` · ${r.responsavel}` : ""}
-                  {r.telefone ? ` · ${r.telefone}` : ""}
-                </p>
-                {r.descricao && (
-                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{r.descricao}</p>
-                )}
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" onClick={() => toggleAtivo(r)} className="gap-1">
-                  <Power className="h-3.5 w-3.5" />
-                  {r.ativo ? t("adminCds.deactivate") : t("adminCds.activate")}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setOperadoresFor({ id: r.id, nome: r.nome })}
-                  className="gap-1"
                 >
-                  <Users className="h-3.5 w-3.5" /> {t("adminCds.operadores.manage")}
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => openEdit(r)} className="gap-1">
-                  <Pencil className="h-3.5 w-3.5" /> {t("common.edit")}
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => remove(r.id)} className="gap-1">
-                  <Trash2 className="h-3.5 w-3.5" /> {t("common.delete")}
-                </Button>
-              </div>
-            </li>
-          ))}
-        </ul>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="font-semibold text-foreground">{r.nome}</h3>
+                      {!r.ativo && (
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                          {t("adminCds.inactive")}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {[r.cidade, r.estado].filter(Boolean).join(" / ") || t("adminCds.semLocal")}
+                      {r.responsavel ? ` · ${r.responsavel}` : ""}
+                      {r.telefone ? ` · ${r.telefone}` : ""}
+                    </p>
+                    {r.descricao && (
+                      <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{r.descricao}</p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="outline" size="sm" onClick={() => toggleAtivo(r)} className="gap-1">
+                      <Power className="h-3.5 w-3.5" />
+                      {r.ativo ? t("adminCds.deactivate") : t("adminCds.activate")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setOperadoresFor({ id: r.id, nome: r.nome })}
+                      className="gap-1"
+                    >
+                      <Users className="h-3.5 w-3.5" /> {t("adminCds.operadores.manage")}
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => openEdit(r)} className="gap-1">
+                      <Pencil className="h-3.5 w-3.5" /> {t("common.edit")}
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => remove(r.id)} className="gap-1">
+                      <Trash2 className="h-3.5 w-3.5" /> {t("common.delete")}
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       )}
+
 
       {operadoresFor && (
         <CdOperadoresDialog
