@@ -168,7 +168,10 @@
       "terroso": "Earthy",
       "chuva": "Rain",
       "classico": "Classic"
-    }
+    },
+    "destaqueScroll": "Featured carousel speed",
+    "destaqueScrollValue": "{{seconds}}s",
+    "destaqueScrollHint": "Interval between slides in the Dashboard's featured carousel (2 to 15 seconds)."
   },
   "placeholders": {
     "soon": "Coming soon",
