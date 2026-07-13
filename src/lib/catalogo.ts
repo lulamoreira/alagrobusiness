@@ -127,3 +127,13 @@ export function catalogoRootSegmento(
   return root?.segmento ?? null;
 }
 
+/** True when the node itself or any of its ancestors has habilita_cd = true. */
+export function catalogoHabilitaCd(
+  nodes: CatalogoNode[],
+  itemId: string | null | undefined,
+): boolean {
+  if (!itemId) return false;
+  return catalogoAncestors(nodes, itemId).some((n) => n.habilita_cd === true);
+}
+
+
