@@ -358,12 +358,11 @@ function CotacaoPage() {
                         />
                       </div>
 
-                      {isSelected && (
-                        <Sparkline
-                          points={ranged.map((r) => ({ data: r.data, value: r.valor_brl }))}
-                          formatValue={(v) => formatDolarValue(v, i18n.language)}
-                        />
-                      )}
+                      <Sparkline
+                        points={ranged.map((r) => ({ data: r.data, value: r.valor_brl }))}
+                        formatValue={(v) => formatDolarValue(v, i18n.language)}
+                      />
+
 
                       {current.atualizado_em && (
                         <p className="text-[10px] text-muted-foreground">
