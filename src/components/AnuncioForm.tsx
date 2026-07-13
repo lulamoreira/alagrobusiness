@@ -51,6 +51,7 @@ export interface AnuncioFormInitial {
   cidade: string | null;
   cep: string | null;
   fotos: string[];
+  centro_ids?: string[];
   tipo_oferta?: OfferType | null;
   servico_modelo_cobranca?: ServiceBilling | null;
   servico_area_atuacao?: string | null;
