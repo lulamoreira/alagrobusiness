@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles, Warehouse } from "lucide-react";
+import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles, Warehouse, MoreHorizontal } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -14,6 +14,13 @@ import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
 import { EstoquePanel } from "@/components/EstoquePanel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
@@ -148,40 +155,49 @@ function SellPage() {
                 : a.status === "pausado"
                   ? t("sell.statusPaused")
                   : t("sell.statusSold");
+            const destaqueAtivo = a.destaque_ate && new Date(a.destaque_ate) > new Date();
+            const isProduto = (a.tipo_oferta ?? "produto") === "produto";
             return (
               <li
                 key={a.id}
-                className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex-row md:items-center"
+                className="overflow-hidden rounded-2xl border border-border bg-card"
               >
-                <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
-                      {statusLabel}
-                    </span>
-                    {a.destaque_ate && new Date(a.destaque_ate) > new Date() && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
-                        <Sparkles className="h-2.5 w-2.5" />
-                        {t("detail.destaque.ate", { data: new Date(a.destaque_ate).toLocaleDateString(i18n.language) })}
+                {/* CONTEÚDO */}
+                <div className="flex gap-4 p-4">
+                  <PhotoThumb path={a.fotos?.[0]} productLabel={a.produto} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 overflow-hidden">
+                      <span className={cn("shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase", statusClass(a.status))}>
+                        {statusLabel}
                       </span>
-                    )}
-                    <span className="text-[10px] text-muted-foreground">
-                      {t("sell.updatedAt")} {new Date(a.updated_at).toLocaleDateString(i18n.language)}
-                    </span>
+                      {destaqueAtivo && (
+                        <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                          {t("sell.destaqueAteShort", { data: new Date(a.destaque_ate!).toLocaleDateString(i18n.language, { day: "2-digit", month: "2-digit" }) })}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="mt-1.5 truncate font-display text-base font-bold">{a.produto}</h2>
+                    <p className="truncate text-xs text-muted-foreground">{a.titulo}</p>
+                    <p className="mt-1 flex items-baseline gap-2 overflow-hidden whitespace-nowrap text-sm font-semibold text-primary">
+                      <span className="truncate">
+                        {price} {unit ? `/ ${t(`units.${unit.nome_chave}`)}` : ""}
+                      </span>
+                      <span className="shrink-0 text-[10px] font-normal text-muted-foreground">
+                        · {t("sell.updatedAt")} {new Date(a.updated_at).toLocaleDateString(i18n.language, { day: "2-digit", month: "2-digit" })}
+                      </span>
+                    </p>
                   </div>
-                  <h2 className="mt-1 font-display text-base font-bold">{a.produto}</h2>
-                  <p className="line-clamp-1 text-xs text-muted-foreground">{a.titulo}</p>
-                  <p className="mt-1 text-sm font-semibold text-primary">
-                    {price} {unit ? `/ ${t(`units.${unit.nome_chave}`)}` : ""}
-                  </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+
+                {/* FOOTER de ações */}
+                <div className="flex flex-wrap items-center gap-2 border-t border-border bg-background/30 px-3 py-2">
                   <Link
                     to="/anuncio/$id"
                     params={{ id: a.id }}
-                    className="text-xs font-medium text-muted-foreground hover:text-foreground underline-offset-2 hover:underline"
+                    className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                    aria-label="↗"
                   >
-                    {a.titulo.length > 0 ? "↗" : "↗"}
+                    ↗
                   </Link>
                   <Link
                     to="/vender/editar/$id"
@@ -191,26 +207,14 @@ function SellPage() {
                     <Pencil className="h-3 w-3" />
                     {t("sell.edit")}
                   </Link>
-                  {a.status !== "vendido" && (
+                  {isProduto && (
                     <button
                       type="button"
-                      disabled={busyId === a.id}
-                      onClick={() => updateStatus(a.id, a.status === "ativo" ? "pausado" : "ativo")}
-                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent disabled:opacity-50"
+                      onClick={() => setEstoqueDialog(a)}
+                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
                     >
-                      {a.status === "ativo" ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
-                      {a.status === "ativo" ? t("sell.pause") : t("sell.activate")}
-                    </button>
-                  )}
-                  {a.status !== "vendido" && (
-                    <button
-                      type="button"
-                      disabled={busyId === a.id}
-                      onClick={() => setSoldDialog(a)}
-                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent disabled:opacity-50"
-                    >
-                      <CheckCircle2 className="h-3 w-3" />
-                      {t("sell.markSold")}
+                      <Warehouse className="h-3 w-3" />
+                      {t("sell.estoqueBtn")}
                     </button>
                   )}
                   {a.status === "ativo" && (
@@ -223,25 +227,48 @@ function SellPage() {
                       {t("detail.destaque.buyCta")}
                     </button>
                   )}
-                  {(a.tipo_oferta ?? "produto") === "produto" && (
-                    <button
-                      type="button"
-                      onClick={() => setEstoqueDialog(a)}
-                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
-                    >
-                      <Warehouse className="h-3 w-3" />
-                      {t("sell.estoqueBtn")}
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    disabled={busyId === a.id}
-                    onClick={() => softDelete(a.id, a.fotos)}
-                    className="inline-flex items-center gap-1 rounded-full border border-destructive/30 bg-destructive/10 px-3 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/20 disabled:opacity-50"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                    {t("sell.delete")}
-                  </button>
+                  <div className="ml-auto">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label={t("sell.moreActions")}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-52">
+                        {a.status !== "vendido" && (
+                          <DropdownMenuItem
+                            disabled={busyId === a.id}
+                            onSelect={() => updateStatus(a.id, a.status === "ativo" ? "pausado" : "ativo")}
+                          >
+                            {a.status === "ativo" ? <Pause className="mr-2 h-3.5 w-3.5" /> : <Play className="mr-2 h-3.5 w-3.5" />}
+                            {a.status === "ativo" ? t("sell.pause") : t("sell.activate")}
+                          </DropdownMenuItem>
+                        )}
+                        {a.status !== "vendido" && (
+                          <DropdownMenuItem
+                            disabled={busyId === a.id}
+                            onSelect={() => setSoldDialog(a)}
+                          >
+                            <CheckCircle2 className="mr-2 h-3.5 w-3.5" />
+                            {t("sell.markSold")}
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          disabled={busyId === a.id}
+                          onSelect={() => softDelete(a.id, a.fotos)}
+                          className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+                        >
+                          <Trash2 className="mr-2 h-3.5 w-3.5" />
+                          {t("sell.delete")}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </li>
             );
