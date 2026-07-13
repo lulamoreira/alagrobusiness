@@ -298,23 +298,50 @@ function MeusCdsPage() {
                     <p className="text-xs text-muted-foreground">{t("meusCds.noAds")}</p>
                   ) : (
                     <ul className="space-y-2">
-                      {ads.map((a) => (
-                        <li key={a.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-background/40 px-3 py-2 text-sm">
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate font-medium">{a.titulo}</p>
-                            <p className="truncate text-xs text-muted-foreground">
-                              {t("meusCds.product")}: {a.produto} · {t("meusCds.seller")}: {a.vendedor_nome ?? "—"} · {t("meusCds.status")}: {a.status}
-                            </p>
-                          </div>
-                          <Link
-                            to="/anuncio/$id"
-                            params={{ id: a.id }}
-                            className="text-xs font-medium text-primary hover:underline"
-                          >
-                            {t("meusCds.openAd")}
-                          </Link>
-                        </li>
-                      ))}
+                      {ads.map((a) => {
+                        const key = `${cd.id}:${a.id}`;
+                        const open = expandedEstoque.has(key);
+                        return (
+                          <li key={a.id} className="rounded-lg border border-border bg-background/40 px-3 py-2 text-sm">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate font-medium">{a.titulo}</p>
+                                <p className="truncate text-xs text-muted-foreground">
+                                  {t("meusCds.product")}: {a.produto} · {t("meusCds.seller")}: {a.vendedor_nome ?? "—"} · {t("meusCds.status")}: {a.status}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => toggleEstoque(key)}
+                                  className="gap-1"
+                                >
+                                  <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", open && "rotate-180")} />
+                                  {t("estoque.title")}
+                                </Button>
+                                <Link
+                                  to="/anuncio/$id"
+                                  params={{ id: a.id }}
+                                  className="text-xs font-medium text-primary hover:underline"
+                                >
+                                  {t("meusCds.openAd")}
+                                </Link>
+                              </div>
+                            </div>
+                            {open && (
+                              <div className="mt-3">
+                                <EstoquePanel
+                                  anuncioId={a.id}
+                                  centroId={cd.id}
+                                  unidadeChave={a.quantidade_unidade_id ? unitMap.get(a.quantidade_unidade_id) : null}
+                                />
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </div>
