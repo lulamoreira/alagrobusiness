@@ -75,7 +75,7 @@ function DetailPage() {
       if (ids.length === 0) return [];
       const { data: centros } = await supabase
         .from("centros_distribuicao")
-        .select("id, nome, cidade, estado")
+        .select("id, nome, cidade, estado, latitude, longitude")
         .in("id", ids)
         .eq("ativo", true)
         .is("deleted_at", null)
