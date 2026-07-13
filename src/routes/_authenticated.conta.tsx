@@ -29,7 +29,8 @@ function openTopLevel(url: string) {
 
 function ContaPage() {
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, profile, refreshProfile } = useAuth();
+  const qc = useQueryClient();
   const {
     codigo,
     limites,
