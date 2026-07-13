@@ -1670,6 +1670,21 @@
     "product": "Produto",
     "openAd": "Ver anúncio"
   },
+  "estoque": {
+    "title": "Estoque",
+    "saldo": "Saldo atual",
+    "entrada": "Entrada",
+    "saida": "Saída",
+    "quantidade": "Quantidade",
+    "observacao": "Observação (opcional)",
+    "adicionar": "Adicionar",
+    "adicionado": "Movimentação registrada.",
+    "historico": "Histórico",
+    "historicoVazio": "Nenhuma movimentação registrada ainda.",
+    "saldoInsuficiente": "Saldo insuficiente para essa saída.",
+    "quantidadeInvalida": "Informe uma quantidade válida.",
+    "semCd": "Vincule um Centro de Distribuição a este anúncio para controlar o estoque."
+  },
   "catalogo": {
     "selectRoot": "Selecione uma categoria…",
     "selectSub": "Selecione…"
