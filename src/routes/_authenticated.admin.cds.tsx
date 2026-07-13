@@ -148,7 +148,9 @@ function AdminCdsPage() {
     setCoordsLocked(true);
     setForm({ ...emptyForm });
   };
-  const openEdit = (r: CdRow) =>
+  const openEdit = (r: CdRow) => {
+    setGeoInfo(null);
+    setCoordsLocked(r.latitude != null && r.longitude != null);
     setForm({
       id: r.id,
       nome: r.nome,
@@ -164,6 +166,7 @@ function AdminCdsPage() {
       capacidade: r.capacidade ?? "",
       ativo: r.ativo,
     });
+  };
 
   const save = async () => {
     if (!form) return;
