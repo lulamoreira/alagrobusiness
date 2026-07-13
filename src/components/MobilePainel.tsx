@@ -284,13 +284,19 @@ function QuotesMobile() {
     .filter((c) => (commodityGroups.get(c.codigo)?.length ?? 0) > 0)
     .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)));
 
-  const vis = prefs?.tipos_dolar_visiveis ?? [];
-  const preferredDolarRow = dolar?.find((d) => d.tipo === userDolarPref);
-  const showDolar = (vis.length === 0 || vis.includes(userDolarPref)) && !!preferredDolarRow;
-  const preferredDolarHistory = dolarGroups.get(userDolarPref) ?? [];
-  const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
+  const vis = (prefs?.tipos_dolar_visiveis ?? []) as DolarTipo[];
+  const tiposToShow: DolarTipo[] = vis.length > 0 ? vis : [userDolarPref];
+  const dolarCards = tiposToShow
+    .map((tipo) => {
+      const row = dolar?.find((d) => d.tipo === tipo);
+      if (!row) return null;
+      const history = dolarGroups.get(tipo) ?? [];
+      const variation = computeVariation(history.map((h) => h.valor_brl));
+      return { tipo, valor: Number(row.valor_brl), variation };
+    })
+    .filter((x): x is { tipo: DolarTipo; valor: number; variation: ReturnType<typeof computeVariation> } => x !== null);
 
-  if (featured.length === 0 && !showDolar) {
+  if (featured.length === 0 && dolarCards.length === 0) {
     return (
       <p className="text-xs text-muted-foreground">{t("quote.emptyPainel")}</p>
     );
