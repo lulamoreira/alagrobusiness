@@ -123,6 +123,7 @@ function PainelPage() {
       </div>
 
       <div className="hidden md:block md:space-y-8">
+        <DestaquesCarousel variant="desktop" />
         <BusinessDashboard />
 
       <section>
