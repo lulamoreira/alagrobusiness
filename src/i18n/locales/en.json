@@ -253,6 +253,8 @@
   "sell": {
     "title": "My Ads",
     "newListing": "New listing",
+    "moreActions": "More actions",
+    "destaqueAteShort": "★ Featured until {{data}}",
     "estoqueBtn": "Stock",
     "estoqueDialog": {
       "title": "Stock — {{produto}}",
