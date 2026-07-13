@@ -307,6 +307,29 @@ function DetailPage() {
             </div>
           )}
 
+          {cdsVinculados && cdsVinculados.length > 0 && (
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+                <Warehouse className="h-4 w-4" /> {t("detail.cdsAvailable")}
+              </p>
+              <ul className="space-y-1 text-sm">
+                {cdsVinculados.map((c) => (
+                  <li key={c.id} className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      {t("detail.cdsItem", {
+                        nome: c.nome,
+                        cidade: c.cidade ?? "—",
+                        estado: c.estado ?? "—",
+                      })}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+
           <div className="rounded-2xl border border-border bg-card p-4">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">{t("detail.seller")}</p>
             <p className="font-display text-base font-bold">{vendedor?.nome_completo ?? "—"}</p>
