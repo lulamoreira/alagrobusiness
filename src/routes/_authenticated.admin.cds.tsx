@@ -143,7 +143,11 @@ function AdminCdsPage() {
     return <div className="p-6 text-sm text-muted-foreground">{t("common.not_found")}</div>;
   }
 
-  const openNew = () => setForm({ ...emptyForm });
+  const openNew = () => {
+    setGeoInfo(null);
+    setCoordsLocked(true);
+    setForm({ ...emptyForm });
+  };
   const openEdit = (r: CdRow) =>
     setForm({
       id: r.id,
