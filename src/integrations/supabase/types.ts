@@ -1109,6 +1109,54 @@ export type Database = {
         }
         Relationships: []
       }
+      estoque_movimentacoes: {
+        Row: {
+          anuncio_id: string
+          centro_id: string
+          created_at: string
+          criado_por: string
+          id: string
+          observacao: string | null
+          quantidade: number
+          tipo: string
+        }
+        Insert: {
+          anuncio_id: string
+          centro_id: string
+          created_at?: string
+          criado_por?: string
+          id?: string
+          observacao?: string | null
+          quantidade: number
+          tipo: string
+        }
+        Update: {
+          anuncio_id?: string
+          centro_id?: string
+          created_at?: string
+          criado_por?: string
+          id?: string
+          observacao?: string | null
+          quantidade?: number
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estoque_movimentacoes_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "estoque_movimentacoes_centro_id_fkey"
+            columns: ["centro_id"]
+            isOneToOne: false
+            referencedRelation: "centros_distribuicao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mensagens: {
         Row: {
           conteudo: string
@@ -1766,7 +1814,29 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      estoque_saldos: {
+        Row: {
+          anuncio_id: string | null
+          centro_id: string | null
+          saldo: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estoque_movimentacoes_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "estoque_movimentacoes_centro_id_fkey"
+            columns: ["centro_id"]
+            isOneToOne: false
+            referencedRelation: "centros_distribuicao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       _aplicar_cortesia: {
@@ -2041,6 +2111,10 @@ export type Database = {
         Returns: undefined
       }
       ativar_acesso_demo_se_pendente: { Args: never; Returns: Json }
+      can_manage_estoque: {
+        Args: { _anuncio: string; _centro: string }
+        Returns: boolean
+      }
       catalogo_subtree_ids: {
         Args: { p_id: string }
         Returns: {
