@@ -39,17 +39,21 @@ function ConfigPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [tema, setTemaState] = useState<ThemeName>(loadStoredTheme());
+  const [destaqueSec, setDestaqueSec] = useState<number>(3);
 
   useEffect(() => {
     if (!profile) return;
     (async () => {
       const { data } = await supabase
         .from("preferencias")
-        .select("tema")
+        .select("tema, destaque_scroll_segundos")
         .eq("usuario_id", profile.id)
         .maybeSingle();
       if (data?.tema && (SUPPORTED_THEMES as readonly string[]).includes(data.tema)) {
         setTemaState(data.tema as ThemeName);
+      }
+      if (typeof data?.destaque_scroll_segundos === "number") {
+        setDestaqueSec(data.destaque_scroll_segundos);
       }
     })();
   }, [profile]);
