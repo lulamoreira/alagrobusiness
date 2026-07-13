@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Warehouse, Save, X, Power, Users } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminPerms } from "@/lib/adminPerms";
@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { CdOperadoresDialog } from "@/components/CdOperadoresDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/cds")({
   component: AdminCdsPage,
