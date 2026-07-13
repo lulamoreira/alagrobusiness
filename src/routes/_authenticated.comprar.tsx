@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
+import { distanceKm } from "@/lib/geo";
 import { cn } from "@/lib/utils";
 
 
