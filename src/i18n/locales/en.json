@@ -734,7 +734,8 @@
     "searching": "Searching...",
     "noResults": "No city found",
     "alreadyAdded": "Already added",
-    "remove": "Remove"
+    "remove": "Remove",
+    "removeError": "Could not remove this location. Please try again."
   },
   "finance": {
     "title": "Finance",
