@@ -184,6 +184,27 @@ function ConfigPage() {
           </div>
         </div>
 
+        <div>
+          <div className="mb-2 flex items-center justify-between text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <span>{t("settings.destaqueScroll")}</span>
+            <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
+              {t("settings.destaqueScrollValue", { seconds: destaqueSec })}
+            </span>
+          </div>
+          <input
+            type="range"
+            min={2}
+            max={15}
+            step={1}
+            value={destaqueSec}
+            onChange={(e) => setDestaqueSec(Number(e.target.value))}
+            className="w-full accent-primary"
+            aria-label={t("settings.destaqueScroll")}
+          />
+          <p className="mt-1 text-[11px] text-muted-foreground">{t("settings.destaqueScrollHint")}</p>
+        </div>
+
+
         <div className="flex items-center gap-3 pt-2">
           <PillButton onClick={save} disabled={saving}>
             {t("common.save")}
