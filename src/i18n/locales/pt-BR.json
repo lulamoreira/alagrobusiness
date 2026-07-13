@@ -298,7 +298,10 @@
     "update": "Atualizar anúncio",
     "error": "Não foi possível salvar o anúncio.",
     "uploadError": "Falha ao enviar a imagem.",
-    "uploading": "Enviando imagens…"
+    "uploading": "Enviando imagens…",
+    "distributionCenters": "Centros de Distribuição",
+    "distributionCentersHint": "Onde o comprador pode retirar/receber via Centro de Distribuição.",
+    "distributionCentersEmpty": "Nenhum CD ativo cadastrado."
   },
   "buy": {
     "title": "Comprar",
@@ -325,7 +328,8 @@
     "featuredTitle": "Destaques",
     "results_one": "{{count}} resultado",
     "noPhoto": "Sem foto",
-    "results_other": "{{count}} resultados"
+    "results_other": "{{count}} resultados",
+    "cdBadge": "CD"
   },
   "detail": {
     "interested": "Tenho interesse",
@@ -374,7 +378,9 @@
     "sem_descricao": "Sem descrição.",
     "fotos": "Fotos",
     "sem_fotos": "Sem fotos.",
-    "close": "Fechar"
+    "close": "Fechar",
+    "cdsAvailable": "Disponível via Centro de Distribuição",
+    "cdsItem": "{{nome}} — {{cidade}}/{{estado}}"
   },
   "messages": {
     "title": "Mensagens",
@@ -409,7 +415,8 @@
     "noMessageYet": "Sem mensagens ainda",
     "openChat": "Abrir conversa",
     "registerSale": "Registrar venda",
-    "moveTo": "Mover para","drag": "Arrastar",
+    "moveTo": "Mover para",
+    "drag": "Arrastar",
     "moveError": "Não foi possível mover a negociação.",
     "buyer": "Comprador",
     "details": "Detalhes",
@@ -1608,7 +1615,6 @@
       "coord": "Coordenada inválida"
     }
   },
-
   "catalogo": {
     "selectRoot": "Selecione uma categoria…",
     "selectSub": "Selecione…"

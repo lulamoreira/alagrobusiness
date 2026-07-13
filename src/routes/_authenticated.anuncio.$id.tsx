@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles, Warehouse } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -62,6 +62,27 @@ function DetailPage() {
     queryFn: () => fetchCatalogoAll(false),
     staleTime: 1000 * 60 * 10,
     enabled: !!anuncio?.catalogo_item_id,
+  });
+
+  const { data: cdsVinculados } = useQuery({
+    queryKey: ["anuncio_cds", id],
+    queryFn: async () => {
+      const { data: links } = await supabase
+        .from("anuncio_centros")
+        .select("centro_id")
+        .eq("anuncio_id", id);
+      const ids = (links ?? []).map((r) => r.centro_id);
+      if (ids.length === 0) return [];
+      const { data: centros } = await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .in("id", ids)
+        .eq("ativo", true)
+        .is("deleted_at", null)
+        .order("nome");
+      return centros ?? [];
+    },
+    enabled: !!anuncio?.id,
   });
 
 
@@ -285,6 +306,29 @@ function DetailPage() {
               </div>
             </div>
           )}
+
+          {cdsVinculados && cdsVinculados.length > 0 && (
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+                <Warehouse className="h-4 w-4" /> {t("detail.cdsAvailable")}
+              </p>
+              <ul className="space-y-1 text-sm">
+                {cdsVinculados.map((c) => (
+                  <li key={c.id} className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <span>
+                      {t("detail.cdsItem", {
+                        nome: c.nome,
+                        cidade: c.cidade ?? "—",
+                        estado: c.estado ?? "—",
+                      })}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
 
           <div className="rounded-2xl border border-border bg-card p-4">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">{t("detail.seller")}</p>

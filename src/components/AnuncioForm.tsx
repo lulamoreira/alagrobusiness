@@ -51,6 +51,7 @@ export interface AnuncioFormInitial {
   cidade: string | null;
   cep: string | null;
   fotos: string[];
+  centro_ids?: string[];
   tipo_oferta?: OfferType | null;
   servico_modelo_cobranca?: ServiceBilling | null;
   servico_area_atuacao?: string | null;
@@ -94,6 +95,18 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
       (await supabase.from("unidades").select("*").is("deleted_at", null).order("nome_chave")).data ?? [],
   });
 
+  const { data: cds } = useQuery({
+    queryKey: ["cds_ativos_form"],
+    queryFn: async () =>
+      (await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .eq("ativo", true)
+        .is("deleted_at", null)
+        .order("nome")).data ?? [],
+    staleTime: 1000 * 60 * 5,
+  });
+
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
   // Legacy `categoria` (enum) preserved as-is on edit; new anuncios leave it null.
@@ -119,6 +132,7 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   const [cidade, setCidade] = useState(initial?.cidade ?? profile?.cidade ?? "");
   const [cep, setCep] = useState(initial?.cep ?? profile?.cep ?? "");
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [centroIds, setCentroIds] = useState<string[]>(initial?.centro_ids ?? []);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -271,13 +285,41 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         servico_prazo: isServico ? (servicoPrazo.trim() || null) : null,
       };
 
+      let anuncioId: string | null = initial?.id ?? null;
       if (mode === "create") {
         const insertPayload = { ...payload, em_startups: canalStartups === true };
-        const { error } = await supabase.from("anuncios").insert(insertPayload);
+        const { data: inserted, error } = await supabase
+          .from("anuncios")
+          .insert(insertPayload)
+          .select("id")
+          .single();
         if (error) throw error;
+        anuncioId = inserted.id;
       } else if (initial) {
         const { error } = await supabase.from("anuncios").update(payload).eq("id", initial.id);
         if (error) throw error;
+      }
+
+      // Sync distribution center links (products only; services never have CDs)
+      if (anuncioId && !isServico) {
+        const desired = new Set(centroIds);
+        const existing = mode === "edit" ? new Set(initial?.centro_ids ?? []) : new Set<string>();
+        const toAdd = [...desired].filter((c) => !existing.has(c));
+        const toRemove = [...existing].filter((c) => !desired.has(c));
+        if (toAdd.length > 0) {
+          const { error: addErr } = await supabase
+            .from("anuncio_centros")
+            .insert(toAdd.map((centro_id) => ({ anuncio_id: anuncioId!, centro_id })));
+          if (addErr) throw addErr;
+        }
+        if (toRemove.length > 0) {
+          const { error: delErr } = await supabase
+            .from("anuncio_centros")
+            .delete()
+            .eq("anuncio_id", anuncioId)
+            .in("centro_id", toRemove);
+          if (delErr) throw delErr;
+        }
       }
 
       navigate({ to: "/vender" });
@@ -510,6 +552,29 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
               </div>
             </div>
           )}
+
+          <div className="rounded-2xl border border-border bg-card/40 p-4">
+            <label className="mb-1 block text-sm font-medium text-foreground">{t("form.distributionCenters")}</label>
+            <p className="mb-3 text-[11px] text-muted-foreground">{t("form.distributionCentersHint")}</p>
+            {(cds ?? []).length === 0 ? (
+              <p className="text-xs text-muted-foreground">{t("form.distributionCentersEmpty")}</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {(cds ?? []).map((c) => (
+                  <Pill
+                    key={c.id}
+                    active={centroIds.includes(c.id)}
+                    onClick={() => setCentroIds((s) => toggle(s, c.id))}
+                  >
+                    {c.nome}
+                    {(c.cidade || c.estado) && (
+                      <span className="ml-1 opacity-70">· {[c.cidade, c.estado].filter(Boolean).join("/")}</span>
+                    )}
+                  </Pill>
+                ))}
+              </div>
+            )}
+          </div>
 
         </>
       )}

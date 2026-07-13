@@ -17,6 +17,12 @@ function EditPage() {
       (await supabase.from("anuncios").select("*").eq("id", id).is("deleted_at", null).maybeSingle()).data,
   });
 
+  const { data: centrosVinc } = useQuery({
+    queryKey: ["anuncio_centros_edit", id],
+    queryFn: async () =>
+      (await supabase.from("anuncio_centros").select("centro_id").eq("anuncio_id", id)).data ?? [],
+  });
+
   if (isLoading) return <p className="text-sm text-muted-foreground">{t("common.loading")}</p>;
   if (!data) return <p className="text-sm text-muted-foreground">{t("detail.notFound")}</p>;
 
@@ -44,6 +50,7 @@ function EditPage() {
     cidade: data.cidade,
     cep: data.cep,
     fotos: data.fotos ?? [],
+    centro_ids: (centrosVinc ?? []).map((r) => r.centro_id),
     tipo_oferta: (data.tipo_oferta ?? "produto") as "produto" | "servico",
     servico_modelo_cobranca: (data.servico_modelo_cobranca ?? null) as "hora" | "projeto" | "mensal" | null,
     servico_area_atuacao: data.servico_area_atuacao ?? null,
