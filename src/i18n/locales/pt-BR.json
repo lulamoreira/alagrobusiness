@@ -387,7 +387,8 @@
     "sem_fotos": "Sem fotos.",
     "close": "Fechar",
     "cdsAvailable": "Disponível via Centro de Distribuição",
-    "cdsItem": "{{nome}} — {{cidade}}/{{estado}}"
+    "cdsItem": "{{nome}} — {{cidade}}/{{estado}}",
+    "cdDistance": "· {{km}} km de você",
   },
   "messages": {
     "title": "Mensagens",
