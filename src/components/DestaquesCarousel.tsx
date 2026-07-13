@@ -116,7 +116,8 @@ export function DestaquesCarousel({ variant }: Props) {
   if (totalSlides === 0) return null;
 
   // Fixed responsive breakpoints: 1 mobile / 2 tablet / 3 desktop — independent of item count.
-  const itemBasis = "basis-full md:basis-1/2 lg:basis-1/3";
+  const itemBasis =
+    "basis-full md:basis-[calc((100%-0.75rem)/2)] lg:basis-[calc((100%-1.5rem)/3)]";
 
   return (
     <section
