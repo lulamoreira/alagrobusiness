@@ -360,6 +360,7 @@ interface AdRow {
   produto: string;
   status: string;
   vendedor_id: string;
+  quantidade_unidade_id: string | null;
   vendedor_nome?: string | null;
 }
 
