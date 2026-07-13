@@ -149,10 +149,14 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
   const unitLabel = priceUnit ? t(`units.${priceUnit.nome_chave}`) : "";
 
   const harvest = item.data_colheita
-    ? new Date(item.data_colheita).toLocaleDateString(i18n.language, { month: "short", year: "numeric" })
+    ? new Date(item.data_colheita).toLocaleDateString(
+        i18n.language,
+        compact ? { month: "2-digit", year: "numeric" } : { month: "short", year: "numeric" },
+      )
     : null;
 
-  const location = [item.cidade, item.estado].filter(Boolean).join(" — ");
+  const estadoLabel = compact ? toUF(item.estado) : item.estado;
+  const location = [item.cidade, estadoLabel].filter(Boolean).join(" — ");
   const hasCert = item.certificacoes && item.certificacoes.length > 0;
   const isFeatured = !!item.destaque_ate && new Date(item.destaque_ate).getTime() > Date.now();
 
@@ -160,7 +164,10 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
     <Link
       to="/anuncio/$id"
       params={{ id: item.id }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
+      className={cn(
+        "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/50",
+        compact && "h-full",
+      )}
     >
       {/* Image area — fixed 16:9 with rounded top via parent overflow */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
