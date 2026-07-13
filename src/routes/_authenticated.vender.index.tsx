@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles } from "lucide-react";
+import { Plus, Pencil, Pause, Play, CheckCircle2, Trash2, Sparkles, Warehouse } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
 import { DestaqueBuyDialog } from "@/components/DestaqueBuyDialog";
+import { EstoquePanel } from "@/components/EstoquePanel";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/vender/")({ component: SellPage });
 
