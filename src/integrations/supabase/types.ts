@@ -1378,6 +1378,7 @@ export type Database = {
           cotacoes_selecionadas: string[]
           created_at: string
           deleted_at: string | null
+          destaque_scroll_segundos: number
           id: string
           idioma: Database["public"]["Enums"]["idioma_app"]
           moeda: Database["public"]["Enums"]["moeda_app"]
@@ -1392,6 +1393,7 @@ export type Database = {
           cotacoes_selecionadas?: string[]
           created_at?: string
           deleted_at?: string | null
+          destaque_scroll_segundos?: number
           id?: string
           idioma?: Database["public"]["Enums"]["idioma_app"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
@@ -1406,6 +1408,7 @@ export type Database = {
           cotacoes_selecionadas?: string[]
           created_at?: string
           deleted_at?: string | null
+          destaque_scroll_segundos?: number
           id?: string
           idioma?: Database["public"]["Enums"]["idioma_app"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
