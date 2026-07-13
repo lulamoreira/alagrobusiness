@@ -141,6 +141,7 @@ function BuyPage() {
           .from("centros_distribuicao")
           .select("id, nome, cidade, estado, latitude, longitude")
           .eq("ativo", true)
+          .eq("aprovado", true)
           .is("deleted_at", null)
           .order("nome", { ascending: true })
       ).data ?? [],
