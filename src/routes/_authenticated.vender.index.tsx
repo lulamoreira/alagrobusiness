@@ -223,6 +223,16 @@ function SellPage() {
                       {t("detail.destaque.buyCta")}
                     </button>
                   )}
+                  {(a.tipo_oferta ?? "produto") === "produto" && (
+                    <button
+                      type="button"
+                      onClick={() => setEstoqueDialog(a)}
+                      className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                    >
+                      <Warehouse className="h-3 w-3" />
+                      {t("sell.estoqueBtn")}
+                    </button>
+                  )}
                   <button
                     type="button"
                     disabled={busyId === a.id}
