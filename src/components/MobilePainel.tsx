@@ -28,6 +28,7 @@ import {
 import { useCommoditiesCatalog, useQuotePreferences, nomeFor } from "@/lib/catalog";
 import { VariationBadge } from "@/components/VariationBadge";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { DestaquesCarousel } from "@/components/DestaquesCarousel";
 import { useMeusClimaLocais } from "@/components/WeatherCard";
 import { buildRegiaoKey } from "@/lib/climaLocais";
 
@@ -564,6 +565,8 @@ export function MobilePainel() {
   const { t } = useTranslation();
   return (
     <div className="space-y-3">
+      <DestaquesCarousel variant="mobile" />
+
       <CollapsibleSection id="business" title={t("dashboard.business.title")}>
         <BusinessMobile />
       </CollapsibleSection>
