@@ -44,6 +44,68 @@ function ContaPage() {
     loading,
   } = usePlan();
 
+  const [locCep, setLocCep] = useState("");
+  const [locCidade, setLocCidade] = useState("");
+  const [locEstado, setLocEstado] = useState("");
+  const [locLat, setLocLat] = useState<number | null>(null);
+  const [locLng, setLocLng] = useState<number | null>(null);
+  const [locInfo, setLocInfo] = useState<string | null>(null);
+  const [locSaving, setLocSaving] = useState(false);
+  const [locGeocoding, setLocGeocoding] = useState(false);
+
+  useEffect(() => {
+    if (!profile) return;
+    setLocCep((p) => p || profile.cep || "");
+    setLocCidade((p) => p || profile.cidade || "");
+    setLocEstado((p) => p || profile.estado || "");
+    setLocLat((p) => (p != null ? p : profile.latitude ?? null));
+    setLocLng((p) => (p != null ? p : profile.longitude ?? null));
+  }, [profile]);
+
+  const handleLocCepBlur = async () => {
+    const digits = (locCep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    setLocGeocoding(true);
+    const geo = await geocodeCep(digits);
+    setLocGeocoding(false);
+    if (!geo) {
+      setLocInfo(t("geo.notFound"));
+      return;
+    }
+    if (geo.cidade) setLocCidade(geo.cidade);
+    if (geo.estado) setLocEstado(geo.estado);
+    setLocLat(geo.latitude);
+    setLocLng(geo.longitude);
+    if (geo.latitude != null && geo.longitude != null) {
+      setLocInfo(t("geo.detected", { cidade: geo.cidade ?? "—", estado: geo.estado ?? "—" }));
+    } else {
+      setLocInfo(t("geo.noCoords"));
+    }
+  };
+
+  const saveLocation = async () => {
+    if (!user) return;
+    setLocSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        cep: locCep.trim() || null,
+        cidade: locCidade.trim() || null,
+        estado: locEstado.trim() || null,
+        latitude: locLat,
+        longitude: locLng,
+      })
+      .eq("id", user.id);
+    setLocSaving(false);
+    if (error) {
+      toast.error(t("geo.saveError"));
+      return;
+    }
+    toast.success(t("geo.saved"));
+    await refreshProfile();
+    qc.invalidateQueries();
+  };
+
   const [loadingPortal, setLoadingPortal] = useState(false);
 
   const { data: assinatura } = useQuery({
