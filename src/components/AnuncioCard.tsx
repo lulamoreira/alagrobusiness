@@ -257,9 +257,11 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
               <p className="mt-1 text-[10px] uppercase tracking-wide text-muted-foreground">/ {unitLabel}</p>
             )}
           </div>
-          <p className="max-w-[55%] truncate text-right text-[10px] text-muted-foreground">
-            {t("common.by")} {sellerName ?? seller?.nome_completo ?? "—"}
-          </p>
+          {!compact && (
+            <p className="max-w-[55%] truncate text-right text-[10px] text-muted-foreground">
+              {t("common.by")} {sellerName ?? seller?.nome_completo ?? "—"}
+            </p>
+          )}
         </div>
       </div>
     </Link>
