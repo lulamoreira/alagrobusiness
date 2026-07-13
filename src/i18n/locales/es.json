@@ -168,7 +168,10 @@
       "terroso": "Terroso",
       "chuva": "Lluvia",
       "classico": "Clásico"
-    }
+    },
+    "destaqueScroll": "Velocidad del carrusel de destacados",
+    "destaqueScrollValue": "{{seconds}}s",
+    "destaqueScrollHint": "Intervalo entre tarjetas del carrusel de destacados del Panel (2 a 15 segundos)."
   },
   "placeholders": {
     "soon": "Próximamente",
