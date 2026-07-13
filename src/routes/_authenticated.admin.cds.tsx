@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { CdOperadoresDialog } from "@/components/CdOperadoresDialog";
+import { geocodeCep } from "@/lib/geocode";
 
 export const Route = createFileRoute("/_authenticated/admin/cds")({
   component: AdminCdsPage,
@@ -73,7 +74,38 @@ function AdminCdsPage() {
   const qc = useQueryClient();
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
+  const [coordsLocked, setCoordsLocked] = useState(true);
+  const [geoInfo, setGeoInfo] = useState<string | null>(null);
   const [operadoresFor, setOperadoresFor] = useState<{ id: string; nome: string } | null>(null);
+
+  const handleCepBlur = async () => {
+    if (!form) return;
+    const digits = (form.cep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    const geo = await geocodeCep(digits);
+    if (!geo) {
+      setGeoInfo(t("geo.notFound"));
+      return;
+    }
+    setForm((f) =>
+      f
+        ? {
+            ...f,
+            endereco: f.endereco || geo.logradouro || "",
+            cidade: geo.cidade ?? f.cidade,
+            estado: geo.estado ?? f.estado,
+            latitude: geo.latitude != null ? String(geo.latitude) : f.latitude,
+            longitude: geo.longitude != null ? String(geo.longitude) : f.longitude,
+          }
+        : f,
+    );
+    setCoordsLocked(true);
+    if (geo.latitude != null && geo.longitude != null) {
+      setGeoInfo(t("geo.detected", { cidade: geo.cidade ?? "—", estado: geo.estado ?? "—" }));
+    } else {
+      setGeoInfo(t("geo.noCoords"));
+    }
+  };
 
   const schema = useMemo(
     () =>
@@ -111,8 +143,14 @@ function AdminCdsPage() {
     return <div className="p-6 text-sm text-muted-foreground">{t("common.not_found")}</div>;
   }
 
-  const openNew = () => setForm({ ...emptyForm });
-  const openEdit = (r: CdRow) =>
+  const openNew = () => {
+    setGeoInfo(null);
+    setCoordsLocked(true);
+    setForm({ ...emptyForm });
+  };
+  const openEdit = (r: CdRow) => {
+    setGeoInfo(null);
+    setCoordsLocked(r.latitude != null && r.longitude != null);
     setForm({
       id: r.id,
       nome: r.nome,
@@ -128,6 +166,7 @@ function AdminCdsPage() {
       capacidade: r.capacidade ?? "",
       ativo: r.ativo,
     });
+  };
 
   const save = async () => {
     if (!form) return;
@@ -258,13 +297,21 @@ function AdminCdsPage() {
               <Input value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })} />
             </Field>
             <Field label={t("adminCds.fields.cep")}>
-              <Input value={form.cep} onChange={(e) => setForm({ ...form, cep: e.target.value })} />
+              <Input
+                value={form.cep}
+                onChange={(e) => setForm({ ...form, cep: e.target.value })}
+                onBlur={handleCepBlur}
+              />
+              {geoInfo && <p className="text-xs text-muted-foreground">{geoInfo}</p>}
             </Field>
+            <div />
             <Field label={t("adminCds.fields.latitude")}>
               <Input
                 value={form.latitude}
                 onChange={(e) => setForm({ ...form, latitude: e.target.value })}
                 placeholder="-23.5505"
+                readOnly={coordsLocked}
+                className={coordsLocked ? "bg-muted/40" : ""}
               />
             </Field>
             <Field label={t("adminCds.fields.longitude")}>
@@ -272,8 +319,22 @@ function AdminCdsPage() {
                 value={form.longitude}
                 onChange={(e) => setForm({ ...form, longitude: e.target.value })}
                 placeholder="-46.6333"
+                readOnly={coordsLocked}
+                className={coordsLocked ? "bg-muted/40" : ""}
               />
             </Field>
+            <div className="md:col-span-2 -mt-2">
+              <p className="text-[11px] text-muted-foreground">
+                {coordsLocked ? t("geo.autoFromCep") : t("geo.manualMode")}{" "}
+                <button
+                  type="button"
+                  onClick={() => setCoordsLocked((v) => !v)}
+                  className="text-primary underline hover:brightness-125"
+                >
+                  {coordsLocked ? t("geo.adjustManually") : t("geo.backToAuto")}
+                </button>
+              </p>
+            </div>
             <div className="flex items-center gap-3">
               <Switch
                 id="cd-ativo"

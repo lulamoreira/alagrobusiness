@@ -1,13 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import { Crown, Sparkles, Clock, Settings, Loader2, CalendarCheck, CalendarClock, ArrowRight, Lock } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Crown, Sparkles, Clock, Settings, Loader2, CalendarCheck, CalendarClock, ArrowRight, Lock, MapPin, Save } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { usePlan } from "@/lib/plan";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { geocodeCep } from "@/lib/geocode";
+import { DarkInput } from "@/components/DarkInput";
 
 export const Route = createFileRoute("/_authenticated/conta")({
   component: ContaPage,
@@ -27,7 +29,8 @@ function openTopLevel(url: string) {
 
 function ContaPage() {
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, profile, refreshProfile } = useAuth();
+  const qc = useQueryClient();
   const {
     codigo,
     limites,
@@ -40,6 +43,68 @@ function ContaPage() {
     fim,
     loading,
   } = usePlan();
+
+  const [locCep, setLocCep] = useState("");
+  const [locCidade, setLocCidade] = useState("");
+  const [locEstado, setLocEstado] = useState("");
+  const [locLat, setLocLat] = useState<number | null>(null);
+  const [locLng, setLocLng] = useState<number | null>(null);
+  const [locInfo, setLocInfo] = useState<string | null>(null);
+  const [locSaving, setLocSaving] = useState(false);
+  const [locGeocoding, setLocGeocoding] = useState(false);
+
+  useEffect(() => {
+    if (!profile) return;
+    setLocCep((p) => p || profile.cep || "");
+    setLocCidade((p) => p || profile.cidade || "");
+    setLocEstado((p) => p || profile.estado || "");
+    setLocLat((p) => (p != null ? p : profile.latitude ?? null));
+    setLocLng((p) => (p != null ? p : profile.longitude ?? null));
+  }, [profile]);
+
+  const handleLocCepBlur = async () => {
+    const digits = (locCep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    setLocGeocoding(true);
+    const geo = await geocodeCep(digits);
+    setLocGeocoding(false);
+    if (!geo) {
+      setLocInfo(t("geo.notFound"));
+      return;
+    }
+    if (geo.cidade) setLocCidade(geo.cidade);
+    if (geo.estado) setLocEstado(geo.estado);
+    setLocLat(geo.latitude);
+    setLocLng(geo.longitude);
+    if (geo.latitude != null && geo.longitude != null) {
+      setLocInfo(t("geo.detected", { cidade: geo.cidade ?? "—", estado: geo.estado ?? "—" }));
+    } else {
+      setLocInfo(t("geo.noCoords"));
+    }
+  };
+
+  const saveLocation = async () => {
+    if (!user) return;
+    setLocSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        cep: locCep.trim() || null,
+        cidade: locCidade.trim() || null,
+        estado: locEstado.trim() || null,
+        latitude: locLat,
+        longitude: locLng,
+      })
+      .eq("id", user.id);
+    setLocSaving(false);
+    if (error) {
+      toast.error(t("geo.saveError"));
+      return;
+    }
+    toast.success(t("geo.saved"));
+    await refreshProfile();
+    qc.invalidateQueries();
+  };
 
   const [loadingPortal, setLoadingPortal] = useState(false);
 
@@ -285,6 +350,58 @@ function ContaPage() {
               )}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* My location */}
+      <section id="minha-localizacao" className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+        <div className="mb-4 flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
+            <MapPin className="h-5 w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-lg font-bold">{t("geo.myLocationTitle")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("geo.myLocationDesc")}</p>
+          </div>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          <DarkInput
+            label={t("onboarding.cep")}
+            value={locCep}
+            onChange={(e) => setLocCep(e.target.value)}
+            onBlur={handleLocCepBlur}
+            placeholder="00000-000"
+          />
+          <DarkInput
+            label={t("signup.city")}
+            value={locCidade}
+            onChange={(e) => setLocCidade(e.target.value)}
+          />
+          <DarkInput
+            label={t("signup.state")}
+            value={locEstado}
+            onChange={(e) => setLocEstado(e.target.value)}
+          />
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-muted-foreground">
+            {locGeocoding
+              ? t("geo.detecting")
+              : locLat != null && locLng != null
+                ? t("geo.hasCoords")
+                : locInfo ?? t("geo.autoFromCep")}
+          </p>
+          <button
+            type="button"
+            onClick={saveLocation}
+            disabled={locSaving}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+          >
+            {locSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {t("common.save")}
+          </button>
         </div>
       </section>
     </div>

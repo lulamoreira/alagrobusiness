@@ -10,6 +10,7 @@ import { PillButton } from "@/components/PillButton";
 import { CategoryChip } from "@/components/CategoryChip";
 import { LGPDCheckbox } from "@/components/LGPDCheckbox";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { geocodeCep } from "@/lib/geocode";
 
 export const Route = createFileRoute("/completar-cadastro")({
   ssr: false,
@@ -42,6 +43,8 @@ function CompleteProfilePage() {
   const [lgpd, setLgpd] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
+  const [geoInfo, setGeoInfo] = useState<string | null>(null);
+  const [coords, setCoords] = useState<{ lat: number | null; lng: number | null }>({ lat: null, lng: null });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -68,6 +71,24 @@ function CompleteProfilePage() {
 
   const toggle = (list: string[], v: string) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
+
+  const handleCepBlur = async () => {
+    const digits = (cep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    const geo = await geocodeCep(digits);
+    if (!geo) return;
+    if (geo.cidade) setCidade((p) => p || geo.cidade!);
+    if (geo.estado) setEstado((p) => p || geo.estado!);
+    setCoords({ lat: geo.latitude, lng: geo.longitude });
+    if (geo.cidade || geo.estado) {
+      setGeoInfo(
+        t("geo.detected", {
+          cidade: geo.cidade ?? "—",
+          estado: geo.estado ?? "—",
+        }),
+      );
+    }
+  };
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -106,6 +127,12 @@ function CompleteProfilePage() {
       return;
     }
     await refreshProfile();
+    if (coords.lat != null && coords.lng != null && user) {
+      await supabase
+        .from("profiles")
+        .update({ latitude: coords.lat, longitude: coords.lng })
+        .eq("id", user.id);
+    }
     const status = data as string;
     if (status === "aguardando_aprovacao") navigate({ to: "/aguardando-aprovacao" });
     else navigate({ to: "/painel" });
@@ -186,11 +213,15 @@ function CompleteProfilePage() {
               onChange={(e) => setCidade(e.target.value)}
               error={errors.cidade ? t(errors.cidade) : undefined}
             />
-            <DarkInput
-              label={t("onboarding.cep")}
-              value={cep}
-              onChange={(e) => setCep(e.target.value)}
-            />
+            <div>
+              <DarkInput
+                label={t("onboarding.cep")}
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+                onBlur={handleCepBlur}
+              />
+              {geoInfo && <p className="mt-1 text-xs text-primary">{geoInfo}</p>}
+            </div>
           </div>
 
           <div>
