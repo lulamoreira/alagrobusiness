@@ -285,13 +285,41 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         servico_prazo: isServico ? (servicoPrazo.trim() || null) : null,
       };
 
+      let anuncioId: string | null = initial?.id ?? null;
       if (mode === "create") {
         const insertPayload = { ...payload, em_startups: canalStartups === true };
-        const { error } = await supabase.from("anuncios").insert(insertPayload);
+        const { data: inserted, error } = await supabase
+          .from("anuncios")
+          .insert(insertPayload)
+          .select("id")
+          .single();
         if (error) throw error;
+        anuncioId = inserted.id;
       } else if (initial) {
         const { error } = await supabase.from("anuncios").update(payload).eq("id", initial.id);
         if (error) throw error;
+      }
+
+      // Sync distribution center links (products only; services never have CDs)
+      if (anuncioId && !isServico) {
+        const desired = new Set(centroIds);
+        const existing = mode === "edit" ? new Set(initial?.centro_ids ?? []) : new Set<string>();
+        const toAdd = [...desired].filter((c) => !existing.has(c));
+        const toRemove = [...existing].filter((c) => !desired.has(c));
+        if (toAdd.length > 0) {
+          const { error: addErr } = await supabase
+            .from("anuncio_centros")
+            .insert(toAdd.map((centro_id) => ({ anuncio_id: anuncioId!, centro_id })));
+          if (addErr) throw addErr;
+        }
+        if (toRemove.length > 0) {
+          const { error: delErr } = await supabase
+            .from("anuncio_centros")
+            .delete()
+            .eq("anuncio_id", anuncioId)
+            .in("centro_id", toRemove);
+          if (delErr) throw delErr;
+        }
       }
 
       navigate({ to: "/vender" });
