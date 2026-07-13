@@ -32,6 +32,8 @@ type AnuncioRow = {
   estado: string | null;
   cidade: string | null;
   destaque_ate: string | null;
+  tipo_oferta: "produto" | "servico" | null;
+
 };
 
 function PhotoThumb({ path, productLabel }: { path: string | null | undefined; productLabel: string }) {
