@@ -251,8 +251,15 @@
     "rainforest": "Rainforest"
   },
   "sell": {
-    "title": "My listings",
+    "title": "My Ads",
     "newListing": "New listing",
+    "estoqueBtn": "Stock",
+    "estoqueDialog": {
+      "title": "Stock — {{produto}}",
+      "close": "Close",
+      "noCd": "This listing is not linked to any Distribution Center yet.",
+      "linkCta": "Link a Distribution Center"
+    },
     "noListings": "You don't have listings yet. Create your first one!",
     "edit": "Edit",
     "pause": "Pause",
