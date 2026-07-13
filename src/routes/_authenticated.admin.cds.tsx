@@ -73,6 +73,7 @@ function AdminCdsPage() {
   const qc = useQueryClient();
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
+  const [operadoresFor, setOperadoresFor] = useState<{ id: string; nome: string } | null>(null);
 
   const schema = useMemo(
     () =>
