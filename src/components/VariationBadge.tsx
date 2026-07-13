@@ -54,7 +54,7 @@ export function VariationBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold tabular-nums",
+        "inline-flex items-center gap-1 whitespace-nowrap shrink-0 rounded-full px-2 py-0.5 font-semibold tabular-nums",
         size === "sm" ? "text-[10px]" : "text-xs",
         color,
       )}
