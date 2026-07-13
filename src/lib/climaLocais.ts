@@ -70,9 +70,6 @@ export async function addLocal(
 }
 
 export async function removeLocal(id: string): Promise<void> {
-  const { error } = await supabase
-    .from("usuario_clima_locais")
-    .update({ deleted_at: new Date().toISOString() })
-    .eq("id", id);
+  const { error } = await supabase.from("usuario_clima_locais").delete().eq("id", id);
   if (error) throw error;
 }
