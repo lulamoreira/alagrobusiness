@@ -63,11 +63,11 @@ function NoticiasPage() {
       const allowed = new Set<string>([...userThemes, "geral"]);
       list = list.filter((n) => n.tema && allowed.has(n.tema));
     }
-    if (activeTheme) {
-      list = list.filter((n) => n.tema === activeTheme);
+    if (activeThemes.size > 0) {
+      list = list.filter((n) => n.tema && activeThemes.has(n.tema));
     }
     return list;
-  }, [noticias, effectiveMode, userThemes, activeTheme]);
+  }, [noticias, effectiveMode, userThemes, activeThemes]);
 
   const showNoInterestsHint = mode === "mine" && !hasInterests;
 
