@@ -510,6 +510,35 @@ export type Database = {
           },
         ]
       }
+      cd_operadores: {
+        Row: {
+          centro_id: string
+          created_at: string
+          id: string
+          usuario_id: string
+        }
+        Insert: {
+          centro_id: string
+          created_at?: string
+          id?: string
+          usuario_id: string
+        }
+        Update: {
+          centro_id?: string
+          created_at?: string
+          id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cd_operadores_centro_id_fkey"
+            columns: ["centro_id"]
+            isOneToOne: false
+            referencedRelation: "centros_distribuicao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       centros_distribuicao: {
         Row: {
           ativo: boolean
@@ -2054,6 +2083,10 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_cd_operador: {
+        Args: { _centro: string; _uid: string }
+        Returns: boolean
+      }
       is_super_admin: { Args: { _uid: string }; Returns: boolean }
       marcar_mensagens_lidas: {
         Args: { p_conversa_id: string }
