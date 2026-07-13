@@ -168,7 +168,10 @@
       "terroso": "Terroso",
       "chuva": "Chuva",
       "classico": "Clássico"
-    }
+    },
+    "destaqueScroll": "Tempo do carrossel de destaques",
+    "destaqueScrollValue": "{{seconds}}s",
+    "destaqueScrollHint": "Intervalo entre trocas de card no carrossel de destaques do Painel (2 a 15 segundos)."
   },
   "placeholders": {
     "soon": "Em breve",
