@@ -72,6 +72,24 @@ function CompleteProfilePage() {
   const toggle = (list: string[], v: string) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
+  const handleCepBlur = async () => {
+    const digits = (cep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    const geo = await geocodeCep(digits);
+    if (!geo) return;
+    if (geo.cidade) setCidade((p) => p || geo.cidade!);
+    if (geo.estado) setEstado((p) => p || geo.estado!);
+    setCoords({ lat: geo.latitude, lng: geo.longitude });
+    if (geo.cidade || geo.estado) {
+      setGeoInfo(
+        t("geo.detected", {
+          cidade: geo.cidade ?? "—",
+          estado: geo.estado ?? "—",
+        }),
+      );
+    }
+  };
+
   const validate = () => {
     const e: Record<string, string> = {};
     if (!nome.trim()) e.nome = "validation.required";
