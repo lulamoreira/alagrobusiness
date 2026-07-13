@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { MapPin, Plus, Trash2, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -241,6 +242,9 @@ function WeatherLocationsSection() {
     try {
       await removeLocal(id);
       qc.invalidateQueries({ queryKey: ["clima_locais", user?.id] });
+    } catch (err) {
+      console.error("removeLocal failed:", err);
+      toast.error(t("weatherLocations.removeError"));
     } finally {
       setBusy(false);
     }

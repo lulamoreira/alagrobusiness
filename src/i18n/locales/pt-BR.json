@@ -734,7 +734,8 @@
     "searching": "Buscando...",
     "noResults": "Nenhuma cidade encontrada",
     "alreadyAdded": "Já adicionada",
-    "remove": "Remover"
+    "remove": "Remover",
+    "removeError": "Não foi possível remover este local. Tente novamente."
   },
   "finance": {
     "title": "Financeiro",
