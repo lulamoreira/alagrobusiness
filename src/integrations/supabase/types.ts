@@ -125,6 +125,42 @@ export type Database = {
         }
         Relationships: []
       }
+      anuncio_centros: {
+        Row: {
+          anuncio_id: string
+          centro_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          anuncio_id: string
+          centro_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          anuncio_id?: string
+          centro_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anuncio_centros_anuncio_id_fkey"
+            columns: ["anuncio_id"]
+            isOneToOne: false
+            referencedRelation: "anuncios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "anuncio_centros_centro_id_fkey"
+            columns: ["centro_id"]
+            isOneToOne: false
+            referencedRelation: "centros_distribuicao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anuncios: {
         Row: {
           aceita_permuta: boolean
