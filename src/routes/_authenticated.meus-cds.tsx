@@ -85,7 +85,7 @@ function MeusCdsPage() {
       const { data: cds, error: err2 } = await supabase
         .from("centros_distribuicao")
         .select(
-          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo",
+          "id, nome, descricao, responsavel, telefone, endereco, cidade, estado, cep, latitude, longitude, capacidade, ativo, aprovado",
         )
         .in("id", ids)
         .is("deleted_at", null)
