@@ -53,7 +53,7 @@ export async function fetchCatalogoAll(includeInactive = false): Promise<Catalog
   while (offset < total) {
     let query = supabase
       .from("categorias_catalogo")
-      .select("id, parent_id, nome, ordem, ativo, icone, tipo, segmento", { count: "exact" })
+      .select("id, parent_id, nome, ordem, ativo, icone, tipo, segmento, habilita_cd", { count: "exact" })
 
       .is("deleted_at", null)
       .order("parent_id", { ascending: true, nullsFirst: true })
