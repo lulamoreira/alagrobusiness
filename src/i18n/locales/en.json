@@ -113,7 +113,8 @@
       "learning": "Learning",
       "account": "Account",
       "admin": "Administration"
-    }
+    },
+    "myCds": "My DCs"
   },
   "dashboard": {
     "hello": "Hello",
@@ -1621,7 +1622,34 @@
     "errors": {
       "nome": "Enter the DC name",
       "coord": "Invalid coordinate"
+    },
+    "operadores": {
+      "title": "Operators",
+      "subtitle": "Users who can manage this DC.",
+      "empty": "No operators linked.",
+      "search": "Search by name or email",
+      "add": "Add",
+      "remove": "Remove",
+      "confirmRemove": "Remove this operator?",
+      "added": "Operator added.",
+      "removed": "Operator removed.",
+      "alreadyLinked": "This user is already an operator of this DC.",
+      "manage": "Manage operators",
+      "close": "Close"
     }
+  },
+  "meusCds": {
+    "title": "My Distribution Centers",
+    "subtitle": "Edit the DCs you operate and track their linked listings.",
+    "empty": "You don't operate any Distribution Center yet.",
+    "edit": "Edit details",
+    "saved": "Details saved.",
+    "linkedAds": "Linked listings",
+    "noAds": "No listings linked to this DC yet.",
+    "seller": "Seller",
+    "status": "Status",
+    "product": "Product",
+    "openAd": "Open listing"
   },
   "catalogo": {
     "selectRoot": "Select a category…",

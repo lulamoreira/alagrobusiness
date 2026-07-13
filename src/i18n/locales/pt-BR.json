@@ -113,7 +113,8 @@
       "learning": "Ensino",
       "account": "Conta",
       "admin": "Administração"
-    }
+    },
+    "myCds": "Meus CDs"
   },
   "dashboard": {
     "hello": "Olá",
@@ -1621,7 +1622,34 @@
     "errors": {
       "nome": "Informe o nome do CD",
       "coord": "Coordenada inválida"
+    },
+    "operadores": {
+      "title": "Operadores",
+      "subtitle": "Usuários que podem gerenciar este CD.",
+      "empty": "Nenhum operador vinculado.",
+      "search": "Buscar por nome ou e-mail",
+      "add": "Adicionar",
+      "remove": "Remover",
+      "confirmRemove": "Remover este operador?",
+      "added": "Operador adicionado.",
+      "removed": "Operador removido.",
+      "alreadyLinked": "Este usuário já é operador deste CD.",
+      "manage": "Gerenciar operadores",
+      "close": "Fechar"
     }
+  },
+  "meusCds": {
+    "title": "Meus Centros de Distribuição",
+    "subtitle": "Edite os dados dos CDs que você opera e acompanhe os anúncios vinculados.",
+    "empty": "Você ainda não opera nenhum Centro de Distribuição.",
+    "edit": "Editar dados",
+    "saved": "Dados salvos.",
+    "linkedAds": "Anúncios vinculados",
+    "noAds": "Nenhum anúncio vinculado a este CD ainda.",
+    "seller": "Vendedor",
+    "status": "Status",
+    "product": "Produto",
+    "openAd": "Ver anúncio"
   },
   "catalogo": {
     "selectRoot": "Selecione uma categoria…",
