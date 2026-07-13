@@ -565,6 +565,8 @@ export function MobilePainel() {
   const { t } = useTranslation();
   return (
     <div className="space-y-3">
+      <DestaquesCarousel variant="mobile" />
+
       <CollapsibleSection id="business" title={t("dashboard.business.title")}>
         <BusinessMobile />
       </CollapsibleSection>
