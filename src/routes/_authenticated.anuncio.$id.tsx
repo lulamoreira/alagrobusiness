@@ -432,6 +432,37 @@ function DetailPage() {
         />
       )}
 
+      {isOwner && (
+        <div className="space-y-3">
+          <h2 className="inline-flex items-center gap-2 font-display text-lg font-bold text-foreground">
+            <Warehouse className="h-5 w-5 text-primary" /> {t("estoque.title")}
+          </h2>
+          {cdsVinculados && cdsVinculados.length > 0 ? (
+            <div className="space-y-4">
+              {cdsVinculados.map((c) => (
+                <div key={c.id} className="rounded-2xl border border-border bg-card/60 p-4">
+                  <p className="mb-3 font-display text-sm font-semibold text-foreground">
+                    {c.nome}
+                    <span className="ml-1 text-xs font-normal text-muted-foreground">
+                      · {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
+                    </span>
+                  </p>
+                  <EstoquePanel
+                    anuncioId={anuncio.id}
+                    centroId={c.id}
+                    unidadeChave={qtyUnit?.nome_chave}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="rounded-2xl border border-dashed border-border bg-card/40 p-6 text-center text-sm text-muted-foreground">
+              {t("estoque.semCd")}
+            </p>
+          )}
+        </div>
+      )}
+
       {anuncio.descricao && (
         <div className="rounded-2xl border border-border bg-card p-5">
           <p className="text-xs font-semibold uppercase text-muted-foreground">{t("form.description")}</p>
