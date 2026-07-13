@@ -284,13 +284,19 @@ function QuotesMobile() {
     .filter((c) => (commodityGroups.get(c.codigo)?.length ?? 0) > 0)
     .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)));
 
-  const vis = prefs?.tipos_dolar_visiveis ?? [];
-  const preferredDolarRow = dolar?.find((d) => d.tipo === userDolarPref);
-  const showDolar = (vis.length === 0 || vis.includes(userDolarPref)) && !!preferredDolarRow;
-  const preferredDolarHistory = dolarGroups.get(userDolarPref) ?? [];
-  const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
+  const vis = (prefs?.tipos_dolar_visiveis ?? []) as DolarTipo[];
+  const tiposToShow: DolarTipo[] = vis.length > 0 ? vis : [userDolarPref];
+  const dolarCards = tiposToShow
+    .map((tipo) => {
+      const row = dolar?.find((d) => d.tipo === tipo);
+      if (!row) return null;
+      const history = dolarGroups.get(tipo) ?? [];
+      const variation = computeVariation(history.map((h) => h.valor_brl));
+      return { tipo, valor: Number(row.valor_brl), variation };
+    })
+    .filter((x): x is { tipo: DolarTipo; valor: number; variation: ReturnType<typeof computeVariation> } => x !== null);
 
-  if (featured.length === 0 && !showDolar) {
+  if (featured.length === 0 && dolarCards.length === 0) {
     return (
       <p className="text-xs text-muted-foreground">{t("quote.emptyPainel")}</p>
     );
@@ -298,27 +304,28 @@ function QuotesMobile() {
 
   return (
     <div className="-mx-1 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-1">
-      {showDolar && preferredDolarRow && (
+      {dolarCards.map((card) => (
         <Link
+          key={card.tipo}
           to="/cotacao"
           className="min-w-[9rem] shrink-0 snap-start rounded-xl border border-primary/40 bg-card p-3"
         >
           <div className="truncate text-[10px] uppercase tracking-wide text-primary/90">
-            {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
+            {t("quote.dollarTitle")} · {t(`quote.${card.tipo}`)}
           </div>
           <div className="mt-1 font-display text-base font-bold text-foreground tabular-nums truncate">
-            {formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)}
+            {formatDolarValue(card.valor, i18n.language)}
           </div>
           <div className="mt-1">
             <VariationBadge
-              variation={preferredDolarVariation}
+              variation={card.variation}
               locale={i18n.language}
               formatDelta={(v) => formatDolarValue(v, i18n.language)}
               size="sm"
             />
           </div>
         </Link>
-      )}
+      ))}
       {featured.map((c) => {
         const history = commodityGroups.get(c.codigo) ?? [];
         const latest = history[history.length - 1];

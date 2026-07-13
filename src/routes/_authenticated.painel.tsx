@@ -107,9 +107,6 @@ function PainelPage() {
   const formatValueInUserCurrency = (valorBRL: number) =>
     formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
 
-  const preferredDolarRow = dolar?.find((d) => d.tipo === userDolarPref);
-  const preferredDolarHistory = dolarGroups.get(userDolarPref) ?? [];
-  const preferredDolarVariation = computeVariation(preferredDolarHistory.map((h) => h.valor_brl));
 
   return (
     <div className="space-y-4 md:space-y-8">
@@ -140,31 +137,45 @@ function PainelPage() {
         </div>
 
         {(() => {
-          const vis = prefs?.tipos_dolar_visiveis ?? [];
-          const show = vis.length === 0 || vis.includes(userDolarPref);
-          if (!show || !preferredDolarRow) return null;
+          const vis = (prefs?.tipos_dolar_visiveis ?? []) as DolarTipo[];
+          const tiposToShow: DolarTipo[] = vis.length > 0 ? vis : [userDolarPref];
+          const cards = tiposToShow
+            .map((tipo) => {
+              const row = dolar?.find((d) => d.tipo === tipo);
+              if (!row) return null;
+              const history = dolarGroups.get(tipo) ?? [];
+              const variation = computeVariation(history.map((h) => h.valor_brl));
+              return { tipo, valor: Number(row.valor_brl), variation };
+            })
+            .filter((x): x is { tipo: DolarTipo; valor: number; variation: ReturnType<typeof computeVariation> } => x !== null);
+          if (cards.length === 0) return null;
           return (
-            <Link
-              to="/cotacao"
-              className="group mb-3 block rounded-2xl border border-primary/40 bg-card p-5 transition-colors hover:border-primary"
-            >
-              <div className="text-xs uppercase tracking-wide text-primary/90">
-                {t("quote.dollarTitle")} · {t(`quote.${userDolarPref}`)}
-              </div>
-              <div className="mt-2 flex items-baseline justify-between gap-2">
-                <span className="font-display text-xl font-bold text-foreground tabular-nums">
-                  {formatDolarValue(Number(preferredDolarRow.valor_brl), i18n.language)}
-                </span>
-              </div>
-              <div className="mt-1">
-                <VariationBadge
-                  variation={preferredDolarVariation}
-                  locale={i18n.language}
-                  formatDelta={(v) => formatDolarValue(v, i18n.language)}
-                  size="sm"
-                />
-              </div>
-            </Link>
+            <div className="mb-3 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+              {cards.map((card) => (
+                <Link
+                  key={card.tipo}
+                  to="/cotacao"
+                  className="group block rounded-2xl border border-primary/40 bg-card p-5 transition-colors hover:border-primary"
+                >
+                  <div className="text-xs uppercase tracking-wide text-primary/90">
+                    {t("quote.dollarTitle")} · {t(`quote.${card.tipo}`)}
+                  </div>
+                  <div className="mt-2 flex items-baseline justify-between gap-2">
+                    <span className="font-display text-xl font-bold text-foreground tabular-nums">
+                      {formatDolarValue(card.valor, i18n.language)}
+                    </span>
+                  </div>
+                  <div className="mt-1">
+                    <VariationBadge
+                      variation={card.variation}
+                      locale={i18n.language}
+                      formatDelta={(v) => formatDolarValue(v, i18n.language)}
+                      size="sm"
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
           );
         })()}
 
