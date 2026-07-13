@@ -40,16 +40,36 @@ const FEEDS: { fonte: string; url: string }[] = [
   { fonte: "Campo & Negócios", url: "https://revistacampoenegocios.com.br/feed/" },
 ];
 
+// Ordem importa: temas mais específicos vêm ANTES dos genéricos (derivarTema
+// retorna a primeira ocorrência). Cobre categorias de topo do catálogo agro
+// + temas transversais (clima, mercado, tecnologia).
 const TEMAS: { key: string; words: string[] }[] = [
+  // Culturas específicas
   { key: "soja", words: ["soja"] },
-  { key: "cafe", words: ["café", "cafe"] },
   { key: "milho", words: ["milho"] },
-  { key: "clima", words: ["clima", "chuva", "seca", "tempo", "geada"] },
-  { key: "mercado", words: ["mercado", "preço", "preco", "cotação", "cotacao", "dólar", "dolar", "exportação", "exportacao"] },
-  { key: "tecnologia", words: ["tecnologia", "agtech", "drone", "ia ", "inteligência artificial", "inovação", "inovacao"] },
-  { key: "pecuaria", words: ["pecuária", "pecuaria", "boi", "gado", "bovino", "frigorífico", "frigorifico"] },
   { key: "trigo", words: ["trigo"] },
   { key: "algodao", words: ["algodão", "algodao"] },
+  { key: "cafe", words: ["café", "cafe", "cacau", "chá ", " cha "] },
+  // Categorias de topo (agro)
+  { key: "graos_cereais", words: ["grão", "grao", "grãos", "graos", "cereais", "cevada", "aveia", "arroz", "sorgo", "centeio"] },
+  { key: "oleaginosas", words: ["oleaginosa", "girassol", "canola", "amendoim", "gergelim", "mamona"] },
+  { key: "frutas", words: ["fruta", "frutas", "laranja", "banana", "manga", "uva", "maçã", "maca", "melancia", "abacaxi", "limão", "limao", "mamão", "mamao", "citros", "citrus"] },
+  { key: "hortalicas", words: ["hortaliça", "hortalica", "hortaliças", "hortalicas", "legume", "verdura", "tomate", "alface", "cebola", "cenoura", "batata"] },
+  { key: "raizes_tuberculos", words: ["mandioca", "tubérculo", "tuberculo", "raiz", "raízes", "raizes", "batata-doce", "inhame"] },
+  { key: "cana_acucar", words: ["cana", "cana-de-açúcar", "cana de açucar", "açúcar", "acucar", "etanol", "usina", "sucroenergético", "sucroenergetico"] },
+  { key: "aves", words: ["aves", "frango", "avicultura", "avícola", "avicola", "poedeira", "ovo", "ovos"] },
+  { key: "aquicultura", words: ["aquicultura", "peixe", "peixes", "pesca", "tilápia", "tilapia", "camarão", "camarao", "piscicultura"] },
+  { key: "leite_derivados", words: ["leite", "laticínio", "laticinio", "laticínios", "laticinios", "queijo", "iogurte", "manteiga", "lácteo", "lacteo"] },
+  { key: "apicultura", words: ["apicultura", "abelha", "abelhas", "mel", "própolis", "propolis"] },
+  { key: "flores_plantas", words: ["flor", "flores", "floricultura", "planta ornamental", "ornamentais", "jardinagem", "muda", "mudas"] },
+  { key: "fibras_florestal", words: ["fibra", "fibras", "sisal", "juta", "florestal", "eucalipto", "pinus", "madeira", "reflorestamento", "silvicultura", "celulose"] },
+  { key: "insumos", words: ["fertilizante", "adubo", "defensivo", "agroquímico", "agroquimico", "semente", "sementes", "insumo", "insumos", "calcário", "calcario", "herbicida", "fungicida", "inseticida"] },
+  { key: "maquinas", words: ["máquina", "maquina", "máquinas", "maquinas", "implemento", "trator", "colheitadeira", "pulverizador", "plantadeira"] },
+  { key: "pecuaria", words: ["pecuária", "pecuaria", "boi", "gado", "bovino", "frigorífico", "frigorifico", "suíno", "suino", "suinocultura", "caprino", "ovino"] },
+  // Transversais
+  { key: "clima", words: ["clima", "chuva", "seca", "tempo", "geada", "estiagem", "temperatura"] },
+  { key: "mercado", words: ["mercado", "preço", "preco", "cotação", "cotacao", "dólar", "dolar", "exportação", "exportacao", "safra", "colheita"] },
+  { key: "tecnologia", words: ["tecnologia", "agtech", "drone", "ia ", "inteligência artificial", "inovação", "inovacao", "digital"] },
 ];
 
 function derivarTema(titulo: string, resumo: string): string {

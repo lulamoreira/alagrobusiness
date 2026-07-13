@@ -15,7 +15,7 @@ type Mode = "mine" | "all";
 function NoticiasPage() {
   const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("mine");
-  const [activeTheme, setActiveTheme] = useState<string | null>(null);
+  const [activeThemes, setActiveThemes] = useState<Set<string>>(new Set());
 
   const { data: prefs } = useQuery({
     queryKey: ["prefs_temas"],
@@ -63,11 +63,11 @@ function NoticiasPage() {
       const allowed = new Set<string>([...userThemes, "geral"]);
       list = list.filter((n) => n.tema && allowed.has(n.tema));
     }
-    if (activeTheme) {
-      list = list.filter((n) => n.tema === activeTheme);
+    if (activeThemes.size > 0) {
+      list = list.filter((n) => n.tema && activeThemes.has(n.tema));
     }
     return list;
-  }, [noticias, effectiveMode, userThemes, activeTheme]);
+  }, [noticias, effectiveMode, userThemes, activeThemes]);
 
   const showNoInterestsHint = mode === "mine" && !hasInterests;
 
@@ -104,10 +104,10 @@ function NoticiasPage() {
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => setActiveTheme(null)}
+            onClick={() => setActiveThemes(new Set())}
             className={cn(
               "rounded-full border px-3 py-1 text-xs transition-colors",
-              activeTheme === null
+              activeThemes.size === 0
                 ? "border-primary bg-primary/15 text-primary"
                 : "border-border bg-card text-muted-foreground hover:text-foreground",
             )}
@@ -118,10 +118,17 @@ function NoticiasPage() {
             <button
               key={tema}
               type="button"
-              onClick={() => setActiveTheme(tema === activeTheme ? null : tema)}
+              onClick={() =>
+                setActiveThemes((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(tema)) next.delete(tema);
+                  else next.add(tema);
+                  return next;
+                })
+              }
               className={cn(
                 "rounded-full border px-3 py-1 text-xs transition-colors",
-                activeTheme === tema
+                activeThemes.has(tema)
                   ? "border-primary bg-primary/15 text-primary"
                   : "border-border bg-card text-muted-foreground hover:text-foreground",
               )}
