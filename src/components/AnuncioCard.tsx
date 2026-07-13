@@ -42,6 +42,7 @@ interface AnuncioCardProps {
   cotacoes: { tipo: "comercial" | "turismo" | "paralelo"; valor_brl: number }[];
   sellerName?: string;
   sellerTipoPerfil?: string | null;
+  hasCd?: boolean;
 }
 
 
