@@ -164,8 +164,13 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
         <AnuncioPhoto path={item.fotos?.[0]} productLabel={item.produto} />
 
         {/* Badges: top-left, stacked, with breathing room. Dark text on light pill = contrast. */}
-        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico" || isStartup || isFeatured) && (
+        {(item.aceita_permuta || hasCert || item.tipo_oferta === "servico" || isStartup || isFeatured || hasCd) && (
           <div className="absolute left-3 top-3 flex max-w-[70%] flex-col items-start gap-1.5">
+            {hasCd && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
+                {t("buy.cdBadge")}
+              </span>
+            )}
             {isFeatured && (
               <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm ring-1 ring-primary/40 backdrop-blur">
                 <Sparkles className="h-3 w-3" /> {t("buy.featuredBadge")}
