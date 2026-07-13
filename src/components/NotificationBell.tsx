@@ -121,7 +121,7 @@ export function NotificationBell() {
     setOpen(false);
     if (!n.lida) await markOne(n.id);
     if (n.link) {
-      navigate({ to: n.link });
+      navigate({ to: n.link as string });
     }
   };
 
