@@ -230,7 +230,14 @@ function MeusCdsPage() {
               <li key={cd.id} className="rounded-2xl border border-border bg-card/60 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-display text-lg font-semibold text-foreground">{cd.nome}</h2>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h2 className="font-display text-lg font-semibold text-foreground">{cd.nome}</h2>
+                      {!cd.aprovado && (
+                        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-500">
+                          {t("cdSelf.pendingBadge")}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-muted-foreground">
                       {[cd.cidade, cd.estado].filter(Boolean).join(" / ") || "—"}
                     </p>
