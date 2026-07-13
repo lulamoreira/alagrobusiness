@@ -314,18 +314,29 @@ function DetailPage() {
                 <Warehouse className="h-4 w-4" /> {t("detail.cdsAvailable")}
               </p>
               <ul className="space-y-1 text-sm">
-                {cdsVinculados.map((c) => (
-                  <li key={c.id} className="flex items-start gap-2">
-                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                    <span>
-                      {t("detail.cdsItem", {
-                        nome: c.nome,
-                        cidade: c.cidade ?? "—",
-                        estado: c.estado ?? "—",
-                      })}
-                    </span>
-                  </li>
-                ))}
+                {cdsVinculados.map((c) => {
+                  const km =
+                    profile?.latitude != null && profile?.longitude != null
+                      ? distanceKm(profile.latitude, profile.longitude, c.latitude, c.longitude)
+                      : null;
+                  return (
+                    <li key={c.id} className="flex items-start gap-2">
+                      <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                      <span>
+                        {t("detail.cdsItem", {
+                          nome: c.nome,
+                          cidade: c.cidade ?? "—",
+                          estado: c.estado ?? "—",
+                        })}
+                        {km != null && (
+                          <span className="ml-1 text-muted-foreground">
+                            {t("detail.cdDistance", { km: km.toFixed(0) })}
+                          </span>
+                        )}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
