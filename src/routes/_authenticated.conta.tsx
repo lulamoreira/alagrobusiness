@@ -1,13 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import { Crown, Sparkles, Clock, Settings, Loader2, CalendarCheck, CalendarClock, ArrowRight, Lock } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Crown, Sparkles, Clock, Settings, Loader2, CalendarCheck, CalendarClock, ArrowRight, Lock, MapPin, Save } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { usePlan } from "@/lib/plan";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { geocodeCep } from "@/lib/geocode";
+import { DarkInput } from "@/components/DarkInput";
 
 export const Route = createFileRoute("/_authenticated/conta")({
   component: ContaPage,
