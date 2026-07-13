@@ -297,13 +297,21 @@ function AdminCdsPage() {
               <Input value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })} />
             </Field>
             <Field label={t("adminCds.fields.cep")}>
-              <Input value={form.cep} onChange={(e) => setForm({ ...form, cep: e.target.value })} />
+              <Input
+                value={form.cep}
+                onChange={(e) => setForm({ ...form, cep: e.target.value })}
+                onBlur={handleCepBlur}
+              />
+              {geoInfo && <p className="text-xs text-muted-foreground">{geoInfo}</p>}
             </Field>
+            <div />
             <Field label={t("adminCds.fields.latitude")}>
               <Input
                 value={form.latitude}
                 onChange={(e) => setForm({ ...form, latitude: e.target.value })}
                 placeholder="-23.5505"
+                readOnly={coordsLocked}
+                className={coordsLocked ? "bg-muted/40" : ""}
               />
             </Field>
             <Field label={t("adminCds.fields.longitude")}>
@@ -311,8 +319,22 @@ function AdminCdsPage() {
                 value={form.longitude}
                 onChange={(e) => setForm({ ...form, longitude: e.target.value })}
                 placeholder="-46.6333"
+                readOnly={coordsLocked}
+                className={coordsLocked ? "bg-muted/40" : ""}
               />
             </Field>
+            <div className="md:col-span-2 -mt-2">
+              <p className="text-[11px] text-muted-foreground">
+                {coordsLocked ? t("geo.autoFromCep") : t("geo.manualMode")}{" "}
+                <button
+                  type="button"
+                  onClick={() => setCoordsLocked((v) => !v)}
+                  className="text-primary underline hover:brightness-125"
+                >
+                  {coordsLocked ? t("geo.adjustManually") : t("geo.backToAuto")}
+                </button>
+              </p>
+            </div>
             <div className="flex items-center gap-3">
               <Switch
                 id="cd-ativo"
