@@ -15,7 +15,7 @@ type Mode = "mine" | "all";
 function NoticiasPage() {
   const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("mine");
-  const [activeTheme, setActiveTheme] = useState<string | null>(null);
+  const [activeThemes, setActiveThemes] = useState<Set<string>>(new Set());
 
   const { data: prefs } = useQuery({
     queryKey: ["prefs_temas"],
