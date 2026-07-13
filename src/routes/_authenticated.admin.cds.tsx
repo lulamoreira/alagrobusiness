@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { CdOperadoresDialog } from "@/components/CdOperadoresDialog";
+import { geocodeCep } from "@/lib/geocode";
 
 export const Route = createFileRoute("/_authenticated/admin/cds")({
   component: AdminCdsPage,
