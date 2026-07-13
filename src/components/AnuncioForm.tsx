@@ -98,13 +98,14 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   });
 
   const { data: cds } = useQuery({
-    queryKey: ["cds_ativos_form"],
+    queryKey: ["cds_ativos_form", user?.id],
     queryFn: async () =>
       (await supabase
         .from("centros_distribuicao")
-        .select("id, nome, cidade, estado")
+        .select("id, nome, cidade, estado, aprovado, created_by")
         .eq("ativo", true)
         .is("deleted_at", null)
+        .or(user ? `aprovado.eq.true,created_by.eq.${user.id}` : "aprovado.eq.true")
         .order("nome")).data ?? [],
     staleTime: 1000 * 60 * 5,
   });
