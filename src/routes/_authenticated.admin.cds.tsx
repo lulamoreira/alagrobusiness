@@ -74,7 +74,38 @@ function AdminCdsPage() {
   const qc = useQueryClient();
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
+  const [coordsLocked, setCoordsLocked] = useState(true);
+  const [geoInfo, setGeoInfo] = useState<string | null>(null);
   const [operadoresFor, setOperadoresFor] = useState<{ id: string; nome: string } | null>(null);
+
+  const handleCepBlur = async () => {
+    if (!form) return;
+    const digits = (form.cep || "").replace(/\D+/g, "");
+    if (digits.length !== 8) return;
+    const geo = await geocodeCep(digits);
+    if (!geo) {
+      setGeoInfo(t("geo.notFound"));
+      return;
+    }
+    setForm((f) =>
+      f
+        ? {
+            ...f,
+            endereco: f.endereco || geo.logradouro || "",
+            cidade: geo.cidade ?? f.cidade,
+            estado: geo.estado ?? f.estado,
+            latitude: geo.latitude != null ? String(geo.latitude) : f.latitude,
+            longitude: geo.longitude != null ? String(geo.longitude) : f.longitude,
+          }
+        : f,
+    );
+    setCoordsLocked(true);
+    if (geo.latitude != null && geo.longitude != null) {
+      setGeoInfo(t("geo.detected", { cidade: geo.cidade ?? "—", estado: geo.estado ?? "—" }));
+    } else {
+      setGeoInfo(t("geo.noCoords"));
+    }
+  };
 
   const schema = useMemo(
     () =>
