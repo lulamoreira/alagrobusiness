@@ -355,7 +355,23 @@
     "cdOption": "{{nome}} — {{cidade}}/{{estado}}",
     "nearMe": "Cerca de mí",
     "radiusKm": "Radio (km)",
-    "needLocationHint": "Configura tu ubicación en el perfil para activar la proximidad."
+    "needLocationHint": "Configura tu ubicación en el perfil para activar la proximidad.",
+    "setLocationCta": "Configurar mi ubicación"
+  },
+  "geo": {
+    "detected": "Ubicación detectada: {{cidade}} / {{estado}}",
+    "notFound": "CEP no encontrado.",
+    "noCoords": "Dirección encontrada, pero sin coordenadas.",
+    "autoFromCep": "Las coordenadas se completarán a partir del CEP.",
+    "manualMode": "Modo manual: estás editando las coordenadas.",
+    "adjustManually": "Ajustar manualmente",
+    "backToAuto": "Volver al automático",
+    "myLocationTitle": "Mi ubicación",
+    "myLocationDesc": "Se usa para calcular proximidad de anuncios y centros de distribución.",
+    "detecting": "Detectando…",
+    "hasCoords": "Coordenadas definidas.",
+    "saved": "Ubicación guardada.",
+    "saveError": "No se pudo guardar tu ubicación."
   },
   "detail": {
     "interested": "Me interesa",
