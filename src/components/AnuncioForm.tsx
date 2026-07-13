@@ -95,6 +95,18 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
       (await supabase.from("unidades").select("*").is("deleted_at", null).order("nome_chave")).data ?? [],
   });
 
+  const { data: cds } = useQuery({
+    queryKey: ["cds_ativos_form"],
+    queryFn: async () =>
+      (await supabase
+        .from("centros_distribuicao")
+        .select("id, nome, cidade, estado")
+        .eq("ativo", true)
+        .is("deleted_at", null)
+        .order("nome")).data ?? [],
+    staleTime: 1000 * 60 * 5,
+  });
+
   const [titulo, setTitulo] = useState(initial?.titulo ?? "");
   const [descricao, setDescricao] = useState(initial?.descricao ?? "");
   // Legacy `categoria` (enum) preserved as-is on edit; new anuncios leave it null.
