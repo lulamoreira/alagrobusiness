@@ -26,7 +26,7 @@ export function VariationBadge({
     return (
       <span
         className={cn(
-          "inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 font-medium text-muted-foreground",
+          "inline-flex items-center gap-1 whitespace-nowrap shrink-0 rounded-full bg-muted px-2 py-0.5 font-medium text-muted-foreground",
           size === "sm" ? "text-[10px]" : "text-xs",
         )}
       >
