@@ -445,7 +445,14 @@ function BuyPage() {
             />
           </div>
           {!hasLocation && (
-            <p className="text-xs text-muted-foreground">{t("buy.needLocationHint")}</p>
+            <div className="rounded-xl border border-primary/40 bg-primary/10 p-3">
+              <p className="text-xs text-foreground">
+                {t("buy.needLocationHint")}{" "}
+                <Link to="/conta" className="font-semibold text-primary underline hover:brightness-125">
+                  {t("buy.setLocationCta")}
+                </Link>
+              </p>
+            </div>
           )}
         </div>
       )}
