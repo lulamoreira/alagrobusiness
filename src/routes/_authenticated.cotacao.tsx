@@ -128,15 +128,21 @@ function CotacaoPage() {
       .filter((c) => (sel.length === 0 ? true : sel.includes(c.codigo)));
   }, [catalog, commodityGroups, prefs]);
 
-  /** Tipos de dólar disponíveis (com dado) filtrados por preferências. */
-  const dolarTiposAvailable: DolarTipo[] = useMemo(() => {
+  /** Tipos de dólar que possuem cotação atual (independente de visibilidade). */
+  const dolarTiposWithData: DolarTipo[] = useMemo(() => {
     const set = new Set<DolarTipo>();
     (dolarCurrent ?? []).forEach((r) => set.add(r.tipo as DolarTipo));
+    return ALL_DOLAR.filter((tipo) => set.has(tipo));
+  }, [dolarCurrent]);
+
+  /** Tipos de dólar visíveis (com dado) — filtrados pela seleção salva. Fallback: preferido. */
+  const dolarTiposAvailable: DolarTipo[] = useMemo(() => {
     const vis = prefs?.tipos_dolar_visiveis ?? [];
-    return ALL_DOLAR.filter((tipo) => set.has(tipo)).filter((tipo) =>
-      vis.length === 0 ? true : vis.includes(tipo),
-    );
-  }, [dolarCurrent, prefs]);
+    if (vis.length === 0) {
+      return dolarTiposWithData.filter((t) => t === userDolarPref);
+    }
+    return dolarTiposWithData.filter((tipo) => vis.includes(tipo));
+  }, [dolarTiposWithData, prefs, userDolarPref]);
 
   const formatValueInUserCurrency = (valorBRL: number) =>
     formatMoney(valorBRL, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
