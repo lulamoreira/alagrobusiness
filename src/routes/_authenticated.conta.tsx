@@ -46,6 +46,9 @@ function ContaPage() {
     loading,
   } = usePlan();
 
+  const myCdsCount = useMyCdsCount();
+  const [cdDialogOpen, setCdDialogOpen] = useState(false);
+
   const [locCep, setLocCep] = useState("");
   const [locCidade, setLocCidade] = useState("");
   const [locEstado, setLocEstado] = useState("");
