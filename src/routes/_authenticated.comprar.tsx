@@ -406,13 +406,13 @@ function BuyPage() {
               </div>
             </div>
             <DarkInput
-              label={t("buy.filterPriceMin")}
+              label={t("buy.filterPriceMinCurrency", { currency: userMoeda })}
               type="number"
               value={priceMin}
               onChange={(e) => setPriceMin(e.target.value)}
             />
             <DarkInput
-              label={t("buy.filterPriceMax")}
+              label={t("buy.filterPriceMaxCurrency", { currency: userMoeda })}
               type="number"
               value={priceMax}
               onChange={(e) => setPriceMax(e.target.value)}
