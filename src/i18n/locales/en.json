@@ -115,7 +115,8 @@
       "account": "Account",
       "admin": "Administration"
     },
-    "myCds": "My DCs"
+    "myCds": "My DCs",
+    "help": "Help"
   },
   "dashboard": {
     "hello": "Hello",
@@ -1960,5 +1961,310 @@
     "ctaCardTitle": "Your listing could be featured here",
     "ctaCardSubtitle": "Get visibility on the Dashboard and Buy screen.",
     "ctaCardAction": "Feature now"
+  },
+  "ajuda": {
+    "ui": {
+      "title": "Help Center",
+      "subtitle": "Learn every part of the app with step-by-step guides, examples and tips.",
+      "searchPlaceholder": "Search by topic (e.g., listing, inventory, dollar)…",
+      "noResults": "Nothing found. Try another term.",
+      "backToTop": "Back to top",
+      "steps": "Step by step",
+      "example": "Example",
+      "tip": "Tip",
+      "openHelp": "Open Help Center",
+      "articleAnchor": "Open article",
+      "categoriesTitle": "Choose a topic",
+      "resultsFor": "Results for",
+      "clearSearch": "Clear search"
+    },
+    "categories": {
+      "primeiros-passos": {
+        "title": "Getting started",
+        "subtitle": "The basics to get going on AGROBUSINESS."
+      },
+      "comprar-vender": {
+        "title": "Buy and Sell",
+        "subtitle": "Find offers and publish your own."
+      },
+      "visibilidade": {
+        "title": "Gain visibility",
+        "subtitle": "Stand out to sell more."
+      },
+      "cds": {
+        "title": "Distribution Centers",
+        "subtitle": "Storage, logistics and per-location inventory."
+      },
+      "negociar": {
+        "title": "Negotiate",
+        "subtitle": "Chat with prospects and track every deal."
+      },
+      "mercado": {
+        "title": "Market and data",
+        "subtitle": "Quotes, alerts, weather and agri news."
+      },
+      "aprender": {
+        "title": "Learn and benefits",
+        "subtitle": "Courses, certificates and exclusive perks."
+      }
+    },
+    "articles": {
+      "painel": {
+        "title": "The Dashboard: your starting point",
+        "summary": "The Dashboard brings the essentials of your day to one screen: greeting, featured listings, dollar quotes and business KPIs.",
+        "steps": [
+          "Open 'Dashboard' in the menu (first option).",
+          "Check the 'Featured' carousel below the greeting: it shows the most visible listings right now.",
+          "See the dollar cards (commercial, tourism, parallel) at the top — the shown types are configurable.",
+          "Scroll to 'My business' for your KPIs: listed products, volume, messages and negotiations."
+        ],
+        "example": "You open the app in the morning, notice the commercial dollar rose 0.8%, and see 3 new messages on your soy listing.",
+        "tip": "Click any KPI card to jump straight to the related screen."
+      },
+      "conta-e-plano": {
+        "title": "Your account and plan",
+        "summary": "'My account' lets you edit your data; 'Plans' lets you pick Free or Pro with more features.",
+        "steps": [
+          "In the menu, open 'Account' > 'My account'.",
+          "Update your name, phone and photo whenever needed.",
+          "To subscribe or switch plans, go to 'Account > Plans' and choose Pro.",
+          "To cancel or change card, click 'Manage subscription' on the same page."
+        ],
+        "example": "Free lets you browse and publish a few listings; Pro unlocks Kanban negotiations, finance, reports and more highlights.",
+        "tip": "A lock icon next to a menu item means it's Pro-only."
+      },
+      "minha-localizacao": {
+        "title": "My location (via ZIP)",
+        "summary": "Setting your location turns on the 'near me' filter and helps the app show nearby CDs and listings.",
+        "steps": [
+          "Go to 'Account > My account' and find 'My location'.",
+          "Type the ZIP: city, state and coordinates are filled automatically.",
+          "If you prefer, tweak city and state by hand.",
+          "Save. The distance filter now works on Buy."
+        ],
+        "example": "After setting a ZIP in Ribeirão Preto, the app sorts listings with CDs within 100 km of you.",
+        "tip": "Without coordinates the distance filter is off — the app warns you at the top of Buy."
+      },
+      "preferencias": {
+        "title": "Preferences: language, currency and visuals",
+        "summary": "Personalize the app: language (PT/EN/ES), preferred currency, which dollars appear and the carousel speed.",
+        "steps": [
+          "Open 'Account > Settings'.",
+          "Pick a language at the top (PT, EN or ES).",
+          "Select your preferred currency (BRL, USD or EUR) and default dollar type.",
+          "Adjust the highlights carousel timing (2 to 15 seconds)."
+        ],
+        "example": "An exporter picks USD as preferred currency and starts seeing every price converted automatically.",
+        "tip": "The dollar chips atop the Quotes page also control which dollars show on the Dashboard."
+      },
+      "comprar": {
+        "title": "Buy: find offers",
+        "summary": "Buy lists open ads with filters by category, state, quality, delivery, certification, barter and price range.",
+        "steps": [
+          "In the menu, open 'Business > Buy'.",
+          "Use the top search bar to type the product.",
+          "Open the filters and refine by category (cascading catalog), state, quality, accepts barter, certification, etc.",
+          "Tap a card to see details, photos and chat with the seller."
+        ],
+        "example": "You look for 'arabica coffee' in MG, filter by organic certification and find three offers with direct farmer contact.",
+        "tip": "Turn on 'Accepts barter' if you'd rather swap products than pay in cash."
+      },
+      "perto-de-mim": {
+        "title": "Near me (distance radius)",
+        "summary": "With your location set, you can list only ads whose Distribution Center is within a radius.",
+        "steps": [
+          "Confirm your location in 'Account > My account'.",
+          "On Buy, turn on 'Near me' and pick a radius (e.g., 50, 100, 200 km).",
+          "The list now shows only offers with CDs inside the radius, sorted by distance."
+        ],
+        "example": "A buyer in Uberlândia (MG) uses a 150 km radius and only sees listings with pickup at nearby CDs.",
+        "tip": "If 'no coordinates' appears, tap the notice and set your ZIP in one click."
+      },
+      "criar-anuncio": {
+        "title": "Publish a listing",
+        "summary": "Publish a product or service in a few steps: pick the catalog, set unit, price, photos and details.",
+        "steps": [
+          "In the menu, open 'Business > My Ads' and click 'New listing'.",
+          "Pick the type (product or service) and browse the catalog to the right category.",
+          "Fill in title, description, unit, quantity and price.",
+          "Add photos (drag and drop), mark certifications and whether you accept barter.",
+          "If you have a CD, link it to the listing. Save and you're done."
+        ],
+        "example": "A farmer publishes 'Bulk corn', 500 bags, R$ 60.00 each, with a photo of the lot and a link to the Rondonópolis CD.",
+        "tip": "Good photos and the right category greatly boost views on your ad."
+      },
+      "meus-anuncios": {
+        "title": "Manage My Ads",
+        "summary": "On 'My Ads' you can edit, pause/resume, mark as sold, delete and access per-listing inventory.",
+        "steps": [
+          "Open 'Business > My Ads'.",
+          "Each card has 'Edit', 'Inventory' (products only) and 'Highlight' buttons.",
+          "The '⋯' menu holds 'Pause', 'Mark as sold' and 'Delete'.",
+          "'Pause' hides the ad from Buy without deleting; resume any time."
+        ],
+        "example": "You sold half the lot off-app and pause the ad until you restock.",
+        "tip": "'Mark as sold' preserves history and helps with future reports."
+      },
+      "destaque": {
+        "title": "Highlight: get to the top",
+        "summary": "Highlight puts your ad in the Dashboard carousel, on top of listings, and adds a golden badge.",
+        "steps": [
+          "Go to 'Business > Highlight ad' (or click 'Highlight' on a card).",
+          "Pick a package (e.g., 7, 15 or 30 days).",
+          "Complete payment; your ad gets the badge automatically.",
+          "Track the expiry date right on the ad card."
+        ],
+        "example": "A farmer highlights for 15 days during soy harvest and triples the ad's views.",
+        "tip": "Great for harvest peaks and dates when demand rises."
+      },
+      "startups-pmes": {
+        "title": "Startups & SMBs",
+        "summary": "A dedicated channel for service providers and agri startups. Ads here don't show on regular Buy unless highlighted.",
+        "steps": [
+          "Mark your profile as 'Startup/SMB' in 'My account'.",
+          "Publish through the 'Startups & SMBs' module — services only.",
+          "To appear on general Buy too, hire a Highlight."
+        ],
+        "example": "An AgTech publishes a per-hectare soil analysis service; the 'Startup' badge appears on the card.",
+        "tip": "Startups sell better with a fresh institutional page and portfolio photos in the ad."
+      },
+      "o-que-e-cd": {
+        "title": "What is a Distribution Center (CD)",
+        "summary": "A CD is a warehouse that receives, stores and redistributes goods. In the app, it links ads to physical pickup locations.",
+        "steps": [
+          "Each CD has address, capacity and a responsible person.",
+          "Ads can be linked to one or several CDs.",
+          "Buyers can filter by CD and by distance to you."
+        ],
+        "example": "A cooperative registers its CD in Sorriso (MT); its 12 ads become linked and visible by proximity.",
+        "tip": "A well-registered CD (with ZIP and coordinates) is the base of the 'near me' filter."
+      },
+      "cadastrar-meu-cd": {
+        "title": "Register my own CD",
+        "summary": "Anyone offering 'Transport/Logistics' or 'Storage' can register a CD; it stays pending until admin approval.",
+        "steps": [
+          "Go to 'Account > My account' and click 'Become a Distribution Center'.",
+          "Fill name, contact person, phone, address and ZIP (the app fills city/state and coordinates).",
+          "Submit. The CD sits as 'Pending approval'.",
+          "Once approved, the 'My CDs' menu appears and you can receive links and record inventory."
+        ],
+        "example": "A carrier registers two CDs (Uberaba and Anápolis); within one business day both are approved and it starts operating.",
+        "tip": "You can also start registration when picking a logistics category in the listing form."
+      },
+      "vincular-cd": {
+        "title": "Link a CD to your listing",
+        "summary": "Linking a CD tells where the product ships from. It feeds the distance filter and enables per-CD inventory.",
+        "steps": [
+          "Edit your listing in 'My Ads'.",
+          "In the 'Distribution Centers' section, pick one or more approved CDs (or your own pending ones).",
+          "Save. Each linked CD now has its own inventory balance."
+        ],
+        "example": "A coffee product is linked to two CDs; each has its own independent stock.",
+        "tip": "If the buyer wants pickup in a certain city, they'll find you faster when you link that region's CD."
+      },
+      "estoque": {
+        "title": "Per-CD inventory control",
+        "summary": "For each ad-CD, you record entries and exits. The balance updates in real time and the app won't let you sell more than the balance.",
+        "steps": [
+          "In 'My Ads', click 'Inventory' on the product card.",
+          "Pick the CD and set type (entry/exit), quantity and an optional note.",
+          "The balance shows at the top; full history sits below.",
+          "An exit larger than balance is blocked with a warning."
+        ],
+        "example": "You post an entry of 200 bags at harvest and later post exits as sales close.",
+        "tip": "A note (e.g., 'sale to John, invoice 123') helps a lot at end-of-month reconciliation."
+      },
+      "mensagens": {
+        "title": "Messages: chat with prospects",
+        "summary": "The in-app chat lets you negotiate without sharing phone numbers. Each ad can spawn a conversation.",
+        "steps": [
+          "Click 'Chat with seller' on an ad, or open 'Messages' in the menu.",
+          "Type your question; the other party gets a notification.",
+          "Turn on auto-translation in the chat if you speak a different language."
+        ],
+        "example": "An Argentinian buyer asks in Spanish; the farmer reads it in Portuguese with the translation toggle on.",
+        "tip": "Agree on price and terms in chat and move the card to 'In negotiation' on the Kanban."
+      },
+      "negociacoes-kanban": {
+        "title": "Kanban negotiations",
+        "summary": "Drag cards across columns to track each deal: started → in negotiation → closed (or discarded).",
+        "steps": [
+          "Open 'Business > Negotiations' (Pro plan).",
+          "Drag a card with the mouse (or long-press on mobile) to change columns.",
+          "The card's status updates automatically on drop."
+        ],
+        "example": "You drag the soy deal to 'Closed' when the payment lands; the card color changes.",
+        "tip": "Use 'Discarded' so you don't lose contacts that didn't move forward."
+      },
+      "cotacoes": {
+        "title": "Quotes: commodities and dollar",
+        "summary": "Follow agri reference prices and dollar quotes (commercial, tourism, parallel).",
+        "steps": [
+          "Open 'Market > Quotes'.",
+          "In the top chips, choose which dollar types you want to see.",
+          "Each card shows current value, change (%) and a mini chart of the last days.",
+          "Green = up; red = down."
+        ],
+        "example": "You notice live cattle rose 1.2% in a week and decide to hold the sale a few more days.",
+        "tip": "The chips picked here also control what shows on the Dashboard."
+      },
+      "alertas-preco": {
+        "title": "Price alerts",
+        "summary": "Get a notification when a commodity price crosses the value you defined.",
+        "steps": [
+          "Open 'Market > Alerts' and click 'New alert'.",
+          "Choose the commodity, the condition (above/below) and the target price.",
+          "When it triggers, the app pings you via the notification bell."
+        ],
+        "example": "'Soy above R$ 145.00 per bag' fires and you get an instant notification.",
+        "tip": "Start with a few well-picked alerts so they don't become daily noise."
+      },
+      "clima": {
+        "title": "Weather: track several cities",
+        "summary": "Add the cities relevant to your operation and see their weather on the Dashboard.",
+        "steps": [
+          "Go to 'Account > Settings' and find 'Weather locations'.",
+          "Add a city by typing its name and picking from the list.",
+          "Remove cities when no longer needed.",
+          "Cities show in a carousel on the mobile Dashboard."
+        ],
+        "example": "A farmer with fields in MT and PR tracks both cities at the same time without leaving the app.",
+        "tip": "Keep up to 5 cities for a quick, clean read."
+      },
+      "noticias": {
+        "title": "Agri news",
+        "summary": "See curated headlines and pick the topics you want to follow (multi-select).",
+        "steps": [
+          "Open 'Market > News'.",
+          "Tap topics to toggle on/off (grains, livestock, inputs, weather, etc.).",
+          "The list adjusts automatically to your picks."
+        ],
+        "example": "Turning on just 'Grains' and 'Exports' keeps you focused on what's useful to your business.",
+        "tip": "Each headline opens the original source in a new tab, without leaving the app."
+      },
+      "cursos-certificados": {
+        "title": "Courses and Certificates",
+        "summary": "Watch classes, track progress and, upon completion, issue a certificate with a validation code.",
+        "steps": [
+          "Open 'Learning > Courses' and pick a track.",
+          "Mark each class as done to update progress.",
+          "When finished, generate the certificate under 'Learning > Certificates'.",
+          "Share the link: anyone can check the code on the public page."
+        ],
+        "example": "You finish 'Farm Cost Management' and send the certificate link to a buyer who asked for proof.",
+        "tip": "The certificate code is unique and can be verified without login."
+      },
+      "clube-vantagens": {
+        "title": "Perks Club (Pro)",
+        "summary": "Partner offers and discounts for Pro subscribers.",
+        "steps": [
+          "Open 'Account > Perks Club'.",
+          "Filter by category to find the offer you want.",
+          "Copy the coupon and click 'Redeem' to open the partner site."
+        ],
+        "example": "A Pro subscriber applies a 15% coupon on farm inputs directly on the partner site.",
+        "tip": "Watch the expiry — some offers change every month."
+      }
+    }
   }
 }
