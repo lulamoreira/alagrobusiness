@@ -103,8 +103,6 @@ function FinanceiroPage() {
   const fmtBRL = (brl: number) => formatPrice(brl, "BRL", userMoeda, cambio ?? [], i18n.language);
   // fmt/fmtCompact mantidos para valores já em moeda do usuário (linhas individuais legadas).
   const fmt = (v: number) => formatMoney(v, userMoeda, userDolarPref, cotacoes, i18n.language);
-  const fmtCompact = (v: number) =>
-    formatMoneyCompact(v, userMoeda, userDolarPref, cotacoes, i18n.language);
 
   const filtered = useMemo(() => {
     return (vendas ?? []).filter((v) => {
