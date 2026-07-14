@@ -199,6 +199,11 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
                 <Sparkles className="h-3 w-3" /> {t("buy.featuredBadge")}
               </span>
             )}
+            {item.para_exportacao && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-sm backdrop-blur">
+                <Globe className="h-3 w-3" /> {t("international.exportBadge")}
+              </span>
+            )}
             {isStartup && (
               <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground shadow-sm ring-1 ring-border/60 backdrop-blur">
                 {t("startups.badge")}
