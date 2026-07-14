@@ -294,6 +294,9 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         servico_modelo_cobranca: isServico ? servicoModelo : null,
         servico_area_atuacao: isServico ? (servicoArea.trim() || null) : null,
         servico_prazo: isServico ? (servicoPrazo.trim() || null) : null,
+        para_exportacao: paraExportacao,
+        incoterm: paraExportacao ? (incoterm || null) : null,
+        paises_destino: paraExportacao ? paisesDestino : null,
       };
 
       let anuncioId: string | null = initial?.id ?? null;
