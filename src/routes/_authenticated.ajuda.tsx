@@ -293,6 +293,6 @@ function AjudaPage() {
           </button>
         </div>
       </div>
-    </AppShell>
+    </>
   );
 }
