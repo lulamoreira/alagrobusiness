@@ -151,13 +151,14 @@ function SellPage() {
         <ul className="space-y-3">
           {(anuncios as AnuncioRow[]).map((a) => {
             const unit = unidades?.find((u) => u.id === a.preco_unidade_id);
-            const price = formatMoney(
+            const price = formatPrice(
               a.preco,
-              profile?.moeda_preferida ?? "BRL",
-              profile?.tipo_dolar_preferido ?? "comercial",
-              cotacoes ?? [],
+              (a.moeda ?? "BRL") as "BRL" | "USD" | "EUR",
+              (profile?.moeda_preferida ?? "BRL") as "BRL" | "USD" | "EUR",
+              cambio ?? [],
               i18n.language,
             );
+
             const statusLabel =
               a.status === "ativo"
                 ? t("sell.statusActive")
