@@ -14,7 +14,8 @@ import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoRootSegmento, catalogoHabilitaCd } from "@/lib/catalogo";
 import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
-import { Warehouse } from "lucide-react";
+import { Warehouse, Globe } from "lucide-react";
+import { INCOTERMS, listCountries, type Incoterm } from "@/lib/countries";
 
 
 
