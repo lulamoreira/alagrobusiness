@@ -32,6 +32,7 @@ import { Route as AuthenticatedNoticiasRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedNegociacoesRouteImport } from './routes/_authenticated.negociacoes'
 import { Route as AuthenticatedMeusCdsRouteImport } from './routes/_authenticated.meus-cds'
 import { Route as AuthenticatedMensagensRouteImport } from './routes/_authenticated.mensagens'
+import { Route as AuthenticatedInternacionalRouteImport } from './routes/_authenticated.internacional'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated.financeiro'
 import { Route as AuthenticatedDestaqueRouteImport } from './routes/_authenticated.destaque'
 import { Route as AuthenticatedCotacaoRouteImport } from './routes/_authenticated.cotacao'
@@ -180,6 +181,12 @@ const AuthenticatedMensagensRoute = AuthenticatedMensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedInternacionalRoute =
+  AuthenticatedInternacionalRouteImport.update({
+    id: '/internacional',
+    path: '/internacional',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
   id: '/financeiro',
   path: '/financeiro',
@@ -385,6 +392,7 @@ export interface FileRoutesByFullPath {
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/destaque': typeof AuthenticatedDestaqueRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/internacional': typeof AuthenticatedInternacionalRoute
   '/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/meus-cds': typeof AuthenticatedMeusCdsRoute
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
@@ -441,6 +449,7 @@ export interface FileRoutesByTo {
   '/cotacao': typeof AuthenticatedCotacaoRoute
   '/destaque': typeof AuthenticatedDestaqueRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/internacional': typeof AuthenticatedInternacionalRoute
   '/meus-cds': typeof AuthenticatedMeusCdsRoute
   '/negociacoes': typeof AuthenticatedNegociacoesRoute
   '/noticias': typeof AuthenticatedNoticiasRoute
@@ -497,6 +506,7 @@ export interface FileRoutesById {
   '/_authenticated/cotacao': typeof AuthenticatedCotacaoRoute
   '/_authenticated/destaque': typeof AuthenticatedDestaqueRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/_authenticated/internacional': typeof AuthenticatedInternacionalRoute
   '/_authenticated/mensagens': typeof AuthenticatedMensagensRouteWithChildren
   '/_authenticated/meus-cds': typeof AuthenticatedMeusCdsRoute
   '/_authenticated/negociacoes': typeof AuthenticatedNegociacoesRoute
@@ -555,6 +565,7 @@ export interface FileRouteTypes {
     | '/cotacao'
     | '/destaque'
     | '/financeiro'
+    | '/internacional'
     | '/mensagens'
     | '/meus-cds'
     | '/negociacoes'
@@ -611,6 +622,7 @@ export interface FileRouteTypes {
     | '/cotacao'
     | '/destaque'
     | '/financeiro'
+    | '/internacional'
     | '/meus-cds'
     | '/negociacoes'
     | '/noticias'
@@ -666,6 +678,7 @@ export interface FileRouteTypes {
     | '/_authenticated/cotacao'
     | '/_authenticated/destaque'
     | '/_authenticated/financeiro'
+    | '/_authenticated/internacional'
     | '/_authenticated/mensagens'
     | '/_authenticated/meus-cds'
     | '/_authenticated/negociacoes'
@@ -879,6 +892,13 @@ declare module '@tanstack/react-router' {
       path: '/mensagens'
       fullPath: '/mensagens'
       preLoaderRoute: typeof AuthenticatedMensagensRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/internacional': {
+      id: '/_authenticated/internacional'
+      path: '/internacional'
+      fullPath: '/internacional'
+      preLoaderRoute: typeof AuthenticatedInternacionalRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/financeiro': {
@@ -1151,6 +1171,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCotacaoRoute: typeof AuthenticatedCotacaoRoute
   AuthenticatedDestaqueRoute: typeof AuthenticatedDestaqueRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
+  AuthenticatedInternacionalRoute: typeof AuthenticatedInternacionalRoute
   AuthenticatedMensagensRoute: typeof AuthenticatedMensagensRouteWithChildren
   AuthenticatedMeusCdsRoute: typeof AuthenticatedMeusCdsRoute
   AuthenticatedNegociacoesRoute: typeof AuthenticatedNegociacoesRoute
@@ -1187,6 +1208,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedCotacaoRoute: AuthenticatedCotacaoRoute,
   AuthenticatedDestaqueRoute: AuthenticatedDestaqueRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
+  AuthenticatedInternacionalRoute: AuthenticatedInternacionalRoute,
   AuthenticatedMensagensRoute: AuthenticatedMensagensRouteWithChildren,
   AuthenticatedMeusCdsRoute: AuthenticatedMeusCdsRoute,
   AuthenticatedNegociacoesRoute: AuthenticatedNegociacoesRoute,
