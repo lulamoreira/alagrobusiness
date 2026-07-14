@@ -330,6 +330,14 @@ function NavTree({
             onNavigate={onNavigate}
           />
         ))}
+      {/* Ajuda standalone — sempre por último */}
+      <NavLeaf
+        item={SOLO_HELP}
+        active={isPathActive(pathname, SOLO_HELP.to)}
+        badge={0}
+        isPro={isPro}
+        onNavigate={onNavigate}
+      />
     </div>
   );
 }
