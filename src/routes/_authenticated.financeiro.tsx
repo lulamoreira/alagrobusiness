@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney, formatMoneyCompact } from "@/lib/format";
+import { formatMoney, formatPrice, toBRL, type CambioRow } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 import { cn } from "@/lib/utils";
 
@@ -67,6 +67,12 @@ function FinanceiroPage() {
       (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  const { data: cambio } = useQuery({
+    queryKey: ["cotacoes_cambio"],
+    queryFn: async (): Promise<CambioRow[]> =>
+      ((await supabase.from("cotacoes_cambio").select("moeda, valor_brl")).data ?? []) as CambioRow[],
+    staleTime: 1000 * 60 * 10,
+  });
 
   const { data: vendas, isLoading } = useQuery({
     queryKey: ["financeiro_vendas", user?.id],
@@ -93,9 +99,10 @@ function FinanceiroPage() {
       })),
     [dolar],
   );
+  // Fase 1: exibição via formatPrice (BRL → moeda do usuário, com degradação suave).
+  const fmtBRL = (brl: number) => formatPrice(brl, "BRL", userMoeda, cambio ?? [], i18n.language);
+  // fmt/fmtCompact mantidos para valores já em moeda do usuário (linhas individuais legadas).
   const fmt = (v: number) => formatMoney(v, userMoeda, userDolarPref, cotacoes, i18n.language);
-  const fmtCompact = (v: number) =>
-    formatMoneyCompact(v, userMoeda, userDolarPref, cotacoes, i18n.language);
 
   const filtered = useMemo(() => {
     return (vendas ?? []).filter((v) => {
@@ -106,20 +113,21 @@ function FinanceiroPage() {
     });
   }, [vendas, statusFilter, periodFrom, periodTo]);
 
+  // Normaliza cada venda para BRL antes de somar (Fase 1b Internacional).
+  // Degradação suave: se faltar taxa, usa valor cru como fallback.
   const totals = useMemo(() => {
     const all = vendas ?? [];
-    // TODO (Fase 1b Internacional): soma valor_total como se todas as vendas estivessem na mesma moeda.
-    // Quando houver vendas em moedas distintas, normalizar cada v.valor_total para BRL (toBRL(v.valor_total, v.moeda, cambio))
-    // antes de somar/agregar KPIs.
-    const total = all.reduce((acc, v) => acc + Number(v.valor_total), 0);
+    const toBRLsafe = (v: VendaRow) =>
+      toBRL(Number(v.valor_total), v.moeda, cambio ?? []) ?? Number(v.valor_total);
+    const total = all.reduce((acc, v) => acc + toBRLsafe(v), 0);
     const received = all
       .filter((v) => v.status_pagamento === "recebido")
-      .reduce((acc, v) => acc + Number(v.valor_total), 0);
+      .reduce((acc, v) => acc + toBRLsafe(v), 0);
     const pending = all
       .filter((v) => v.status_pagamento === "aguardando")
-      .reduce((acc, v) => acc + Number(v.valor_total), 0);
+      .reduce((acc, v) => acc + toBRLsafe(v), 0);
     return { total, received, pending };
-  }, [vendas]);
+  }, [vendas, cambio]);
 
 
   const invalidateAll = () => {
@@ -164,22 +172,22 @@ function FinanceiroPage() {
       <section className="grid gap-3 sm:grid-cols-3">
         <KpiCard
           label={t("finance.kpiTotal")}
-          value={fmtCompact(totals.total)}
-          fullValue={fmt(totals.total)}
+          value={fmtBRL(totals.total)}
+          fullValue={fmtBRL(totals.total)}
           icon={Wallet}
           tone="primary"
         />
         <KpiCard
           label={t("finance.kpiReceived")}
-          value={fmtCompact(totals.received)}
-          fullValue={fmt(totals.received)}
+          value={fmtBRL(totals.received)}
+          fullValue={fmtBRL(totals.received)}
           icon={ArrowDownCircle}
           tone="success"
         />
         <KpiCard
           label={t("finance.kpiPending")}
-          value={fmtCompact(totals.pending)}
-          fullValue={fmt(totals.pending)}
+          value={fmtBRL(totals.pending)}
+          fullValue={fmtBRL(totals.pending)}
           icon={Clock}
           tone="warning"
         />
