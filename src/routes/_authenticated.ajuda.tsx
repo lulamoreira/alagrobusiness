@@ -17,7 +17,7 @@ import {
   GraduationCap,
   BookOpen,
 } from "lucide-react";
-import { AppShell } from "@/components/AppShell";
+
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
@@ -103,7 +103,7 @@ function AjudaPage() {
   const backToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <AppShell>
+    <>
       <div className="mx-auto max-w-5xl space-y-8">
         {/* Header */}
         <section className="rounded-3xl border border-border bg-gradient-to-br from-primary/10 via-card to-card p-6 shadow-lg md:p-8">
@@ -293,6 +293,6 @@ function AjudaPage() {
           </button>
         </div>
       </div>
-    </AppShell>
+    </>
   );
 }
