@@ -68,7 +68,25 @@ function ContaPage() {
     setLocEstado((p) => p || profile.estado || "");
     setLocLat((p) => (p != null ? p : profile.latitude ?? null));
     setLocLng((p) => (p != null ? p : profile.longitude ?? null));
+    setPais((p) => p || (profile as unknown as { pais?: string | null }).pais || "");
   }, [profile]);
+
+  const savePais = async () => {
+    if (!user) return;
+    setPaisSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .update({ pais: pais || null } as any)
+      .eq("id", user.id);
+    setPaisSaving(false);
+    if (error) {
+      toast.error(t("international.myCountrySaveError"));
+      return;
+    }
+    toast.success(t("international.myCountrySaved"));
+    await refreshProfile();
+  };
 
   const handleLocCepBlur = async () => {
     const digits = (locCep || "").replace(/\D+/g, "");
