@@ -17,7 +17,7 @@ import {
   GraduationCap,
   BookOpen,
 } from "lucide-react";
-import { AppShell } from "@/components/AppShell";
+
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
