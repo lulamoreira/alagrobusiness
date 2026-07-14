@@ -648,7 +648,65 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         </div>
       )}
 
+      <section className="space-y-4 rounded-2xl border border-border bg-card/40 p-4">
+        <label className="flex items-start gap-3 text-sm font-medium text-foreground">
+          <input
+            type="checkbox"
+            checked={paraExportacao}
+            onChange={(e) => setParaExportacao(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-border accent-primary"
+          />
+          <span className="flex-1">
+            <span className="inline-flex items-center gap-1.5 font-semibold">
+              <Globe className="h-4 w-4 text-primary" />
+              {t("international.formToggle")}
+            </span>
+            <span className="mt-0.5 block text-xs text-muted-foreground">
+              {t("international.formToggleDesc")}
+            </span>
+          </span>
+        </label>
+
+        {paraExportacao && (
+          <div className="space-y-4">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("international.incotermLabel")}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <Pill active={incoterm === ""} onClick={() => setIncoterm("")}>
+                  {t("international.incotermNone")}
+                </Pill>
+                {INCOTERMS.map((i) => (
+                  <Pill key={i} active={incoterm === i} onClick={() => setIncoterm(i)}>
+                    {i}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("international.countriesLabel")}
+              </label>
+              <p className="mb-2 text-[11px] text-muted-foreground">{t("international.countriesHint")}</p>
+              <div className="flex max-h-52 flex-wrap gap-2 overflow-y-auto">
+                {listCountries(t("common.locale", { defaultValue: "pt-BR" })).map((c) => (
+                  <Pill
+                    key={c.code}
+                    active={paisesDestino.includes(c.code)}
+                    onClick={() => setPaisesDestino((s) => toggle(s, c.code))}
+                  >
+                    {c.name}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
       <div className="grid gap-4 md:grid-cols-3">
+
         <DarkInput label={t("form.state")} value={estado} onChange={(e) => setEstado(e.target.value)} />
         <DarkInput label={t("form.city")} value={cidade} onChange={(e) => setCidade(e.target.value)} />
         <DarkInput label={t("form.zip")} value={cep} onChange={(e) => setCep(e.target.value)} />
