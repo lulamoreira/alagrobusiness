@@ -2274,5 +2274,30 @@
   "pricing": {
     "convertedFrom": "converted from {{moeda}}",
     "rateUnavailable": "exchange rate unavailable — showing in the listing currency"
+  },
+  "international": {
+    "title": "Exports",
+    "subtitle": "Listings available to international buyers.",
+    "exportBadge": "Export",
+    "filterCountry": "Destination country",
+    "allCountries": "All countries",
+    "noResults": "No export listings found.",
+    "results_one": "{{count}} listing",
+    "results_other": "{{count}} listings",
+    "formToggle": "Available for export",
+    "formToggleDesc": "Enable to offer this listing to international buyers.",
+    "incotermLabel": "Incoterm",
+    "incotermNone": "None",
+    "countriesLabel": "Destination countries",
+    "countriesHint": "Select one or more countries you can export to.",
+    "detailTitle": "Export",
+    "destinations": "Destinations",
+    "myCountryTitle": "My country",
+    "myCountryDesc": "Used to identify international buyers and improve recommendations.",
+    "myCountryPlaceholder": "Select your country",
+    "myCountrySaved": "Country saved.",
+    "myCountrySaveError": "Could not save your country.",
+    "setYourCountryHint": "Set your country in Account for a full international experience."
   }
 }
+
