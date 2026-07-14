@@ -351,6 +351,8 @@
     "filterDeliveryMode": "Delivery",
     "filterPriceMin": "Min price",
     "filterPriceMax": "Max price",
+    "filterPriceMinCurrency": "Min price ({{currency}})",
+    "filterPriceMaxCurrency": "Max price ({{currency}})",
     "noResults": "No listings found.",
     "acceptsBarterBadge": "Barter",
     "certifiedBadge": "Certified",
