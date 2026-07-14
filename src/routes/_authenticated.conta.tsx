@@ -68,7 +68,7 @@ function ContaPage() {
     setLocEstado((p) => p || profile.estado || "");
     setLocLat((p) => (p != null ? p : profile.latitude ?? null));
     setLocLng((p) => (p != null ? p : profile.longitude ?? null));
-    setPais((p) => p || (profile as unknown as { pais?: string | null }).pais || "");
+    setPais((p) => p || profile.pais || "");
   }, [profile]);
 
   const savePais = async () => {
@@ -76,8 +76,7 @@ function ContaPage() {
     setPaisSaving(true);
     const { error } = await supabase
       .from("profiles")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .update({ pais: pais || null } as any)
+      .update({ pais: pais })
       .eq("id", user.id);
     setPaisSaving(false);
     if (error) {
