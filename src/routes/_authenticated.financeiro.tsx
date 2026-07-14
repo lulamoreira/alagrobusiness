@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { formatMoney, formatMoneyCompact } from "@/lib/format";
+import { formatMoney, formatMoneyCompact, formatPrice, toBRL, type CambioRow } from "@/lib/format";
 import { PillButton } from "@/components/PillButton";
 import { cn } from "@/lib/utils";
 
