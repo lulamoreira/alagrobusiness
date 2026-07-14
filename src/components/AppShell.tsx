@@ -73,6 +73,7 @@ interface NavGroup {
 
 const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
 const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
+const SOLO_HELP: NavItem = { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle };
 
 const GROUPS: NavGroup[] = [
   {
@@ -126,7 +127,6 @@ const GROUPS: NavGroup[] = [
       { to: "/planos", labelKey: "nav.plans", icon: Crown },
       { to: "/clube", labelKey: "nav.club", icon: Sparkles },
       { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
-      { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle },
     ],
   },
   {
@@ -330,6 +330,14 @@ function NavTree({
             onNavigate={onNavigate}
           />
         ))}
+      {/* Ajuda standalone — sempre por último */}
+      <NavLeaf
+        item={SOLO_HELP}
+        active={isPathActive(pathname, SOLO_HELP.to)}
+        badge={0}
+        isPro={isPro}
+        onNavigate={onNavigate}
+      />
     </div>
   );
 }
