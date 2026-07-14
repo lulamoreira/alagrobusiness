@@ -99,6 +99,9 @@ function FinanceiroPage() {
       })),
     [dolar],
   );
+  // Fase 1: exibição via formatPrice (BRL → moeda do usuário, com degradação suave).
+  const fmtBRL = (brl: number) => formatPrice(brl, "BRL", userMoeda, cambio ?? [], i18n.language);
+  // fmt/fmtCompact mantidos para valores já em moeda do usuário (linhas individuais legadas).
   const fmt = (v: number) => formatMoney(v, userMoeda, userDolarPref, cotacoes, i18n.language);
   const fmtCompact = (v: number) =>
     formatMoneyCompact(v, userMoeda, userDolarPref, cotacoes, i18n.language);
@@ -112,20 +115,21 @@ function FinanceiroPage() {
     });
   }, [vendas, statusFilter, periodFrom, periodTo]);
 
+  // Normaliza cada venda para BRL antes de somar (Fase 1b Internacional).
+  // Degradação suave: se faltar taxa, usa valor cru como fallback.
   const totals = useMemo(() => {
     const all = vendas ?? [];
-    // TODO (Fase 1b Internacional): soma valor_total como se todas as vendas estivessem na mesma moeda.
-    // Quando houver vendas em moedas distintas, normalizar cada v.valor_total para BRL (toBRL(v.valor_total, v.moeda, cambio))
-    // antes de somar/agregar KPIs.
-    const total = all.reduce((acc, v) => acc + Number(v.valor_total), 0);
+    const toBRLsafe = (v: VendaRow) =>
+      toBRL(Number(v.valor_total), v.moeda, cambio ?? []) ?? Number(v.valor_total);
+    const total = all.reduce((acc, v) => acc + toBRLsafe(v), 0);
     const received = all
       .filter((v) => v.status_pagamento === "recebido")
-      .reduce((acc, v) => acc + Number(v.valor_total), 0);
+      .reduce((acc, v) => acc + toBRLsafe(v), 0);
     const pending = all
       .filter((v) => v.status_pagamento === "aguardando")
-      .reduce((acc, v) => acc + Number(v.valor_total), 0);
+      .reduce((acc, v) => acc + toBRLsafe(v), 0);
     return { total, received, pending };
-  }, [vendas]);
+  }, [vendas, cambio]);
 
 
   const invalidateAll = () => {
