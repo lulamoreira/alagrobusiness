@@ -115,7 +115,8 @@
       "account": "Cuenta",
       "admin": "Administración"
     },
-    "myCds": "Mis CDs"
+    "myCds": "Mis CDs",
+    "help": "Ayuda"
   },
   "dashboard": {
     "hello": "Hola",
@@ -1960,5 +1961,310 @@
     "ctaCardTitle": "Tu anuncio podría estar destacado aquí",
     "ctaCardSubtitle": "Gana visibilidad en el Panel y en Comprar.",
     "ctaCardAction": "Destacar ahora"
+  },
+  "ajuda": {
+    "ui": {
+      "title": "Centro de Ayuda",
+      "subtitle": "Aprende cada parte de la app con guías paso a paso, ejemplos y consejos.",
+      "searchPlaceholder": "Buscar por tema (ej.: anuncio, stock, dólar)…",
+      "noResults": "No se encontró nada. Prueba otro término.",
+      "backToTop": "Volver arriba",
+      "steps": "Paso a paso",
+      "example": "Ejemplo",
+      "tip": "Consejo",
+      "openHelp": "Abrir Centro de Ayuda",
+      "articleAnchor": "Abrir artículo",
+      "categoriesTitle": "Elige un tema",
+      "resultsFor": "Resultados para",
+      "clearSearch": "Limpiar búsqueda"
+    },
+    "categories": {
+      "primeiros-passos": {
+        "title": "Primeros pasos",
+        "subtitle": "Lo básico para comenzar bien en AGROBUSINESS."
+      },
+      "comprar-vender": {
+        "title": "Comprar y Vender",
+        "subtitle": "Encuentra ofertas y publica las tuyas."
+      },
+      "visibilidade": {
+        "title": "Ganar visibilidad",
+        "subtitle": "Destácate para vender más."
+      },
+      "cds": {
+        "title": "Centros de Distribución",
+        "subtitle": "Almacenamiento, logística y stock por lugar."
+      },
+      "negociar": {
+        "title": "Negociar",
+        "subtitle": "Chatea con interesados y sigue cada negocio."
+      },
+      "mercado": {
+        "title": "Mercado y datos",
+        "subtitle": "Cotizaciones, alertas, clima y noticias del agro."
+      },
+      "aprender": {
+        "title": "Aprender y beneficios",
+        "subtitle": "Cursos, certificados y ventajas exclusivas."
+      }
+    },
+    "articles": {
+      "painel": {
+        "title": "El Panel: tu punto de partida",
+        "summary": "El Panel reúne en una pantalla lo esencial del día: saludo, anuncios destacados, cotizaciones del dólar e indicadores del negocio.",
+        "steps": [
+          "Abre 'Panel' en el menú (primera opción).",
+          "Mira el carrusel de 'Destacados' bajo el saludo: son los anuncios más visibles del momento.",
+          "Revisa las tarjetas del dólar (comercial, turismo, paralelo) arriba — los tipos mostrados son configurables.",
+          "Baja hasta 'Mi negocio' para tus KPI: productos anunciados, volumen, mensajes y negociaciones."
+        ],
+        "example": "Entras a la app por la mañana, ves que el dólar comercial subió 0,8% y tu anuncio de soja tiene 3 mensajes nuevos.",
+        "tip": "Toca cualquier tarjeta de KPI para ir directo a la pantalla correspondiente."
+      },
+      "conta-e-plano": {
+        "title": "Tu cuenta y tu plan",
+        "summary": "'Mi cuenta' te deja editar tus datos; 'Planes' elige entre Free y Pro con más funciones.",
+        "steps": [
+          "En el menú, abre 'Cuenta' > 'Mi cuenta'.",
+          "Actualiza tu nombre, teléfono y foto cuando lo necesites.",
+          "Para suscribirte o cambiar de plan, ve a 'Cuenta > Planes' y elige Pro.",
+          "Para cancelar o cambiar tarjeta, toca 'Gestionar suscripción' en la misma pantalla."
+        ],
+        "example": "Free te deja navegar y publicar pocos anuncios; Pro habilita Kanban, financiero, informes y más destacados.",
+        "tip": "El candado junto a un ítem del menú indica que es exclusivo del plan Pro."
+      },
+      "minha-localizacao": {
+        "title": "Mi ubicación (por CP)",
+        "summary": "Definir tu ubicación activa el filtro 'cerca de mí' y ayuda a mostrar CDs y anuncios próximos.",
+        "steps": [
+          "Ve a 'Cuenta > Mi cuenta' y busca 'Mi ubicación'.",
+          "Escribe el CP: ciudad, estado y coordenadas se completan automáticamente.",
+          "Si prefieres, ajusta ciudad y estado a mano.",
+          "Guarda. Ya funciona el filtro por distancia en Comprar."
+        ],
+        "example": "Al fijar un CP en Ribeirão Preto, la app ordena anuncios con CD dentro de 100 km.",
+        "tip": "Sin coordenadas, el filtro de distancia queda apagado — la app te avisa en la parte superior de Comprar."
+      },
+      "preferencias": {
+        "title": "Preferencias: idioma, moneda y visuales",
+        "summary": "Personaliza la app: idioma (PT/EN/ES), moneda preferida, qué dólares aparecen y la velocidad del carrusel.",
+        "steps": [
+          "Abre 'Cuenta > Configuración'.",
+          "Elige un idioma arriba (PT, EN o ES).",
+          "Selecciona tu moneda preferida (BRL, USD o EUR) y el tipo de dólar por defecto.",
+          "Ajusta el tiempo del carrusel de destacados (2 a 15 segundos)."
+        ],
+        "example": "Un exportador elige USD como moneda preferida y ve todos los precios convertidos automáticamente.",
+        "tip": "Los chips de dólar arriba de la pantalla de Cotización también controlan qué se muestra en el Panel."
+      },
+      "comprar": {
+        "title": "Comprar: encontrar ofertas",
+        "summary": "Comprar lista anuncios abiertos con filtros por categoría, estado, calidad, entrega, certificación, permuta y rango de precio.",
+        "steps": [
+          "En el menú, abre 'Negocios > Comprar'.",
+          "Usa la barra de búsqueda de arriba para escribir el producto.",
+          "Abre los filtros y refina por categoría (catálogo en cascada), estado, calidad, acepta permuta, certificación, etc.",
+          "Toca una tarjeta para ver detalles, fotos y chatear con el vendedor."
+        ],
+        "example": "Buscas 'café arábica' en MG, filtras por certificación orgánica y encuentras tres ofertas con contacto directo.",
+        "tip": "Activa 'Acepta permuta' si prefieres intercambiar productos en lugar de pagar en efectivo."
+      },
+      "perto-de-mim": {
+        "title": "Cerca de mí (radio por distancia)",
+        "summary": "Con tu ubicación fijada, puedes listar solo anuncios cuyo Centro de Distribución esté dentro de un radio.",
+        "steps": [
+          "Confirma tu ubicación en 'Cuenta > Mi cuenta'.",
+          "En Comprar, activa 'Cerca de mí' y elige el radio (ej.: 50, 100, 200 km).",
+          "La lista muestra solo ofertas con CD dentro del radio, ordenadas por distancia."
+        ],
+        "example": "Un comprador en Uberlândia (MG) usa radio de 150 km y solo ve anuncios con retiro en CDs cercanos.",
+        "tip": "Si aparece 'sin coordenadas', toca el aviso y define el CP en un clic."
+      },
+      "criar-anuncio": {
+        "title": "Publicar un anuncio",
+        "summary": "Publica un producto o servicio en pocos pasos: elige el catálogo, indica unidad, precio, fotos y detalles.",
+        "steps": [
+          "En el menú, abre 'Negocios > Mis Anuncios' y toca 'Nuevo anuncio'.",
+          "Elige el tipo (producto o servicio) y navega el catálogo hasta la categoría correcta.",
+          "Completa título, descripción, unidad, cantidad y precio.",
+          "Agrega fotos (arrastrar y soltar), marca certificaciones y si aceptas permuta.",
+          "Si tienes CD, vincúlalo al anuncio. Guarda y listo."
+        ],
+        "example": "Un productor publica 'Maíz a granel', 500 sacos, R$ 60,00 c/u, con foto del lote y vínculo al CD de Rondonópolis.",
+        "tip": "Buenas fotos y categoría correcta aumentan mucho las visualizaciones."
+      },
+      "meus-anuncios": {
+        "title": "Gestionar Mis Anuncios",
+        "summary": "En 'Mis Anuncios' puedes editar, pausar/activar, marcar como vendido, eliminar y acceder al stock de cada oferta.",
+        "steps": [
+          "Abre 'Negocios > Mis Anuncios'.",
+          "Cada tarjeta tiene botones 'Editar', 'Stock' (solo productos) y 'Destacar'.",
+          "En el menú '⋯' están 'Pausar', 'Marcar como vendido' y 'Eliminar'.",
+          "'Pausar' oculta el anuncio de Comprar sin borrarlo; reactívalo cuando quieras."
+        ],
+        "example": "Vendiste medio lote fuera de la app y pausas el anuncio hasta reponer stock.",
+        "tip": "'Marcar como vendido' conserva el historial y ayuda en informes futuros."
+      },
+      "destaque": {
+        "title": "Destaque: aparecer arriba",
+        "summary": "El Destaque coloca tu anuncio en el carrusel del Panel, encima del listado, y le agrega un sello dorado.",
+        "steps": [
+          "Ve a 'Negocios > Destacar anuncio' (o toca 'Destacar' en una tarjeta).",
+          "Elige un paquete (ej.: 7, 15 o 30 días).",
+          "Completa el pago; tu anuncio recibe el sello automáticamente.",
+          "Sigue la fecha de expiración en la tarjeta del anuncio."
+        ],
+        "example": "Un productor destaca 15 días en la cosecha de soja y triplica las visualizaciones.",
+        "tip": "Ideal en picos de cosecha y fechas de mayor demanda."
+      },
+      "startups-pmes": {
+        "title": "Startups y PyMEs",
+        "summary": "Un canal dedicado para prestadores y startups del agro. Estos anuncios no aparecen en Comprar común salvo que estén destacados.",
+        "steps": [
+          "Marca tu perfil como 'Startup/PyME' en 'Mi cuenta'.",
+          "Publica desde el módulo 'Startups y PyMEs' — solo servicios.",
+          "Para aparecer también en Comprar general, contrata un Destaque."
+        ],
+        "example": "Una AgTech publica un servicio de análisis de suelo por hectárea; el sello 'Startup' aparece en la tarjeta.",
+        "tip": "Las startups venden mejor con página institucional al día y portafolio en las fotos."
+      },
+      "o-que-e-cd": {
+        "title": "Qué es un Centro de Distribución (CD)",
+        "summary": "Un CD es un depósito que recibe, guarda y redistribuye mercadería. En la app conecta anuncios a lugares físicos de retiro.",
+        "steps": [
+          "Cada CD tiene dirección, capacidad y responsable.",
+          "Los anuncios se pueden vincular a uno o varios CDs.",
+          "Los compradores filtran por CD y por distancia hasta ellos."
+        ],
+        "example": "Una cooperativa registra su CD en Sorriso (MT); sus 12 anuncios quedan vinculados y visibles por proximidad.",
+        "tip": "Un CD bien registrado (con CP y coordenadas) es la base del filtro 'cerca de mí'."
+      },
+      "cadastrar-meu-cd": {
+        "title": "Registrar mi propio CD",
+        "summary": "Quien ofrece 'Transporte/Logística' o 'Almacenamiento' puede registrar un CD; queda pendiente hasta aprobación del admin.",
+        "steps": [
+          "Ve a 'Cuenta > Mi cuenta' y toca 'Convertirse en Centro de Distribución'.",
+          "Completa nombre, responsable, teléfono, dirección y CP (la app carga ciudad/estado y coordenadas).",
+          "Envía. El CD queda 'Pendiente de aprobación'.",
+          "Una vez aprobado, aparece el menú 'Mis CDs' y ya puedes recibir vínculos y registrar stock."
+        ],
+        "example": "Una transportadora registra dos CDs (Uberaba y Anápolis); en un día hábil ambos son aprobados y comienza a operar.",
+        "tip": "También puedes iniciar el registro al elegir una categoría de logística en el formulario del anuncio."
+      },
+      "vincular-cd": {
+        "title": "Vincular un CD a tu anuncio",
+        "summary": "Vincular un CD indica desde dónde sale el producto. Alimenta el filtro por distancia y habilita el stock por CD.",
+        "steps": [
+          "Edita tu anuncio en 'Mis Anuncios'.",
+          "En la sección 'Centros de Distribución', elige uno o varios CDs aprobados (o los tuyos pendientes).",
+          "Guarda. Cada CD vinculado tiene su propio saldo de stock."
+        ],
+        "example": "Un producto de café se vincula a dos CDs; cada uno con su stock independiente.",
+        "tip": "Si el comprador quiere retirar en cierta ciudad, te encontrará antes si vinculas el CD de esa región."
+      },
+      "estoque": {
+        "title": "Control de stock por CD",
+        "summary": "Para cada anuncio-CD registras entradas y salidas. El saldo se actualiza en tiempo real y la app no deja vender más del saldo.",
+        "steps": [
+          "En 'Mis Anuncios', toca 'Stock' en la tarjeta del producto.",
+          "Elige el CD y define tipo (entrada/salida), cantidad y una nota opcional.",
+          "El saldo aparece arriba; el historial completo debajo.",
+          "Una salida mayor al saldo se bloquea con aviso."
+        ],
+        "example": "Registras entrada de 200 sacos al llegar la cosecha y luego salidas conforme cierras ventas.",
+        "tip": "Anotar una observación (ej.: 'venta a Juan, factura 123') ayuda mucho en el cierre mensual."
+      },
+      "mensagens": {
+        "title": "Mensajes: chatear con interesados",
+        "summary": "El chat interno permite negociar sin intercambiar teléfonos. Cada anuncio puede generar una conversación.",
+        "steps": [
+          "Toca 'Chatear con el vendedor' en un anuncio o abre 'Mensajes' en el menú.",
+          "Escribe tu consulta; la otra parte recibe notificación.",
+          "Activa la traducción automática en la conversación si hablas otro idioma."
+        ],
+        "example": "Un comprador argentino pregunta en español; el productor lo lee en portugués con la traducción activada.",
+        "tip": "Acuerda precio y plazo en el chat y mueve la tarjeta a 'En negociación' en el Kanban."
+      },
+      "negociacoes-kanban": {
+        "title": "Negociaciones en Kanban",
+        "summary": "Arrastra tarjetas entre columnas para seguir cada trato: iniciado → en negociación → cerrado (o descartado).",
+        "steps": [
+          "Abre 'Negocios > Negociaciones' (plan Pro).",
+          "Arrastra una tarjeta con el mouse (o mantén pulsado en móvil) para cambiar de columna.",
+          "El estado de la tarjeta cambia al soltarla."
+        ],
+        "example": "Arrastras la negociación de soja a 'Cerrado' cuando entra el pago; la tarjeta cambia de color.",
+        "tip": "Usa 'Descartado' para no perder el historial de contactos que no avanzaron."
+      },
+      "cotacoes": {
+        "title": "Cotizaciones: commodities y dólar",
+        "summary": "Sigue precios de referencia del agro y cotizaciones del dólar (comercial, turismo, paralelo).",
+        "steps": [
+          "Abre 'Mercado > Cotización'.",
+          "En los chips de arriba, elige qué tipos de dólar ver.",
+          "Cada tarjeta muestra el valor actual, la variación (%) y un mini gráfico de los últimos días.",
+          "Verde = sube; rojo = baja."
+        ],
+        "example": "Ves que el novillo subió 1,2% en la semana y decides retener la venta unos días más.",
+        "tip": "Los chips elegidos aquí también controlan lo que aparece en el Panel."
+      },
+      "alertas-preco": {
+        "title": "Alertas de precio",
+        "summary": "Recibe una notificación cuando el precio de un commodity cruza el valor que definiste.",
+        "steps": [
+          "Abre 'Mercado > Alertas' y toca 'Nueva alerta'.",
+          "Elige el commodity, la condición (arriba/abajo) y el precio objetivo.",
+          "Cuando se dispare, la app te avisa por la campana de notificaciones."
+        ],
+        "example": "'Soja arriba de R$ 145,00 por saco' se dispara y recibes la notificación al instante.",
+        "tip": "Empieza con pocas alertas bien elegidas para que no se vuelvan ruido diario."
+      },
+      "clima": {
+        "title": "Clima: seguir varias ciudades",
+        "summary": "Agrega las ciudades relevantes a tu operación y ve su clima en el Panel.",
+        "steps": [
+          "Ve a 'Cuenta > Configuración' y encuentra 'Ubicaciones de clima'.",
+          "Agrega una ciudad escribiendo su nombre y eligiendo de la lista.",
+          "Quita ciudades cuando ya no las necesites.",
+          "Las ciudades aparecen en un carrusel del Panel móvil."
+        ],
+        "example": "Un productor con campos en MT y PR sigue ambas ciudades a la vez sin salir de la app.",
+        "tip": "Deja hasta 5 ciudades para una lectura rápida y limpia."
+      },
+      "noticias": {
+        "title": "Noticias del agro",
+        "summary": "Ve titulares seleccionados y elige los temas a seguir (multiselección).",
+        "steps": [
+          "Abre 'Mercado > Noticias'.",
+          "Toca los temas para activarlos/desactivarlos (granos, ganadería, insumos, clima, etc.).",
+          "La lista se ajusta automáticamente a tus selecciones."
+        ],
+        "example": "Al dejar solo 'Granos' y 'Exportación', te enfocas en lo útil para tu negocio.",
+        "tip": "Cada noticia abre la fuente original en otra pestaña, sin salir de la app."
+      },
+      "cursos-certificados": {
+        "title": "Cursos y Certificados",
+        "summary": "Mira las clases, sigue tu progreso y al terminar emite un certificado con código de validación.",
+        "steps": [
+          "Abre 'Enseñanza > Cursos' y elige un recorrido.",
+          "Marca cada clase como completada para actualizar el progreso.",
+          "Al terminar, genera el certificado en 'Enseñanza > Certificados'.",
+          "Comparte el enlace: cualquiera puede verificar el código en la página pública."
+        ],
+        "example": "Terminas 'Gestión de Costos en la Finca' y envías el enlace del certificado a un comprador que pidió comprobante.",
+        "tip": "El código del certificado es único y se puede verificar sin login."
+      },
+      "clube-vantagens": {
+        "title": "Club de Ventajas (Pro)",
+        "summary": "Ofertas y descuentos de socios para suscriptores del plan Pro.",
+        "steps": [
+          "Abre 'Cuenta > Club de Ventajas'.",
+          "Filtra por categoría para encontrar la oferta que te interesa.",
+          "Copia el cupón y toca 'Aprovechar' para abrir el sitio del socio."
+        ],
+        "example": "Un suscriptor Pro aplica un cupón del 15% en un insumo agrícola directamente en el sitio del socio.",
+        "tip": "Atento a la validez — algunas ofertas cambian cada mes."
+      }
+    }
   }
 }
