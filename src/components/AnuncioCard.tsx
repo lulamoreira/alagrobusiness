@@ -34,6 +34,9 @@ export interface AnuncioCardData {
   servico_area_atuacao?: string | null;
   servico_prazo?: string | null;
   destaque_ate?: string | null;
+  para_exportacao?: boolean | null;
+  incoterm?: string | null;
+  paises_destino?: string[] | null;
 }
 
 
