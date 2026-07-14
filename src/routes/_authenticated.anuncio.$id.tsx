@@ -2,7 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles, Warehouse } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Package, BadgeCheck, Repeat2, Truck, ChevronLeft, ChevronRight, MessageCircle, Sparkles, Warehouse, Globe } from "lucide-react";
+import { countryName } from "@/lib/countries";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
@@ -318,6 +319,37 @@ function DetailPage() {
               </div>
             </div>
           )}
+          {(anuncio as unknown as { para_exportacao?: boolean }).para_exportacao && (
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
+              <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+                <Globe className="h-4 w-4" /> {t("international.detailTitle")}
+              </p>
+              {(anuncio as unknown as { incoterm?: string | null }).incoterm && (
+                <p className="text-sm">
+                  <span className="text-muted-foreground">{t("international.incotermLabel")}: </span>
+                  <span className="font-semibold">
+                    {(anuncio as unknown as { incoterm?: string }).incoterm}
+                  </span>
+                </p>
+              )}
+              {((anuncio as unknown as { paises_destino?: string[] }).paises_destino ?? []).length > 0 && (
+                <div className="mt-2">
+                  <p className="mb-1 text-xs text-muted-foreground">{t("international.destinations")}:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {((anuncio as unknown as { paises_destino?: string[] }).paises_destino ?? []).map((c) => (
+                      <span
+                        key={c}
+                        className="rounded-full border border-border bg-background/60 px-2 py-0.5 text-[11px]"
+                      >
+                        {countryName(c, i18n.language)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
 
           {cdsVinculados && cdsVinculados.length > 0 && (
             <div className="rounded-2xl border border-border bg-card p-4">

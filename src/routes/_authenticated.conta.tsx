@@ -12,6 +12,7 @@ import { geocodeCep } from "@/lib/geocode";
 import { DarkInput } from "@/components/DarkInput";
 import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
 import { useMyCdsCount } from "@/hooks/useMyCdsCount";
+import { listCountries } from "@/lib/countries";
 
 export const Route = createFileRoute("/_authenticated/conta")({
   component: ContaPage,
@@ -57,6 +58,8 @@ function ContaPage() {
   const [locInfo, setLocInfo] = useState<string | null>(null);
   const [locSaving, setLocSaving] = useState(false);
   const [locGeocoding, setLocGeocoding] = useState(false);
+  const [pais, setPais] = useState<string>("");
+  const [paisSaving, setPaisSaving] = useState(false);
 
   useEffect(() => {
     if (!profile) return;
@@ -65,7 +68,24 @@ function ContaPage() {
     setLocEstado((p) => p || profile.estado || "");
     setLocLat((p) => (p != null ? p : profile.latitude ?? null));
     setLocLng((p) => (p != null ? p : profile.longitude ?? null));
+    setPais((p) => p || profile.pais || "");
   }, [profile]);
+
+  const savePais = async () => {
+    if (!user) return;
+    setPaisSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ pais: pais })
+      .eq("id", user.id);
+    setPaisSaving(false);
+    if (error) {
+      toast.error(t("international.myCountrySaveError"));
+      return;
+    }
+    toast.success(t("international.myCountrySaved"));
+    await refreshProfile();
+  };
 
   const handleLocCepBlur = async () => {
     const digits = (locCep || "").replace(/\D+/g, "");
@@ -394,7 +414,44 @@ function ContaPage() {
       <CdSelfRegisterDialog open={cdDialogOpen} onOpenChange={setCdDialogOpen} />
 
       {/* My location */}
+      {/* My country (for international buyers/exporters) */}
+      <section className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+        <div className="mb-4 flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
+            <MapPin className="h-5 w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-lg font-bold">{t("international.myCountryTitle")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("international.myCountryDesc")}</p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <select
+            value={pais}
+            onChange={(e) => setPais(e.target.value)}
+            className="min-w-[200px] flex-1 rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
+          >
+            <option value="">{t("international.myCountryPlaceholder")}</option>
+            {listCountries(i18n.language).map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={savePais}
+            disabled={paisSaving}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+          >
+            {paisSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {t("common.save")}
+          </button>
+        </div>
+      </section>
+
       <section id="minha-localizacao" className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+
         <div className="mb-4 flex items-start gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
             <MapPin className="h-5 w-5" />

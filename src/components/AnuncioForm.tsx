@@ -14,7 +14,8 @@ import { handlePaywallError } from "@/components/PlanStatus";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoRootSegmento, catalogoHabilitaCd } from "@/lib/catalogo";
 import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
-import { Warehouse } from "lucide-react";
+import { Warehouse, Globe } from "lucide-react";
+import { INCOTERMS, listCountries, type Incoterm } from "@/lib/countries";
 
 
 
@@ -58,6 +59,9 @@ export interface AnuncioFormInitial {
   servico_modelo_cobranca?: ServiceBilling | null;
   servico_area_atuacao?: string | null;
   servico_prazo?: string | null;
+  para_exportacao?: boolean | null;
+  incoterm?: Incoterm | null;
+  paises_destino?: string[] | null;
 }
 
 
@@ -87,7 +91,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
 }
 
 export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }: AnuncioFormProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
 
@@ -152,6 +156,9 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   );
   const [servicoArea, setServicoArea] = useState(initial?.servico_area_atuacao ?? "");
   const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
+  const [paraExportacao, setParaExportacao] = useState<boolean>(initial?.para_exportacao ?? false);
+  const [incoterm, setIncoterm] = useState<Incoterm | "">((initial?.incoterm as Incoterm | null) ?? "");
+  const [paisesDestino, setPaisesDestino] = useState<string[]>(initial?.paises_destino ?? []);
   const isServico = tipoOferta === "servico";
 
   const { data: catalogoNodes } = useQuery({
@@ -287,6 +294,9 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         servico_modelo_cobranca: isServico ? servicoModelo : null,
         servico_area_atuacao: isServico ? (servicoArea.trim() || null) : null,
         servico_prazo: isServico ? (servicoPrazo.trim() || null) : null,
+        para_exportacao: paraExportacao,
+        incoterm: paraExportacao ? (incoterm || null) : null,
+        paises_destino: paraExportacao ? paisesDestino : null,
       };
 
       let anuncioId: string | null = initial?.id ?? null;
@@ -638,7 +648,65 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
         </div>
       )}
 
+      <section className="space-y-4 rounded-2xl border border-border bg-card/40 p-4">
+        <label className="flex items-start gap-3 text-sm font-medium text-foreground">
+          <input
+            type="checkbox"
+            checked={paraExportacao}
+            onChange={(e) => setParaExportacao(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-border accent-primary"
+          />
+          <span className="flex-1">
+            <span className="inline-flex items-center gap-1.5 font-semibold">
+              <Globe className="h-4 w-4 text-primary" />
+              {t("international.formToggle")}
+            </span>
+            <span className="mt-0.5 block text-xs text-muted-foreground">
+              {t("international.formToggleDesc")}
+            </span>
+          </span>
+        </label>
+
+        {paraExportacao && (
+          <div className="space-y-4">
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("international.incotermLabel")}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <Pill active={incoterm === ""} onClick={() => setIncoterm("")}>
+                  {t("international.incotermNone")}
+                </Pill>
+                {INCOTERMS.map((i) => (
+                  <Pill key={i} active={incoterm === i} onClick={() => setIncoterm(i)}>
+                    {i}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium text-muted-foreground">
+                {t("international.countriesLabel")}
+              </label>
+              <p className="mb-2 text-[11px] text-muted-foreground">{t("international.countriesHint")}</p>
+              <div className="flex max-h-52 flex-wrap gap-2 overflow-y-auto">
+                {listCountries(i18n.language).map((c) => (
+                  <Pill
+                    key={c.code}
+                    active={paisesDestino.includes(c.code)}
+                    onClick={() => setPaisesDestino((s) => toggle(s, c.code))}
+                  >
+                    {c.name}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
       <div className="grid gap-4 md:grid-cols-3">
+
         <DarkInput label={t("form.state")} value={estado} onChange={(e) => setEstado(e.target.value)} />
         <DarkInput label={t("form.city")} value={cidade} onChange={(e) => setCidade(e.target.value)} />
         <DarkInput label={t("form.zip")} value={cep} onChange={(e) => setCep(e.target.value)} />

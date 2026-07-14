@@ -41,6 +41,7 @@ import {
   Rocket,
   Warehouse,
   HelpCircle,
+  Globe,
 
 
 } from "lucide-react";
@@ -84,6 +85,7 @@ const GROUPS: NavGroup[] = [
       { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
       { to: "/vender", labelKey: "nav.sell", icon: Store },
       { to: "/startups", labelKey: "nav.startups", icon: Rocket },
+      { to: "/internacional", labelKey: "nav.international", icon: Globe },
       { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
       { to: "/destaque", labelKey: "nav.destaqueAnuncio", icon: Sparkles },
     ],

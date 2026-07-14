@@ -55,6 +55,10 @@ function EditPage() {
     servico_modelo_cobranca: (data.servico_modelo_cobranca ?? null) as "hora" | "projeto" | "mensal" | null,
     servico_area_atuacao: data.servico_area_atuacao ?? null,
     servico_prazo: data.servico_prazo ?? null,
+    para_exportacao: (data as unknown as { para_exportacao?: boolean }).para_exportacao ?? false,
+    incoterm: ((data as unknown as { incoterm?: string | null }).incoterm ?? null) as
+      | "EXW" | "FCA" | "FOB" | "CFR" | "CIF" | "CPT" | "CIP" | "DAP" | "DPU" | "DDP" | null,
+    paises_destino: (data as unknown as { paises_destino?: string[] | null }).paises_destino ?? null,
   };
   return <AnuncioForm mode="edit" initial={initial} />;
 }
