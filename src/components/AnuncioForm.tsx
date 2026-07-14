@@ -91,7 +91,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
 }
 
 export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }: AnuncioFormProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
 
