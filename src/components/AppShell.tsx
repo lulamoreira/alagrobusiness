@@ -124,6 +124,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/conta", labelKey: "nav.account", icon: UserCircle },
       { to: "/planos", labelKey: "nav.plans", icon: Crown },
+      { to: "/clube", labelKey: "nav.club", icon: Sparkles },
       { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
       { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle },
     ],
