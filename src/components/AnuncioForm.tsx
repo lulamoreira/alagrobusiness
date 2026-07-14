@@ -59,6 +59,9 @@ export interface AnuncioFormInitial {
   servico_modelo_cobranca?: ServiceBilling | null;
   servico_area_atuacao?: string | null;
   servico_prazo?: string | null;
+  para_exportacao?: boolean | null;
+  incoterm?: Incoterm | null;
+  paises_destino?: string[] | null;
 }
 
 
