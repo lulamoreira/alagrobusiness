@@ -50,6 +50,7 @@ function Chip({
 function BuyPage() {
   const { t } = useTranslation();
   const { profile } = useAuth();
+  const userMoeda = (profile?.moeda_preferida ?? "BRL") as "BRL" | "USD" | "EUR";
   const [search, setSearch] = useState("");
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
   const [state, setState] = useState("");
