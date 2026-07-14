@@ -88,6 +88,15 @@ function SellPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  void cotacoes;
+
+  const { data: cambio } = useQuery({
+    queryKey: ["cotacoes_cambio"],
+    queryFn: async (): Promise<CambioRow[]> =>
+      ((await supabase.from("cotacoes_cambio").select("moeda, valor_brl")).data ?? []) as CambioRow[],
+    staleTime: 1000 * 60 * 10,
+  });
+
 
   const { data: unidades } = useQuery({
     queryKey: ["unidades_all"],
