@@ -23,8 +23,7 @@ function InternationalPage() {
         .from("anuncios")
         .select("*")
         .eq("status", "ativo")
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .eq("para_exportacao" as any, true)
+        .eq("para_exportacao", true)
         .is("deleted_at", null)
         .order("destaque_ate", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false })
