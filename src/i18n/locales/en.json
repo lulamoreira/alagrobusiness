@@ -116,7 +116,9 @@
       "admin": "Administration"
     },
     "myCds": "My DCs",
-    "help": "Help"
+    "myCds": "My DCs",
+    "help": "Help",
+    "club": "Club"
   },
   "dashboard": {
     "hello": "Hello",
