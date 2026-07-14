@@ -108,6 +108,9 @@ function FinanceiroPage() {
 
   const totals = useMemo(() => {
     const all = vendas ?? [];
+    // TODO (Fase 1b Internacional): soma valor_total como se todas as vendas estivessem na mesma moeda.
+    // Quando houver vendas em moedas distintas, normalizar cada v.valor_total para BRL (toBRL(v.valor_total, v.moeda, cambio))
+    // antes de somar/agregar KPIs.
     const total = all.reduce((acc, v) => acc + Number(v.valor_total), 0);
     const received = all
       .filter((v) => v.status_pagamento === "recebido")
@@ -117,6 +120,7 @@ function FinanceiroPage() {
       .reduce((acc, v) => acc + Number(v.valor_total), 0);
     return { total, received, pending };
   }, [vendas]);
+
 
   const invalidateAll = () => {
     qc.invalidateQueries({ queryKey: ["financeiro_vendas"] });
