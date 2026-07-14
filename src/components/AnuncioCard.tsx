@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MapPin, Repeat2, BadgeCheck, Sprout, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
-import { formatMoney } from "@/lib/format";
+import { formatPrice, type CambioRow } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
