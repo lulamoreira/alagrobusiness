@@ -156,6 +156,9 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
   );
   const [servicoArea, setServicoArea] = useState(initial?.servico_area_atuacao ?? "");
   const [servicoPrazo, setServicoPrazo] = useState(initial?.servico_prazo ?? "");
+  const [paraExportacao, setParaExportacao] = useState<boolean>(initial?.para_exportacao ?? false);
+  const [incoterm, setIncoterm] = useState<Incoterm | "">((initial?.incoterm as Incoterm | null) ?? "");
+  const [paisesDestino, setPaisesDestino] = useState<string[]>(initial?.paises_destino ?? []);
   const isServico = tipoOferta === "servico";
 
   const { data: catalogoNodes } = useQuery({
