@@ -58,6 +58,8 @@ function ContaPage() {
   const [locInfo, setLocInfo] = useState<string | null>(null);
   const [locSaving, setLocSaving] = useState(false);
   const [locGeocoding, setLocGeocoding] = useState(false);
+  const [pais, setPais] = useState<string>("");
+  const [paisSaving, setPaisSaving] = useState(false);
 
   useEffect(() => {
     if (!profile) return;
