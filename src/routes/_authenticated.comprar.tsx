@@ -10,6 +10,7 @@ import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
 import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
 import { distanceKm } from "@/lib/geo";
+import { toBRL, type CambioRow } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 
