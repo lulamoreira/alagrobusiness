@@ -892,6 +892,27 @@ export type Database = {
         }
         Relationships: []
       }
+      cotacoes_cambio: {
+        Row: {
+          atualizado_em: string
+          fonte: string | null
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          valor_brl: number
+        }
+        Insert: {
+          atualizado_em?: string
+          fonte?: string | null
+          moeda: Database["public"]["Enums"]["moeda_app"]
+          valor_brl: number
+        }
+        Update: {
+          atualizado_em?: string
+          fonte?: string | null
+          moeda?: Database["public"]["Enums"]["moeda_app"]
+          valor_brl?: number
+        }
+        Relationships: []
+      }
       cotacoes_commodities: {
         Row: {
           atualizado_em: string

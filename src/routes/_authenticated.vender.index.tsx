@@ -7,7 +7,7 @@ import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
 import { deleteAnuncioPhotos } from "@/lib/storage";
 import { AnuncioPhoto } from "@/components/AnuncioCard";
-import { formatMoney } from "@/lib/format";
+import { formatPrice, type CambioRow } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MarkAsSoldDialog } from "@/components/MarkAsSoldDialog";
@@ -88,6 +88,15 @@ function SellPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  void cotacoes;
+
+  const { data: cambio } = useQuery({
+    queryKey: ["cotacoes_cambio"],
+    queryFn: async (): Promise<CambioRow[]> =>
+      ((await supabase.from("cotacoes_cambio").select("moeda, valor_brl")).data ?? []) as CambioRow[],
+    staleTime: 1000 * 60 * 10,
+  });
+
 
   const { data: unidades } = useQuery({
     queryKey: ["unidades_all"],
@@ -142,13 +151,14 @@ function SellPage() {
         <ul className="space-y-3">
           {(anuncios as AnuncioRow[]).map((a) => {
             const unit = unidades?.find((u) => u.id === a.preco_unidade_id);
-            const price = formatMoney(
+            const price = formatPrice(
               a.preco,
-              profile?.moeda_preferida ?? "BRL",
-              profile?.tipo_dolar_preferido ?? "comercial",
-              cotacoes ?? [],
+              (a.moeda ?? "BRL") as "BRL" | "USD" | "EUR",
+              (profile?.moeda_preferida ?? "BRL") as "BRL" | "USD" | "EUR",
+              cambio ?? [],
               i18n.language,
             );
+
             const statusLabel =
               a.status === "ativo"
                 ? t("sell.statusActive")

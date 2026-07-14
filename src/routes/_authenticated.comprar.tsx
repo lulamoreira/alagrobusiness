@@ -241,8 +241,11 @@ function BuyPage() {
     if (certs.length > 0) list = list.filter((a) => certs.every((c) => a.certificacoes?.includes(c)));
     if (acceptsBarter !== null) list = list.filter((a) => a.aceita_permuta === acceptsBarter);
     if (delivery) list = list.filter((a) => (a as unknown as { modalidade_entrega: string }).modalidade_entrega === delivery);
+    // TODO (Fase 1b Internacional): filtro min/max compara número cru sem considerar anuncios.moeda.
+    // Quando houver mistura de moedas nos anúncios, normalizar para BRL via toBRL(a.preco, a.moeda, cambio) antes de comparar.
     if (priceMin) list = list.filter((a) => Number(a.preco) >= Number(priceMin));
     if (priceMax) list = list.filter((a) => Number(a.preco) <= Number(priceMax));
+
 
     if (cdFilter) {
       list = list.filter((a) => (anuncioToCds.get(a.id) ?? []).includes(cdFilter));

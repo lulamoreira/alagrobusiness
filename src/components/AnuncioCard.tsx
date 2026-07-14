@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MapPin, Repeat2, BadgeCheck, Sprout, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedUrl } from "@/lib/storage";
-import { formatMoney } from "@/lib/format";
+import { formatPrice, type CambioRow } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
@@ -139,14 +139,24 @@ export function AnuncioCard({ item, units, cotacoes, sellerName, sellerTipoPerfi
     : null;
 
 
+  const { data: cambio } = useQuery({
+    queryKey: ["cotacoes_cambio"],
+    queryFn: async (): Promise<CambioRow[]> =>
+      ((await supabase.from("cotacoes_cambio").select("moeda, valor_brl")).data ?? []) as CambioRow[],
+    staleTime: 1000 * 60 * 10,
+  });
+
   const priceUnit = units.find((u) => u.id === item.preco_unidade_id);
   const qtyUnit = units.find((u) => u.id === item.quantidade_unidade_id);
 
   const userMoeda = profile?.moeda_preferida ?? "BRL";
-  const userDolar = profile?.tipo_dolar_preferido ?? "comercial";
+  // Deixado para compatibilidade com o restante do sistema (Mercado)
+  void profile?.tipo_dolar_preferido;
+  void cotacoes;
 
-  const priceLabel = formatMoney(item.preco, userMoeda, userDolar, cotacoes, i18n.language);
+  const priceLabel = formatPrice(item.preco, item.moeda, userMoeda, cambio ?? [], i18n.language);
   const unitLabel = priceUnit ? t(`units.${priceUnit.nome_chave}`) : "";
+
 
   const harvest = item.data_colheita
     ? new Date(item.data_colheita).toLocaleDateString(

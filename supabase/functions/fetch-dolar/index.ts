@@ -82,8 +82,10 @@ Deno.serve(async (req) => {
   const out: Record<string, unknown> = { sources: {} };
   let comercial: number | null = null;
   let turismo: number | null = null;
+  let eur: number | null = null;
+  let openErApiRates: Record<string, number> | null = null;
 
-  // 1) Comercial — open.er-api.com (estável, sem 429)
+  // 1) Comercial — open.er-api.com (estável, sem 429). Também expõe todos os rates para derivar EUR.
   try {
     const r = await fetchWithRetry("https://open.er-api.com/v6/latest/USD");
     if (!r || !r.ok) throw new Error(`open.er-api HTTP ${r?.status ?? "no-response"}`);
@@ -91,6 +93,7 @@ Deno.serve(async (req) => {
     const brl = j?.rates?.BRL;
     if (typeof brl !== "number") throw new Error("BRL ausente em open.er-api");
     comercial = brl;
+    openErApiRates = j?.rates ?? null;
     (out.sources as Record<string, unknown>).comercial = "open.er-api.com";
   } catch (err) {
     // fallback AwesomeAPI
@@ -125,6 +128,28 @@ Deno.serve(async (req) => {
     }
   }
 
+  // 3) EUR — AwesomeAPI EUR-BRL, com fallback via open.er-api (rates.BRL / rates.EUR).
+  try {
+    const r = await fetchWithRetry("https://economia.awesomeapi.com.br/json/last/EUR-BRL");
+    if (!r || !r.ok) throw new Error(`AwesomeAPI EUR-BRL HTTP ${r?.status ?? "no-response"}`);
+    const j = await r.json();
+    const bid = j?.EURBRL?.bid;
+    eur = bid ? Number(bid) : null;
+    (out.sources as Record<string, unknown>).eur = "awesomeapi.com.br";
+  } catch (err) {
+    // Fallback: derivar via open.er-api já baixado (BRL por USD / EUR por USD = BRL por EUR)
+    const brlPerUsd = openErApiRates?.BRL;
+    const eurPerUsd = openErApiRates?.EUR;
+    if (brlPerUsd && eurPerUsd && eurPerUsd > 0) {
+      eur = Number((brlPerUsd / eurPerUsd).toFixed(4));
+      (out.sources as Record<string, unknown>).eur = "derived (open.er-api BRL/EUR)";
+      (out.sources as Record<string, unknown>).eur_warn = String(err);
+    } else {
+      (out.sources as Record<string, unknown>).eur_error = String(err);
+    }
+  }
+
+
   async function upsertHistorico(tipo: "comercial" | "turismo", valor: number) {
     const hoje = new Date().toISOString().slice(0, 10);
     const { data: upd, error: updErr } = await supabase
@@ -143,10 +168,21 @@ Deno.serve(async (req) => {
     }
   }
 
+  async function upsertCambio(moeda: "USD" | "EUR", valor: number, fonte: string) {
+    const { error } = await supabase
+      .from("cotacoes_cambio")
+      .upsert(
+        { moeda, valor_brl: valor, fonte, atualizado_em: new Date().toISOString() },
+        { onConflict: "moeda" },
+      );
+    if (error) throw error;
+  }
+
   try {
     if (comercial != null) {
       await upsertCotacao(supabase, "comercial", comercial);
       await upsertHistorico("comercial", comercial);
+      await upsertCambio("USD", comercial, String((out.sources as Record<string, unknown>).comercial ?? ""));
       (out as Record<string, unknown>).comercial = comercial;
     }
     if (turismo != null) {
@@ -154,8 +190,12 @@ Deno.serve(async (req) => {
       await upsertHistorico("turismo", turismo);
       (out as Record<string, unknown>).turismo = turismo;
     }
+    if (eur != null) {
+      await upsertCambio("EUR", eur, String((out.sources as Record<string, unknown>).eur ?? ""));
+      (out as Record<string, unknown>).eur = eur;
+    }
   } catch (err) {
-    console.error("upsert cotacoes_dolar:", err);
+    console.error("upsert cotacoes:", err);
     return new Response(JSON.stringify({ ok: false, error: String(err), ...out }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -167,3 +207,4 @@ Deno.serve(async (req) => {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 });
+

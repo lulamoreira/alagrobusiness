@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
 import { AnuncioPhoto } from "@/components/AnuncioCard";
-import { formatMoney } from "@/lib/format";
+import { formatPrice, type CambioRow } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
@@ -58,6 +58,15 @@ function DetailPage() {
     queryFn: async () => (await supabase.from("cotacoes_dolar").select("tipo, valor_brl")).data ?? [],
     staleTime: 1000 * 60 * 30,
   });
+  void cotacoes;
+
+  const { data: cambio } = useQuery({
+    queryKey: ["cotacoes_cambio"],
+    queryFn: async (): Promise<CambioRow[]> =>
+      ((await supabase.from("cotacoes_cambio").select("moeda, valor_brl")).data ?? []) as CambioRow[],
+    staleTime: 1000 * 60 * 10,
+  });
+
 
   const { data: catalogo } = useQuery({
     queryKey: ["catalogo_all_active"],
@@ -104,13 +113,14 @@ function DetailPage() {
 
   const priceUnit = unidades?.find((u) => u.id === anuncio.preco_unidade_id);
   const qtyUnit = unidades?.find((u) => u.id === anuncio.quantidade_unidade_id);
-  const priceLabel = formatMoney(
+  const priceLabel = formatPrice(
     Number(anuncio.preco),
-    profile?.moeda_preferida ?? "BRL",
-    profile?.tipo_dolar_preferido ?? "comercial",
-    cotacoes ?? [],
+    (anuncio.moeda ?? "BRL") as "BRL" | "USD" | "EUR",
+    (profile?.moeda_preferida ?? "BRL") as "BRL" | "USD" | "EUR",
+    cambio ?? [],
     i18n.language,
   );
+
   const harvest = anuncio.data_colheita
     ? new Date(anuncio.data_colheita).toLocaleDateString(i18n.language, { day: "2-digit", month: "long", year: "numeric" })
     : null;
