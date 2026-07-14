@@ -127,7 +127,6 @@ const GROUPS: NavGroup[] = [
       { to: "/planos", labelKey: "nav.plans", icon: Crown },
       { to: "/clube", labelKey: "nav.club", icon: Sparkles },
       { to: "/configuracoes", labelKey: "nav.settings", icon: Settings },
-      { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle },
     ],
   },
   {
