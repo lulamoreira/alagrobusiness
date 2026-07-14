@@ -2,6 +2,53 @@ type DolarRow = { tipo: "comercial" | "turismo" | "paralelo"; valor_brl: number 
 type Moeda = "BRL" | "USD" | "EUR";
 type TipoDolar = "comercial" | "turismo" | "paralelo";
 
+/** Linha de câmbio consultada em public.cotacoes_cambio (USD/EUR → BRL). */
+export type CambioRow = { moeda: "USD" | "EUR"; valor_brl: number };
+
+/** Converte valor em qualquer moeda para BRL usando cotacoes_cambio. Retorna null se faltar taxa. */
+export function toBRL(valor: number, moeda: Moeda, cambio: CambioRow[] | null | undefined): number | null {
+  if (moeda === "BRL") return valor;
+  const row = cambio?.find((c) => c.moeda === moeda);
+  if (!row || !(row.valor_brl > 0)) return null;
+  return valor * Number(row.valor_brl);
+}
+
+/** Converte de BRL para a moeda alvo. Retorna null se faltar taxa. */
+export function fromBRL(valorBRL: number, moeda: Moeda, cambio: CambioRow[] | null | undefined): number | null {
+  if (moeda === "BRL") return valorBRL;
+  const row = cambio?.find((c) => c.moeda === moeda);
+  if (!row || !(row.valor_brl > 0)) return null;
+  return valorBRL / Number(row.valor_brl);
+}
+
+/**
+ * Formata um preço convertendo da moeda de origem (ex.: moeda do anúncio) para a
+ * moeda de exibição preferida do usuário. Se faltar alguma taxa necessária,
+ * degrada exibindo na MOEDA ORIGINAL do anúncio (nunca fingindo que é BRL).
+ */
+export function formatPrice(
+  preco: number | null | undefined,
+  precoMoeda: Moeda,
+  displayMoeda: Moeda,
+  cambio: CambioRow[] | null | undefined,
+  locale = "pt-BR",
+): string {
+  if (preco == null || isNaN(preco)) return "—";
+  const brl = toBRL(preco, precoMoeda, cambio);
+  if (brl == null) {
+    // Degrada: sem taxa para converter a origem → mostra na moeda do anúncio
+    return new Intl.NumberFormat(locale, { style: "currency", currency: precoMoeda }).format(preco);
+  }
+  const out = fromBRL(brl, displayMoeda, cambio);
+  if (out == null) {
+    // Degrada: sem taxa para a moeda de destino → mostra na moeda do anúncio
+    return new Intl.NumberFormat(locale, { style: "currency", currency: precoMoeda }).format(preco);
+  }
+  return new Intl.NumberFormat(locale, { style: "currency", currency: displayMoeda }).format(out);
+}
+
+
+
 /** Converte um valor em BRL para a moeda alvo do usuário. Retorna { value, currency } ou null se degradado. */
 function convertToUserCurrency(
   valorBRL: number,
