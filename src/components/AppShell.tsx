@@ -381,6 +381,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="ml-auto flex items-center gap-3">
           <PlanBadge />
+          <Link
+            to="/ajuda"
+            aria-label={t("ajuda.ui.openHelp")}
+            title={t("ajuda.ui.openHelp")}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground transition hover:border-primary/50 hover:text-primary"
+          >
+            <HelpCircle className="h-4 w-4" />
+          </Link>
           <NotificationBell />
           <LanguageSelector />
           <div className="hidden items-center gap-2 md:flex">
