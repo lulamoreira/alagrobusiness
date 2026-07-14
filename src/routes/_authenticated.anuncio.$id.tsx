@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { PillButton } from "@/components/PillButton";
 import { AnuncioPhoto } from "@/components/AnuncioCard";
-import { formatMoney } from "@/lib/format";
+import { formatPrice, type CambioRow } from "@/lib/format";
 import { getOrCreateConversation } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { fetchCatalogoAll, catalogoPathLabel } from "@/lib/catalogo";
