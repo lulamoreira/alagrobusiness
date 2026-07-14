@@ -690,7 +690,7 @@ export function AnuncioForm({ mode, initial, defaultTipoOferta, canalStartups }:
               </label>
               <p className="mb-2 text-[11px] text-muted-foreground">{t("international.countriesHint")}</p>
               <div className="flex max-h-52 flex-wrap gap-2 overflow-y-auto">
-                {listCountries(t("common.locale", { defaultValue: "pt-BR" })).map((c) => (
+                {listCountries(i18n.language).map((c) => (
                   <Pill
                     key={c.code}
                     active={paisesDestino.includes(c.code)}
