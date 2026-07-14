@@ -179,10 +179,13 @@ export type Database = {
           estado: string | null
           fotos: string[]
           id: string
+          incoterm: string | null
           latitude: number | null
           longitude: number | null
           modalidade_entrega: Database["public"]["Enums"]["modalidade_entrega"]
           moeda: Database["public"]["Enums"]["moeda_app"]
+          paises_destino: string[] | null
+          para_exportacao: boolean
           permuta_descricao: string | null
           preco: number
           preco_unidade_id: string
@@ -217,10 +220,13 @@ export type Database = {
           estado?: string | null
           fotos?: string[]
           id?: string
+          incoterm?: string | null
           latitude?: number | null
           longitude?: number | null
           modalidade_entrega?: Database["public"]["Enums"]["modalidade_entrega"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
+          paises_destino?: string[] | null
+          para_exportacao?: boolean
           permuta_descricao?: string | null
           preco: number
           preco_unidade_id: string
@@ -255,10 +261,13 @@ export type Database = {
           estado?: string | null
           fotos?: string[]
           id?: string
+          incoterm?: string | null
           latitude?: number | null
           longitude?: number | null
           modalidade_entrega?: Database["public"]["Enums"]["modalidade_entrega"]
           moeda?: Database["public"]["Enums"]["moeda_app"]
+          paises_destino?: string[] | null
+          para_exportacao?: boolean
           permuta_descricao?: string | null
           preco?: number
           preco_unidade_id?: string
