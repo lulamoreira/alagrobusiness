@@ -40,6 +40,7 @@ import {
   FolderTree,
   Rocket,
   Warehouse,
+  HelpCircle,
 
 
 } from "lucide-react";
