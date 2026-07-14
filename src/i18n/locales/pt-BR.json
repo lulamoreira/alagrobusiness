@@ -2267,5 +2267,9 @@
         "tip": "Fique de olho na validade — algumas ofertas mudam todo mês."
       }
     }
+  },
+  "pricing": {
+    "convertedFrom": "convertido de {{moeda}}",
+    "rateUnavailable": "câmbio indisponível — exibindo na moeda do anúncio"
   }
 }

@@ -2267,5 +2267,9 @@
         "tip": "Watch the expiry — some offers change every month."
       }
     }
+  },
+  "pricing": {
+    "convertedFrom": "converted from {{moeda}}",
+    "rateUnavailable": "exchange rate unavailable — showing in the listing currency"
   }
 }
