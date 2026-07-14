@@ -287,7 +287,7 @@ function BuyPage() {
     if (sort === "asc") list = [...list].sort((a, b) => sortKey(a) - sortKey(b));
     else if (sort === "desc") list = [...list].sort((a, b) => sortKey(b) - sortKey(a));
     return list;
-  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort, cdFilter, nearbyCdIds, anuncioToCds]);
+  }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort, cdFilter, nearbyCdIds, anuncioToCds, cambio, userMoeda]);
 
   const clearFilters = () => {
     setCatalogoFilter(null);
