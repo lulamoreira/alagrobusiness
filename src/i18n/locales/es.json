@@ -351,6 +351,8 @@
     "filterDeliveryMode": "Entrega",
     "filterPriceMin": "Precio mínimo",
     "filterPriceMax": "Precio máximo",
+    "filterPriceMinCurrency": "Precio mínimo ({{currency}})",
+    "filterPriceMaxCurrency": "Precio máximo ({{currency}})",
     "noResults": "No se encontraron anuncios.",
     "acceptsBarterBadge": "Permuta",
     "certifiedBadge": "Certificado",
