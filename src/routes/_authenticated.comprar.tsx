@@ -249,10 +249,28 @@ function BuyPage() {
     if (certs.length > 0) list = list.filter((a) => certs.every((c) => a.certificacoes?.includes(c)));
     if (acceptsBarter !== null) list = list.filter((a) => a.aceita_permuta === acceptsBarter);
     if (delivery) list = list.filter((a) => (a as unknown as { modalidade_entrega: string }).modalidade_entrega === delivery);
-    // TODO (Fase 1b Internacional): filtro min/max compara número cru sem considerar anuncios.moeda.
-    // Quando houver mistura de moedas nos anúncios, normalizar para BRL via toBRL(a.preco, a.moeda, cambio) antes de comparar.
-    if (priceMin) list = list.filter((a) => Number(a.preco) >= Number(priceMin));
-    if (priceMax) list = list.filter((a) => Number(a.preco) <= Number(priceMax));
+    // Normaliza para BRL antes de filtrar/ordenar por preço (Fase 1b Internacional).
+    // Degradação suave: se faltar taxa, precoBRL = null → passa no filtro; ordena por preço cru.
+    const precoBRL = (a: AnuncioCardData) =>
+      toBRL(Number(a.preco), (a.moeda ?? "BRL") as "BRL" | "USD" | "EUR", cambio ?? []);
+    const minBRL = priceMin ? toBRL(Number(priceMin), userMoeda, cambio ?? []) : null;
+    const maxBRL = priceMax ? toBRL(Number(priceMax), userMoeda, cambio ?? []) : null;
+    if (priceMin) {
+      list = list.filter((a) => {
+        const p = precoBRL(a);
+        if (p == null) return true; // sem taxa → não esconder
+        if (minBRL == null) return Number(a.preco) >= Number(priceMin); // degrada
+        return p >= minBRL;
+      });
+    }
+    if (priceMax) {
+      list = list.filter((a) => {
+        const p = precoBRL(a);
+        if (p == null) return true;
+        if (maxBRL == null) return Number(a.preco) <= Number(priceMax);
+        return p <= maxBRL;
+      });
+    }
 
 
     if (cdFilter) {
@@ -265,8 +283,9 @@ function BuyPage() {
       });
     }
 
-    if (sort === "asc") list = [...list].sort((a, b) => Number(a.preco) - Number(b.preco));
-    else if (sort === "desc") list = [...list].sort((a, b) => Number(b.preco) - Number(a.preco));
+    const sortKey = (a: AnuncioCardData) => precoBRL(a) ?? Number(a.preco);
+    if (sort === "asc") list = [...list].sort((a, b) => sortKey(a) - sortKey(b));
+    else if (sort === "desc") list = [...list].sort((a, b) => sortKey(b) - sortKey(a));
     return list;
   }, [anuncios, search, catalogoFilter, catalogoNodes, state, quality, certs, acceptsBarter, delivery, priceMin, priceMax, sort, cdFilter, nearbyCdIds, anuncioToCds]);
 
