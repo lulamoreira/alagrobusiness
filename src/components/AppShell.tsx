@@ -73,6 +73,7 @@ interface NavGroup {
 
 const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
 const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
+const SOLO_HELP: NavItem = { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle };
 
 const GROUPS: NavGroup[] = [
   {
