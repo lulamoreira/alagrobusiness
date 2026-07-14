@@ -12,6 +12,7 @@ import { geocodeCep } from "@/lib/geocode";
 import { DarkInput } from "@/components/DarkInput";
 import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
 import { useMyCdsCount } from "@/hooks/useMyCdsCount";
+import { listCountries } from "@/lib/countries";
 
 export const Route = createFileRoute("/_authenticated/conta")({
   component: ContaPage,
