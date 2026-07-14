@@ -174,22 +174,22 @@ function FinanceiroPage() {
       <section className="grid gap-3 sm:grid-cols-3">
         <KpiCard
           label={t("finance.kpiTotal")}
-          value={fmtCompact(totals.total)}
-          fullValue={fmt(totals.total)}
+          value={fmtBRL(totals.total)}
+          fullValue={fmtBRL(totals.total)}
           icon={Wallet}
           tone="primary"
         />
         <KpiCard
           label={t("finance.kpiReceived")}
-          value={fmtCompact(totals.received)}
-          fullValue={fmt(totals.received)}
+          value={fmtBRL(totals.received)}
+          fullValue={fmtBRL(totals.received)}
           icon={ArrowDownCircle}
           tone="success"
         />
         <KpiCard
           label={t("finance.kpiPending")}
-          value={fmtCompact(totals.pending)}
-          fullValue={fmt(totals.pending)}
+          value={fmtBRL(totals.pending)}
+          fullValue={fmtBRL(totals.pending)}
           icon={Clock}
           tone="warning"
         />
