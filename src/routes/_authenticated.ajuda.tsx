@@ -39,7 +39,7 @@ interface CategoryDef {
 }
 
 const CATEGORIES: CategoryDef[] = [
-  { id: "primeiros-passos", icon: LayoutDashboard, articles: ["painel", "conta-e-plano", "minha-localizacao", "preferencias"] },
+  { id: "primeiros-passos", icon: LayoutDashboard, articles: ["painel", "navegacao", "conta-e-plano", "minha-localizacao", "preferencias"] },
   { id: "comprar-vender", icon: ShoppingCart, articles: ["comprar", "perto-de-mim", "criar-anuncio", "meus-anuncios"] },
   { id: "visibilidade", icon: Sparkles, articles: ["destaque", "startups-pmes"] },
   { id: "cds", icon: Warehouse, articles: ["o-que-e-cd", "cadastrar-meu-cd", "vincular-cd", "estoque"] },
