@@ -1,20 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, X } from "lucide-react";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
-import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
+import { fetchCatalogoAll, catalogoSubtreeIds, catalogoName } from "@/lib/catalogo";
 import { distanceKm } from "@/lib/geo";
 import { toBRL, type CambioRow } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 
-export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
+const buySearchSchema = z.object({
+  categoria: fallback(z.string(), "").default(""),
+});
+
+export const Route = createFileRoute("/_authenticated/comprar")({
+  component: BuyPage,
+  validateSearch: zodValidator(buySearchSchema),
+});
 
 
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
