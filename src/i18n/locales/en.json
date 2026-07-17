@@ -109,6 +109,8 @@
     "certificates": "Certificates",
     "groups": {
       "business": "Business",
+      "services": "Services Channel",
+      "benefits": "Benefits Club",
       "management": "Management",
       "market": "Market",
       "learning": "Learning",
@@ -118,7 +120,21 @@
     "myCds": "My DCs",
     "help": "Help",
     "club": "Club",
-    "international": "International"
+    "international": "International",
+    "soon": "Coming soon",
+    "demandas": "Demand Requests",
+    "imobiliario": "Real Estate",
+    "logistica": "Logistics",
+    "consultoria": "Consulting",
+    "aluguelEquip": "Equipment Rental",
+    "maoDeObra": "Workforce",
+    "financiamentos": "Financing",
+    "expimp": "Export/Import",
+    "seguros": "Insurance",
+    "maquinario": "Machinery",
+    "insumos": "Inputs",
+    "juridico": "Legal",
+    "planosSaude": "Health Plans"
   },
   "dashboard": {
     "hello": "Hello",
