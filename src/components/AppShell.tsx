@@ -234,9 +234,29 @@ interface NavLeafProps {
 function NavLeaf({ item, active, badge, isPro, onNavigate }: NavLeafProps) {
   const { t } = useTranslation();
   const Icon = item.icon;
+
+  if (item.soon) {
+    return (
+      <div
+        aria-disabled="true"
+        className="flex cursor-default select-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground/70"
+      >
+        <Icon className="h-4 w-4 shrink-0 opacity-70" />
+        <span className="truncate">{t(item.labelKey)}</span>
+        <span className="ml-auto rounded-full border border-border bg-background/60 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">
+          {t("nav.soon")}
+        </span>
+      </div>
+    );
+  }
+
+  const linkProps = item.categoriaParam
+    ? { to: item.to, search: { categoria: item.categoriaParam } }
+    : { to: item.to };
+
   return (
     <Link
-      to={item.to}
+      {...linkProps}
       onClick={onNavigate}
       className={cn(
         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
