@@ -1999,6 +1999,10 @@
         "title": "Distribution Centers",
         "subtitle": "Storage, logistics and per-location inventory."
       },
+      "internacional": {
+        "title": "International and currencies",
+        "subtitle": "Sell abroad: currencies, export, incoterms and countries."
+      },
       "negociar": {
         "title": "Negotiate",
         "subtitle": "Chat with prospects and track every deal."
