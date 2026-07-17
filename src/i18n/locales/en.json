@@ -2102,10 +2102,11 @@
           "Use the top search bar to type the product.",
           "Open the filters and refine by category (cascading catalog), state, quality, accepts barter, certification, etc.",
           "In the min and max price fields, use YOUR display currency — the app converts each listing automatically for comparison.",
+          "Some menu shortcuts (Logistics, Consulting, Financing, Insurance, Machinery, Inputs) open Buy already filtered by that category — just clear the filter to see everything.",
           "Tap a card to see details, photos and chat with the seller."
         ],
         "example": "You look for 'arabica coffee' in MG, filter by organic certification and find three offers with direct farmer contact.",
-        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly."
+        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly. If you arrived via a menu shortcut (e.g. Inputs), click the X on the category filter to see everything."
       },
       "perto-de-mim": {
         "title": "Near me (distance radius)",
