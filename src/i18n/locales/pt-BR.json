@@ -2102,10 +2102,11 @@
           "Use a barra de busca no topo para digitar o produto.",
           "Abra os filtros e refine por categoria (catálogo em cascata), UF, qualidade, aceita permuta, certificação etc.",
           "Nos campos de preço mínimo e máximo, use a SUA moeda de exibição — o app converte cada anúncio automaticamente para comparar.",
+          "Alguns atalhos do menu (Logística, Consultoria, Financiamentos, Seguros, Maquinário, Insumos) já abrem o Comprar filtrado por aquela categoria — é só limpar o filtro para ver tudo.",
           "Toque num card para ver detalhes, fotos e falar com o vendedor."
         ],
         "example": "Você procura 'café arábica' em MG, filtra por certificação orgânica e encontra três ofertas com contato direto do produtor.",
-        "tip": "A ordenação por preço já considera a conversão de moeda, então anúncios em BRL, USD e EUR são comparados de forma justa."
+        "tip": "A ordenação por preço já considera a conversão de moeda, então anúncios em BRL, USD e EUR são comparados de forma justa. Se você entrou por um atalho do menu (ex.: Insumos), clique no X do filtro de categoria para ver tudo."
       },
       "perto-de-mim": {
         "title": "Perto de mim (raio por distância)",
