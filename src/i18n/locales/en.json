@@ -2091,12 +2091,14 @@
       },
       "criar-anuncio": {
         "title": "Publish a listing",
-        "summary": "Publish a product or service in a few steps: pick the catalog, set unit, price, photos and details.",
+        "summary": "Publish a product or service in a few steps: pick the catalog, set unit, price (in the currency you want to be paid) and details.",
         "steps": [
           "In the menu, open 'Business > My Ads' and click 'New listing'.",
           "Pick the type (product or service) and browse the catalog to the right category.",
           "Fill in title, description, unit, quantity and price.",
+          "Pick the price CURRENCY (Real, US Dollar or Euro) — it is the currency you want to receive.",
           "Add photos (drag and drop), mark certifications and whether you accept barter.",
+          "To reach buyers abroad, turn on 'Available for export' and (optionally) pick the incoterm and destination countries.",
           "If you have a CD, link it to the listing. Save and you're done."
         ],
         "example": "A farmer publishes 'Bulk corn', 500 bags, R$ 60.00 each, with a photo of the lot and a link to the Rondonópolis CD.",
