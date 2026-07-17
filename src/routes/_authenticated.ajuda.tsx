@@ -51,6 +51,7 @@ const CATEGORIES: CategoryDef[] = [
 
 const ARTICLE_ICONS: Record<string, typeof LayoutDashboard> = {
   painel: LayoutDashboard,
+  navegacao: Compass,
   "conta-e-plano": BookOpen,
   "minha-localizacao": BookOpen,
   preferencias: BookOpen,
