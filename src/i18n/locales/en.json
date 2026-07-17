@@ -2045,6 +2045,19 @@
         "example": "You open the app in the morning, notice the commercial dollar rose 0.8%, and see 3 new messages on your soy listing.",
         "tip": "Click any KPI card to jump straight to the related screen."
       },
+      "navegacao": {
+        "title": "How the menu is organized",
+        "summary": "Where to find each thing in the app's side menu.",
+        "steps": [
+          "BUSINESS: buy, your listings (sell), negotiations, feature a listing and messages.",
+          "SERVICES CHANNEL: service areas like Logistics, Consulting, Financing, Learning, Startups and Export/Import. Some items open the Buy page already filtered by that category.",
+          "BENEFITS CLUB: perks like Insurance, Machinery and Inputs.",
+          "MARKET: quotes, news and price alerts. LEARNING: courses and certificates. ACCOUNT: your profile, plan, Club and settings.",
+          "Items tagged 'Coming soon' will launch later — they already appear so you know what's on the way."
+        ],
+        "example": "Need to hire freight? Go to Services Channel → Logistics: it opens Buy already filtered by Transporte e Logística.",
+        "tip": "'Coming soon' items don't open anything yet — it's just a heads-up about what's coming."
+      },
       "conta-e-plano": {
         "title": "Your account and plan",
         "summary": "'My account' lets you edit your data; 'Plans' lets you pick Free or Pro with more features.",
@@ -2089,10 +2102,11 @@
           "Use the top search bar to type the product.",
           "Open the filters and refine by category (cascading catalog), state, quality, accepts barter, certification, etc.",
           "In the min and max price fields, use YOUR display currency — the app converts each listing automatically for comparison.",
+          "Some menu shortcuts (Logistics, Consulting, Financing, Insurance, Machinery, Inputs) open Buy already filtered by that category — just clear the filter to see everything.",
           "Tap a card to see details, photos and chat with the seller."
         ],
         "example": "You look for 'arabica coffee' in MG, filter by organic certification and find three offers with direct farmer contact.",
-        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly."
+        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly. If you arrived via a menu shortcut (e.g. Inputs), click the X on the category filter to see everything."
       },
       "perto-de-mim": {
         "title": "Near me (distance radius)",

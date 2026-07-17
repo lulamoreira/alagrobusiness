@@ -20,7 +20,9 @@ import {
   DollarSign,
   FileText,
   MapPin,
+  Compass,
 } from "lucide-react";
+
 
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -37,7 +39,7 @@ interface CategoryDef {
 }
 
 const CATEGORIES: CategoryDef[] = [
-  { id: "primeiros-passos", icon: LayoutDashboard, articles: ["painel", "conta-e-plano", "minha-localizacao", "preferencias"] },
+  { id: "primeiros-passos", icon: LayoutDashboard, articles: ["painel", "navegacao", "conta-e-plano", "minha-localizacao", "preferencias"] },
   { id: "comprar-vender", icon: ShoppingCart, articles: ["comprar", "perto-de-mim", "criar-anuncio", "meus-anuncios"] },
   { id: "visibilidade", icon: Sparkles, articles: ["destaque", "startups-pmes"] },
   { id: "cds", icon: Warehouse, articles: ["o-que-e-cd", "cadastrar-meu-cd", "vincular-cd", "estoque"] },
@@ -49,6 +51,7 @@ const CATEGORIES: CategoryDef[] = [
 
 const ARTICLE_ICONS: Record<string, typeof LayoutDashboard> = {
   painel: LayoutDashboard,
+  navegacao: Compass,
   "conta-e-plano": BookOpen,
   "minha-localizacao": BookOpen,
   preferencias: BookOpen,
