@@ -1999,6 +1999,10 @@
         "title": "Centros de Distribuição",
         "subtitle": "Armazenagem, logística e estoque por local."
       },
+      "internacional": {
+        "title": "Internacional e moedas",
+        "subtitle": "Venda para fora: moedas, exportação, incoterms e países."
+      },
       "negociar": {
         "title": "Negociar",
         "subtitle": "Converse com interessados e acompanhe cada negociação."
