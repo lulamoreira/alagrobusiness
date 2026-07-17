@@ -2045,6 +2045,19 @@
         "example": "Você entra no app pela manhã, vê que o dólar comercial subiu 0,8% e que seu anúncio de soja teve 3 novas mensagens durante a noite.",
         "tip": "Clique em qualquer cartão de KPI para ir direto à tela correspondente."
       },
+      "navegacao": {
+        "title": "Como o menu está organizado",
+        "summary": "Onde encontrar cada coisa no menu lateral do app.",
+        "steps": [
+          "NEGÓCIOS: comprar, seus anúncios (vender), negociações, destacar anúncio e mensagens.",
+          "CANAL DE SERVIÇOS: áreas de serviço como Logística, Consultoria, Financiamentos, Ensino, Startups e Exportação/Importação. Alguns itens abrem a página Comprar já filtrada naquela categoria.",
+          "CLUBE DE BENEFÍCIOS: benefícios como Seguros, Maquinário e Insumos.",
+          "MERCADO: cotações, notícias e alertas de preço. ENSINO: cursos e certificados. CONTA: seu perfil, plano, Clube e configurações.",
+          "Itens marcados como 'Em breve' ainda vão ser lançados — já aparecem para você saber o que está por vir."
+        ],
+        "example": "Quer contratar um frete? Vá em Canal de Serviços → Logística: abre o Comprar já filtrado em Transporte e Logística.",
+        "tip": "Itens 'Em breve' ainda não abrem nada — é só um aviso do que vem por aí."
+      },
       "conta-e-plano": {
         "title": "Sua conta e seu plano",
         "summary": "Em 'Minha conta' você edita seus dados, e em 'Planos' você escolhe entre o plano Free e o Pro, com mais recursos.",
