@@ -2269,12 +2269,70 @@
         "title": "Clube de Vantagens (Pro)",
         "summary": "Ofertas e descontos de parceiros para assinantes do plano Pro.",
         "steps": [
-          "Abra 'Conta > Clube de Vantagens'.",
+          "Abra 'Conta > Clube de Vantagens' no menu — ou clique no card 'Clube de Vantagens' dentro da página 'Conta'.",
+          "Se o seu plano não incluir o Clube, aparece a opção de upgrade para o Pro na própria tela.",
           "Filtre por categoria para encontrar a oferta que interessa.",
           "Copie o cupom e clique em 'Aproveitar' para abrir o site do parceiro."
         ],
         "example": "Um assinante Pro aplica um cupom de 15% num insumo agrícola diretamente no site do parceiro.",
         "tip": "Fique de olho na validade — algumas ofertas mudam todo mês."
+      },
+      "moedas": {
+        "title": "Como funciona a moeda no app",
+        "summary": "Ao criar o anúncio, você escolhe a moeda do preço (Real, Dólar ou Euro). Quem vê o anúncio enxerga o preço convertido para a moeda que ELE escolheu nas preferências.",
+        "steps": [
+          "Ao criar ou editar um anúncio, escolha a moeda do preço (BRL, USD ou EUR).",
+          "Digite o preço nessa moeda — é a moeda em que você quer receber.",
+          "Em 'Conta > Configurações', escolha a SUA moeda de exibição.",
+          "Todos os preços passam a aparecer nela, com conversão automática pelas cotações do dia."
+        ],
+        "example": "Você anuncia soja a US$ 20 a saca. Um comprador que prefere Real vê o valor já convertido em R$.",
+        "tip": "A moeda do anúncio é a que você recebe; a de exibição é só como cada usuário enxerga. Se faltar cotação, o preço aparece na moeda original — nunca é convertido errado."
+      },
+      "exportacao": {
+        "title": "Marcar seu anúncio para exportação",
+        "summary": "No formulário do anúncio existe o botão 'Disponível para exportação'. Ligando, o anúncio ganha o selo 'Exportação' e passa a aparecer também na página Internacional, sem sair do Comprar nacional.",
+        "steps": [
+          "Abra 'Negócios > Meus Anúncios' e edite (ou crie) um anúncio.",
+          "Ligue o toggle 'Disponível para exportação'.",
+          "Opcional: escolha um Incoterm (regra internacional de entrega) e os países de destino que você atende.",
+          "Salve. O selo 'Exportação' aparece automaticamente no card."
+        ],
+        "example": "Você marca um lote de café como 'Disponível para exportação', escolhe FOB e adiciona Alemanha e Itália como destinos. O anúncio segue no Comprar e também aparece para compradores internacionais.",
+        "tip": "Você não perde o mercado interno — o anúncio continua listado no Comprar nacional."
+      },
+      "canal-internacional": {
+        "title": "A página Internacional",
+        "summary": "No menu 'Negócios' existe 'Internacional': uma vitrine que reúne apenas os anúncios marcados como disponíveis para exportação.",
+        "steps": [
+          "Abra 'Negócios > Internacional' no menu.",
+          "Use o filtro 'País de destino' para ver apenas quem atende o país escolhido.",
+          "Toque num card para ver detalhes, Incoterm, destinos e falar com o vendedor."
+        ],
+        "example": "Um comprador em Portugal filtra por 'Portugal' e vê só os anúncios cujos vendedores marcaram esse país como destino.",
+        "tip": "Se um anúncio não aparecer aqui, provavelmente o vendedor ainda não ligou o toggle 'Disponível para exportação'."
+      },
+      "incoterms": {
+        "title": "Incoterms: entenda em 1 minuto",
+        "summary": "Incoterm é a regra internacional que define até onde vai a responsabilidade do vendedor (frete, seguro, despacho aduaneiro). É opcional e serve para o comprador saber o combinado antes de fechar.",
+        "steps": [
+          "Ao ligar 'Disponível para exportação' no anúncio, escolha o Incoterm no seletor.",
+          "O Incoterm aparece no card e na tela de detalhes do anúncio.",
+          "Se não escolher, o anúncio segue como 'a combinar'."
+        ],
+        "example": "Os três mais usados no agro: EXW — o comprador retira na origem; FOB — o vendedor entrega no navio (porto de embarque); CIF — o vendedor paga frete e seguro até o porto de destino.",
+        "tip": "Na dúvida em grãos, FOB e CIF são os mais comuns. Combine no chat antes de fechar."
+      },
+      "meu-pais": {
+        "title": "Definir o seu país",
+        "summary": "Em 'Conta' você define o seu país. Isso ajuda compradores de fora a te encontrar e situa o app no mercado internacional. Os nomes dos países aparecem automaticamente no seu idioma.",
+        "steps": [
+          "Abra 'Conta > Minha conta'.",
+          "Localize o campo 'Meu país' e escolha o seu país na lista.",
+          "Salve. Pronto — a informação já é usada nas telas internacionais."
+        ],
+        "example": "Um exportador do Brasil define 'Brasil' como país; compradores da Europa passam a identificar a origem do vendedor em cada anúncio.",
+        "tip": "Se você mudar o idioma do app, os nomes dos países se traduzem automaticamente — sem precisar cadastrar de novo."
       }
     }
   },
