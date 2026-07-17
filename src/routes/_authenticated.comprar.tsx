@@ -1,20 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, X } from "lucide-react";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { DarkInput } from "@/components/DarkInput";
 import { AnuncioCard, type AnuncioCardData } from "@/components/AnuncioCard";
 import { CatalogoCascade } from "@/components/CatalogoCascade";
-import { fetchCatalogoAll, catalogoSubtreeIds } from "@/lib/catalogo";
+import { fetchCatalogoAll, catalogoSubtreeIds, catalogoName } from "@/lib/catalogo";
 import { distanceKm } from "@/lib/geo";
 import { toBRL, type CambioRow } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 
-export const Route = createFileRoute("/_authenticated/comprar")({ component: BuyPage });
+const buySearchSchema = z.object({
+  categoria: fallback(z.string(), "").default(""),
+});
+
+export const Route = createFileRoute("/_authenticated/comprar")({
+  component: BuyPage,
+  validateSearch: zodValidator(buySearchSchema),
+});
 
 
 const DELIVERY_MODES = ["retirada", "entrega", "ambos"] as const;
@@ -50,6 +59,7 @@ function Chip({
 function BuyPage() {
   const { t } = useTranslation();
   const { profile } = useAuth();
+  const { categoria: categoriaParam } = Route.useSearch();
   const userMoeda = (profile?.moeda_preferida ?? "BRL") as "BRL" | "USD" | "EUR";
   const [search, setSearch] = useState("");
   const [catalogoFilter, setCatalogoFilter] = useState<string | null>(null);
@@ -132,6 +142,17 @@ function BuyPage() {
     queryFn: () => fetchCatalogoAll(false),
     staleTime: 1000 * 60 * 10,
   });
+
+  // Deep-link: /comprar?categoria=<nome-raiz-pt> → aplica filtro na 1ª carga do catálogo.
+  useEffect(() => {
+    if (!categoriaParam || !catalogoNodes) return;
+    const target = categoriaParam.trim().toLowerCase();
+    const root = catalogoNodes.find(
+      (n) => n.parent_id == null && catalogoName(n.nome, "pt").trim().toLowerCase() === target,
+    );
+    if (root) setCatalogoFilter(root.id);
+    // Só reage à mudança do param ou à chegada dos nós.
+  }, [categoriaParam, catalogoNodes]);
 
 
   const { data: unidades } = useQuery({

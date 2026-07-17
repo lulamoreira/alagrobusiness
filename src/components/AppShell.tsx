@@ -42,6 +42,17 @@ import {
   Warehouse,
   HelpCircle,
   Globe,
+  ClipboardList,
+  Home,
+  Truck,
+  Headphones,
+  Wrench,
+  Users,
+  Landmark,
+  Tractor,
+  Sprout,
+  Scale,
+  HeartPulse,
 
 
 } from "lucide-react";
@@ -61,6 +72,8 @@ interface NavItem {
   pro?: boolean;
   permKey?: import("@/lib/adminPerms").AdminResource;
   operatorOnly?: boolean;
+  soon?: boolean;
+  categoriaParam?: string;
 }
 
 interface NavGroup {
@@ -73,7 +86,6 @@ interface NavGroup {
 
 
 const SOLO_TOP: NavItem = { to: "/painel", labelKey: "nav.dashboard", icon: LayoutDashboard };
-const SOLO_MESSAGES: NavItem = { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" };
 const SOLO_HELP: NavItem = { to: "/ajuda", labelKey: "nav.help", icon: HelpCircle };
 
 const GROUPS: NavGroup[] = [
@@ -84,10 +96,38 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/comprar", labelKey: "nav.buy", icon: ShoppingCart },
       { to: "/vender", labelKey: "nav.sell", icon: Store },
-      { to: "/startups", labelKey: "nav.startups", icon: Rocket },
-      { to: "/internacional", labelKey: "nav.international", icon: Globe },
       { to: "/negociacoes", labelKey: "nav.negotiations", icon: Handshake, pro: true },
       { to: "/destaque", labelKey: "nav.destaqueAnuncio", icon: Sparkles },
+      { to: "/mensagens", labelKey: "nav.messages", icon: MessageSquare, badgeKey: "messages" },
+    ],
+  },
+  {
+    id: "services",
+    labelKey: "nav.groups.services",
+    icon: Headphones,
+    items: [
+      { to: "#", labelKey: "nav.demandas", icon: ClipboardList, soon: true },
+      { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
+      { to: "#", labelKey: "nav.imobiliario", icon: Home, soon: true },
+      { to: "/comprar", labelKey: "nav.logistica", icon: Truck, categoriaParam: "Transporte e Logística" },
+      { to: "/comprar", labelKey: "nav.consultoria", icon: Headphones, categoriaParam: "Consultoria e Assistência Técnica" },
+      { to: "#", labelKey: "nav.aluguelEquip", icon: Wrench, soon: true },
+      { to: "#", labelKey: "nav.maoDeObra", icon: Users, soon: true },
+      { to: "/comprar", labelKey: "nav.financiamentos", icon: Landmark, categoriaParam: "Crédito, Seguro e Finanças" },
+      { to: "/startups", labelKey: "nav.startups", icon: Rocket },
+      { to: "/internacional", labelKey: "nav.expimp", icon: Globe },
+    ],
+  },
+  {
+    id: "benefits",
+    labelKey: "nav.groups.benefits",
+    icon: Sparkles,
+    items: [
+      { to: "/comprar", labelKey: "nav.seguros", icon: ShieldCheck, categoriaParam: "Crédito, Seguro e Finanças" },
+      { to: "/comprar", labelKey: "nav.maquinario", icon: Tractor, categoriaParam: "Mecanização e Operações" },
+      { to: "/comprar", labelKey: "nav.insumos", icon: Sprout, categoriaParam: "Insumos Agrícolas" },
+      { to: "#", labelKey: "nav.juridico", icon: Scale, soon: true },
+      { to: "#", labelKey: "nav.planosSaude", icon: HeartPulse, soon: true },
     ],
   },
   {
@@ -193,21 +233,47 @@ interface NavLeafProps {
 function NavLeaf({ item, active, badge, isPro, onNavigate }: NavLeafProps) {
   const { t } = useTranslation();
   const Icon = item.icon;
-  return (
-    <Link
-      to={item.to}
-      onClick={onNavigate}
-      className={cn(
-        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-        active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
-      )}
-    >
+
+  if (item.soon) {
+    return (
+      <div
+        aria-disabled="true"
+        className="flex cursor-default select-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground/70"
+      >
+        <Icon className="h-4 w-4 shrink-0 opacity-70" />
+        <span className="truncate">{t(item.labelKey)}</span>
+        <span className="ml-auto rounded-full border border-border bg-background/60 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">
+          {t("nav.soon")}
+        </span>
+      </div>
+    );
+  }
+
+  const className = cn(
+    "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+    active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
+  );
+  const inner = (
+    <>
       <Icon className="h-4 w-4 shrink-0" />
       <span className="truncate">{t(item.labelKey)}</span>
       {item.pro && !isPro && (
         <Lock className="ml-1 h-3 w-3 shrink-0 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
       )}
       <Badge count={badge} />
+    </>
+  );
+
+  if (item.categoriaParam) {
+    return (
+      <Link to={item.to} search={{ categoria: item.categoriaParam }} onClick={onNavigate} className={className}>
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <Link to={item.to} onClick={onNavigate} className={className}>
+      {inner}
     </Link>
   );
 }
@@ -311,14 +377,6 @@ function NavTree({
             onNavigate={onNavigate}
           />
         ))}
-      {/* Mensagens standalone */}
-      <NavLeaf
-        item={SOLO_MESSAGES}
-        active={isPathActive(pathname, SOLO_MESSAGES.to)}
-        badge={unreadMessages}
-        isPro={isPro}
-        onNavigate={onNavigate}
-      />
       {/* Rest */}
       {visibleGroups
         .filter((g) => g.id !== "business")
