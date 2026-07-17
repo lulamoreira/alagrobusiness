@@ -378,14 +378,6 @@ function NavTree({
             onNavigate={onNavigate}
           />
         ))}
-      {/* Mensagens standalone */}
-      <NavLeaf
-        item={SOLO_MESSAGES}
-        active={isPathActive(pathname, SOLO_MESSAGES.to)}
-        badge={unreadMessages}
-        isPro={isPro}
-        onNavigate={onNavigate}
-      />
       {/* Rest */}
       {visibleGroups
         .filter((g) => g.id !== "business")
