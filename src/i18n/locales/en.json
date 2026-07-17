@@ -2045,6 +2045,19 @@
         "example": "You open the app in the morning, notice the commercial dollar rose 0.8%, and see 3 new messages on your soy listing.",
         "tip": "Click any KPI card to jump straight to the related screen."
       },
+      "navegacao": {
+        "title": "How the menu is organized",
+        "summary": "Where to find each thing in the app's side menu.",
+        "steps": [
+          "BUSINESS: buy, your listings (sell), negotiations, feature a listing and messages.",
+          "SERVICES CHANNEL: service areas like Logistics, Consulting, Financing, Learning, Startups and Export/Import. Some items open the Buy page already filtered by that category.",
+          "BENEFITS CLUB: perks like Insurance, Machinery and Inputs.",
+          "MARKET: quotes, news and price alerts. LEARNING: courses and certificates. ACCOUNT: your profile, plan, Club and settings.",
+          "Items tagged 'Coming soon' will launch later — they already appear so you know what's on the way."
+        ],
+        "example": "Need to hire freight? Go to Services Channel → Logistics: it opens Buy already filtered by Transporte e Logística.",
+        "tip": "'Coming soon' items don't open anything yet — it's just a heads-up about what's coming."
+      },
       "conta-e-plano": {
         "title": "Your account and plan",
         "summary": "'My account' lets you edit your data; 'Plans' lets you pick Free or Pro with more features.",
