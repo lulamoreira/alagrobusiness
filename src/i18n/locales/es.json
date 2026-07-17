@@ -2067,15 +2067,16 @@
       },
       "comprar": {
         "title": "Comprar: encontrar ofertas",
-        "summary": "Comprar lista anuncios abiertos con filtros por categoría, estado, calidad, entrega, certificación, permuta y rango de precio.",
+        "summary": "Comprar lista anuncios abiertos con filtros por categoría, estado, calidad, entrega, certificación, permuta y rango de precio. Los precios se muestran en tu moneda preferida.",
         "steps": [
           "En el menú, abre 'Negocios > Comprar'.",
           "Usa la barra de búsqueda de arriba para escribir el producto.",
           "Abre los filtros y refina por categoría (catálogo en cascada), estado, calidad, acepta permuta, certificación, etc.",
+          "En los campos de precio mínimo y máximo, usa TU moneda de visualización — la app convierte cada anuncio automáticamente para comparar.",
           "Toca una tarjeta para ver detalles, fotos y chatear con el vendedor."
         ],
         "example": "Buscas 'café arábica' en MG, filtras por certificación orgánica y encuentras tres ofertas con contacto directo.",
-        "tip": "Activa 'Acepta permuta' si prefieres intercambiar productos en lugar de pagar en efectivo."
+        "tip": "El orden por precio ya considera la conversión de moneda, así comparas de forma justa anuncios en BRL, USD y EUR."
       },
       "perto-de-mim": {
         "title": "Cerca de mí (radio por distancia)",
