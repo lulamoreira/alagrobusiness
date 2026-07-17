@@ -42,6 +42,17 @@ import {
   Warehouse,
   HelpCircle,
   Globe,
+  ClipboardList,
+  Home,
+  Truck,
+  Headphones,
+  Wrench,
+  Users,
+  Landmark,
+  Tractor,
+  Sprout,
+  Scale,
+  HeartPulse,
 
 
 } from "lucide-react";
@@ -61,6 +72,8 @@ interface NavItem {
   pro?: boolean;
   permKey?: import("@/lib/adminPerms").AdminResource;
   operatorOnly?: boolean;
+  soon?: boolean;
+  categoriaParam?: string;
 }
 
 interface NavGroup {
