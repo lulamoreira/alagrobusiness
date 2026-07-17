@@ -16,6 +16,10 @@ import {
   TrendingUp,
   GraduationCap,
   BookOpen,
+  Globe,
+  DollarSign,
+  FileText,
+  MapPin,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
