@@ -250,25 +250,31 @@ function NavLeaf({ item, active, badge, isPro, onNavigate }: NavLeafProps) {
     );
   }
 
-  const linkProps: Record<string, unknown> = item.categoriaParam
-    ? { to: item.to, search: { categoria: item.categoriaParam } }
-    : { to: item.to };
-
-  return (
-    <Link
-      {...linkProps}
-      onClick={onNavigate}
-      className={cn(
-        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-        active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
-      )}
-    >
+  const className = cn(
+    "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+    active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground",
+  );
+  const inner = (
+    <>
       <Icon className="h-4 w-4 shrink-0" />
       <span className="truncate">{t(item.labelKey)}</span>
       {item.pro && !isPro && (
         <Lock className="ml-1 h-3 w-3 shrink-0 text-muted-foreground/70" aria-label={t("plan.proBadge")} />
       )}
       <Badge count={badge} />
+    </>
+  );
+
+  if (item.categoriaParam) {
+    return (
+      <Link to={item.to} search={{ categoria: item.categoriaParam }} onClick={onNavigate} className={className}>
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <Link to={item.to} onClick={onNavigate} className={className}>
+      {inner}
     </Link>
   );
 }
