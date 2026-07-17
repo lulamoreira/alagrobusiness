@@ -250,7 +250,7 @@ function NavLeaf({ item, active, badge, isPro, onNavigate }: NavLeafProps) {
     );
   }
 
-  const linkProps = item.categoriaParam
+  const linkProps: Record<string, unknown> = item.categoriaParam
     ? { to: item.to, search: { categoria: item.categoriaParam } }
     : { to: item.to };
 
