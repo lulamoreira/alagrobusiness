@@ -2091,12 +2091,14 @@
       },
       "criar-anuncio": {
         "title": "Publicar un anuncio",
-        "summary": "Publica un producto o servicio en pocos pasos: elige el catálogo, indica unidad, precio, fotos y detalles.",
+        "summary": "Publica un producto o servicio en pocos pasos: elige el catálogo, indica unidad, precio (en la moneda en que quieres cobrar) y detalles.",
         "steps": [
           "En el menú, abre 'Negocios > Mis Anuncios' y toca 'Nuevo anuncio'.",
           "Elige el tipo (producto o servicio) y navega el catálogo hasta la categoría correcta.",
           "Completa título, descripción, unidad, cantidad y precio.",
+          "Elige la MONEDA del precio (Real, Dólar o Euro) — es la moneda en la que quieres cobrar.",
           "Agrega fotos (arrastrar y soltar), marca certificaciones y si aceptas permuta.",
+          "Para vender al exterior, activa 'Disponible para exportación' y (opcional) elige el incoterm y los países de destino.",
           "Si tienes CD, vincúlalo al anuncio. Guarda y listo."
         ],
         "example": "Un productor publica 'Maíz a granel', 500 sacos, R$ 60,00 c/u, con foto del lote y vínculo al CD de Rondonópolis.",
