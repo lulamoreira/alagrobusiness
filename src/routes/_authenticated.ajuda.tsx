@@ -70,6 +70,11 @@ const ARTICLE_ICONS: Record<string, typeof LayoutDashboard> = {
   noticias: TrendingUp,
   "cursos-certificados": GraduationCap,
   "clube-vantagens": Sparkles,
+  moedas: DollarSign,
+  exportacao: Globe,
+  "canal-internacional": Globe,
+  incoterms: FileText,
+  "meu-pais": MapPin,
 };
 
 function AjudaPage() {
