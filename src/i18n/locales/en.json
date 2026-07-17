@@ -2067,15 +2067,16 @@
       },
       "comprar": {
         "title": "Buy: find offers",
-        "summary": "Buy lists open ads with filters by category, state, quality, delivery, certification, barter and price range.",
+        "summary": "Buy lists open ads with filters by category, state, quality, delivery, certification, barter and price range. Prices show in your preferred currency.",
         "steps": [
           "In the menu, open 'Business > Buy'.",
           "Use the top search bar to type the product.",
           "Open the filters and refine by category (cascading catalog), state, quality, accepts barter, certification, etc.",
+          "In the min and max price fields, use YOUR display currency — the app converts each listing automatically for comparison.",
           "Tap a card to see details, photos and chat with the seller."
         ],
         "example": "You look for 'arabica coffee' in MG, filter by organic certification and find three offers with direct farmer contact.",
-        "tip": "Turn on 'Accepts barter' if you'd rather swap products than pay in cash."
+        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly."
       },
       "perto-de-mim": {
         "title": "Near me (distance radius)",
