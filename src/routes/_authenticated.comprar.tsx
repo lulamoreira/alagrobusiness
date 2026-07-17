@@ -143,6 +143,17 @@ function BuyPage() {
     staleTime: 1000 * 60 * 10,
   });
 
+  // Deep-link: /comprar?categoria=<nome-raiz-pt> → aplica filtro na 1ª carga do catálogo.
+  useEffect(() => {
+    if (!categoriaParam || !catalogoNodes) return;
+    const target = categoriaParam.trim().toLowerCase();
+    const root = catalogoNodes.find(
+      (n) => n.parent_id == null && catalogoName(n.nome, "pt").trim().toLowerCase() === target,
+    );
+    if (root) setCatalogoFilter(root.id);
+    // Só reage à mudança do param ou à chegada dos nós.
+  }, [categoriaParam, catalogoNodes]);
+
 
   const { data: unidades } = useQuery({
     queryKey: ["unidades_all"],
