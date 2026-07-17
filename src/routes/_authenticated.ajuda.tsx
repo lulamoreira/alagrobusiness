@@ -20,7 +20,9 @@ import {
   DollarSign,
   FileText,
   MapPin,
+  Compass,
 } from "lucide-react";
+
 
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
