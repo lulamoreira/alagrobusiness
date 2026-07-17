@@ -1999,6 +1999,10 @@
         "title": "Centros de Distribución",
         "subtitle": "Almacenamiento, logística y stock por lugar."
       },
+      "internacional": {
+        "title": "Internacional y monedas",
+        "subtitle": "Vender afuera: monedas, exportación, incoterms y países."
+      },
       "negociar": {
         "title": "Negociar",
         "subtitle": "Chatea con interesados y sigue cada negocio."
@@ -2063,15 +2067,16 @@
       },
       "comprar": {
         "title": "Comprar: encontrar ofertas",
-        "summary": "Comprar lista anuncios abiertos con filtros por categoría, estado, calidad, entrega, certificación, permuta y rango de precio.",
+        "summary": "Comprar lista anuncios abiertos con filtros por categoría, estado, calidad, entrega, certificación, permuta y rango de precio. Los precios se muestran en tu moneda preferida.",
         "steps": [
           "En el menú, abre 'Negocios > Comprar'.",
           "Usa la barra de búsqueda de arriba para escribir el producto.",
           "Abre los filtros y refina por categoría (catálogo en cascada), estado, calidad, acepta permuta, certificación, etc.",
+          "En los campos de precio mínimo y máximo, usa TU moneda de visualización — la app convierte cada anuncio automáticamente para comparar.",
           "Toca una tarjeta para ver detalles, fotos y chatear con el vendedor."
         ],
         "example": "Buscas 'café arábica' en MG, filtras por certificación orgánica y encuentras tres ofertas con contacto directo.",
-        "tip": "Activa 'Acepta permuta' si prefieres intercambiar productos en lugar de pagar en efectivo."
+        "tip": "El orden por precio ya considera la conversión de moneda, así comparas de forma justa anuncios en BRL, USD y EUR."
       },
       "perto-de-mim": {
         "title": "Cerca de mí (radio por distancia)",
@@ -2086,12 +2091,14 @@
       },
       "criar-anuncio": {
         "title": "Publicar un anuncio",
-        "summary": "Publica un producto o servicio en pocos pasos: elige el catálogo, indica unidad, precio, fotos y detalles.",
+        "summary": "Publica un producto o servicio en pocos pasos: elige el catálogo, indica unidad, precio (en la moneda en que quieres cobrar) y detalles.",
         "steps": [
           "En el menú, abre 'Negocios > Mis Anuncios' y toca 'Nuevo anuncio'.",
           "Elige el tipo (producto o servicio) y navega el catálogo hasta la categoría correcta.",
           "Completa título, descripción, unidad, cantidad y precio.",
+          "Elige la MONEDA del precio (Real, Dólar o Euro) — es la moneda en la que quieres cobrar.",
           "Agrega fotos (arrastrar y soltar), marca certificaciones y si aceptas permuta.",
+          "Para vender al exterior, activa 'Disponible para exportación' y (opcional) elige el incoterm y los países de destino.",
           "Si tienes CD, vincúlalo al anuncio. Guarda y listo."
         ],
         "example": "Un productor publica 'Maíz a granel', 500 sacos, R$ 60,00 c/u, con foto del lote y vínculo al CD de Rondonópolis.",
@@ -2262,12 +2269,70 @@
         "title": "Club de Ventajas (Pro)",
         "summary": "Ofertas y descuentos de socios para suscriptores del plan Pro.",
         "steps": [
-          "Abre 'Cuenta > Club de Ventajas'.",
+          "Abre 'Cuenta > Club de Ventajas' en el menú — o toca la tarjeta 'Club de Ventajas' dentro de la página 'Cuenta'.",
+          "Si tu plan no incluye el Club, en la misma pantalla aparece la opción de mejorar a Pro.",
           "Filtra por categoría para encontrar la oferta que te interesa.",
           "Copia el cupón y toca 'Aprovechar' para abrir el sitio del socio."
         ],
         "example": "Un suscriptor Pro aplica un cupón del 15% en un insumo agrícola directamente en el sitio del socio.",
         "tip": "Atento a la validez — algunas ofertas cambian cada mes."
+      },
+      "moedas": {
+        "title": "Cómo funciona la moneda en la app",
+        "summary": "Al crear el anuncio, TÚ eliges la moneda del precio (Real, Dólar o Euro). Quien lo ve lee el precio convertido a la moneda que ÉL eligió en preferencias.",
+        "steps": [
+          "Al crear o editar un anuncio, elige la moneda del precio (BRL, USD o EUR).",
+          "Escribe el precio en esa moneda — es lo que quieres cobrar.",
+          "En 'Cuenta > Configuración', elige TU moneda de visualización.",
+          "Todos los precios pasan a mostrarse en ella, convertidos con las cotizaciones del día."
+        ],
+        "example": "Anuncias soja a US$ 20 el saco. Un comprador que prefiere Real ve el valor ya convertido a R$.",
+        "tip": "La moneda del anuncio es la que recibes; la de visualización es solo cómo cada uno lo ve. Si falta cotización, el precio aparece en la moneda original — nunca se convierte mal."
+      },
+      "exportacao": {
+        "title": "Marcar tu anuncio para exportación",
+        "summary": "En el formulario del anuncio hay un botón 'Disponible para exportación'. Al activarlo, el anuncio gana el sello 'Exportación' y aparece también en la página Internacional, sin salir del Comprar nacional.",
+        "steps": [
+          "Abre 'Negocios > Mis Anuncios' y edita (o crea) un anuncio.",
+          "Activa el toggle 'Disponible para exportación'.",
+          "Opcional: elige un Incoterm (regla internacional de entrega) y los países de destino que atiendes.",
+          "Guarda. El sello 'Exportación' aparece en la tarjeta automáticamente."
+        ],
+        "example": "Marcas un lote de café como 'Disponible para exportación', eliges FOB y agregas Alemania e Italia como destinos. El anuncio sigue en Comprar y también aparece para compradores internacionales.",
+        "tip": "No pierdes el mercado interno — el anuncio sigue apareciendo en el Comprar nacional."
+      },
+      "canal-internacional": {
+        "title": "La página Internacional",
+        "summary": "En 'Negocios' está 'Internacional': una vidriera que reúne solo los anuncios marcados como disponibles para exportación.",
+        "steps": [
+          "Abre 'Negocios > Internacional' en el menú.",
+          "Usa el filtro 'País de destino' para ver solo a quienes atienden el país elegido.",
+          "Toca una tarjeta para ver detalles, Incoterm, destinos y chatear con el vendedor."
+        ],
+        "example": "Un comprador en Portugal filtra por 'Portugal' y ve solo los anuncios cuyos vendedores marcaron ese país como destino.",
+        "tip": "Si un anuncio no aparece aquí, es probable que el vendedor aún no haya activado el toggle 'Disponible para exportación'."
+      },
+      "incoterms": {
+        "title": "Incoterms: entiéndelo en 1 minuto",
+        "summary": "El Incoterm es la regla internacional que define hasta dónde llega la responsabilidad del vendedor (flete, seguro, despacho aduanero). Es opcional y le muestra al comprador el trato antes de cerrar.",
+        "steps": [
+          "Al activar 'Disponible para exportación' en el anuncio, elige el Incoterm en el selector.",
+          "El Incoterm aparece en la tarjeta y en la pantalla de detalle del anuncio.",
+          "Si no eliges ninguno, el anuncio va como 'a convenir'."
+        ],
+        "example": "Los tres más usados en agro: EXW — el comprador retira en origen; FOB — el vendedor entrega en el barco (puerto de embarque); CIF — el vendedor paga flete y seguro hasta el puerto de destino.",
+        "tip": "En granos, ante la duda, FOB y CIF son los más comunes. Confírmalo en el chat antes de cerrar."
+      },
+      "meu-pais": {
+        "title": "Definir tu país",
+        "summary": "En 'Cuenta' defines tu país. Ayuda a que compradores del exterior te encuentren y ubica la app en el mercado internacional. Los nombres de los países aparecen automáticamente en tu idioma.",
+        "steps": [
+          "Abre 'Cuenta > Mi cuenta'.",
+          "Ubica el campo 'Mi país' y elige tu país en la lista.",
+          "Guarda. Listo — la información ya se usa en las pantallas internacionales."
+        ],
+        "example": "Un exportador brasileño define 'Brasil' como país; los compradores europeos pueden identificar el origen del vendedor en cada anuncio.",
+        "tip": "Si cambias el idioma de la app, los nombres de los países se traducen automáticamente — no necesitas registrarlo de nuevo."
       }
     }
   },

@@ -1999,6 +1999,10 @@
         "title": "Distribution Centers",
         "subtitle": "Storage, logistics and per-location inventory."
       },
+      "internacional": {
+        "title": "International and currencies",
+        "subtitle": "Sell abroad: currencies, export, incoterms and countries."
+      },
       "negociar": {
         "title": "Negotiate",
         "subtitle": "Chat with prospects and track every deal."
@@ -2063,15 +2067,16 @@
       },
       "comprar": {
         "title": "Buy: find offers",
-        "summary": "Buy lists open ads with filters by category, state, quality, delivery, certification, barter and price range.",
+        "summary": "Buy lists open ads with filters by category, state, quality, delivery, certification, barter and price range. Prices show in your preferred currency.",
         "steps": [
           "In the menu, open 'Business > Buy'.",
           "Use the top search bar to type the product.",
           "Open the filters and refine by category (cascading catalog), state, quality, accepts barter, certification, etc.",
+          "In the min and max price fields, use YOUR display currency — the app converts each listing automatically for comparison.",
           "Tap a card to see details, photos and chat with the seller."
         ],
         "example": "You look for 'arabica coffee' in MG, filter by organic certification and find three offers with direct farmer contact.",
-        "tip": "Turn on 'Accepts barter' if you'd rather swap products than pay in cash."
+        "tip": "Price sorting already takes currency conversion into account, so BRL, USD and EUR listings are compared fairly."
       },
       "perto-de-mim": {
         "title": "Near me (distance radius)",
@@ -2086,12 +2091,14 @@
       },
       "criar-anuncio": {
         "title": "Publish a listing",
-        "summary": "Publish a product or service in a few steps: pick the catalog, set unit, price, photos and details.",
+        "summary": "Publish a product or service in a few steps: pick the catalog, set unit, price (in the currency you want to be paid) and details.",
         "steps": [
           "In the menu, open 'Business > My Ads' and click 'New listing'.",
           "Pick the type (product or service) and browse the catalog to the right category.",
           "Fill in title, description, unit, quantity and price.",
+          "Pick the price CURRENCY (Real, US Dollar or Euro) — it is the currency you want to receive.",
           "Add photos (drag and drop), mark certifications and whether you accept barter.",
+          "To reach buyers abroad, turn on 'Available for export' and (optionally) pick the incoterm and destination countries.",
           "If you have a CD, link it to the listing. Save and you're done."
         ],
         "example": "A farmer publishes 'Bulk corn', 500 bags, R$ 60.00 each, with a photo of the lot and a link to the Rondonópolis CD.",
@@ -2262,12 +2269,70 @@
         "title": "Perks Club (Pro)",
         "summary": "Partner offers and discounts for Pro subscribers.",
         "steps": [
-          "Open 'Account > Perks Club'.",
+          "Open 'Account > Perks Club' in the menu — or click the 'Perks Club' card inside the 'Account' page.",
+          "If your plan doesn't include the Club, an upgrade option to Pro shows up on the same screen.",
           "Filter by category to find the offer you want.",
           "Copy the coupon and click 'Redeem' to open the partner site."
         ],
         "example": "A Pro subscriber applies a 15% coupon on farm inputs directly on the partner site.",
         "tip": "Watch the expiry — some offers change every month."
+      },
+      "moedas": {
+        "title": "How currency works in the app",
+        "summary": "When creating a listing, YOU pick the price currency (Real, US Dollar or Euro). Whoever sees it reads the price converted to the currency THEY chose in preferences.",
+        "steps": [
+          "When creating or editing a listing, pick the price currency (BRL, USD or EUR).",
+          "Type the price in that currency — it's what you want to be paid.",
+          "In 'Account > Settings', pick YOUR display currency.",
+          "Every price now shows in it, converted automatically using the day's rates."
+        ],
+        "example": "You list soy at US$ 20 per bag. A buyer who prefers Real sees the value already converted to R$.",
+        "tip": "The listing currency is what you receive; the display currency is just how each user sees it. If a rate is missing, the price shows in the original currency — it's never converted wrong."
+      },
+      "exportacao": {
+        "title": "Mark your listing for export",
+        "summary": "The listing form has an 'Available for export' toggle. Turning it on adds an 'Export' badge and also lists it on the International page, without leaving the local Buy.",
+        "steps": [
+          "Open 'Business > My Ads' and edit (or create) a listing.",
+          "Turn on the 'Available for export' toggle.",
+          "Optional: pick an Incoterm (international delivery rule) and the destination countries you serve.",
+          "Save. The 'Export' badge appears on the card automatically."
+        ],
+        "example": "You mark a coffee lot as 'Available for export', pick FOB and add Germany and Italy as destinations. The listing stays on Buy and also shows up for international buyers.",
+        "tip": "You don't lose the domestic market — the listing keeps showing on the local Buy."
+      },
+      "canal-internacional": {
+        "title": "The International page",
+        "summary": "Under 'Business' there is 'International': a showcase with only the listings marked as available for export.",
+        "steps": [
+          "Open 'Business > International' in the menu.",
+          "Use the 'Destination country' filter to see only sellers who serve the country you chose.",
+          "Tap a card to see details, Incoterm, destinations and chat with the seller."
+        ],
+        "example": "A buyer in Portugal filters by 'Portugal' and sees only listings whose sellers marked that country as a destination.",
+        "tip": "If a listing doesn't show up here, the seller probably hasn't turned on the 'Available for export' toggle."
+      },
+      "incoterms": {
+        "title": "Incoterms: understand in 1 minute",
+        "summary": "An Incoterm is the international rule that sets how far the seller's responsibility goes (freight, insurance, customs). It's optional and lets the buyer know the deal up front.",
+        "steps": [
+          "When you turn on 'Available for export', pick the Incoterm from the selector.",
+          "The Incoterm appears on the card and on the listing detail page.",
+          "If you don't pick one, the listing goes as 'to be agreed'."
+        ],
+        "example": "The three most common in agri: EXW — buyer picks up at origin; FOB — seller delivers on board the ship (port of loading); CIF — seller pays freight and insurance to the port of destination.",
+        "tip": "In grains, when in doubt, FOB and CIF are the most common. Confirm it in chat before closing."
+      },
+      "meu-pais": {
+        "title": "Set your country",
+        "summary": "In 'Account' you set your country. It helps buyers abroad find you and places the app in the international market. Country names show up automatically in your language.",
+        "steps": [
+          "Open 'Account > My account'.",
+          "Find the 'My country' field and pick your country from the list.",
+          "Save. Done — the info is already used on international screens."
+        ],
+        "example": "A Brazilian exporter sets 'Brazil' as country; European buyers can identify the seller's origin on each listing.",
+        "tip": "If you change the app language, country names translate automatically — no need to set it again."
       }
     }
   },

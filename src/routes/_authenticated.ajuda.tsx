@@ -16,6 +16,10 @@ import {
   TrendingUp,
   GraduationCap,
   BookOpen,
+  Globe,
+  DollarSign,
+  FileText,
+  MapPin,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -37,6 +41,7 @@ const CATEGORIES: CategoryDef[] = [
   { id: "comprar-vender", icon: ShoppingCart, articles: ["comprar", "perto-de-mim", "criar-anuncio", "meus-anuncios"] },
   { id: "visibilidade", icon: Sparkles, articles: ["destaque", "startups-pmes"] },
   { id: "cds", icon: Warehouse, articles: ["o-que-e-cd", "cadastrar-meu-cd", "vincular-cd", "estoque"] },
+  { id: "internacional", icon: Globe, articles: ["moedas", "exportacao", "canal-internacional", "incoterms", "meu-pais"] },
   { id: "negociar", icon: Handshake, articles: ["mensagens", "negociacoes-kanban"] },
   { id: "mercado", icon: TrendingUp, articles: ["cotacoes", "alertas-preco", "clima", "noticias"] },
   { id: "aprender", icon: GraduationCap, articles: ["cursos-certificados", "clube-vantagens"] },
@@ -65,6 +70,11 @@ const ARTICLE_ICONS: Record<string, typeof LayoutDashboard> = {
   noticias: TrendingUp,
   "cursos-certificados": GraduationCap,
   "clube-vantagens": Sparkles,
+  moedas: DollarSign,
+  exportacao: Globe,
+  "canal-internacional": Globe,
+  incoterms: FileText,
+  "meu-pais": MapPin,
 };
 
 function AjudaPage() {
