@@ -43,7 +43,8 @@
     "welcome": "Welcome back",
     "subtitle": "Sign in to continue",
     "signing": "Signing in…",
-    "error": "Could not sign in. Check your credentials."
+    "error": "Could not sign in. Check your credentials.",
+    "blockedAccount": "Your account is blocked. Please contact support."
   },
   "signup": {
     "title": "Create account",
