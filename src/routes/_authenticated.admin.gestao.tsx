@@ -162,6 +162,16 @@ function AdminGestaoPage() {
   const numberFmt = new Intl.NumberFormat(i18n.language);
   const money = (v: number) => formatMoneyCompact(v, userMoeda, userDolarPref, cotacoesForConvert, i18n.language);
 
+  const syncAuthBan = async () => {
+    try {
+      const { error } = await supabase.functions.invoke("sync-demo-auth-ban", { body: {} });
+      if (error) toast.error(`sync-demo-auth-ban: ${error.message}`);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      toast.error(`sync-demo-auth-ban: ${msg}`);
+    }
+  };
+
   const runAction = async () => {
     if (!pending) return;
     setBusy(true);
@@ -175,6 +185,7 @@ function AdminGestaoPage() {
       });
       if (error) throw error;
       toast.success(t(`adminGestao.action.${pending.action}Success`));
+      await syncAuthBan();
       await qc.invalidateQueries({ queryKey: ["admin_users_list"] });
       await qc.invalidateQueries({ queryKey: ["admin_kpis"] });
       setPending(null);
