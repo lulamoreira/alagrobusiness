@@ -43,7 +43,8 @@
     "welcome": "Bienvenido de vuelta",
     "subtitle": "Accede para continuar",
     "signing": "Entrando…",
-    "error": "No se pudo iniciar sesión."
+    "error": "No se pudo iniciar sesión.",
+    "blockedAccount": "Tu cuenta está bloqueada. Contacta con soporte."
   },
   "signup": {
     "title": "Crear cuenta",
