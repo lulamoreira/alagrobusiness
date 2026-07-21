@@ -39,6 +39,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { formatMoneyCompact } from "@/lib/format";
+import { useDocsObrigatorios, useSetDocsObrigatorios } from "@/lib/appConfig";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/admin/gestao")({
@@ -260,6 +261,10 @@ function AdminGestaoPage() {
           <p className="text-sm text-muted-foreground">{t("adminGestao.subtitle")}</p>
         </div>
       </header>
+
+      <DocsObrigatoriosCard />
+
+
 
       {/* KPIs */}
       <section className="space-y-3">
@@ -510,3 +515,44 @@ function AdminGestaoPage() {
     </div>
   );
 }
+
+function DocsObrigatoriosCard() {
+  const { t } = useTranslation();
+  const { data, isLoading } = useDocsObrigatorios();
+  const mut = useSetDocsObrigatorios();
+  const ativo = Boolean(data?.ativo);
+  return (
+    <section className="rounded-2xl border border-border bg-card/60 p-5">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h2 className="text-sm font-bold text-foreground">{t("docs.adminSectionTitle")}</h2>
+          <p className="mt-1 text-xs text-muted-foreground">{t("docs.adminToggleDesc")}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <span
+            className={cn(
+              "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+              ativo ? "bg-emerald-500/15 text-emerald-400" : "bg-muted text-muted-foreground",
+            )}
+          >
+            {ativo ? t("docs.adminActive") : t("docs.adminInactive")}
+          </span>
+          <Button
+            size="sm"
+            variant={ativo ? "outline" : "default"}
+            disabled={isLoading || mut.isPending}
+            onClick={() =>
+              mut.mutate(!ativo, {
+                onSuccess: () => toast.success(t("docs.saved")),
+                onError: () => toast.error(t("docs.saveError")),
+              })
+            }
+          >
+            {t("docs.adminToggleLabel")}
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+

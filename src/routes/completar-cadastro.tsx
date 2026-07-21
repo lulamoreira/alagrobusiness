@@ -11,6 +11,8 @@ import { CategoryChip } from "@/components/CategoryChip";
 import { LGPDCheckbox } from "@/components/LGPDCheckbox";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { geocodeCep } from "@/lib/geocode";
+import { isValidCpfCnpj, maskCpfCnpj, onlyDigits } from "@/lib/docs";
+import { useDocsObrigatorios } from "@/lib/appConfig";
 
 export const Route = createFileRoute("/completar-cadastro")({
   ssr: false,
@@ -29,12 +31,17 @@ function CompleteProfilePage() {
   const { user, profile, loading, refreshProfile, signOut } = useAuth();
   const navigate = useNavigate();
 
+  const { data: docsCfg } = useDocsObrigatorios();
+  const docsAtivo = Boolean(docsCfg?.ativo);
+
   const [tipo, setTipo] = useState<(typeof PROFILE_TYPES)[number]>("comprador");
   const [nome, setNome] = useState("");
   const [estado, setEstado] = useState("");
   const [cidade, setCidade] = useState("");
   const [cep, setCep] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [dataNasc, setDataNasc] = useState("");
   const [cats, setCats] = useState<string[]>([]);
   const [temas, setTemas] = useState<string[]>([]);
   const [idioma, setIdioma] = useState<string>("pt-BR");
@@ -97,6 +104,12 @@ function CompleteProfilePage() {
     if (!cidade.trim()) e.cidade = "validation.required";
     if (cats.length === 0) e.cats = "validation.minOneCategory";
     if (!lgpd) e.lgpd = "validation.lgpdRequired";
+    if (docsAtivo) {
+      if (!cpfCnpj.trim() || !isValidCpfCnpj(cpfCnpj)) e.cpfCnpj = "docs.invalid";
+      if (!dataNasc) e.dataNasc = "validation.required";
+    } else if (cpfCnpj.trim() && !isValidCpfCnpj(cpfCnpj)) {
+      e.cpfCnpj = "docs.invalid";
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -120,6 +133,8 @@ function CompleteProfilePage() {
       p_temas: temas,
       p_lgpd: lgpd,
       p_termos_versao: "v1",
+      p_cpf_cnpj: cpfCnpj ? onlyDigits(cpfCnpj) : undefined,
+      p_data_nascimento: dataNasc || undefined,
     });
     setSubmitting(false);
     if (error) {
@@ -222,7 +237,22 @@ function CompleteProfilePage() {
               />
               {geoInfo && <p className="mt-1 text-xs text-primary">{geoInfo}</p>}
             </div>
+            <DarkInput
+              label={`${t("docs.cpfCnpj")}${docsAtivo ? " *" : ""}`}
+              value={cpfCnpj}
+              onChange={(e) => setCpfCnpj(maskCpfCnpj(e.target.value))}
+              placeholder={t("docs.cpfCnpjPlaceholder")}
+              error={errors.cpfCnpj ? t(errors.cpfCnpj) : undefined}
+            />
+            <DarkInput
+              type="date"
+              label={`${t("docs.dob")}${docsAtivo ? " *" : ""}`}
+              value={dataNasc}
+              onChange={(e) => setDataNasc(e.target.value)}
+              error={errors.dataNasc ? t(errors.dataNasc) : undefined}
+            />
           </div>
+
 
           <div>
             <label className="mb-2 block text-xs font-medium text-muted-foreground">

@@ -13,6 +13,8 @@ import { DarkInput } from "@/components/DarkInput";
 import { CdSelfRegisterDialog } from "@/components/CdSelfRegisterDialog";
 import { useMyCdsCount } from "@/hooks/useMyCdsCount";
 import { listCountries } from "@/lib/countries";
+import { isValidCpfCnpj, maskCpfCnpj, onlyDigits } from "@/lib/docs";
+import { useDocsObrigatorios } from "@/lib/appConfig";
 
 export const Route = createFileRoute("/_authenticated/conta")({
   component: ContaPage,
@@ -60,6 +62,11 @@ function ContaPage() {
   const [locGeocoding, setLocGeocoding] = useState(false);
   const [pais, setPais] = useState<string>("");
   const [paisSaving, setPaisSaving] = useState(false);
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [dataNasc, setDataNasc] = useState("");
+  const [docsSaving, setDocsSaving] = useState(false);
+  const { data: docsCfg } = useDocsObrigatorios();
+  const docsAtivo = Boolean(docsCfg?.ativo);
 
   useEffect(() => {
     if (!profile) return;
@@ -69,7 +76,29 @@ function ContaPage() {
     setLocLat((p) => (p != null ? p : profile.latitude ?? null));
     setLocLng((p) => (p != null ? p : profile.longitude ?? null));
     setPais((p) => p || profile.pais || "");
+    setCpfCnpj((p) => p || (profile.cpf_cnpj ? maskCpfCnpj(profile.cpf_cnpj) : ""));
+    setDataNasc((p) => p || profile.data_nascimento || "");
   }, [profile]);
+
+  const saveDocs = async () => {
+    if (!user) return;
+    const raw = onlyDigits(cpfCnpj);
+    if (docsAtivo) {
+      if (!raw || !isValidCpfCnpj(raw)) return toast.error(t("docs.invalid"));
+      if (!dataNasc) return toast.error(t("docs.required"));
+    } else if (raw && !isValidCpfCnpj(raw)) {
+      return toast.error(t("docs.invalid"));
+    }
+    setDocsSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ cpf_cnpj: raw || null, data_nascimento: dataNasc || null })
+      .eq("id", user.id);
+    setDocsSaving(false);
+    if (error) return toast.error(t("docs.saveError"));
+    toast.success(t("docs.saved"));
+    await refreshProfile();
+  };
 
   const savePais = async () => {
     if (!user) return;
@@ -449,6 +478,48 @@ function ContaPage() {
           </button>
         </div>
       </section>
+
+      {/* Personal documents (CPF/CNPJ + DOB) */}
+      <section className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
+        <div className="mb-4 flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-background/60 text-primary">
+            <Lock className="h-5 w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-lg font-bold">{t("docs.adminSectionTitle")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {docsAtivo ? t("docs.required") : t("docs.adminInactive")}
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <DarkInput
+            label={`${t("docs.cpfCnpj")}${docsAtivo ? " *" : ""}`}
+            value={cpfCnpj}
+            onChange={(e) => setCpfCnpj(maskCpfCnpj(e.target.value))}
+            placeholder={t("docs.cpfCnpjPlaceholder")}
+          />
+          <DarkInput
+            type="date"
+            label={`${t("docs.dob")}${docsAtivo ? " *" : ""}`}
+            value={dataNasc}
+            onChange={(e) => setDataNasc(e.target.value)}
+          />
+        </div>
+        <div className="mt-4 flex justify-end">
+          <button
+            type="button"
+            onClick={saveDocs}
+            disabled={docsSaving}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
+          >
+            {docsSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {t("common.save")}
+          </button>
+        </div>
+      </section>
+
+
 
       <section id="minha-localizacao" className="rounded-3xl border border-border bg-card p-6 shadow-lg md:p-7">
 

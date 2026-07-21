@@ -108,11 +108,11 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "#", labelKey: "nav.demandas", icon: ClipboardList, soon: true },
       { to: "/cursos", labelKey: "nav.courses", icon: GraduationCap },
-      { to: "#", labelKey: "nav.imobiliario", icon: Home, soon: true },
+      { to: "/comprar", labelKey: "nav.imobiliario", icon: Home, categoriaParam: "Imobiliário" },
       { to: "/comprar", labelKey: "nav.logistica", icon: Truck, categoriaParam: "Transporte e Logística" },
       { to: "/comprar", labelKey: "nav.consultoria", icon: Headphones, categoriaParam: "Consultoria e Assistência Técnica" },
-      { to: "#", labelKey: "nav.aluguelEquip", icon: Wrench, soon: true },
-      { to: "#", labelKey: "nav.maoDeObra", icon: Users, soon: true },
+      { to: "/comprar", labelKey: "nav.maquinasEquip", icon: Tractor, categoriaParam: "Mecanização e Operações" },
+      { to: "/comprar", labelKey: "nav.maoDeObra", icon: Users, categoriaParam: "Mão de Obra" },
       { to: "/comprar", labelKey: "nav.financiamentos", icon: Landmark, categoriaParam: "Crédito, Seguro e Finanças" },
       { to: "/startups", labelKey: "nav.startups", icon: Rocket },
       { to: "/internacional", labelKey: "nav.expimp", icon: Globe },
@@ -124,7 +124,6 @@ const GROUPS: NavGroup[] = [
     icon: Sparkles,
     items: [
       { to: "/comprar", labelKey: "nav.seguros", icon: ShieldCheck, categoriaParam: "Crédito, Seguro e Finanças" },
-      { to: "/comprar", labelKey: "nav.maquinario", icon: Tractor, categoriaParam: "Mecanização e Operações" },
       { to: "/comprar", labelKey: "nav.insumos", icon: Sprout, categoriaParam: "Insumos Agrícolas" },
       { to: "#", labelKey: "nav.juridico", icon: Scale, soon: true },
       { to: "#", labelKey: "nav.planosSaude", icon: HeartPulse, soon: true },

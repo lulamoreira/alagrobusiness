@@ -71,6 +71,20 @@
     "loginHere": "Sign in",
     "error": "Could not create account."
   },
+  "docs": {
+    "cpfCnpj": "Tax ID (CPF/CNPJ)",
+    "cpfCnpjPlaceholder": "000.000.000-00 or 00.000.000/0000-00",
+    "dob": "Date of birth",
+    "invalid": "Invalid CPF/CNPJ",
+    "required": "Tax ID and date of birth are required",
+    "adminSectionTitle": "Signup documents",
+    "adminToggleLabel": "Require Tax ID and date of birth at signup",
+    "adminToggleDesc": "When enabled, new signups and profile edits must provide a valid Tax ID (CPF/CNPJ) and date of birth. Users who already completed their profile are not affected.",
+    "adminActive": "Active",
+    "adminInactive": "Optional",
+    "saved": "Setting saved",
+    "saveError": "Could not save"
+  },
   "categories": {
     "fruta": "Fruits",
     "grao": "Grains",
@@ -127,12 +141,11 @@
     "imobiliario": "Real Estate",
     "logistica": "Logistics",
     "consultoria": "Consulting",
-    "aluguelEquip": "Equipment Rental",
-    "maoDeObra": "Workforce",
+    "maquinasEquip": "Machinery & Equipment",
+    "maoDeObra": "Labor",
     "financiamentos": "Financing",
     "expimp": "Export/Import",
     "seguros": "Insurance",
-    "maquinario": "Machinery",
     "insumos": "Inputs",
     "juridico": "Legal",
     "planosSaude": "Health Plans"
