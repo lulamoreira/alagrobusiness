@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "AGROBUSINESS",
+    "appName": "Entreposto Virtual",
     "tagline": "El agronegocio brasileño, conectado.",
     "loading": "Cargando…",
     "save": "Guardar",
@@ -27,7 +27,7 @@
     "error": "Ocurrió un error"
   },
   "splash": {
-    "title": "AGROBUSINESS",
+    "title": "Entreposto Virtual",
     "subtitle": "Marketplace del agronegocio brasileño",
     "enter": "Entrar",
     "create": "Crear cuenta"
@@ -1239,7 +1239,7 @@
   },
   "notifications": {
     "approvedTitle": "Cuenta aprobada",
-    "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a AGROBUSINESS!",
+    "approvedMsg": "Tu cuenta ha sido aprobada. ¡Bienvenido a Entreposto Virtual!",
     "blockedTitle": "Acceso bloqueado",
     "blockedMsg": "Tu acceso ha sido bloqueado temporalmente. Contacta con soporte.",
     "reactivatedTitle": "Acceso reactivado",
@@ -1338,7 +1338,7 @@
       },
       "club": {
         "title": "Club de beneficios",
-        "desc": "Beneficios exclusivos para suscriptores y socios de AGROBUSINESS."
+        "desc": "Beneficios exclusivos para suscriptores y socios de Entreposto Virtual."
       }
     },
     "how": {
@@ -1390,8 +1390,8 @@
     "sendAnother": "Enviar otro mensaje",
     "errorGeneric": "No se pudo enviar. Inténtalo en un momento.",
     "errorRate": "Demasiados mensajes en poco tiempo. Espera unos minutos.",
-    "seoTitle": "Contacto — AGROBUSINESS",
-    "seoDesc": "Habla con AGROBUSINESS. Envía tu duda, sugerencia o alianza."
+    "seoTitle": "Contacto — Entreposto Virtual",
+    "seoDesc": "Habla con Entreposto Virtual. Envía tu duda, sugerencia o alianza."
   },
   "adminContatos": {
     "navLabel": "Contactos",
@@ -1420,7 +1420,7 @@
       "title": "Vende directo — sin intermediarios entre tú y el mercado.",
       "subtitle": "Publica tu cosecha, recibe ofertas de compradores verificados y gestiona todo en un panel hecho para el campo.",
       "cta": "Crear cuenta como Productor",
-      "benefitsTitle": "Por qué AGROBUSINESS para ti",
+      "benefitsTitle": "Por qué Entreposto Virtual para ti",
       "benefitsSubtitle": "Herramientas pensadas para quien produce.",
       "b1": {
         "title": "Mayor alcance",
@@ -1459,7 +1459,7 @@
       "title": "Conecta tu marca con quien realmente decide en el campo.",
       "subtitle": "Fortalece tu presencia en el agro brasileño con un canal directo al productor, a la tienda y al comprador profesional.",
       "cta": "Crear cuenta como Marca",
-      "benefitsTitle": "Por qué AGROBUSINESS para tu marca",
+      "benefitsTitle": "Por qué Entreposto Virtual para tu marca",
       "benefitsSubtitle": "Una vitrina premium para el agronegocio.",
       "b1": {
         "title": "Presencia cualificada",
@@ -1498,7 +1498,7 @@
       "title": "Amplía tu tienda y llega a productores en todo Brasil.",
       "subtitle": "Publica tu catálogo, gestiona stock y cierra más ventas — con un canal directo a quien produce en el campo.",
       "cta": "Crear cuenta como Tienda",
-      "benefitsTitle": "Por qué AGROBUSINESS para tu tienda",
+      "benefitsTitle": "Por qué Entreposto Virtual para tu tienda",
       "benefitsSubtitle": "Vitrina, negociación y gestión en un solo lugar.",
       "b1": {
         "title": "Vitrina nacional",
@@ -1534,9 +1534,9 @@
     }
   },
   "about": {
-    "title": "Sobre AGROBUSINESS",
+    "title": "Sobre Entreposto Virtual",
     "subtitle": "Una plataforma hecha para conectar toda la cadena del agronegocio brasileño.",
-    "p1": "AGROBUSINESS nació para darle al productor rural, al comprador, a la tienda y a la marca del agro un único lugar para encontrarse, negociar y crecer juntos.",
+    "p1": "Entreposto Virtual nació para darle al productor rural, al comprador, a la tienda y a la marca del agro un único lugar para encontrarse, negociar y crecer juntos.",
     "p2": "Reunimos marketplace, cotizaciones, clima, noticias, cursos y un club de ventajas en una experiencia simple, mobile-first y pensada para quien vive el campo.",
     "p3": "Nuestro compromiso es con la transparencia, la seguridad de la información y el respeto a las leyes de privacidad — para que cada usuario controle sus datos y negociaciones.",
     "mission": {
@@ -1559,7 +1559,7 @@
       "title": "Términos de Uso",
       "s1": {
         "title": "1. Aceptación",
-        "body": "Al usar AGROBUSINESS declaras haber leído y aceptado estos Términos. Si no estás de acuerdo, no uses la plataforma."
+        "body": "Al usar Entreposto Virtual declaras haber leído y aceptado estos Términos. Si no estás de acuerdo, no uses la plataforma."
       },
       "s2": {
         "title": "2. Registro y cuenta",
@@ -1571,11 +1571,11 @@
       },
       "s4": {
         "title": "4. Anuncios y negociaciones",
-        "body": "Las negociaciones entre usuarios son responsabilidad de las partes. AGROBUSINESS actúa como intermediario de conexión."
+        "body": "Las negociaciones entre usuarios son responsabilidad de las partes. Entreposto Virtual actúa como intermediario de conexión."
       },
       "s5": {
         "title": "5. Propiedad intelectual",
-        "body": "Todo el contenido, marca y software de AGROBUSINESS está protegido por derechos de autor y demás leyes aplicables."
+        "body": "Todo el contenido, marca y software de Entreposto Virtual está protegido por derechos de autor y demás leyes aplicables."
       },
       "s6": {
         "title": "6. Cambios",
@@ -1867,13 +1867,13 @@
     "copyPassword": "Copiar contraseña",
     "copyAll": "Copiar login y contraseña",
     "sendWhatsapp": "Enviar por WhatsApp",
-    "waMessage": "AGROBUSINESS — Acceso de demostración\n\n🔑 Login: {{login}}\n🔒 Contraseña: {{senha}}\n🌐 Ingresa: {{url}}\n\nTu acceso es válido por {{dias}} días desde el primer inicio de sesión.",
+    "waMessage": "Entreposto Virtual — Acceso de demostración\n\n🔑 Login: {{login}}\n🔒 Contraseña: {{senha}}\n🌐 Ingresa: {{url}}\n\nTu acceso es válido por {{dias}} días desde el primer inicio de sesión.",
     "copyLoginLink": "Copiar login y enlace",
     "sendLoginWhatsapp": "Enviar login por WhatsApp",
     "loginOnlyNote": "Envío solo con el login (sin contraseña). Para enviar la contraseña, restablécela en \"Editar\" o cópiala al momento de crear la cuenta.",
     "sharePwdPlaceholder": "Escribe la contraseña para enviar",
     "sharePwdNote": "La contraseña no se guarda. Escríbela aquí para incluirla en el envío, o usa \"Editar\" para restablecerla.",
-    "waMessageLoginOnly": "AGROBUSINESS — Acceso de demostración\n\n🔑 Login: {{login}}\n🌐 Ingresa: {{url}}\n\nLa contraseña se enviará a continuación."
+    "waMessageLoginOnly": "Entreposto Virtual — Acceso de demostración\n\n🔑 Login: {{login}}\n🌐 Ingresa: {{url}}\n\nLa contraseña se enviará a continuación."
   },
   "offer": {
     "type": "Tipo de oferta",
@@ -2002,7 +2002,7 @@
     "categories": {
       "primeiros-passos": {
         "title": "Primeros pasos",
-        "subtitle": "Lo básico para comenzar bien en AGROBUSINESS."
+        "subtitle": "Lo básico para comenzar bien en Entreposto Virtual."
       },
       "comprar-vender": {
         "title": "Comprar y Vender",

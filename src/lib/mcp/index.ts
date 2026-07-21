@@ -5,9 +5,9 @@ import listAnunciosTool from "./tools/list-anuncios";
 
 export default defineMcp({
   name: "agrobusiness-mcp",
-  title: "AGROBUSINESS MCP",
+  title: "Entreposto Virtual MCP",
   version: "0.1.0",
   instructions:
-    "Public read-only tools for AGROBUSINESS: latest Brazilian agribusiness news, USD/BRL exchange rate, and active marketplace listings.",
+    "Public read-only tools for Entreposto Virtual: latest Brazilian agribusiness news, USD/BRL exchange rate, and active marketplace listings.",
   tools: [listNoticiasTool, getDolarTool, listAnunciosTool],
 });

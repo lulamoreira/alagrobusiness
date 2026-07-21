@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
 
     const originHeader = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
     const originClean = originHeader.replace(/\/$/, "");
-    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://agrobusiness.lovable.app";
+    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://entrepostovirtual.lovable.app";
     const successUrl = `${origin}/anuncio/${anuncio_id}?destaque=success&session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${origin}/anuncio/${anuncio_id}?destaque=cancel`;
 

@@ -7,8 +7,8 @@ export const Route = createFileRoute("/termos")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Termos de Uso — AGROBUSINESS" },
-      { name: "description", content: "Termos de Uso do AGROBUSINESS." },
+      { title: "Termos de Uso — Entreposto Virtual" },
+      { name: "description", content: "Termos de Uso do Entreposto Virtual." },
       { name: "robots", content: "noindex" },
     ],
   }),

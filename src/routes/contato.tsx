@@ -25,10 +25,10 @@ export const Route = createFileRoute("/contato")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Contato — AGROBUSINESS" },
-      { name: "description", content: "Fale com o AGROBUSINESS. Envie sua dúvida, sugestão ou parceria." },
-      { property: "og:title", content: "Contato — AGROBUSINESS" },
-      { property: "og:description", content: "Fale com o AGROBUSINESS." },
+      { title: "Contato — Entreposto Virtual" },
+      { name: "description", content: "Fale com o Entreposto Virtual. Envie sua dúvida, sugestão ou parceria." },
+      { property: "og:title", content: "Contato — Entreposto Virtual" },
+      { property: "og:description", content: "Fale com o Entreposto Virtual." },
     ],
   }),
   component: ContactPage,

@@ -17,9 +17,9 @@ interface Payload {
 }
 
 const SUBJECTS: Record<string, string> = {
-  "pt-BR": "Você ganhou acesso Pro no AGROBUSINESS",
-  en: "You've been granted Pro access on AGROBUSINESS",
-  es: "Ganaste acceso Pro en AGROBUSINESS",
+  "pt-BR": "Você ganhou acesso Pro no Entreposto Virtual",
+  en: "You've been granted Pro access on Entreposto Virtual",
+  es: "Ganaste acceso Pro en Entreposto Virtual",
 };
 
 function bodyHtml(lang: string, link: string, dias: number | null | undefined) {
@@ -37,19 +37,19 @@ function bodyHtml(lang: string, link: string, dias: number | null | undefined) {
         };
   const t: Record<string, { title: string; p1: string; cta: string; foot: string }> = {
     "pt-BR": {
-      title: "Cortesia AGROBUSINESS",
+      title: "Cortesia Entreposto Virtual",
       p1: `Você recebeu <b>${dur["pt-BR"]}</b>. Crie sua conta com este mesmo e-mail para ativar automaticamente.`,
       cta: "Criar conta",
       foot: "Se você não esperava este convite, ignore esta mensagem.",
     },
     en: {
-      title: "AGROBUSINESS courtesy",
+      title: "Entreposto Virtual courtesy",
       p1: `You received <b>${dur.en}</b>. Sign up with this same email to activate automatically.`,
       cta: "Create account",
       foot: "If you were not expecting this invite, ignore this message.",
     },
     es: {
-      title: "Cortesía AGROBUSINESS",
+      title: "Cortesía Entreposto Virtual",
       p1: `Recibiste <b>${dur.es}</b>. Crea tu cuenta con este mismo correo para activarla automáticamente.`,
       cta: "Crear cuenta",
       foot: "Si no esperabas esta invitación, ignora este mensaje.",
@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const from = Deno.env.get("RESEND_FROM") || "AGROBUSINESS <onboarding@resend.dev>";
+    const from = Deno.env.get("RESEND_FROM") || "Entreposto Virtual <onboarding@resend.dev>";
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
