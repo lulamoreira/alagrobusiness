@@ -60,7 +60,13 @@ function LoginPage() {
     });
     setSubmitting(false);
     if (error) {
-      setServerError(t("auth.error"));
+      const code = (error as { code?: string }).code;
+      const msg = (error.message ?? "").toLowerCase();
+      if (code === "user_banned" || msg.includes("banned")) {
+        setServerError(t("auth.blockedAccount"));
+      } else {
+        setServerError(t("auth.error"));
+      }
       return;
     }
     navigate({ to: "/painel" });

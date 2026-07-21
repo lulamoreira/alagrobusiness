@@ -43,7 +43,8 @@
     "welcome": "Bem-vindo de volta",
     "subtitle": "Acesse sua conta para continuar",
     "signing": "Entrando…",
-    "error": "Não foi possível entrar. Verifique seus dados."
+    "error": "Não foi possível entrar. Verifique seus dados.",
+    "blockedAccount": "Sua conta está bloqueada. Entre em contato com o suporte."
   },
   "signup": {
     "title": "Criar conta",
