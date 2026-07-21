@@ -52,6 +52,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             } catch {
               /* noop */
             }
+            try {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              await (supabase as any).rpc("checar_meu_acesso_demo");
+            } catch {
+              /* noop */
+            }
           }
           await loadProfile(sess.user.id);
         }, 0);

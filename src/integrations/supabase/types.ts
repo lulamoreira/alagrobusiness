@@ -2161,6 +2161,7 @@ export type Database = {
           id: string
         }[]
       }
+      checar_meu_acesso_demo: { Args: never; Returns: Json }
       complete_profile: {
         Args: {
           p_categorias: string[]
@@ -2185,6 +2186,7 @@ export type Database = {
         Args: { p_curso_id: string }
         Returns: Json
       }
+      expirar_acessos_demo: { Args: never; Returns: Json }
       get_cron_secret: { Args: never; Returns: string }
       get_stripe_webhook_secret: { Args: never; Returns: string }
       gravar_cotacoes_ia: {
