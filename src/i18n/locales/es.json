@@ -71,6 +71,20 @@
     "loginHere": "Entrar",
     "error": "No se pudo crear la cuenta."
   },
+  "docs": {
+    "cpfCnpj": "CPF/CNPJ",
+    "cpfCnpjPlaceholder": "000.000.000-00 o 00.000.000/0000-00",
+    "dob": "Fecha de nacimiento",
+    "invalid": "CPF/CNPJ inválido",
+    "required": "CPF/CNPJ y fecha de nacimiento son obligatorios",
+    "adminSectionTitle": "Documentos en el registro",
+    "adminToggleLabel": "Exigir CPF/CNPJ y fecha de nacimiento en el registro",
+    "adminToggleDesc": "Cuando está activo, los nuevos registros y ediciones de perfil deben incluir un CPF/CNPJ válido y fecha de nacimiento. No afecta a quienes ya completaron el registro.",
+    "adminActive": "Activo",
+    "adminInactive": "Opcional",
+    "saved": "Configuración guardada",
+    "saveError": "No se pudo guardar"
+  },
   "categories": {
     "fruta": "Frutas",
     "grao": "Granos",
@@ -127,12 +141,11 @@
     "imobiliario": "Inmobiliario",
     "logistica": "Logística",
     "consultoria": "Consultoría",
-    "aluguelEquip": "Alquiler de Equipos",
+    "maquinasEquip": "Máquinas y Equipos",
     "maoDeObra": "Mano de Obra",
     "financiamentos": "Financiación",
     "expimp": "Exportación/Importación",
     "seguros": "Seguros",
-    "maquinario": "Maquinaria",
     "insumos": "Insumos",
     "juridico": "Jurídico",
     "planosSaude": "Planes de Salud"

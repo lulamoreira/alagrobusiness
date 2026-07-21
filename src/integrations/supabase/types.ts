@@ -316,6 +316,24 @@ export type Database = {
           },
         ]
       }
+      app_config: {
+        Row: {
+          chave: string
+          updated_at: string
+          valor: Json
+        }
+        Insert: {
+          chave: string
+          updated_at?: string
+          valor: Json
+        }
+        Update: {
+          chave?: string
+          updated_at?: string
+          valor?: Json
+        }
+        Relationships: []
+      }
       assinaturas: {
         Row: {
           created_at: string
@@ -1523,7 +1541,9 @@ export type Database = {
           categorias_interesse: Database["public"]["Enums"]["categoria_agro"][]
           cep: string | null
           cidade: string | null
+          cpf_cnpj: string | null
           created_at: string
+          data_nascimento: string | null
           deleted_at: string | null
           email: string
           estado: string | null
@@ -1551,7 +1571,9 @@ export type Database = {
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
           cidade?: string | null
+          cpf_cnpj?: string | null
           created_at?: string
+          data_nascimento?: string | null
           deleted_at?: string | null
           email: string
           estado?: string | null
@@ -1579,7 +1601,9 @@ export type Database = {
           categorias_interesse?: Database["public"]["Enums"]["categoria_agro"][]
           cep?: string | null
           cidade?: string | null
+          cpf_cnpj?: string | null
           created_at?: string
+          data_nascimento?: string | null
           deleted_at?: string | null
           email?: string
           estado?: string | null
@@ -2167,6 +2191,8 @@ export type Database = {
           p_categorias: string[]
           p_cep: string
           p_cidade: string
+          p_cpf_cnpj?: string
+          p_data_nascimento?: string
           p_estado: string
           p_idioma: string
           p_lgpd: boolean
