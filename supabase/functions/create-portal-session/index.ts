@@ -39,7 +39,7 @@ async function ensurePortalConfiguration(): Promise<string> {
 
   const form: Record<string, string> = {
     "metadata[lookup]": PORTAL_LOOKUP,
-    "business_profile[headline]": "AGROBUSINESS",
+    "business_profile[headline]": "Entreposto Virtual",
     "features[customer_update][enabled]": "true",
     "features[customer_update][allowed_updates][0]": "email",
     "features[customer_update][allowed_updates][1]": "tax_id",
