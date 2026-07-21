@@ -26,13 +26,13 @@ export const Route = createFileRoute("/conheca")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "AGROBUSINESS — Marketplace do Agronegócio" },
+      { title: "Entreposto Virtual — Marketplace do Agronegócio" },
       {
         name: "description",
         content:
           "Do campo ao mercado: anuncie, negocie e acompanhe cotações, clima, notícias e cursos. A plataforma do agronegócio brasileiro para produtores, compradores, lojistas e marcas.",
       },
-      { property: "og:title", content: "AGROBUSINESS — Marketplace do Agronegócio" },
+      { property: "og:title", content: "Entreposto Virtual — Marketplace do Agronegócio" },
       {
         property: "og:description",
         content: "A plataforma do agronegócio brasileiro para produtores, compradores, lojistas e marcas.",
@@ -255,7 +255,7 @@ function PublicHome() {
           </nav>
         </div>
         <div className="border-t border-border/40 px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
-          © {new Date().getFullYear()} AGROBUSINESS. {t("public.footer.rights")}
+          © {new Date().getFullYear()} Entreposto Virtual. {t("public.footer.rights")}
         </div>
       </footer>
     </div>

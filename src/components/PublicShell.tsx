@@ -49,7 +49,7 @@ export function PublicShell({ children }: PublicShellProps) {
           </nav>
         </div>
         <div className="border-t border-border/40 px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
-          © {new Date().getFullYear()} AGROBUSINESS. {t("public.footer.rights")}
+          © {new Date().getFullYear()} Entreposto Virtual. {t("public.footer.rights")}
         </div>
       </footer>
     </div>

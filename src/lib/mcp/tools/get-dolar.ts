@@ -5,7 +5,7 @@ import { z } from "zod";
 export default defineTool({
   name: "get_cotacao_dolar",
   title: "Get USD/BRL quote",
-  description: "Get the latest USD/BRL exchange rate tracked by AGROBUSINESS.",
+  description: "Get the latest USD/BRL exchange rate tracked by Entreposto Virtual.",
   inputSchema: {
     tipo: z
       .enum(["comercial", "turismo", "paralelo"])

@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
 
     const originHeader = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
     const originClean = originHeader.replace(/\/$/, "");
-    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://agrobusiness.lovable.app";
+    const origin = /^https?:\/\//.test(originClean) ? originClean : "https://entrepostovirtual.lovable.app";
     const returnUrl = `${origin}/planos`;
 
     const session = await stripeCall(`/billing_portal/sessions`, {

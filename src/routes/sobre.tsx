@@ -6,8 +6,8 @@ export const Route = createFileRoute("/sobre")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Sobre — AGROBUSINESS" },
-      { name: "description", content: "Conheça o AGROBUSINESS, o marketplace do agronegócio brasileiro." },
+      { title: "Sobre — Entreposto Virtual" },
+      { name: "description", content: "Conheça o Entreposto Virtual, o marketplace do agronegócio brasileiro." },
     ],
   }),
   component: SobrePage,
