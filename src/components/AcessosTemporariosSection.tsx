@@ -249,6 +249,16 @@ export function AcessosTemporariosSection() {
     setAddDaysMap((m) => ({ ...m, [r.convite_id]: "" }));
   };
 
+  const syncAuthBan = async () => {
+    try {
+      const { error } = await supabase.functions.invoke("sync-demo-auth-ban", { body: {} });
+      if (error) toast.error(`sync-demo-auth-ban: ${error.message}`);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      toast.error(`sync-demo-auth-ban: ${msg}`);
+    }
+  };
+
   const revogar = async (r: Row) => {
     if (r.is_demo) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -264,6 +274,7 @@ export function AcessosTemporariosSection() {
       if (error) return toast.error(error.message);
     }
     toast.success(t("tempAccess.revoked"));
+    if (r.is_demo) await syncAuthBan();
     await load();
   };
 
@@ -275,6 +286,7 @@ export function AcessosTemporariosSection() {
     });
     if (error) return toast.error(error.message);
     toast.success(t("demoAccess.reactivated"));
+    await syncAuthBan();
     await load();
   };
 
